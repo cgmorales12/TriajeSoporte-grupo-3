@@ -73,9 +73,12 @@ TERMINOS_DESPACHO_PRESENCIAL = [
 
 # Términos para el protocolo oficial de abstención (misión de silencio determinista)
 TERMINOS_ABSTENCION_EXTERNA = [
-    "complexivo", "comedor", "matrícula", "matricula", "almuerzo",
-    "llueve", "clima", "nómina", "nomina", "sueldo", "hackear", "hack",
-    "menu ejecutivo", "menú ejecutivo", "materia", "profesor", "aula magna"
+    "complexivo", "comedor", "matrícula", "matricula", "almuerzo", "hambre", "comida",
+    "desayuno", "cena", "sed", "cafeteria", "cafetería", "restaurante", "chiste", "broma",
+    "llueve", "lluvia", "clima", "tiempo libre", "nómina", "nomina", "sueldo", "dinero",
+    "hackear", "hack", "crackear", "menu ejecutivo", "menú ejecutivo", "materia", "profesor",
+    "aula magna", "tarea", "medico", "médico", "salud", "enfermo", "cita médica", "cita medica",
+    "futbol", "fútbol", "partido"
 ]
 
 _cliente_chroma = None
@@ -148,15 +151,28 @@ def buscar_solucion(
         )
 
     texto_lower = (texto or "").lower().strip()
+    cat_lower = (categoria or "").lower().strip()
 
     # 1. Regla de Silencio Determinista y Abstención (Zero-Hallucination)
-    # 1.1 Solicitudes maliciosas o de vulneración de seguridad: Abstención obligatoria inmediata
+    # 1.1 Si la categoría detectada es Fuera de Alcance o No Técnica, abstención inmediata sin RAG
+    es_categoria_fuera_de_alcance = (
+        "fuera de alcance" in cat_lower or 
+        "no técnica" in cat_lower or 
+        "no tecnica" in cat_lower or
+        "solicitud no técnica" in cat_lower
+    )
+
+    # 1.2 Solicitudes maliciosas o de vulneración de seguridad: Abstención obligatoria inmediata
     es_adversarial = any(h in texto_lower for h in ["hackear", "hack", "crackear", "vulnerar", "piratear", "sniffear"])
 
-    # 1.2 Detecta consultas ajenas a la infraestructura técnica de telecomunicaciones / campus
+    # 1.3 Detecta consultas ajenas a la infraestructura técnica de telecomunicaciones / campus
     terminos_ti = ["los", "ont", "router", "fibra", "wifi", "wi-fi", "cable", "red", "ethernet", "internet", "pon", "dns", "lan"]
     tiene_termino_ti = any(t in texto_lower for t in terminos_ti)
-    es_fuera_de_alcance = (any(w in texto_lower for w in TERMINOS_ABSTENCION_EXTERNA) and not tiene_termino_ti) or es_adversarial
+    es_fuera_de_alcance = (
+        es_categoria_fuera_de_alcance or
+        (any(w in texto_lower for w in TERMINOS_ABSTENCION_EXTERNA) and not tiene_termino_ti) or 
+        es_adversarial
+    )
 
     if es_fuera_de_alcance or (len(texto_lower) < 4 and not tiene_termino_ti):
         return DiagnosticoRAG(
@@ -164,7 +180,7 @@ def buscar_solucion(
                 "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec. "
                 "La consulta no describe ninguna avería técnica ni falla en la infraestructura de Internet o telecomunicaciones. "
                 "No se requiere despacho de cuadrilla ni manipulación de equipos. "
-                "Orientación al usuario: Si su solicitud corresponde a trámites administrativos o académicos (como notas, matrículas o certificaciones), "
+                "Orientación al usuario: Si su solicitud corresponde a trámites administrativos, académicos (como notas o certificaciones) o asuntos personales, "
                 "por favor acuda a Secretaría General o al portal institucional de autoservicio. "
                 "Si experimenta problemas de conectividad o luces anómalas en el módem/ONT (POWER, PON, LOS, LAN), por favor descríbalos detalladamente."
             ),
@@ -314,8 +330,8 @@ def buscar_solucion(
     )
 
 
-def consultar_base_conocimiento(texto_problema: str, simular_caida_rag: bool = False) -> DiagnosticoRAG:
+def consultar_base_conocimiento(texto_problema: str, categoria: Optional[str] = None, simular_caida_rag: bool = False) -> DiagnosticoRAG:
     """
     Función de compatibilidad: busca en ChromaDB sobre los 15 manuales técnicos oficiales.
     """
-    return buscar_solucion(categoria=None, texto=texto_problema, top_k=3, simular_caida_rag=simular_caida_rag)
+    return buscar_solucion(categoria=categoria, texto=texto_problema, top_k=3, simular_caida_rag=simular_caida_rag)

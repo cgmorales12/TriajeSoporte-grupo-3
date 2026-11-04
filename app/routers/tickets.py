@@ -97,6 +97,7 @@ def clasificar_y_crear_ticket(solicitud: SolicitudTicketIn, request: Request = N
         # 3. Consulta RAG sobre el corpus de 15 manuales (con soporte de desconexión simulada)
         diagnostico_rag = consultar_base_conocimiento(
             solicitud.descripcion_problema,
+            categoria=clasificacion_ia.categoria,
             simular_caida_rag=solicitud.simular_caida_rag
         )
         estado_inicial = "escalado_cuadrilla" if diagnostico_rag.requiere_visita_campo else ("en_atencion" if solicitud.simular_caida_rag else "nuevo")
@@ -263,6 +264,7 @@ def proponer_registro_ticket(solicitud: SolicitudTicketIn, request: Request = No
     prioridad_sla = calcular_prioridad_itil(clasificacion_ia.impacto, clasificacion_ia.urgencia)
     diagnostico_rag = consultar_base_conocimiento(
         solicitud.descripcion_problema,
+        categoria=clasificacion_ia.categoria,
         simular_caida_rag=solicitud.simular_caida_rag
     )
 
