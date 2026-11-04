@@ -3056,7 +3056,7 @@ Verifique que los niveles de potencia o navegación vuelvan a parámetros nomina
 
         async function abrirModalConfirmarEnvio(ticketId) {
             try {
-                const res = await fetch(`${API_URL}/v1/tickets/${ticketId}/proponer-envio`);
+                const res = await fetch(`${API_URL}/${ticketId}/proponer-envio`);
                 if (!res.ok) throw new Error('No se pudo obtener la propuesta de envío');
                 const p = await res.json();
 
@@ -3090,7 +3090,7 @@ Verifique que los niveles de potencia o navegación vuelvan a parámetros nomina
             };
 
             try {
-                const res = await fetch(`${API_URL}/v1/tickets/${ticketId}/confirmar-envio`, {
+                const res = await fetch(`${API_URL}/${ticketId}/confirmar-envio`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -3113,7 +3113,7 @@ Verifique que los niveles de potencia o navegación vuelvan a parámetros nomina
 
         async function abrirModalConfirmarDerivacion(ticketId) {
             try {
-                const res = await fetch(`${API_URL}/v1/tickets/${ticketId}/proponer-derivacion`);
+                const res = await fetch(`${API_URL}/${ticketId}/proponer-derivacion`);
                 if (!res.ok) throw new Error('No se pudo obtener la propuesta de derivación');
                 const p = await res.json();
 
@@ -3153,7 +3153,7 @@ Verifique que los niveles de potencia o navegación vuelvan a parámetros nomina
             };
 
             try {
-                const res = await fetch(`${API_URL}/v1/tickets/${ticketId}/confirmar-derivacion`, {
+                const res = await fetch(`${API_URL}/${ticketId}/confirmar-derivacion`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
