@@ -20,12 +20,20 @@ except ImportError:
 logger = logging.getLogger("conectatec.database")
 
 DB_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
-DB_PATH = os.path.join(DB_DIR, "conectatec.db")
+DEFAULT_DB_PATH = os.path.join(DB_DIR, "conectatec.db")
+DB_PATH = os.environ.get("CONECTATEC_DB_PATH", DEFAULT_DB_PATH)
+
+def obtener_ruta_db() -> str:
+    """Retorna la ruta activa a la base de datos (permite sobreescritura en tests)."""
+    return os.environ.get("CONECTATEC_DB_PATH", DEFAULT_DB_PATH)
 
 def _obtener_conexion():
     """Retorna una conexión activa a la base de datos SQLite."""
-    os.makedirs(DB_DIR, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
+    ruta = obtener_ruta_db()
+    dir_bd = os.path.dirname(ruta)
+    if dir_bd:
+        os.makedirs(dir_bd, exist_ok=True)
+    conn = sqlite3.connect(ruta)
     conn.row_factory = sqlite3.Row
     return conn
 
