@@ -308,9 +308,13 @@ def raiz():
 
 @app.get("/tablero", tags=["Frontend Kanban"])
 def ver_tablero_kanban():
-    """Sirve la interfaz web interactiva del tablero Kanban."""
+    """Sirve la interfaz web interactiva del tablero Kanban sin caché de navegador."""
     import os
     from fastapi.responses import FileResponse
     frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend", "index.html")
-    return FileResponse(frontend_path)
+    response = FileResponse(frontend_path)
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 

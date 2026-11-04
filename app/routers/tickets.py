@@ -355,6 +355,11 @@ def confirmar_y_guardar_ticket(payload: ConfirmarRegistroIn):
     summary="Genera borrador de notificación antes de remitir al usuario (HITL)",
     description="Genera el asunto y cuerpo del mensaje con citas técnicas para que el operador lo revise antes del envío."
 )
+@router.get(
+    "/v1/tickets/{ticket_id}/proponer-envio",
+    response_model=PropuestaEnviarNotificacionOut,
+    include_in_schema=False
+)
 def proponer_envio_notificacion(ticket_id: int):
     """
     Fase 1 de Envío HITL:
@@ -401,6 +406,11 @@ def proponer_envio_notificacion(ticket_id: int):
     summary="Confirma y registra el envío de notificación al cliente tras revisión humana",
     description="Autoriza formalmente el despacho del mensaje al usuario registrando al operador responsable."
 )
+@router.post(
+    "/v1/tickets/{ticket_id}/confirmar-envio",
+    response_model=ResultadoConfirmacionHumanaOut,
+    include_in_schema=False
+)
 def confirmar_envio_notificacion_endpoint(ticket_id: int, payload: ConfirmarEnvioIn):
     """
     Fase 2 de Envío HITL:
@@ -434,6 +444,11 @@ def confirmar_envio_notificacion_endpoint(ticket_id: int, payload: ConfirmarEnvi
     response_model=PropuestaDerivarCuadrillaOut,
     summary="Genera orden propuesta de despacho presencial antes de derivar cuadrilla (HITL)",
     description="Calcula costo y herramientas requeridas antes de comprometer personal físico en campo."
+)
+@router.get(
+    "/v1/tickets/{ticket_id}/proponer-derivacion",
+    response_model=PropuestaDerivarCuadrillaOut,
+    include_in_schema=False
 )
 def proponer_derivacion_cuadrilla(ticket_id: int):
     """
@@ -474,6 +489,11 @@ def proponer_derivacion_cuadrilla(ticket_id: int):
     response_model=ResultadoConfirmacionHumanaOut,
     summary="Confirma y autoriza el despacho presencial de cuadrilla técnica (HITL)",
     description="Transiciona el ticket a 'escalado_cuadrilla' y genera orden de trabajo física ODT."
+)
+@router.post(
+    "/v1/tickets/{ticket_id}/confirmar-derivacion",
+    response_model=ResultadoConfirmacionHumanaOut,
+    include_in_schema=False
 )
 def confirmar_derivacion_cuadrilla_endpoint(ticket_id: int, payload: ConfirmarDerivacionIn):
     """
