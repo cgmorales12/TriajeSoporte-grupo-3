@@ -537,14 +537,15 @@ def configurar_20_tickets_perfectos():
     cursor = conn.cursor()
     ahora_iso = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # 1. Marcar como eliminados lógicamente todos los tickets previos para partir de un estado limpio
-    cursor.execute("""
-        UPDATE tickets 
-        SET eliminado = 1, fecha_eliminacion = ?, eliminado_por = 'reinicio_5_tickets_perfectos'
-        WHERE (eliminado IS NULL OR eliminado = 0)
-    """, (ahora_iso,))
+    # 1. Eliminar todos los tickets que no formen parte de la selección oficial de 20 casos
+    codigos_demo = [t["codigo"] for t in TICKETS_DEMO]
+    placeholders = ",".join(["?"] * len(codigos_demo))
+    cursor.execute(f"""
+        DELETE FROM tickets 
+        WHERE ticket_codigo NOT IN ({placeholders})
+    """, codigos_demo)
 
-    # 2. Insertar los 20 tickets limpios (5 por cada estado)
+    # 2. Insertar o sincronizar los 20 tickets limpios (5 por cada estado)
     for t in TICKETS_DEMO:
         cursor.execute("""
             INSERT INTO tickets (
@@ -556,6 +557,36 @@ def configurar_20_tickets_perfectos():
                 tokens_prompt, tokens_completado, tokens_total, modo_vulnerable, alucinacion_detectada,
                 eliminado
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+            ON CONFLICT(ticket_codigo) DO UPDATE SET
+                fecha_creacion = excluded.fecha_creacion,
+                nombre_cliente = excluded.nombre_cliente,
+                email_cliente = excluded.email_cliente,
+                descripcion_problema = excluded.descripcion_problema,
+                categoria = excluded.categoria,
+                impacto = excluded.impacto,
+                urgencia = excluded.urgencia,
+                prioridad = excluded.prioridad,
+                sla_minutos = excluded.sla_minutos,
+                descripcion_sla = excluded.descripcion_sla,
+                solucion_propuesta = excluded.solucion_propuesta,
+                citas_json = excluded.citas_json,
+                estado = excluded.estado,
+                requiere_revision_humana = excluded.requiere_revision_humana,
+                proveedor_ia = excluded.proveedor_ia,
+                modelo_ia = excluded.modelo_ia,
+                conmutado = excluded.conmutado,
+                motivo_conmutacion = excluded.motivo_conmutacion,
+                latencia_ms = excluded.latencia_ms,
+                justificacion = excluded.justificacion,
+                sintomas_json = excluded.sintomas_json,
+                tokens_prompt = excluded.tokens_prompt,
+                tokens_completado = excluded.tokens_completado,
+                tokens_total = excluded.tokens_total,
+                modo_vulnerable = excluded.modo_vulnerable,
+                alucinacion_detectada = excluded.alucinacion_detectada,
+                eliminado = 0,
+                fecha_eliminacion = NULL,
+                eliminado_por = NULL
         """, (
             t["codigo"],
             ahora_iso,
@@ -587,6 +618,8 @@ def configurar_20_tickets_perfectos():
         ))
 
     conn.commit()
+    cursor.execute("VACUUM")
+    conn.commit()
 
     # 3. Validar conteo final en consola
     conteo = cursor.execute("""
@@ -594,10 +627,17 @@ def configurar_20_tickets_perfectos():
         FROM tickets 
         WHERE (eliminado IS NULL OR eliminado = 0) 
         GROUP BY estado
+        ORDER BY CASE estado
+            WHEN 'nuevo' THEN 1
+            WHEN 'en_atencion' THEN 2
+            WHEN 'escalado_cuadrilla' THEN 3
+            WHEN 'resuelto' THEN 4
+            ELSE 5
+        END
     """).fetchall()
     
     print("\n" + "=" * 75)
-    print(" CONFIGURACION DE TABLERO KANBAN CON 5 EJEMPLOS DIDACTICOS POR COLUMNA")
+    print(" CONFIGURACIÓN DE TABLERO KANBAN CON 5 EJEMPLOS DIDÁCTICOS POR COLUMNA")
     print("=" * 75)
     for est, total in conteo:
         print(f" * Estado: {est.upper():<20} -> {total} tickets activos")
