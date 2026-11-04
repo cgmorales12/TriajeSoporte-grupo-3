@@ -21,11 +21,11 @@ CHROMA_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "chroma
 PALABRAS_CLAVE_MANUALES = {
     "DOC-01": ["huawei", "los roja", "pon", "echolife", "hg8245", "hg8546", "luz roja", "led los"],
     "DOC-02": ["zte", "f660", "f670", "indicador pon", "los zte", "alarma zte"],
-    "DOC-03": ["reiniciar", "reinicio", "desconectar", "corriente", "30 segundos", "ciclo", "electrico", "transformador", "apagar"],
+    "DOC-03": ["reiniciar", "reinicio", "desconectar", "corriente", "30 segundos", "ciclo", "electrico", "transformador", "apagar", "no navega", "sin navegacion"],
     "DOC-04": ["clave wifi", "contrasena", "ssid", "cambiar clave", "wpa2", "wpa3", "192.168.1.1", "nombre de red"],
     "DOC-05": ["5g", "5ghz", "2.4g", "2.4ghz", "cobertura", "alcance", "banda", "muro", "pared"],
-    "DOC-06": ["velocidad", "lento", "lentitud", "speedtest", "megas", "bajada", "subida", "test ethernet", "ookla"],
-    "DOC-07": ["dns", "no se puede acceder", "err_name_not_resolved", "flushdns", "8.8.8.8", "1.1.1.1", "ping"],
+    "DOC-06": ["velocidad", "lento", "lentitud", "speedtest", "megas", "bajada", "subida", "test ethernet", "ookla", "demora en cargar"],
+    "DOC-07": ["dns", "no se puede acceder", "err_name_not_resolved", "flushdns", "8.8.8.8", "1.1.1.1", "ping", "no carga", "no cargan", "no abre", "no abren", "pagina", "paginas", "página", "páginas", "sitio", "navegacion", "navegación", "navegar"],
     "DOC-08": ["cable", "utp", "rj45", "rj-45", "cat6", "cat5", "100 mbps", "cobre"],
     "DOC-09": ["rotura", "fibra rota", "corte fibra", "atenuacion", "splitter", "cuadrilla", "fusionadora", "aplastado"],
     "DOC-10": ["microondas", "interferencia", "espejo", "bluetooth", "ruido", "concreto"],
@@ -207,12 +207,12 @@ def buscar_solucion(
             res_chroma = None
             try:
                 if filtro_where:
-                    res_chroma = coleccion.query(query_texts=[texto], n_results=max(top_k, 3), where=filtro_where)
+                    res_chroma = coleccion.query(query_texts=[texto], n_results=max(top_k * 3, 10), where=filtro_where)
             except Exception:
                 res_chroma = None
 
             if not res_chroma or not res_chroma.get("ids") or len(res_chroma["ids"][0]) == 0:
-                res_chroma = coleccion.query(query_texts=[texto], n_results=max(top_k, 3))
+                res_chroma = coleccion.query(query_texts=[texto], n_results=max(top_k * 3, 10))
 
             if res_chroma and res_chroma.get("metadatas") and len(res_chroma["metadatas"][0]) > 0:
                 metas = res_chroma["metadatas"][0]
@@ -221,6 +221,24 @@ def buscar_solucion(
 
                 for meta, doc_texto, dist in zip(metas, docs, dists):
                     doc_id = meta.get("documento", "DOC-01")
+
+                    # Filtros de consistencia y prevención de falsos positivos léxicos:
+                    # 1. DOC-14 (Corte por mora / Canales de pago): Solo si el usuario menciona facturación, cobros o deudas
+                    if doc_id == "DOC-14":
+                        terminos_pago = ["pago", "pagar", "factura", "mora", "cobro", "deuda", "suspensi", "recibo", "banco", "saldo", "cancelar", "comercial", "corte por", "dinero"]
+                        if not any(tp in texto_lower for tp in terminos_pago):
+                            continue
+
+                    # 2. DOC-09 (Rotura de fibra exterior): Solo si la consulta menciona daño físico o alarmas ópticas
+                    if doc_id == "DOC-09":
+                        terminos_fibra = ["fibra", "rotura", "corte", "los", "mordid", "colgando", "piso", "partid", "quebrad", "curvatura", "atenuaci", "camion", "camión", "arbol", "árbol", "cable roto"]
+                        if not any(tf in texto_lower for tf in terminos_fibra):
+                            continue
+
+                    # 3. DOC-15 (Matriz ITIL interna): No es un manual operativo de solución técnica para usuarios
+                    if doc_id == "DOC-15":
+                        continue
+
                     if doc_id not in docs_recuperados:
                         docs_recuperados.append(doc_id)
                         
