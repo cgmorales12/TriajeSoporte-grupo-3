@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagrama de Arquitectura y Flujo: ConectaTec - Grupo 3</title>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+            --success: #10b981;
+            --success-hover: #059669;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 12px;
+            border: 1px solid #bae6fd;
+        }
+
+        h1 {
+            font-size: 1.85rem;
+            color: #0f172a;
+            margin: 0 0 10px 0;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin: 0 0 20px 0;
+            line-height: 1.5;
+        }
+
+        .btn-toolbar {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: #ffffff;
+        }
+        .btn-success:hover {
+            background-color: var(--success-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background-color: #ffffff;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .canvas-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+            padding: 40px;
+            max-width: 1050px;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <span class="badge">TecnoAula · ConectaTec (Caso N.º 03 · Grupo 3 UNIANDES)</span>
+        <h1>¿Cómo funciona realmente el sistema por dentro?</h1>
+        <p>Flujo determinista de Triaje Inteligente, Perímetro RAG Grounded y Protocolo de Abstención (Zero-Hallucination).</p>
+    </div>
+
+    <div class="btn-toolbar">
+        <button class="btn btn-primary" onclick="descargarPNG()">
+            📥 Descargar como Imagen PNG
+        </button>
+        <button class="btn btn-success" onclick="descargarSVG()">
+            📥 Descargar como Vector SVG
+        </button>
+        <button class="btn btn-outline" onclick="copiarAlPortapapeles()">
+            📋 Copiar Imagen al Portapapeles
+        </button>
+        <a class="btn btn-outline" href="https://mermaid.live" target="_blank" rel="noopener">
+            🌐 Abrir en Mermaid Live
+        </a>
+    </div>
+
+    <div class="canvas-card" id="contenedorDiagrama">
+        <div class="mermaid" id="diagramaMermaid">
+flowchart TD
+    A["Mensaje del Usuario / Docente:<br><i>'me sale Error 400'</i> o <i>'falla de Wi-Fi'</i>"] --> B["🤖 Triaje por IA (Gemini / Groq):<br><b>Clasificación Estructurada Pydantic</b>"]
+    
+    B --> C{"¿Avería de Red ISP<br/>sustentada en Manuales?"}
+    
+    C -->|"❌ NO (Fuera de Alcance)"| D["🚨 Protocolo de Abstención<br><b>(Regla de Silencio Determinista)</b>"]
+    D --> E["Cero Alucinaciones (Zero-Hallucination):<br><b>Citas RAG = Vacías [ ]</b>"]
+    E --> F["Clasificación en Tablero Kanban:<br><b>🔘 Nivel 0 · Fuera de Alcance</b>"]
+    F --> G["💡 Orientación Transparente al Usuario:<br><i>'No corresponde a infraestructura de Internet.<br/>Acuda al soporte de su aplicación o Secretaría.'</i>"]
+    
+    C -->|"✅ SÍ (Wi-Fi, Fibra, ONT, PPPoE)"| H["📚 Motor RAG (ChromaDB Vectorial):<br><b>Búsqueda en los 15 Manuales Oficiales</b>"]
+    H --> I["Cita RAG Verificada:<br><b>DOC-XX: Paso Y exacto + URL oficial</b>"]
+    I --> J["Matriz ITIL Determinista:<br><b>Cálculo Matemático de Prioridad y SLA</b>"]
+    J --> K["Compuertas Human-in-the-Loop:<br><b>Aprobación del Operador antes de actuar</b>"]
+    
+    %% Estilos de Nodos
+    style A fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1
+    style B fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+    style C fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e
+    style D fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#991b1b
+    style E fill:#fff1f2,stroke:#f43f5e,stroke-width:2px,color:#9f1239
+    style F fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155
+    style G fill:#f8fafc,stroke:#94a3b8,stroke-width:2px,color:#475569
+    style H fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#166534
+    style I fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#065f46
+    style J fill:#fef9c3,stroke:#ca8a04,stroke-width:2px,color:#854d0e
+    style K fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#3730a3
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Seminario de Titulación: Ingeniería de Software con IA Generativa — UNIANDES 2026 · Caso N.º 03 · Grupo 3
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        function obtenerElementoSVG() {
+            return document.querySelector('#contenedorDiagrama svg');
+        }
+
+        function descargarSVG() {
+            const svg = obtenerElementoSVG();
+            if (!svg) {
+                alert('El diagrama aún se está renderizando, espere un segundo.');
+                return;
+            }
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'diagrama-funcionamiento-conectar-tec.svg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function descargarPNG() {
+            const svg = obtenerElementoSVG();
+            if (!svg) {
+                alert('El diagrama aún se está renderizando, espere un segundo.');
+                return;
+            }
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const URL_OBJ = window.URL || window.webkitURL || window;
+            const blobURL = URL_OBJ.createObjectURL(svgBlob);
+
+            const image = new Image();
+            image.onload = function () {
+                const canvas = document.createElement('canvas');
+                const scale = 2; // Alta resolución (2x)
+                canvas.width = (svg.clientWidth || 900) * scale;
+                canvas.height = (svg.clientHeight || 750) * scale;
+                const context = canvas.getContext('2d');
+                context.scale(scale, scale);
+
+                // Fondo blanco
+                context.fillStyle = '#ffffff';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+
+                context.drawImage(image, 0, 0);
+                const pngURL = canvas.toDataURL('image/png');
+
+                const link = document.createElement('a');
+                link.href = pngURL;
+                link.download = 'diagrama-funcionamiento-conectar-tec.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL_OBJ.revokeObjectURL(blobURL);
+            };
+            image.src = blobURL;
+        }
+
+        async function copiarAlPortapapeles() {
+            const svg = obtenerElementoSVG();
+            if (!svg) return;
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const URL_OBJ = window.URL || window.webkitURL || window;
+            const blobURL = URL_OBJ.createObjectURL(svgBlob);
+
+            const image = new Image();
+            image.onload = async function () {
+                const canvas = document.createElement('canvas');
+                canvas.width = svg.clientWidth || 900;
+                canvas.height = svg.clientHeight || 750;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(image, 0, 0);
+
+                canvas.toBlob(async function(blob) {
+                    try {
+                        await navigator.clipboard.write([
+                            new ClipboardItem({ 'image/png': blob })
+                        ]);
+                        alert('¡Imagen copiada al portapapeles! Ahora puedes pegarla directamente (Ctrl + V) en Word o PowerPoint.');
+                    } catch (err) {
+                        alert('Por seguridad del navegador, use el botón "Descargar como Imagen PNG".');
+                    }
+                    URL_OBJ.revokeObjectURL(blobURL);
+                }, 'image/png');
+            };
+            image.src = blobURL;
+        }
+    </script>
+</body>
+</html>

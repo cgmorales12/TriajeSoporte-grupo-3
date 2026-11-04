@@ -318,3 +318,13 @@ def ver_tablero_kanban():
     response.headers["Expires"] = "0"
     return response
 
+
+@app.get("/diagrama", tags=["Documentación y Defensa"])
+def ver_diagrama_sistema():
+    """Sirve la herramienta interactiva de visualización y descarga del diagrama de arquitectura."""
+    import os
+    from fastapi.responses import FileResponse
+    diagrama_path = os.path.join(os.path.dirname(__file__), "..", "docs", "diagrama-funcionamiento-sistema.html")
+    return FileResponse(diagrama_path)
+
+
