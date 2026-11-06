@@ -1400,6 +1400,48 @@ def test_hitl_propuesta_y_confirmacion_antes_de_derivar_cuadrilla():
     assert r_der["ticket_actualizado"]["orden_despacho_id"].startswith("ODT-FIBRA-")
 
 
+def test_metricas_fase5_dashboard_y_graficos_excel():
+    """
+    Valida los requerimientos de la Fase 5 (Sustentación y Comunicación de Resultados):
+    1. Endpoint /v1/metricas/fase5 con las 3 preguntas clave y cálculo matemático.
+    2. Tasa de autoatención Nivel 1 >= 70% (Meta UNIANDES).
+    3. Retorno de Inversión (ROI) con MTTR, FCR y costos.
+    4. Frontend con integración de Chart.js y lienzos interactivos tipo Excel (Anillo y Barras).
+    """
+    # 1. Verificar endpoint de métricas Fase 5
+    res = client.get("/v1/metricas/fase5")
+    assert res.status_code == 200
+    data = res.json()
+    assert "Fase 5" in data["fase"]
+    assert "indicadores_calidad" in data
+    assert "retorno_inversion_roi" in data
+    assert "regla_escalamiento" in data
+    assert "resumen_tablero_actual" in data
+
+    # 2. Verificar cumplimiento de indicadores
+    ind = data["indicadores_calidad"]
+    assert ind["cumple_meta_autoatencion"] is True
+    assert ind["tasa_autoatencion_nivel_1_pct"] >= 70.0
+    assert ind["tasa_escalamiento_presencial_pct"] > 0
+
+    # 3. Verificar ROI
+    roi = data["retorno_inversion_roi"]
+    assert roi["mttr_ia_minutos"] < roi["mttr_manual_minutos"]
+    assert roi["reduccion_tiempo_espera_pct"] >= 80.0
+    assert roi["ahorro_anual_estimado_usd"] > 10000
+
+    # 4. Verificar presencia en frontend de modal, Chart.js y canvas tipo Excel
+    res_front = client.get("/tablero")
+    assert res_front.status_code == 200
+    html = res_front.text
+    assert "modalDashboardFase5" in html
+    assert "chart.umd.min.js" in html
+    assert 'id="chartDonaAutoatencion"' in html
+    assert 'id="chartBarrasROI"' in html
+    assert "renderizarGraficosFase5" in html
+
+
+
 
 
 

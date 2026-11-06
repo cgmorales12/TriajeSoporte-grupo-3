@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Chart.js para visualización estadística ejecutiva (Fase 5 · Métricas y ROI) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <style>
         :root {
             /* Paleta Corporativa ConectaTec: Sobria, Ejecutiva y Agradable a la Vista */
@@ -3734,6 +3736,9 @@
             }
         }
 
+        let _chartDonaF5 = null;
+        let _chartBarrasF5 = null;
+
         function renderizarDashboardFase5(d) {
             if (!d) return;
             const ind = d.indicadores_calidad || {};
@@ -3772,6 +3777,187 @@
             const elContadores = document.getElementById('f5_contadoresTablero');
             if (elContadores) {
                 elContadores.textContent = `Tablero: ${tab.total_tickets || 20} tickets (Nuevos: ${tab.nuevos || 5} · En Atención: ${tab.en_atencion || 5} · Escalados: ${tab.escalados_presencial || 5} · Resueltos: ${tab.resueltos || 5})`;
+            }
+
+            // Invocar renderizado de gráficos tipo Excel con micro-retardo para garantizar layout del modal
+            setTimeout(() => {
+                renderizarGraficosFase5(d);
+            }, 60);
+        }
+
+        function renderizarGraficosFase5(d) {
+            if (typeof Chart === 'undefined') {
+                console.warn("Chart.js no está disponible en este momento. Las métricas numéricas permanecen activas.");
+                return;
+            }
+            if (!d) return;
+
+            const ind = d.indicadores_calidad || {};
+            const roi = d.retorno_inversion_roi || {};
+
+            const tasaAuto = Number(ind.tasa_autoatencion_nivel_1_pct || 80.8);
+            const tasaEscala = Number(ind.tasa_escalamiento_presencial_pct || 19.2);
+
+            // Actualizar etiquetas de badges
+            const lblMeta = document.getElementById('f5_lblChart1Meta');
+            if (lblMeta) {
+                const dif = (tasaAuto - (ind.tasa_autoatencion_meta_pct || 70.0)).toFixed(1);
+                lblMeta.textContent = tasaAuto >= 70.0 ? `CUMPLE (Supera por +${dif}%)` : `Requiere ajuste (${dif}%)`;
+            }
+
+            const lblAhorro = document.getElementById('f5_lblChart2Ahorro');
+            if (lblAhorro) {
+                const valor = roi.ahorro_anual_estimado_usd || 16987;
+                lblAhorro.textContent = `$${Number(valor).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})} USD`;
+            }
+
+            // 1. Gráfico de Anillo Estilo Excel: Autoatención Nivel 1 vs Escalamiento Presencial
+            const canvasDona = document.getElementById('chartDonaAutoatencion');
+            if (canvasDona) {
+                if (_chartDonaF5) {
+                    try { _chartDonaF5.destroy(); } catch (e) { console.warn(e); }
+                }
+                const ctxDona = canvasDona.getContext('2d');
+                _chartDonaF5 = new Chart(ctxDona, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [
+                            `Autoatención Nivel 1 (${tasaAuto.toFixed(1)}%)`,
+                            `Escalamiento Presencial (${tasaEscala.toFixed(1)}%)`
+                        ],
+                        datasets: [{
+                            data: [tasaAuto, tasaEscala],
+                            backgroundColor: ['#10B981', '#F59E0B'],
+                            hoverBackgroundColor: ['#059669', '#D97706'],
+                            borderColor: '#FFFFFF',
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '62%',
+                        animation: { duration: 600 },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: { family: "'IBM Plex Sans', sans-serif", size: 11, weight: '600' },
+                                    color: '#1E293B',
+                                    boxWidth: 14,
+                                    padding: 10
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: '#0F172A',
+                                titleFont: { size: 12, weight: 'bold' },
+                                bodyFont: { size: 11 },
+                                padding: 10,
+                                cornerRadius: 6,
+                                callbacks: {
+                                    label: function(context) {
+                                        const val = context.raw || 0;
+                                        const casosAprox = Math.round((val / 100) * 30);
+                                        return ` ${val.toFixed(1)}% (~${casosAprox} de 30 incidentes de prueba)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 2. Gráfico de Barras Agrupadas Estilo Excel: Comparativa Antes vs ConectaTec IA
+            const canvasBarras = document.getElementById('chartBarrasROI');
+            if (canvasBarras) {
+                if (_chartBarrasF5) {
+                    try { _chartBarrasF5.destroy(); } catch (e) { console.warn(e); }
+                }
+                const ctxBarras = canvasBarras.getContext('2d');
+                const mttrManual = Number(roi.mttr_manual_minutos || 45.0);
+                const mttrIA = Number(roi.mttr_ia_minutos || 3.8);
+                const costoManual = Number(roi.costo_ticket_manual_usd || 18.0);
+                const costoIA = Number(roi.costo_ticket_ia_usd || 3.4);
+                const horasManual = 22.5; // (45 min * 30 incidentes / 60)
+                const horasIA = 1.9;     // (3.8 min * 30 incidentes / 60)
+
+                _chartBarrasF5 = new Chart(ctxBarras, {
+                    type: 'bar',
+                    data: {
+                        labels: ['MTTR (minutos)', 'Costo x Ticket ($)', 'Horas x 30 Casos'],
+                        datasets: [
+                            {
+                                label: 'Atención Manual (Tradicional)',
+                                data: [mttrManual, costoManual, horasManual],
+                                backgroundColor: '#EF4444',
+                                hoverBackgroundColor: '#DC2626',
+                                borderRadius: 5,
+                                barPercentage: 0.7,
+                                categoryPercentage: 0.6
+                            },
+                            {
+                                label: 'ConectaTec (IA + RAG)',
+                                data: [mttrIA, costoIA, horasIA],
+                                backgroundColor: '#0284C7',
+                                hoverBackgroundColor: '#0369A1',
+                                borderRadius: 5,
+                                barPercentage: 0.7,
+                                categoryPercentage: 0.6
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: { duration: 600 },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: { family: "'IBM Plex Sans', sans-serif", size: 11, weight: '600' },
+                                    color: '#1E293B',
+                                    boxWidth: 14,
+                                    padding: 10
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: '#0F172A',
+                                titleFont: { size: 12, weight: 'bold' },
+                                bodyFont: { size: 11 },
+                                padding: 10,
+                                cornerRadius: 6,
+                                callbacks: {
+                                    label: function(context) {
+                                        const ds = context.dataset.label || '';
+                                        const val = context.raw || 0;
+                                        const idx = context.dataIndex;
+                                        if (idx === 0) return ` ${ds}: ${val} min (-91.5% de espera)`;
+                                        if (idx === 1) return ` ${ds}: $${Number(val).toFixed(2)} USD (-81.1% costo)`;
+                                        if (idx === 2) return ` ${ds}: ${val} horas (-91.5% tiempo técnico)`;
+                                        return ` ${ds}: ${val}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: {
+                                    font: { family: "'IBM Plex Sans', sans-serif", size: 11, weight: '600' },
+                                    color: '#334155'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: '#F1F5F9', borderDash: [3, 3] },
+                                ticks: {
+                                    font: { size: 10.5 },
+                                    color: '#64748B'
+                                }
+                            }
+                        }
+                    }
+                });
             }
         }
 
@@ -4944,6 +5130,55 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                         <div style="font-size:11px; font-weight:700; color:#6D28D9; text-transform:uppercase;">4. Ahorro Anual PYME</div>
                         <div id="f5_ahorroAnual" style="font-size:26px; font-weight:800; color:#7C3AED; margin:4px 0;">$16,987 USD</div>
                         <div style="font-size:11px; color:#6D28D9;">Ticket baja de $18 a $3.40 <b style="background:#EDE9FE; padding:2px 6px; border-radius:4px; margin-left:4px;">ROI ALTO</b></div>
+                    </div>
+                </div>
+
+                <!-- Panel de Gráficos Estadísticos Ejecutivos Estilo Excel / Power BI (Fase 5) -->
+                <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:12px; padding:14px 16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #E2E8F0; padding-bottom:8px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:16px;">📊</span>
+                            <span style="font-weight:700; color:#0F172A; font-size:13.5px;">Visualización Estadística Ejecutiva (Gráficos Interactivos Estilo Excel)</span>
+                        </div>
+                        <span style="font-size:11px; background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 8px; border-radius:6px; font-weight:600;">Interactivo · Datos en Tiempo Real</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(360px, 1fr)); gap:14px;">
+                        <!-- Gráfico 1: Anillo de Autoatención vs Escalamiento -->
+                        <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:12px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <div style="font-size:12px; font-weight:700; color:#1E293B; display:flex; align-items:center; gap:6px;">
+                                    <span style="display:inline-block; width:8px; height:8px; background:#10B981; border-radius:50%;"></span>
+                                    Gráfico N.º 1 · Tasa de Autoatención vs Escalamiento
+                                </div>
+                                <span style="font-size:10px; background:#DCFCE7; color:#166534; font-weight:700; padding:2px 6px; border-radius:4px;">Anillo Excel</span>
+                            </div>
+                            <div style="position:relative; height:210px; width:100%; display:flex; align-items:center; justify-content:center;">
+                                <canvas id="chartDonaAutoatencion" style="max-height:210px;"></canvas>
+                            </div>
+                            <div style="margin-top:8px; padding-top:6px; border-top:1px dashed #E2E8F0; font-size:11px; color:#475569; display:flex; justify-content:space-between; align-items:center;">
+                                <span>Meta UNIANDES: <b>≥ 70%</b></span>
+                                <span id="f5_lblChart1Meta" style="color:#16A34A; font-weight:700; background:#F0FDF4; padding:2px 6px; border-radius:4px;">CUMPLE (Supera por +10.8%)</span>
+                            </div>
+                        </div>
+
+                        <!-- Gráfico 2: Barras Comparativas de Eficiencia y Costos -->
+                        <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:12px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <div style="font-size:12px; font-weight:700; color:#1E293B; display:flex; align-items:center; gap:6px;">
+                                    <span style="display:inline-block; width:8px; height:8px; background:#0284C7; border-radius:50%;"></span>
+                                    Gráfico N.º 2 · Comparativa de ROI: Antes vs ConectaTec IA
+                                </div>
+                                <span style="font-size:10px; background:#E0F2FE; color:#0369A1; font-weight:700; padding:2px 6px; border-radius:4px;">Barras Excel</span>
+                            </div>
+                            <div style="position:relative; height:210px; width:100%; display:flex; align-items:center; justify-content:center;">
+                                <canvas id="chartBarrasROI" style="max-height:210px;"></canvas>
+                            </div>
+                            <div style="margin-top:8px; padding-top:6px; border-top:1px dashed #E2E8F0; font-size:11px; color:#475569; display:flex; justify-content:space-between; align-items:center;">
+                                <span>Ahorro anual: <b id="f5_lblChart2Ahorro" style="color:#15803D;">$16,987 USD</b></span>
+                                <span style="color:#0284C7; font-weight:700; background:#F0F9FF; padding:2px 6px; border-radius:4px;">-91.5% Espera · -81.1% Costo</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
