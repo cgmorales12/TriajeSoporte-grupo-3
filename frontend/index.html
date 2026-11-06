@@ -791,6 +791,21 @@
             height: 15px;
             line-height: 15px;
         }
+        .cita-label-solucion {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: #1E3A8A;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            height: 15px;
+            line-height: 15px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .cita-fragmento {
             font-style: italic;
             color: #334155 !important;
@@ -2040,6 +2055,9 @@
         body.dark-theme .cita-paso {
             color: #60A5FA !important;
         }
+        body.dark-theme .cita-label-solucion {
+            color: #93C5FD !important;
+        }
         body.dark-theme .cita-fragmento {
             background: #080D1A !important;
             border-color: #1C2B47 !important;
@@ -2801,6 +2819,7 @@
                     </div>
                     <div class="cita-doc" title="No corresponde a avería en infraestructura tecnológica">⚠️ No corresponde a soporte de TI</div>
                     <div class="cita-paso">📍 <b>Canal sugerido:</b> Recursos Humanos / Administración</div>
+                    <div class="cita-label-solucion">💡 <b>Respuesta y Soluciones:</b></div>
                     <div class="cita-fragmento" title="${escaparTextoHtml(descFuera)}">«${descFuera}»</div>
                     <div class="cita-footer">
                         <span class="link-fuente" style="color:#64748B !important;">🛡️ Mesa TI PYME</span>
@@ -2837,6 +2856,7 @@
                     </div>
                     <div class="cita-doc" title="${docId}: ${titLimpio}"><b>${docId}:</b> ${titLimpio}</div>
                     <div class="cita-paso" title="${pasoLimpio}">📍 <b>Paso:</b> ${pasoLimpio}</div>
+                    <div class="cita-label-solucion">💡 <b>Respuesta y Soluciones:</b></div>
                     <div class="cita-fragmento" title="${escaparTextoHtml(fragLimpio)}">«${fragCorto}»</div>
                     <div class="cita-footer">
                         ${urlLink}
@@ -2852,6 +2872,7 @@
                     </div>
                     <div class="cita-doc" title="RAG con umbral de abstención activado o contingencia">RAG con umbral de contingencia</div>
                     <div class="cita-paso">📍 <b>Derivación:</b> Diagnóstico presencial</div>
+                    <div class="cita-label-solucion">💡 <b>Respuesta y Soluciones:</b></div>
                     <div class="cita-fragmento" title="${escaparTextoHtml(descEscalado)}">«${descEscalado}»</div>
                     <div class="cita-footer">
                         <span class="link-fuente" style="color:#B45309 !important;">🚚 ODT Soporte</span>
@@ -2867,6 +2888,7 @@
                     </div>
                     <div class="cita-doc" title="Mesa de Ayuda TIC para PYMEs">Mesa de Ayuda TIC PYME</div>
                     <div class="cita-paso">📍 <b>Procedimiento:</b> Triaje N1</div>
+                    <div class="cita-label-solucion">💡 <b>Respuesta y Soluciones:</b></div>
                     <div class="cita-fragmento" title="${escaparTextoHtml(descGuia)}">«${descGuia}»</div>
                     <div class="cita-footer">
                         <span class="link-fuente">📄 Guía ConectaTec</span>
