@@ -111,7 +111,7 @@ def test_tool_clasificar_solicitud_caso():
 
     # Verificación extra='forbid'
     with pytest.raises(ValidationError):
-        ParamsClasificar(**{"solicitud": "problema wifi", "inyeccion_no_permitida": "malware"})
+        ParamsClasificar.model_validate({"solicitud": "problema wifi", "inyeccion_no_permitida": "malware"})
 
 
 def test_tool_buscar_solucion_chromadb_caso():
@@ -214,7 +214,7 @@ def test_tool_buscar_procedimiento_rag_exito_y_esquema():
 def test_tool_buscar_procedimiento_rag_rechazo_extra_forbid():
     """Valida que ParamsBuscarProcedimientoRAG rechace campos no declarados (OWASP extra='forbid')."""
     with pytest.raises(ValidationError) as exc_info:
-        ParamsBuscarProcedimientoRAG(**{
+        ParamsBuscarProcedimientoRAG.model_validate({
             "consulta": "consulta técnica válida",
             "parametro_malicioso_inyectado": "bypass_test"  # Inyección indebida
         })
@@ -268,7 +268,7 @@ def test_tool_consultar_estado_nodo_telemetria():
 
     # Verificación extra='forbid'
     with pytest.raises(ValidationError):
-        ParamsConsultarEstadoNodo(**{"nodo_id": "NODO-CENTRAL", "hack": "drop database"})
+        ParamsConsultarEstadoNodo.model_validate({"nodo_id": "NODO-CENTRAL", "hack": "drop database"})
 
 
 # Tool 4: Registro Determinista de Ticket en Kanban
@@ -337,7 +337,7 @@ def test_tool_consultar_tarifas_repuestos_desacoplada():
 
     # Rechazo extra_forbid
     with pytest.raises(ValidationError):
-        ParamsConsultarTarifasRepuestos(**{"codigo_o_categoria": "EQ-ONT-GPON-W6", "descuento_secreto": 0.50})
+        ParamsConsultarTarifasRepuestos.model_validate({"codigo_o_categoria": "EQ-ONT-GPON-W6", "descuento_secreto": 0.50})
 
 
 # Tool 7: Consulta de Calendario Operativo y Feriados (config/calendario.json)

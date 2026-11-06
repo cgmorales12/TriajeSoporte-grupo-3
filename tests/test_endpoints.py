@@ -942,13 +942,13 @@ def test_agente_herramientas_esquemas_pydantic_extra_forbid():
 
     # 2. Comprobar que extra='forbid' rechaza parámetros no autorizados
     with pytest.raises(ValidationError):
-        ParamsBuscarProcedimientoRAG(consulta="luz roja huawei", parametro_espurio="intento_inyeccion")
+        ParamsBuscarProcedimientoRAG.model_validate({"consulta": "luz roja huawei", "parametro_espurio": "intento_inyeccion"})
 
     with pytest.raises(ValidationError):
-        ParamsCalcularPrioridadITIL(impacto="Alto", urgencia="Alta", parametro_maligno=123)
+        ParamsCalcularPrioridadITIL.model_validate({"impacto": "Alto", "urgencia": "Alta", "parametro_maligno": 123})
 
     with pytest.raises(ValidationError):
-        ParamsConsultarEstadoNodo(nodo_id="NODO-CENTRAL", drop_database=True)
+        ParamsConsultarEstadoNodo.model_validate({"nodo_id": "NODO-CENTRAL", "drop_database": True})
 
 
 def test_agente_implementacion_determinista_herramientas():
