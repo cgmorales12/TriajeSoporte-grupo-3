@@ -173,6 +173,23 @@ Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquem
 
 ---
 
+### Pregunta 9: *«¿Por qué el endpoint `/health` nunca debe invocar al modelo LLM?»*
+* **Respuesta del Equipo:**  
+  *«Porque `/health` es una sonda de vitalidad operacional (liveness probe). Su único propósito es verificar si el servidor web, el runtime de Python y el microcontenedor están activos («estoy viva»). Si `/health` realizara una llamada a Google Gemini o Groq y la API externa sufriera latencia, timeout, cuota 429 o una caída temporal 503, la plataforma de orquestación en la nube (Render, Cloud Run, Kubernetes) asumiría erróneamente que la aplicación entera colapsó y reiniciaría en bucle el contenedor, destruyendo la disponibilidad del servicio. Además, invocar al modelo en `/health` provocaría un consumo continuo e innecesario de tokens. En nuestra arquitectura, `/health` nunca invoca al LLM y responde inmediatamente en milisegundos con `{"status": "ok"}`.»*
+* **Archivos de respaldo:** [app/routers/salud.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/routers/salud.py) y [app/main.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/main.py).
+
+---
+
+### Pregunta 10: *«¿Dónde viven los datos en el contenedor y qué vería el usuario si desplegamos dos copias de la app, cada una con su propio SQLite?»*
+* **Respuesta del Equipo:**  
+  *«Bajo la premisa de que 'el contenedor nace limpio en cada arranque', clasificamos los datos en tres niveles arquitectónicos:  
+  1. **Datos de solo lectura:** El índice vectorial de ChromaDB (`data/chroma/`), los 15 manuales técnicos (`data/raw/`) y la configuración ITIL (`config/`) se empaquetan dentro de la imagen Docker en el build (`COPY . .`), garantizando que la aplicación esté lista para resolver consultas desde el primer segundo sin descargas externas.  
+  2. **Datos transaccionales efímeros del MVP:** La base SQLite (`data/conectatec.db`) corre en disco local con réplica única (`replicas: 1`), aceptando su reinicio limpio para garantizar costo cero y latencia menor a 1ms.  
+  **Si desplegáramos dos copias (réplicas concurrentes) cada una con su propio SQLite:** El usuario experimentaría **inconsistencia de datos (Split-Brain / Estado Fragmentado)**. Si un colaborador crea un ticket en la Réplica A y al recargar la página el balanceador lo envía a la Réplica B, el ticket no aparecerá porque la base de B es un archivo local independiente. Por ello, la evolución a producción multi-instancia horizontal exige desacoplar SQLite hacia una base de datos externa gestionada (PostgreSQL / Supabase) o volumen persistente compartido, decisión formalmente documentada en el ADR-004.»*
+* **Archivos de respaldo:** [docs/09-decisiones/ADR-004-sqlite-persistencia-local.md](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/docs/09-decisiones/ADR-004-sqlite-persistencia-local.md), [Dockerfile](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/Dockerfile) y [app/database.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/database.py).
+
+---
+
 ##  3. Matriz de Trazabilidad: Concepto Teórico vs. Archivo en el Repositorio
 
 | Concepto Evaluado por el Tribunal | Archivo Principal de Implementación | Justificación Técnica Breve |
