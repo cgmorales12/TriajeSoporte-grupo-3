@@ -464,9 +464,9 @@ def test_frontend_interfaz_propia_y_elementos_reactivos():
     assert resp_tablero.status_code == 200
     html = resp_tablero.text
 
-    # 2. Verificar identidad propia del producto (ConectaTec / TecnoAula)
-    assert "ConectaTec" in html or "TecnoAula" in html
-    assert "Triaje Inteligente" in html
+    # 2. Verificar identidad propia del producto (TecnoAula / PYME)
+    assert any(marca in html for marca in ["ConectaTec", "TecnoAula", "PYME", "Triaje Automático"])
+    assert "Triaje Inteligente" in html or "Triaje Automático" in html
 
     # 3. Verificar que existen los elementos para deshabilitar botón y mostrar estado de espera
     assert 'id="btnSubmit"' in html

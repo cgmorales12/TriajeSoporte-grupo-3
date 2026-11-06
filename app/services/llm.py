@@ -47,23 +47,23 @@ PATRON_PASSWORD = re.compile(
     re.IGNORECASE
 )
 
-SYSTEM_PROMPT = """Eres el analista de soporte técnico y triaje inteligente de ConectaTec ISP (Caso 03).
-Tu función es clasificar las incidencias reportadas por los clientes en formato JSON estricto.
+SYSTEM_PROMPT = """Eres el analista de soporte técnico y triaje inteligente de la Mesa de Ayuda TIC para una PYME (Caso 03).
+Tu función es clasificar las incidencias reportadas por los colaboradores en formato JSON estricto.
 
 Debes extraer exactamente los siguientes campos:
 {
-  "categoria": "Equipos de Cliente / ONT | Conectividad y Fibra Óptica | Redes Inalámbricas y Wi-Fi | Calidad y Velocidad | Facturacion y Cuentas | Solicitud No Técnica / Fuera de Alcance",
+  "categoria": "Accesos y Contraseñas | Red y Conectividad | Impresoras y Periféricos | Carpetas Compartidas | Software y Sistema Contable | Hardware y Equipos | Políticas y Seguridad | Solicitud No Técnica / Fuera de Alcance",
   "impacto": "Alto | Medio | Bajo",
   "urgencia": "Alta | Media | Baja",
-  "sintomas_detectados": ["lista", "de", "luces", "o", "fallos"],
+  "sintomas_detectados": ["lista", "de", "síntomas", "o", "fallos"],
   "justificacion": "Explicación técnica concisa"
 }
 
 Reglas de negocio:
-1. Si se menciona corte total de servicio, luz LOS roja en la ONT o corte de fibra, Impacto=Alto y Urgencia=Alta.
-2. Si se menciona lentitud o mala cobertura en habitaciones lejanas, Impacto=Medio y Urgencia=Media.
-3. Si se solicita cambio de clave Wi-Fi o consulta de pago, Impacto=Bajo y Urgencia=Baja.
-4. Si la solicitud NO contiene una avería ni problema técnico de conectividad o telecomunicaciones (ej. preguntas ajenas como 'porque no llueve', clima, comida, saludos aislados o bromas), clasifica en categoria="Solicitud No Técnica / Fuera de Alcance", Impacto="Bajo", Urgencia="Baja" y explica en justificacion que la consulta no corresponde al soporte del ISP.
+1. Si se menciona caída de servidor central SMB, bloqueo total de ERP o caída general de red, Impacto=Alto y Urgencia=Alta.
+2. Si se menciona impresora de red departamental atascada, VPN no conecta o lentitud de red, Impacto=Medio y Urgencia=Media.
+3. Si se solicita desbloqueo de contraseña Active Directory, Outlook o segundo monitor, Impacto=Bajo y Urgencia=Baja.
+4. Si la solicitud NO contiene una avería ni problema técnico de soporte TIC (ej. recetas, comida, clima, bromas o trámites ajenos), clasifica en categoria="Solicitud No Técnica / Fuera de Alcance", Impacto="Bajo", Urgencia="Baja" y explica en justificacion que la consulta no corresponde al soporte TIC de la empresa.
 5. Responde ÚNICAMENTE el objeto JSON sin bloques Markdown adicionales ni texto antes o después.
 """
 
@@ -856,7 +856,9 @@ class ClienteLLM:
             "luz", "luces", "pon", "los", "lan", "wlan", "clave", "contraseña", "password",
             "lento", "lentitud", "velocidad", "mbps", "ping", "dns", "ip", "mora", "factura",
             "pago", "servicio", "conectar", "conecta", "navegar", "navego", "pagina", "puerto",
-            "pppoe", "señal", "enlace", "desconexión", "intermitente", "caida", "caída"
+            "pppoe", "señal", "enlace", "desconexión", "intermitente", "caida", "caída",
+            "active directory", "windows", "impresora", "vpn", "erp", "smb", "nas", "outlook",
+            "correo", "pantalla", "bloqueado", "bloqueada", "usuario", "periférico", "docking"
         ]
         if not any(k in t for k in palabras_tecnicas):
             return ClasificacionIA(

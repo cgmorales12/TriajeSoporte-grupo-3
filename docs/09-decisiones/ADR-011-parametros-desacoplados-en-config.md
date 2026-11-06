@@ -3,12 +3,12 @@
 **Fecha:** Octubre 2026  
 **Autores:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
 **Docente Evaluador:** Heyler Fabio Guaza (Ing. Informático · Mg. en Ciberseguridad · OPD · Abogado)  
-**Proyecto:** ConectaTec / TecnoAula — Triaje de Incidentes Técnicos (Caso N.º 03 · Grupo 3 UNIANDES)  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)  
 
 ---
 
 ## 1. Contexto y Problema
-En el despliegue de sistemas inteligentes para soporte técnico de ISP e instituciones educativas, confluyen normativas laborales, regulatorias y comerciales:
+En el despliegue de sistemas inteligentes para soporte microinformático de PYMEs, confluyen normativas laborales, regulatorias y comerciales:
 1. **Salario Básico Unificado (SBU):** En Ecuador, el SBU es decretado anualmente por el Ministerio del Trabajo ($482.00 USD para 2026) y sirve de base legal para cuantificar sanciones contractuales por indisponibilidad de servicio o incumplimiento de Acuerdos de Nivel de Servicio (SLA).
 2. **Tarifario de Equipamiento y Mano de Obra:** Los costos de reposición de terminales de red (ONT GPON Wi-Fi 6, routers Mesh, cordones de fibra SC/APC, cable drop monomodo) y las tarifas de hora técnica presencial están sujetos a fluctuaciones comerciales y aprobaciones de ARCOTEL.
 3. **Calendario y Turnos de Soporte:** La Ley de Feriados del Ecuador y el Código del Trabajo fijan descansos obligatorios que suspenden el cómputo de horas hábiles para incidentes ordinarios (P2, P3, P4), mientras que las averías críticas (P1 masivos) se atienden en guardia ininterrumpida 24/7 los 365 días del año.

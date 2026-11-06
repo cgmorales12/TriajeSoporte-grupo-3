@@ -1,4 +1,4 @@
-# Manual Técnico y de Despliegue · TecnoAula
+# Manual Técnico y de Despliegue · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 **Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda PYME: FastAPI, RAG ChromaDB, SQLite y Resiliencia**
 
 ---

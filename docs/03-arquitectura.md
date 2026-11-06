@@ -1,5 +1,5 @@
-# Arquitectura de Software ConectaTec (Modelo C4)
-**Proyecto:** ConectaTec — Mesa de Ayuda Inteligente para Proveedores de Servicios de Internet (ISP)  
+# Arquitectura de Software — Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Modelo C4)
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (60 Colaboradores)  
 **Seminario de Titulación:** Ingeniería de Software con IA Generativa — UNIANDES (2026)  
 **Integrantes:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
 **Docente Evaluador:** Heyler Fabio Guaza  
@@ -9,24 +9,24 @@
 
 ## 1. Nivel 1: Diagrama de Contexto del Sistema (System Context)
 
-El diagrama de contexto ilustra la posición de **ConectaTec** en su ecosistema operativo, delimitando a los usuarios que interactúan con la plataforma y los sistemas externos con los que se integra.
+El diagrama de contexto ilustra la posición de la **Plataforma de Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME** en su ecosistema operativo, delimitando a los usuarios que interactúan con la plataforma y los sistemas externos con los que se integra.
 
 ```mermaid
 flowchart TD
     subgraph Actores_Humanos["Usuarios y Operadores"]
-        C["👤 Cliente / Usuario Final<br/><i>(Docente, Administrativo, Abonado ISP)</i><br/>Reporta incidencias, consulta diagnósticos y chatea."]
-        T["👷 Técnico de Soporte N1 / N2<br/><i>(Personal de Cuadrilla o Mesa)</i><br/>Visualiza tablero Kanban, actualiza estados y ejecuta soluciones."]
-        O["👨‍💼 Supervisor de Mesa de Ayuda<br/><i>(Coordinador de Operaciones)</i><br/>Supervisa SLA, reasigna tickets y audita métricas de IA."]
+        C["👤 Colaborador / Usuario Final<br/><i>(Contabilidad, Ventas, RRHH, Operaciones)</i><br/>Reporta incidencias, consulta diagnósticos y guías."]
+        T["👷 Técnico de Soporte TIC<br/><i>(Mesa de Ayuda y Soporte Presencial)</i><br/>Visualiza tablero Kanban, actualiza estados y ejecuta soluciones."]
+        O["👨‍💼 Supervisor de Mesa de Ayuda TIC<br/><i>(Coordinador de Operaciones)</i><br/>Supervisa SLA, reasigna tickets y audita métricas de IA."]
     end
 
-    subgraph Sistema_ConectaTec["Sistema Central"]
-        CT["🖥️ Plataforma ConectaTec<br/><b>Mesa de Ayuda Inteligente ISP</b><br/>Triaje automatizado, priorización ITIL determinista,<br/>RAG con citas de manuales y tablero de tickets."]
+    subgraph Sistema_Triaje["Sistema Central"]
+        CT["🖥️ Plataforma de Triaje TIC<br/><b>Soporte Tecnológico para PYMEs (60 Colaboradores)</b><br/>Triaje automatizado, priorización ITIL determinista,<br/>RAG con citas de manuales y tablero de tickets."]
     end
 
     subgraph Sistemas_Externos["Servicios Externos y Proveedores"]
-        GEMINI["☁️ Google Gemini API<br/><i>(Modelo Primario: Gemini 1.5 Flash)</i><br/>Inferencia estructurada, context caching y streaming."]
+        GEMINI["☁️ Google Gemini API<br/><i>(Modelo Primario: Gemini 3.5 Flash)</i><br/>Inferencia estructurada, context caching y streaming."]
         GROQ["⚡ Groq Cloud API<br/><i>(Modelo de Respaldo: Llama 3.3 70B)</i><br/>Failover de ultra baja latencia ante fallas 429/503."]
-        CHROMA["📚 Corpus de Manuales RAG<br/><i>(15 Documentos Técnicos ISP)</i><br/>ChromaDB / Búsqueda semántica de procedimientos."]
+        CHROMA["📚 Corpus de Manuales RAG<br/><i>(15 Manuales Técnicos PYME)</i><br/>ChromaDB / Búsqueda semántica de procedimientos."]
         SMTP["✉️ Servidor SMTP / Notificaciones<br/><i>(Simulación de Correo)</i><br/>Envío de confirmaciones de tickets y alertas SLA."]
     end
 
@@ -208,7 +208,7 @@ classDiagram
 ```mermaid
 sequenceDiagram
     autonumber
-    actor U as Docente / Cliente
+    actor U as Colaborador / Usuario
     participant FE as Frontend Web
     participant BE as FastAPI (/clasificar)
     participant SEC as Sanitizador LOPDP
@@ -217,14 +217,14 @@ sequenceDiagram
     participant RAG as rag.py
     participant DB as SQLite (database.py)
 
-    U->>FE: Ingresa reporte de avería y presiona "Diagnosticar e Iniciar Triaje"
+    U->>FE: Ingresa reporte de avería y presiona "Clasificar con IA y Crear Ticket"
     FE->>FE: Deshabilita botón, muestra spinner y animación de espera
     FE->>BE: POST /clasificar {descripcion: "...", remitente: "..."}
     BE->>SEC: sanitizar_entrada(descripcion)
     SEC-->>BE: Texto limpio (contraseñas reemplazadas por [CONFIDENCIAL_REMOVIDO])
     BE->>LLM: clasificar(texto_limpio)
-    LLM->>LLM: Intento 1: Google Gemini 1.5 Flash
-    LLM-->>BE: TicketClasificado {categoria: "fibra_optica", impacto: "Alto", urgencia: "Alta"}
+    LLM->>LLM: Intento 1: Google Gemini 3.5 Flash
+    LLM-->>BE: TicketClasificado {categoria: "Accesos y Contraseñas", impacto: "Medio", urgencia: "Alta"}
     BE->>ITIL: calcular_prioridad_y_sla("Alto", "Alta")
     ITIL-->>BE: {prioridad: "Alta", tiempo_sla_minutos: 120}
     BE->>RAG: buscar_citas(descripcion, categoria)

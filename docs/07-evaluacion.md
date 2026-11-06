@@ -1,5 +1,5 @@
 # Informe Integral de Evaluación de Calidad del Sistema
-**Proyecto:** TecnoAula / ConectaTec — Triaje y Resolución Inteligente de Incidencias Técnicas  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME  
 **Caso Asignado:** Caso N.º 03 · Grupo 3 UNIANDES  
 **Seminario de Titulación:** Ingeniería de Software con IA Generativa — UNIANDES (Octubre – Noviembre 2026)  
 **Integrantes del Grupo 3:**  
@@ -14,7 +14,7 @@
 
 ## 1. Resumen Ejecutivo y Marco Metodológico de Calidad
 
-Este informe documenta la evaluación empírica del sistema **TecnoAula / ConectaTec**, diseñado para el soporte técnico inteligente y triaje determinista de incidencias en instituciones educativas e ISP.
+Este informe documenta la evaluación empírica del sistema **Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME**, diseñado para el soporte microinformático inteligente y triaje determinista de incidencias en empresas de servicios (60 colaboradores).
 
 Bajo la directriz fundamental de la cátedra:
 > ***«El modelo propone, el código dispone, la configuración gobierna, el humano autoriza.»***

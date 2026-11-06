@@ -1,5 +1,5 @@
-# Catálogo Versionado de Prompts · ConectaTec
-**Sistema de Triaje Inteligente de Incidentes ISP (Caso N.º 03 · Grupo 3 UNIANDES)**  
+# Catálogo Versionado de Prompts · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)  
 **Estructura:** Método R.E.C.E.T.A. con Delimitación Semántica `<solicitud>` y Salida JSON Pydantic.
 
 ---
@@ -11,15 +11,15 @@ El sistema cuenta con un catálogo de **3 versiones probadas** que documentan la
 | Versión | Archivo Físico | Rol Asignado | Tono | Restricciones Principales | Instrucción de Abstención (Cero Alucinación) |
 | :---: | :--- | :--- | :--- | :--- | :--- |
 | **v1.0** | `app/prompts/system_v1.md` | Analista de soporte nivel 1 | Formal, conciso y neutral | Formato JSON plano sin bloques markdown | Ante ambigüedad, clasificar en "Atención General" sin suponer averías |
-| **v2.0** | `app/prompts/system_v2.md` | Especialista senior de triaje GPON | Profesional, directo y analítico | 5 categorías cerradas ITIL y reglas fijas de impacto/urgencia | Ante temas ajenos, clasificar en "Fuera de Alcance" y abstenerse de inventar |
-| **v3.0** | `app/prompts/system_v3.md` | Analista senior de triaje y diagnóstico | Riguroso, sobrio, empático y técnico | Delimitación `<solicitud>`, validación Pydantic `extra="forbid"`, anti-inyección | **Inviolable:** Prohibido inventar manuales o causas; abstención y derivación humana obligatoria |
+| **v2.0** | `app/prompts/system_v2.md` | Especialista senior de triaje TIC | Profesional, directo y analítico | Categorías cerradas ITIL y reglas fijas de impacto/urgencia | Ante temas ajenos, clasificar en "Fuera de Alcance" y abstenerse de inventar |
+| **v3.0** | `app/prompts/system_v3.md` | Analista senior de triaje y diagnóstico TIC | Riguroso, sobrio, empático y técnico | Delimitación `<solicitud>`, validación Pydantic `extra="forbid"`, anti-inyección | **Inviolable:** Prohibido inventar manuales o causas; abstención y derivación humana obligatoria |
 
 ---
 
 ### 1.1. Versión 1 (`app/prompts/system_v1.md`)
 * **Propósito:** Línea base funcional para probar la extracción inicial de JSON y formato de salida.
 * **Criterios Clave:**
-  - **Rol:** Analista nivel 1 de ConectaTec ISP.
+  - **Rol:** Analista nivel 1 de soporte microinformático TIC para PYME.
   - **Tono:** Formal y neutral.
   - **Restricciones:** Estructura JSON pura sin bloques markdown; el LLM nunca calcula SLA ni prioridad.
   - **Abstención:** Ante falta de síntomas claros, clasifica en "Atención General" solicitando aclaración sin inventar datos.

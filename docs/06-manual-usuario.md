@@ -1,5 +1,5 @@
-# Manual de Usuario · TecnoAula
-**Sistema de Triaje Inteligente y Mesa de Ayuda para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES)**
+# Manual de Usuario · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
+**Sistema de Triaje Inteligente y Mesa de Ayuda para Soporte Microinformático (Caso N.º 03 · Grupo 3 UNIANDES)**
 
 ---
 

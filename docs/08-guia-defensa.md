@@ -1,5 +1,5 @@
 # Guía Maestra de Defensa de Grado y Preguntas del Tribunal Evaluador
-**Proyecto:** ConectaTec / TecnoAula — Triaje y Resolución Inteligente de Incidentes para ISP e Instituciones Educativas  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)  
 **Seminario de Titulación:** Ingeniería de Software con Inteligencia Artificial Generativa  
 **Universidad Regional Autónoma de los Andes (UNIANDES)** — Octubre – Noviembre 2026  
 **Caso Asignado:** Caso N.º 03 · Grupo de Desarrollo N.º 03  

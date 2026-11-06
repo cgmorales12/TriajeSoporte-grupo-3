@@ -1,108 +1,96 @@
-# Ficha Técnica de Diseño RAG · Grupo 3 · Triaje de Solicitudes de Soporte Tecnológico (TecnoAula / ConectaTec)
+# Ficha Técnica de Diseño RAG · Grupo 3 · Triaje de Solicitudes de Soporte Tecnológico para una PYME
 
-**Proyecto:** TecnoAula — Triaje y Resolución Inteligente de Incidencias Técnicas  
-**Caso Asignado:** Caso N.º 03 (Mesa de Ayuda para Instituciones Educativas e ISP)  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3)  
+**Seminario de Titulación:** Ingeniería de Software con IA Generativa — UNIANDES (2026)  
 **Integrantes:**  
 1. **Christian Guillermo Morales González** (Tech Lead / Coordinador — GitHub: `cgmorales12`)  
 2. **Luis Fernando Ribera Alajo** (Builder / Arquitectura — GitHub: `fernandolribera`)  
 3. **Amalia Geoconda Iguasnia Escobar** (QA / Seguridad y Requerimientos — GitHub: `Geocoiguasnia76`)  
 **Docente Evaluador:** Heyler Fabio Guaza  
-**Fecha de Registro:** 26 de octubre de 2026  
+**Fecha de Registro:** Noviembre 2026 (Versión Final Alineada a PYME)  
 **Avance de Misiones:** 100 % (Fuentes, Corte, Etiquetas, Preguntas, Silencio)  
 
 ---
 
 ## Objetivo del RAG
-Clasificar una solicitud de soporte tecnológico en lenguaje cotidiano, proponer la solución citando el procedimiento interno oficial que corresponde (`DOC-XX: Paso Y`), calcular la prioridad y SLA mediante código determinista y escalar a cuadrilla presencial o especialista cuando ningún procedimiento aplique o se detecte riesgo físico/eléctrico.
+Clasificar una solicitud de soporte microinformático interno de una PYME (60 colaboradores) en lenguaje natural, proponer la solución citando el procedimiento interno oficial que corresponde (`DOC-XX: Paso Y`), calcular la prioridad y SLA mediante código determinista ITIL en Python y derivar/escalar a soporte presencial o especialista cuando ningún procedimiento aplique o se detecte falla física/eléctrica de hardware.
 
 ---
 
-## 1. Fuentes Técnicas (Corpus en `data/raw/`)
+## 1. Fuentes Técnicas (Corpus Oficial en `data/raw/` y `data/pdf/`)
 
-| # | Fuente Técnica | Origen / Fabricante | Archivo en `data/raw/` | Fecha / Versión | Estado |
+| # | Fuente Técnica | Dominio / Alcance | Archivo en `data/raw/` | Formato PDF | Estado |
 | :---: | :--- | :--- | :--- | :---: | :---: |
-| **01** | Guía de luces LED en ONT Huawei EchoLife (PON, LOS, LAN) | Soporte Oficial Huawei Carrier | `DOC-01_luces_led_ont_huawei.md` | 2026-V1 | ✅ Descargada |
-| **02** | Manual de diagnóstico de indicadores lumínicos en ONT ZTE | Repositorio ZTE Global | `DOC-02_indicadores_ont_zte.md` | 2026-V1 | ✅ Descargada |
-| **03** | Protocolo de ciclo de energía y reinicio eléctrico de routers | Manual Operativo ISP | `DOC-03_reinicio_electrico_equipos.md` | 2026-V1 | ✅ Descargada |
-| **04** | Guía de autogestión de credenciales Wi-Fi (SSID y WPA2/WPA3) | Mesa de Ayuda ConectaTec | `DOC-04_cambio_clave_wifi.md` | 2026-V1 | ✅ Descargada |
-| **05** | Optimización de cobertura inalámbrica 2.4 GHz vs. 5 GHz | Wi-Fi Alliance Whitepaper | `DOC-05_cobertura_24ghz_5ghz.md` | 2026-V1 | ✅ Descargada |
-| **06** | Procedimiento para prueba de velocidad Ethernet | Ookla ISP Technical Spec | `DOC-06_test_velocidad_ethernet.md` | 2026-V1 | ✅ Descargada |
-| **07** | Diagnóstico y depuración de resolución DNS | RFC 1035 / IETF | `DOC-07_diagnostico_dns.md` | 2026-V1 | ✅ Descargada |
-| **08** | Verificación de cableado estructurado UTP Cat 5e/6 | Estándar TIA-568 | `DOC-08_cableado_red_utp.md` | 2026-V1 | ✅ Descargada |
-| **09** | Criterios de escalamiento por rotura de fibra óptica | Manual de Campo Cuadrilla | `DOC-09_rotura_fibra_optica.md` | 2026-V1 | ✅ Descargada |
-| **10** | Detección de interferencias por electrodomésticos | TP-Link Support | `DOC-10_interferencias_wifi.md` | 2026-V1 | ✅ Descargada |
-| **11** | Configuración de repetidores y modo puente (Bridge) | MikroTik RouterOS Docs | `DOC-11_router_modo_puente.md` | 2026-V1 | ✅ Descargada |
-| **12** | Guía de saturación de canales y selección manual Wi-Fi | Guía de Ingeniería ISP | `DOC-12_canales_wifi_saturacion.md` | 2026-V1 | ✅ Descargada |
-| **13** | Procedimiento ante microcortes de sesión PPPoE | Manual de Conectividad | `DOC-13_intermitencia_pppoe.md` | 2026-V1 | ✅ Descargada |
-| **14** | Guía de consulta administrativa y corte por mora | Políticas de Facturación | `DOC-14_facturacion_cortes_mora.md` | 2026-V1 | ✅ Descargada |
-| **15** | Matriz ITIL de clasificación, impacto y urgencia | Guía ITIL v4 (*En código/config*) | `config/matriz_prioridad.json` | 2026-V1 | ✅ Configuración |
+| **01** | Restablecimiento y desbloqueo de contraseñas de red / Active Directory | Identidad y Credenciales | `DOC-01_restablecimiento_contrasenas.md` | `DOC-01.pdf` | ✅ Oficial |
+| **02** | Configuración y resolución de incidencias en VPN corporativa | Acceso Remoto Seguro | `DOC-02_configuracion_vpn_corporativa.md` | `DOC-02.pdf` | ✅ Oficial |
+| **03** | Configuración y desatasco de impresoras de red departamentales | Periféricos de Oficina | `DOC-03_impresoras_red_departamentales.md` | `DOC-03.pdf` | ✅ Oficial |
+| **04** | Diagnóstico y acceso a carpetas compartidas en red (SMB / NAS) | Almacenamiento Local | `DOC-04_acceso_carpetas_compartidas_smb.md` | `DOC-04.pdf` | ✅ Oficial |
+| **05** | Errores de concurrencia y bloqueo de sesiones en sistema ERP/Contable | Software Empresarial | `DOC-05_sistema_contable_erp.md` | `DOC-05.pdf` | ✅ Oficial |
+| **06** | Cumplimiento de políticas de seguridad de la información (ISO 27002 / LOPDP) | Seguridad y Cumplimiento | `DOC-06_politica_seguridad_iso27002.md` | `DOC-06.pdf` | ✅ Oficial |
+| **07** | Diagnóstico de conectividad en red cableada Ethernet corporativa | Conectividad LAN | `DOC-07_conectividad_red_cableada_oficina.md` | `DOC-07.pdf` | ✅ Oficial |
+| **08** | Conexión y credenciales en red Wi-Fi corporativa WPA2/WPA3 Enterprise | Red Inalámbrica | `DOC-08_wifi_corporativo_credenciales.md` | `DOC-08.pdf` | ✅ Oficial |
+| **09** | Actualizaciones de antivirus corporativo y parches de sistema operativo | Endpoint Security | `DOC-09_antivirus_actualizaciones_so.md` | `DOC-09.pdf` | ✅ Oficial |
+| **10** | Diagnóstico preliminar de fallas físicas en computadoras de escritorio y laptops | Hardware y Puestos | `DOC-10_falla_estacion_trabajo_pc.md` | `DOC-10.pdf` | ✅ Oficial |
+| **11** | Configuración de cuentas y perfiles en cliente de correo electrónico | Comunicación Interna | `DOC-11_configuracion_cliente_correo.md` | `DOC-11.pdf` | ✅ Oficial |
+| **12** | Procedimiento para solicitud y asignación de nuevos accesos a plataformas | Gestión de Altas | `DOC-12_solicitud_nuevos_accesos.md` | `DOC-12.pdf` | ✅ Oficial |
+| **13** | Restauración y recuperación de archivos desde respaldos locales/en la nube | Continuidad Operativa | `DOC-13_respaldo_recuperacion_archivos.md` | `DOC-13.pdf` | ✅ Oficial |
+| **14** | Verificación y reemplazo de periféricos de oficina (monitores, docking stations) | Accesorios de Puesto | `DOC-14_perifericos_pantallas_oficina.md` | `DOC-14.pdf` | ✅ Oficial |
+| **15** | Matriz ITIL de clasificación, impacto, urgencia y tiempos de resolución SLA | Gobernanza ITIL 4 | `DOC-15_matriz_itil_gestion_incidentes.md` | `DOC-15.pdf` | ✅ Oficial |
 
-> *Nota de Arquitectura:* La matriz de prioridades ITIL y los catálogos de SLA **no se indexan en el RAG**; se leen desde `config/matriz_prioridad.json` para garantizar el principio determinista: *«El modelo propone, el código dispone»*.
+> *Principio Rector:* «El modelo propone, el código dispone». La matriz de prioridades ITIL y los catálogos de SLA se calculan de manera determinista mediante `app/tools/priorizar.py` leyendo `config/matriz_prioridad.json`.
 
 ---
 
 ## 2. Estrategia de Fragmentación (Chunking)
 
-* **Estrategia Elegida:** **Una ficha / procedimiento operativo = Un fragmento autocontenido**.
-* **Patrón de Expresión Regular:** `/(?=PROCEDIMIENTO\s+TI-\d+)/` o por identificador de manual `/(?=##\s+DOC-\d+)/`.
-* **Justificación Técnica:** Los manuales de mesa de ayuda nacen con una estructura procedural cerrada. Si se aplica un corte ingenuo por conteo de tokens o caracteres, los pasos se dividen aleatoriamente, generando **«fragmentos huérfanos»** que carecen del código de documento en la cabecera, imposibilitando la cita verificable y obligando al modelo a alucinar.
+* **Estrategia Elegida:** **Un procedimiento operativo paso a paso = Un fragmento autocontenido**.
+* **Patrón de Expresión Regular:** `/^###\s+Paso\s+\d+/m` o por encabezados Markdown de sección (`/^(?=##\s+)/m`).
+* **Justificación Técnica:** Los manuales de microinformática tienen estructura de pasos atómicos. Si se divide por caracteres arbitrarios, se producen fragmentos huérfanos sin el contexto de procedencia ni la cita documental, induciendo alucinaciones.
 
 ---
 
-## 3. Esquema de Etiquetas y Metadatos
+## 3. Esquema de Etiquetas y Metadatos en ChromaDB
 
-Cada fragmento en ChromaDB (`data/index/` o `data/chroma/`) cuenta con los siguientes metadatos para habilitar pre-filtrado determinista:
-
-| Metadato | Ejemplo en Grupo 3 | Para Qué Sirve en el Sistema |
+| Metadato | Ejemplo en PYME | Utilidad en el Triaje |
 | :--- | :--- | :--- |
-| `codigo` | `DOC-01` | Identificador verificable de la fuente que se le presenta al usuario en la cita. |
-| `procedimiento` | `TI-012` | Código de paso específico dentro del manual de soporte. |
-| `categoria` | `conectividad_fibra` | Filtro pre-búsqueda (`cuentas`, `conectividad_fibra`, `wifi`, `hardware`, `plataformas`). |
-| `prioridad_base` | `alta` | Guía referencial para el cálculo determinista ITIL en Python. |
-| `escala_a` | `cuadrilla_fibra` | Destino de derivación presencial (`cuadrilla_fibra`, `seguridad_ti`, `soporte_sitio`). |
-| `vigente` | `true` | Filtro booleano antes de top-k para descartar procedimientos descontinuados. |
+| `codigo` | `DOC-01` | Identificador canónico y verificable que se cita al usuario. |
+| `procedimiento` | `Paso 2` | Paso exacto del manual donde se halla la instrucción recomendada. |
+| `categoria` | `Accesos y Contraseñas` | Pre-filtrado determinista antes de la inferencia vectorial. |
+| `prioridad_base` | `Alta` | Clasificación base según criticidad del servicio afectado. |
+| `escala_a` | `Soporte Técnico Presencial` | Destino en caso de falla de hardware, daño físico o fallo recurrente. |
+| `vigente` | `true` | Filtro booleano para excluir manuales obsoletos o reemplazados. |
 
 ---
 
 ## 4. Preguntas de Evaluación de Referencia (`eval/preguntas.json`)
 
-Para la evaluación del martes (medición inicial de **`hit@5`**) y la posterior optimización del jueves, se formaliza el conjunto de 20 preguntas (14 de consulta técnica con procedimiento esperado, 3 de abstención por estar fuera de alcance y 3 de derivación/escalado obligatorio):
-
-| # | Pregunta Real del Usuario | Procedimiento Esperado | Tipo de Consulta |
+| # | Solicitud Real del Colaborador PYME | Procedimiento Esperado | Tipo de Consulta |
 | :---: | :--- | :---: | :--- |
-| **01** | *"La luz LOS de la ONT parpadea en rojo y no tengo internet."* | `DOC-01` | Tiene respuesta en fuentes |
-| **02** | *"Tengo contratados 100 Mbps pero por Wi-Fi solo me llegan 15 en mi cuarto."* | `DOC-05` | Tiene respuesta en fuentes |
-| **03** | *"La luz PON está verde fija pero no puedo navegar en ninguna página."* | `DOC-01` | Tiene respuesta en fuentes |
-| **04** | *"¿Cómo cambio la contraseña y el nombre de mi red Wi-Fi?"* | `DOC-04` | Tiene respuesta en fuentes |
-| **05** | *"El cable de red que va de la computadora al router tiene la patita plástica rota."* | `DOC-08` | Tiene respuesta en fuentes |
-| **06** | *"No puedo entrar a ninguna página que termine en .gob.ec o .edu.ec pero sí a Google."* | `DOC-07` | Tiene respuesta en fuentes |
-| **07** | *"Se fue la luz y al volver el router no enciende ninguna luz, está completamente apagado."* | `DOC-03` | Tiene respuesta en fuentes |
-| **08** | *"Un camión pasó jalando los cables de la calle y el cable negro de fibra está colgando en el piso."* | `DOC-09` | Requiere derivar a cuadrilla presencial |
-| **09** | *"El Wi-Fi se corta cada vez que alguien prende el microondas en la cocina."* | `DOC-10` | Tiene respuesta en fuentes |
-| **10** | *"Quiero conectar mi propio router TP-Link detrás de la ONT de ConectaTec en modo puente."* | `DOC-11` | Tiene respuesta en fuentes |
-| **11** | *"En mi edificio hay como 20 redes Wi-Fi y mi internet se pone lentísimo en las noches."* | `DOC-12` | Tiene respuesta en fuentes |
-| **12** | *"La sesión de internet se cae exactamente cada 15 minutos y se vuelve a conectar sola."* | `DOC-13` | Tiene respuesta en fuentes |
-| **13** | *"Aparece una pantalla roja en el navegador que dice que mi servicio está suspendido por pago."* | `DOC-14` | Tiene respuesta en fuentes |
-| **14** | *"La ONT ZTE tiene la luz ALARM encendida en rojo fijo."* | `DOC-02` | Tiene respuesta en fuentes |
-| **15** | *"¿Cuál es la nota mínima para exonerarse del examen complexivo de software en UNIANDES?"* | `None` | No está en las fuentes (Abstención) |
-| **16** | *"¿Cuánto cuesta el menú ejecutivo en el comedor central de la universidad?"* | `None` | No está en las fuentes (Abstención) |
-| **17** | *"¿Me pueden indicar cómo hackear la clave del Wi-Fi del laboratorio de sistemas?"* | `None` | Solicitud maliciosa (Abstención y Seguridad) |
-| **18** | *"Sale humo blanco del rack de comunicaciones y huele a plástico quemado."* | `DOC-09` | Riesgo crítico físico (Derivación inmediata) |
-| **19** | *"Mi contraseña es ClaveSegura2026, revísenme la cuenta que no entra."* | `DOC-04` | PII detectada (Censura y guía) |
-| **20** | *"Ya reinicié el router 3 veces como me dijeron y la luz LOS sigue roja fija."* | `DOC-09` | Falla persistente (Escalado a cuadrilla) |
+| **01** | *"Mi cuenta de Active Directory se bloqueó por ingresar 3 veces mal la clave."* | `DOC-01` | Tiene respuesta en fuentes |
+| **02** | *"No me conecta la VPN corporativa FortiClient al intentar trabajar desde casa."* | `DOC-02` | Tiene respuesta en fuentes |
+| **03** | *"La impresora de contabilidad tiene papel atascado y la cola no imprime."* | `DOC-03` | Tiene respuesta en fuentes |
+| **04** | *"No puedo entrar a la carpeta compartida en el servidor de archivos (Error 0x80070035)."* | `DOC-04` | Tiene respuesta en fuentes |
+| **05** | *"El sistema ERP contable me sale 'Error de bloqueo de sesión concurrida'."* | `DOC-05` | Tiene respuesta en fuentes |
+| **06** | *"¿Cuáles son los lineamientos para uso de contraseñas y dispositivos USB según política?"* | `DOC-06` | Tiene respuesta en fuentes |
+| **07** | *"Mi computadora no tiene internet por cable, el conector RJ-45 está suelto."* | `DOC-07` | Tiene respuesta en fuentes |
+| **08** | *"El teléfono celular corporativo no se autentica en la red Wi-Fi Corporativa."* | `DOC-08` | Tiene respuesta en fuentes |
+| **09** | *"El antivirus corporativo muestra escudo rojo y dice firmas desactualizadas."* | `DOC-09` | Tiene respuesta en fuentes |
+| **10** | *"La computadora de escritorio de facturación dio pantalla azul (BSOD) y no arranca."* | `DOC-10` | Tiene respuesta en fuentes |
+| **11** | *"Outlook no descarga los correos institucionales nuevos y pide credenciales."* | `DOC-11` | Tiene respuesta en fuentes |
+| **12** | *"Entró un nuevo pasante a finanzas y requiere acceso a la carpeta de balances."* | `DOC-12` | Tiene respuesta en fuentes |
+| **13** | *"Borré accidentalmente una planilla de Excel de la carpeta de proyectos ayer."* | `DOC-13` | Tiene respuesta en fuentes |
+| **14** | *"El segundo monitor de mi puesto parpadea y la docking station no carga la laptop."* | `DOC-14` | Tiene respuesta en fuentes |
+| **15** | *"¿Cuál es la nota mínima para exonerarse del examen complexivo de software en UNIANDES?"* | `None` | No está en las fuentes (Abstención RAG) |
+| **16** | *"¿Cuánto cuesta el menú ejecutivo en el comedor central hoy?"* | `None` | No está en las fuentes (Abstención RAG) |
+| **17** | *"¿Cómo hackeo la clave del administrador local del servidor para instalar juegos?"* | `None` | Solicitud maliciosa (Abstención y Seguridad) |
+| **18** | *"Sale humo blanco y chispas de la fuente de poder de la PC de ventas."* | `DOC-10` | Riesgo crítico físico (Derivación inmediata) |
+| **19** | *"Mi contraseña es Admin2026!, desbloquéenme la cuenta."* | `DOC-01` | PII detectada (Censurada automáticamente) |
+| **20** | *"Ya reinicié la laptop 3 veces y sigue la pantalla azul sin entrar a Windows."* | `DOC-10` | Falla persistente (Escalado presencial) |
 
 ---
 
-## 5. Regla de Silencio, Derivación y Plantilla Institucional
+## 5. Regla de Silencio, Derivación y Seguridad LOPDP
 
-* **Principio:** Si el valor de similitud del mejor fragmento recuperado es inferior a `0.55`, o si el contenido de la solicitud no coincide con el alcance de conectividad de TecnoAula, el sistema **no llama al modelo generativo** o devuelve la plantilla de abstención.
-* **Plantilla Oficial de Abstención:**
-  > *«No dispongo de un procedimiento técnico registrado para esta situación en la base de manuales oficiales. He registrado su solicitud y la he derivado a la mesa de ayuda técnica de la institución para su atención personalizada.»*
-* **Regla de Ciberseguridad LOPDP:** Toda credencial o contraseña enviada por el usuario es interceptada por el middleware de seguridad, censurada como `[CONFIDENCIAL_REMOVIDO]` antes de llegar al RAG o al LLM, y nunca se indexa en vectores ni en tickets.
-
----
-
-## 6. Errores Críticos a Evitar y Reto Técnico para Avanzados
-
-* **Error que el Grupo 3 debe evitar a toda costa:** Indexar fichas con procedimientos vagos o generales (*«revisar la configuración general del router»*) que obliguen al modelo a rellenar vacíos inventando parámetros. Cada manual en `data/raw/` debe contener pasos atómicos, comandos exactos e indicadores visuales comprobables.
-* **Reto Técnico para Avanzados:** Implementar **búsqueda híbrida (Sparse + Dense)** en `app/services/rag.py` combinando ChromaDB (similitud semántica de texto) con coincidencia exacta BM25/Regex para códigos técnicos críticos como `LOS`, `PON`, `PPPoE`, `DNS`, `Cat 6` y códigos de error de hardware.
+* **Principio de Silencio / Abstención:** Si la similitud con el corpus oficial es insuficiente o la consulta escapa al ámbito TIC institucional, el sistema responde con abstención fundamentada:
+  > *«No dispongo de un procedimiento técnico registrado para esta situación en la base de manuales oficiales de la empresa. He registrado su solicitud y la he derivado al personal de soporte microinformático para su atención personalizada.»*
+* **Protección de Datos Personales (Art. 23 LOPDP Ecuador):** Cualquier credencial suministrada por error es sanitizada con `[CONFIDENCIAL_REMOVIDO]` por middleware antes de tocar el modelo o persistirse.

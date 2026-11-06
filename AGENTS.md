@@ -1,5 +1,5 @@
 # AGENTS.md · Reglas de Contexto Persistente para Asistentes y Agentes de Código
-**Proyecto:** TecnoAula — Mesa de Ayuda Inteligente para Instituciones Educativas (Caso N.º 03 · Grupo 3)  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3)  
 **Seminario de Titulación:** Ingeniería de Software con IA Generativa — UNIANDES (Octubre – Noviembre 2026)  
 **Integrantes del Grupo 3:**  
 1. **Christian Guillermo Morales González** (Tech Lead / Coordinador — GitHub: `cgmorales12`)  
@@ -11,7 +11,7 @@
 ---
 
 ## 1. Misión, Filosofía y Alcance del Proyecto
-El objetivo del Grupo 3 es construir **TecnoAula**, una aplicación web de triaje y resolución inteligente de incidencias tecnológicas para instituciones educativas (docentes, personal administrativo y técnicos).
+El objetivo del Grupo 3 es construir una plataforma web de **Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME**, para la resolución inteligente de incidencias microinformáticas de cualquier departamento (Contabilidad, Ventas, Recursos Humanos, Operaciones).
 
 ### 1.1. Principio Rector de Arquitectura
 > ***«El modelo propone, el código dispone.»***  

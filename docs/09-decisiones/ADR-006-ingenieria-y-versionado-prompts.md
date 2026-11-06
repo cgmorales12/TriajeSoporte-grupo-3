@@ -8,7 +8,7 @@ Los modelos generativos tienden a inventar procedimientos técnicos inexistentes
 
 ## Decisión
 1. Mantener tres versiones formales de prompts (`system_v1.md`, `system_v2.md`, `system_v3.md`) en `app/prompts/`.
-2. Implementar una **directiva estricta de abstención**: el prompt ordena taxativamente responder con `"requiere_revision_humana": true` y abstenerse de formular diagnósticos si la solicitud no pertenece al ámbito del ISP o carece de información suficiente.
+2. Implementar una **directiva estricta de abstención**: el prompt ordena taxativamente responder con `"requiere_revision_humana": true` y abstenerse de formular diagnósticos si la solicitud no pertenece al ámbito del soporte microinformático de la PYME o carece de información suficiente.
 3. Aislar los datos del usuario mediante delimitadores semánticos XML (`<solicitud>{texto}</solicitud>`).
 
 ## Justificación

@@ -1,7 +1,7 @@
 # Justificación del Diseño RAG y Estrategia de Fragmentación (Chunking)
 
-**Proyecto:** TecnoAula / ConectaTec — Triaje y Resolución Inteligente de Incidencias Técnicas  
-**Caso Asignado:** Caso N.º 03 (Mesa de Ayuda para Instituciones Educativas e ISP)  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME  
+**Caso Asignado:** Caso N.º 03 (Mesa de Ayuda y Soporte Microinformático TIC para PYME de 60 Colaboradores)  
 **Seminario de Titulación:** Ingeniería de Software con IA Generativa — UNIANDES (Octubre 2026)  
 **Integrantes del Grupo 3:**  
 1. **Christian Guillermo Morales González** (Tech Lead / Coordinador — GitHub: `cgmorales12`)  
@@ -15,7 +15,7 @@
 
 ## 1. Resumen Ejecutivo y Misión del Módulo RAG
 
-El módulo de **Recuperación Aumentada por Generación (RAG)** de TecnoAula tiene como misión operativa resolver el triaje de primer nivel (L1) para incidencias tecnológicas reportadas por docentes, personal administrativo y técnicos de campus.
+El módulo de **Recuperación Aumentada por Generación (RAG)** de la plataforma tiene como misión operativa resolver el triaje de primer nivel (L1) para incidencias tecnológicas reportadas por colaboradores de cualquier departamento de la PYME (Contabilidad, Ventas, RRHH, Operaciones).
 
 Bajo el principio rector de la arquitectura:
 > ***«El modelo propone, el código dispone»***  
@@ -120,11 +120,11 @@ La búsqueda semántica mediante embeddings resuelve la equivalencia de signific
 ```json
 {
   "documento": "DOC-01",
-  "sección": "Paso 2: Diagnóstico de LED PON y LOS (Enlace Óptico)",
-  "vigencia": "v3.2 - Octubre 2026",
-  "url": "https://soporte.conectatec.edu.ec/manuales/DOC-01-luces-led-ont-huawei",
-  "categoria": "conectividad_fibra",
-  "fabricante": "Huawei Technologies",
+  "sección": "Paso 2: Desbloqueo de Cuenta en Active Directory",
+  "vigencia": "2026 (Norma ISO/IEC 27002)",
+  "url": "https://soporte.pyme-estandar.org/manuales/DOC-01_restablecimiento_contrasenas.md",
+  "categoria": "Accesos y Contraseñas",
+  "fabricante": "Mesa de Ayuda TIC PYME",
   "procedimiento": "DOC-01-P2"
 }
 ```

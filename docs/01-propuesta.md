@@ -1,7 +1,7 @@
-# Propuesta del Proyecto: TecnoAula — Triaje Automático de Solicitudes de Soporte para PYMEs
+# Propuesta del Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 
 ## 1. Identificación del Proyecto
-* **Producto:** **TecnoAula** — Sistema Genérico y Configurable de Triaje Automático y Resolución de Incidentes de Soporte Tecnológico para PYMEs
+* **Producto:** **Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME** (Sistema Genérico y Configurable de Soporte Microinformático TIC)
 * **Caso Asignado Oficial:** **Caso N.º 03 (Grupo 3)** — *Triaje automático de solicitudes de soporte tecnológico para una PYME (Clasificación y resolución de tickets con RAG sobre manuales internos – Agente de gestión de incidentes)*
 * **Institución:** Universidad Regional Autónoma de Los Andes (UNIANDES)
 * **Carrera:** Software — Seminario de Titulación Complexivo en IA Generativa (2026)

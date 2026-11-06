@@ -1,4 +1,4 @@
-# 🏢 TecnoAula — Triaje Automático de Solicitudes de Soporte Tecnológico para PYME
+# 🏢 Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 > **Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda Inteligente con RAG y Agente de Gestión de Incidentes**  
 > **Seminario de Titulación:** Ingeniería de Software con IA Generativa — Universidad Regional Autónoma de Los Andes (UNIANDES)  
 > **Docente Evaluador:** Ing. Heyler Fabio Guaza (Mg. en Ciberseguridad · OPD · Abogado)  

@@ -4,7 +4,7 @@
 **Autores:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
 
 ## Contexto
-El sistema ConectaTec requiere exponer una API REST segura, modular y de alto rendimiento para recibir solicitudes de soporte, comunicarse con modelos generativos (Gemini/Groq) y servir datos al tablero Kanban.
+El sistema de Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME requiere exponer una API REST segura, modular y de alto rendimiento para recibir solicitudes de soporte, comunicarse con modelos generativos (Gemini/Groq) y servir datos al tablero Kanban.
 
 ## Decisión
 Seleccionar **FastAPI** (Python 3.10+) junto a Uvicorn y Pydantic V2 como la infraestructura del perímetro de backend.

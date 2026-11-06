@@ -3,7 +3,7 @@
 **Fecha:** Octubre 2026  
 **Autores:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
 **Docente Evaluador:** Heyler Fabio Guaza (Ing. Informático · Mg. en Ciberseguridad · OPD · Abogado)  
-**Proyecto:** ConectaTec / TecnoAula — Triaje de Incidentes Técnicos (Caso N.º 03 · Grupo 3 UNIANDES)  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)  
 
 ---
 

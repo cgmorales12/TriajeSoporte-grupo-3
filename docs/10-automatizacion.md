@@ -1,7 +1,7 @@
 # ADR-012: Flujo Automatizado de Triaje con IA y Vía de Revisión Humana
 
-**Proyecto:** ConectaTec / TecnoAula — Triaje y Resolución Inteligente de Incidencias Técnicas  
-**Caso Asignado:** Caso N.º 03 (Mesa de Ayuda para Instituciones Educativas e ISP)  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME  
+**Caso Asignado:** Caso N.º 03 (Mesa de Ayuda y Triaje Inteligente de Incidentes Microinformáticos)  
 **Grupo de Desarrollo N.º 03:**  
 * **Christian Guillermo Morales González** (Tech Lead / Coordinador — GitHub: `cgmorales12`)  
 * **Luis Fernando Ribera Alajo** (Builder / Arquitectura — GitHub: `fernandolribera`)  

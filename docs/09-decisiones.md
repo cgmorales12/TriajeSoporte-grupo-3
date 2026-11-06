@@ -1,5 +1,5 @@
 # Registros de Decisiones de Arquitectura (ADR)
-**Proyecto:** ConectaTec — Mesa de Ayuda Inteligente para Proveedores de Servicios de Internet (ISP)  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME  
 **Seminario de Titulación:** Ingeniería de Software con IA Generativa — UNIANDES (2026)  
 **Integrantes del Grupo 3:**  
 1. **Christian Guillermo Morales González** (Tech Lead / Coordinador — GitHub: `cgmorales12`)  
@@ -35,7 +35,7 @@
 - **Autores:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
 
 #### Contexto
-El sistema ConectaTec requiere exponer una API REST segura, modular y de alto rendimiento para recibir solicitudes de soporte, comunicarse con modelos generativos (Gemini/Groq) y servir datos al tablero Kanban en tiempo real.
+El sistema de Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME requiere exponer una API REST segura, modular y de alto rendimiento para recibir solicitudes de soporte, comunicarse con modelos generativos (Gemini/Groq) y servir datos al tablero Kanban en tiempo real.
 
 #### Decisión
 Seleccionar **FastAPI** (Python 3.10+) junto a Uvicorn y Pydantic V2 como la infraestructura central del perímetro de backend.

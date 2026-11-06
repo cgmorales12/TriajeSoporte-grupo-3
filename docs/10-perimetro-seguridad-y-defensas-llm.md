@@ -1,5 +1,5 @@
 # Perímetro de Seguridad, Ciberseguridad y Mitigación de Alucinaciones
-**Proyecto:** ConectaTec · Mesa de Ayuda Inteligente ISP (Caso N.º 03 · Grupo 3)  
+**Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3)  
 **Seminario de Titulación:** Ingeniería de Software con IA Generativa — UNIANDES (Octubre – Noviembre 2026)  
 **Integrantes del Grupo 3:**  
 1. **Christian Guillermo Morales González** (Tech Lead / Coordinador — GitHub: `cgmorales12`)  
@@ -11,7 +11,7 @@
 ---
 
 ## 1. Resumen Ejecutivo de Seguridad para el Tribunal
-Este documento técnico sirve como **respaldo de sustentación y auditoría de ciberseguridad** ante el tribunal evaluador. En cumplimiento estricto del estándar internacional **OWASP Top 10 for LLM Applications (2025)** y la **Ley Orgánica de Protección de Datos Personales (LOPDP de Ecuador)**, el sistema ConectaTec implementa una arquitectura de **Defensa en Profundidad (6 capas)** que impide la inyección de prompts, la fuga de credenciales, la manipulación de SLAs y la alucinación de manuales técnicos.
+Este documento técnico sirve como **respaldo de sustentación y auditoría de ciberseguridad** ante el tribunal evaluador. En cumplimiento estricto del estándar internacional **OWASP Top 10 for LLM Applications (2025)** y la **Ley Orgánica de Protección de Datos Personales (LOPDP de Ecuador)**, el sistema de **Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME** implementa una arquitectura de **Defensa en Profundidad (6 capas)** que impide la inyección de prompts, la fuga de credenciales, la manipulación de SLAs y la alucinación de manuales técnicos.
 
 ---
 
@@ -120,13 +120,13 @@ if solicitud.modo_vulnerable:
         citas=[CitaRAG(documento_id="DOC-99 (Inventado)", ...)]
     )
 else:
-    # Arquitectura Protegida ConectaTec: El código dispone
+    # Arquitectura Protegida: El código dispone
     prioridad_sla = calcular_prioridad_itil(clasificacion_ia.impacto, clasificacion_ia.urgencia)
     diagnostico_rag = consultar_base_conocimiento(...)
 ```
 
 ### Resultados Comparativos Visibles en el Tablero Kanban:
-| Caso de Prueba | Modo Vulnerable (Sin Defensas) | Modo Protegido (ConectaTec) |
+| Caso de Prueba | Modo Vulnerable (Sin Defensas) | Modo Protegido (Triaje TIC PYME) |
 | :--- | :--- | :--- |
 | **Ataque Adverso (`OWASP-LLM01`)** | Ignora instrucciones, pide `Prioridad=Infinita`, `Impacto=Cósmico` y cita falsa `DOC-99`. | Mismo texto inyectado. |
 | **Color de Tarjeta** | 🚨 **Rojo Carmesí (`p-alucinacion`)** | 🟢 **Verde / Neutro estándar** |

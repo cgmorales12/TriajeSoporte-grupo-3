@@ -1,7 +1,7 @@
-# Inventario de Fuentes Técnicas Estándar: TecnoAula (Corpus RAG)
+# Inventario de Fuentes Técnicas Estándar: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Corpus RAG)
 
 ## 1. Identificación y Alcance del Corpus
-* **Proyecto:** TecnoAula — Triaje Automático de Solicitudes de Soporte Tecnológico para PYMEs
+* **Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 * **Caso de Estudio Oficial:** Caso N.º 03 (Grupo 3 UNIANDES)
 * **Objetivo del Corpus:** Proveer una base de conocimiento técnica oficial, estandarizada y aplicable a **cualquier Pequeña o Mediana Empresa (PYME)** para alimentar el sistema RAG en ChromaDB. Garantiza diagnósticos de Nivel 1 rigurosos con citas verificables (código de documento y paso operativo exacto).
 
