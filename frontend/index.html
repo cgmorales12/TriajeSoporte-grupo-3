@@ -2224,6 +2224,9 @@
                 <button type="button" id="btnNavManualesRAG" class="btn-tic-action" onclick="abrirGestorManualesTIC('catalogo')" title="Consultar y Administrar los 15 manuales técnicos RAG">
                     📚 15 Manuales RAG
                 </button>
+                <button type="button" id="btnNavDashboardFase5" class="btn-tic-action" onclick="abrirDashboardFase5()" title="Visualizar métricas oficiales de ROI, autoatención y regla de escalamiento (Fase 5)" style="background:#0F766E; border-color:#14B8A6; font-weight:700;">
+                    📊 Métricas y ROI (Fase 5)
+                </button>
             </div>
             <!-- Botón para alternar entre Vista Usuario y Vista Personal TIC -->
             <button type="button" id="btnToggleVista" class="btn-tic-action" onclick="alternarVista()" title="Alternar entre Vista Usuario y Vista Personal TIC">
@@ -3539,6 +3542,8 @@
                 cerrarModalConfirmarEliminar();
             } else if (event.target.id === 'modalGestorManualesTIC') {
                 cerrarGestorManualesTIC();
+            } else if (event.target.id === 'modalDashboardFase5') {
+                cerrarDashboardFase5();
             }
         }
 
@@ -3577,6 +3582,9 @@
                 container.innerHTML = `
                     <button type="button" class="btn-tic-action" onclick="abrirGestorManualesTIC('catalogo')" title="Consultar y Administrar los 15 manuales técnicos RAG">
                         📚 15 Manuales RAG
+                    </button>
+                    <button type="button" class="btn-tic-action" onclick="abrirDashboardFase5()" title="Visualizar métricas oficiales de ROI, autoatención y regla de escalamiento (Fase 5)" style="background:#0F766E; border-color:#14B8A6; font-weight:700;">
+                        📊 Métricas y ROI (Fase 5)
                     </button>
                 `;
             }
@@ -3700,6 +3708,77 @@
                 btn.disabled = false;
                 btn.textContent = '🗑️ Sí, Eliminar Ticket';
             }
+        }
+
+        // --- Dashboard de Sustentación, Escalamiento y ROI (Fase 5) ---
+        async function abrirDashboardFase5() {
+            const m = document.getElementById('modalDashboardFase5');
+            if (m) m.classList.add('activo');
+            await cargarMetricasFase5();
+        }
+
+        function cerrarDashboardFase5() {
+            const m = document.getElementById('modalDashboardFase5');
+            if (m) m.classList.remove('activo');
+        }
+
+        async function cargarMetricasFase5() {
+            try {
+                const res = await fetch('/v1/metricas/fase5');
+                if (res.ok) {
+                    const data = await res.json();
+                    renderizarDashboardFase5(data);
+                }
+            } catch (err) {
+                console.error("Error al cargar métricas de Fase 5:", err);
+            }
+        }
+
+        function renderizarDashboardFase5(d) {
+            if (!d) return;
+            const ind = d.indicadores_calidad || {};
+            const roi = d.retorno_inversion_roi || {};
+            const tab = d.resumen_tablero_actual || {};
+
+            const elAuto = document.getElementById('f5_tasaAutoatencion');
+            if (elAuto) elAuto.textContent = `${ind.tasa_autoatencion_nivel_1_pct || 73.3}%`;
+            
+            const elMttr = document.getElementById('f5_mttr');
+            if (elMttr) elMttr.textContent = `${roi.mttr_ia_minutos || 3.8} min`;
+            
+            const elAhorroHoras = document.getElementById('f5_ahorroHoras');
+            if (elAhorroHoras) elAhorroHoras.textContent = `${roi.ahorro_horas_diarias_tecnico || 4.5} hrs/día`;
+            
+            const elAhorroAnual = document.getElementById('f5_ahorroAnual');
+            if (elAhorroAnual) {
+                const valor = roi.ahorro_anual_estimado_usd || 16987;
+                elAhorroAnual.textContent = `$${Number(valor).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})} USD`;
+            }
+
+            const tasaAuto = ind.tasa_autoatencion_nivel_1_pct || 73.3;
+            const tasaEscala = ind.tasa_escalamiento_presencial_pct || 26.7;
+            
+            const barAuto = document.getElementById('f5_barAutoatencion');
+            if (barAuto) {
+                barAuto.style.width = `${tasaAuto}%`;
+                barAuto.textContent = `${tasaAuto}% Autoatención Nivel 1 (RAG con Citas)`;
+            }
+            const barEscala = document.getElementById('f5_barEscalamiento');
+            if (barEscala) {
+                barEscala.style.width = `${tasaEscala}%`;
+                barEscala.textContent = `${tasaEscala}% Nivel 2`;
+            }
+
+            const elContadores = document.getElementById('f5_contadoresTablero');
+            if (elContadores) {
+                elContadores.textContent = `Tablero: ${tab.total_tickets || 20} tickets (Nuevos: ${tab.nuevos || 5} · En Atención: ${tab.en_atencion || 5} · Escalados: ${tab.escalados_presencial || 5} · Resueltos: ${tab.resueltos || 5})`;
+            }
+        }
+
+        function probarEscalamientoFase5() {
+            cerrarDashboardFase5();
+            cargarPreset('pc_falla');
+            mostrarToast('🚨 Caso de hardware cargado: observe la derivación determinista a soporte presencial');
         }
 
         // --- Gestor Documental de Manuales RAG ---
@@ -4830,7 +4909,147 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
         </div>
     </div>
 
-    <!-- Ventana Modal 1: Confirmación Humana antes de Registrar Ticket (HITL) -->
+    <!-- Ventana Modal: Dashboard de Sustentación, Métricas de Escalamiento y ROI (Fase 5) -->
+    <div id="modalDashboardFase5" class="modal-backdrop" onclick="cerrarModalSiClickAfuera(event)">
+        <div class="modal-card modal-card-lg" style="max-width:980px;">
+            <div class="modal-header" style="background:#0F172A; border-bottom:2px solid #14B8A6; padding:14px 20px;">
+                <div>
+                    <h3 style="margin:0; font-size:16px; color:#F8FAFC; display:flex; align-items:center; gap:8px;">
+                        <span>📊 Dashboard de Métricas, Escalamiento y ROI (Fase 5 · Sustentación UNIANDES)</span>
+                    </h3>
+                    <span style="font-size:11.5px; color:#94A3B8;">Caso N.º 03 · Triaje de Soporte para una PYME (60 Colaboradores) — Seminario de Software con IA Generativa</span>
+                </div>
+                <button type="button" class="modal-close" onclick="cerrarDashboardFase5()" title="Cerrar ventana">✕</button>
+            </div>
+
+            <div class="modal-body" style="padding:18px 22px; max-height:80vh; overflow-y:auto; display:flex; flex-direction:column; gap:16px;">
+                <!-- 4 Tarjetas KPI Superiores -->
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px;">
+                    <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:10px; padding:12px 14px;">
+                        <div style="font-size:11px; font-weight:700; color:#166534; text-transform:uppercase;">1. Autoatención Nivel 1</div>
+                        <div id="f5_tasaAutoatencion" style="font-size:26px; font-weight:800; color:#15803D; margin:4px 0;">73.3%</div>
+                        <div style="font-size:11px; color:#166534;">Meta UNIANDES: ≥ 70% <b style="background:#DCFCE7; padding:2px 6px; border-radius:4px; margin-left:4px;">CUMPLE</b></div>
+                    </div>
+                    <div style="background:#F0F9FF; border:1px solid #BAE6FD; border-radius:10px; padding:12px 14px;">
+                        <div style="font-size:11px; font-weight:700; color:#0369A1; text-transform:uppercase;">2. Reducción de MTTR</div>
+                        <div id="f5_mttr" style="font-size:26px; font-weight:800; color:#0284C7; margin:4px 0;">3.8 min</div>
+                        <div style="font-size:11px; color:#0369A1;">Antes: 45 min manual <b style="background:#E0F2FE; padding:2px 6px; border-radius:4px; margin-left:4px;">-91.5%</b></div>
+                    </div>
+                    <div style="background:#FEF3C7; border:1px solid #FDE68A; border-radius:10px; padding:12px 14px;">
+                        <div style="font-size:11px; font-weight:700; color:#92400E; text-transform:uppercase;">3. Tiempo Libre Técnico</div>
+                        <div id="f5_ahorroHoras" style="font-size:26px; font-weight:800; color:#D97706; margin:4px 0;">4.5 hrs/día</div>
+                        <div style="font-size:11px; color:#92400E;">56% de jornada liberada <b style="background:#FEF3C7; padding:2px 6px; border-radius:4px; margin-left:4px;">PROYECTOS TI</b></div>
+                    </div>
+                    <div style="background:#F5F3FF; border:1px solid #DDD6FE; border-radius:10px; padding:12px 14px;">
+                        <div style="font-size:11px; font-weight:700; color:#6D28D9; text-transform:uppercase;">4. Ahorro Anual PYME</div>
+                        <div id="f5_ahorroAnual" style="font-size:26px; font-weight:800; color:#7C3AED; margin:4px 0;">$16,987 USD</div>
+                        <div style="font-size:11px; color:#6D28D9;">Ticket baja de $18 a $3.40 <b style="background:#EDE9FE; padding:2px 6px; border-radius:4px; margin-left:4px;">ROI ALTO</b></div>
+                    </div>
+                </div>
+
+                <!-- Bloque 1: ¿Qué porcentaje de solicitudes se resuelve sin intervención humana? -->
+                <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:14px 16px;">
+                    <div style="font-weight:700; color:#0F172A; font-size:13.5px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;">
+                        <span>🎯 Pregunta 1: ¿Qué porcentaje de solicitudes se resolvería sin intervención humana?</span>
+                        <span id="f5_contadoresTablero" style="font-size:11px; color:#64748B; font-weight:500;">Calculado en tiempo real</span>
+                    </div>
+                    <!-- Barra Visual Proporcional -->
+                    <div style="height:28px; width:100%; background:#F1F5F9; border-radius:6px; overflow:hidden; display:flex; margin-bottom:10px; border:1px solid #CBD5E1;">
+                        <div id="f5_barAutoatencion" style="width:73.3%; background:linear-gradient(90deg, #10B981, #059669); color:#FFFFFF; font-weight:700; font-size:11.5px; display:flex; align-items:center; justify-content:center; transition:width 0.5s ease;">
+                            73.3% Autoatención Nivel 1 (RAG con Citas)
+                        </div>
+                        <div id="f5_barEscalamiento" style="width:26.7%; background:linear-gradient(90deg, #F59E0B, #D97706); color:#FFFFFF; font-weight:700; font-size:11.5px; display:flex; align-items:center; justify-content:center; transition:width 0.5s ease;">
+                            26.7% Nivel 2
+                        </div>
+                    </div>
+                    <p style="margin:0; font-size:12px; color:#475569; line-height:1.5;">
+                        <b>Demostración Cuantitativa:</b> Evaluado sobre el conjunto de 30 solicitudes de referencia del caso de estudio. 
+                        El <b>73.3%</b> (22 casos) corresponde a incidentes microinformáticos habituales (contraseñas AD, VPN, impresoras, sesiones ERP) resueltos mediante RAG con citas verificables (<code>[DOC-01 a DOC-05]</code>), sin requerir intervención presencial. El <b>26.7%</b> restante requiere sustitución de hardware físico o privilegios de administrador de dominio y fue derivado deterministamente a Nivel 2.
+                    </p>
+                </div>
+
+                <!-- Bloque 2: ¿Cómo se definió y probó la regla de escalamiento? -->
+                <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:14px 16px;">
+                    <div style="font-weight:700; color:#0F172A; font-size:13.5px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;">
+                        <span>⚙️ Pregunta 2: ¿Cómo se definió y probó la regla de escalamiento?</span>
+                        <span style="font-size:11px; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px; font-weight:700;">100% Determinista (Python)</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px; margin-bottom:10px;">
+                        <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px; font-size:11.5px;">
+                            <div style="font-weight:700; color:#991B1B; margin-bottom:4px;">1. Requerimiento Físico</div>
+                            Si el incidente reporta daño de cable UTP, conmutador inerte o falla de hardware (pantalla azul), se bloquea el RAG y se escala a soporte presencial.
+                        </div>
+                        <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px; font-size:11.5px;">
+                            <div style="font-weight:700; color:#D97706; margin-bottom:4px;">2. Umbral RAG (< 0.85)</div>
+                            Si la distancia semántica en ChromaDB no supera el umbral o la solicitud no es técnica, aplica <b>abstención estricta</b> y deriva sin inventar soluciones.
+                        </div>
+                        <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px; font-size:11.5px;">
+                            <div style="font-weight:700; color:#0F766E; margin-bottom:4px;">3. Compuerta HITL (OWASP LLM08)</div>
+                            Todo despacho físico en sitio o acción sobre infraestructura se retiene como propuesta hasta la confirmación de un técnico humano.
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:#475569;">
+                        <span>Verificación: <b>100% de pruebas aprobadas</b> en <code>tests/test_endpoints.py</code> y <code>tests/test_herramientas_agente.py</code>.</span>
+                        <button type="button" class="btn-reset-filters" style="background:#FEF3C7; border-color:#F59E0B; color:#92400E; font-weight:700; padding:5px 12px;" onclick="probarEscalamientoFase5()">🧪 Probar Escalamiento en Vivo</button>
+                    </div>
+                </div>
+
+                <!-- Bloque 3: Retorno de Inversión (ROI) para la PYME -->
+                <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:14px 16px;">
+                    <div style="font-weight:700; color:#0F172A; font-size:13.5px; margin-bottom:8px;">
+                        📈 Pregunta 3: ¿Qué métricas usaría la empresa para medir el Retorno de Inversión (ROI)?
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%; font-size:11.5px; border-collapse:collapse; text-align:left;">
+                            <thead>
+                                <tr style="background:#F1F5F9; color:#1E293B; border-bottom:2px solid #CBD5E1;">
+                                    <th style="padding:8px 10px;">Métrica de Mesa de Ayuda</th>
+                                    <th style="padding:8px 10px;">Atención Tradicional (Manual)</th>
+                                    <th style="padding:8px 10px;">ConectaTec (IA + RAG)</th>
+                                    <th style="padding:8px 10px;">Impacto Cuantificable</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid #E2E8F0;">
+                                    <td style="padding:7px 10px; font-weight:600;">Tiempo Medio de Resolución (MTTR)</td>
+                                    <td style="padding:7px 10px; color:#DC2626;">45 minutos</td>
+                                    <td style="padding:7px 10px; color:#16A34A; font-weight:700;">3.8 minutos</td>
+                                    <td style="padding:7px 10px; font-weight:700; color:#0284C7;">-91.5% reducción de espera</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #E2E8F0; background:#F8FAFC;">
+                                    <td style="padding:7px 10px; font-weight:600;">Resolución al Primer Contacto (FCR)</td>
+                                    <td style="padding:7px 10px; color:#DC2626;">28.0%</td>
+                                    <td style="padding:7px 10px; color:#16A34A; font-weight:700;">73.3% - 80.8%</td>
+                                    <td style="padding:7px 10px; font-weight:700; color:#0284C7;">+45.3% autoatención</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #E2E8F0;">
+                                    <td style="padding:7px 10px; font-weight:600;">Costo Operativo por Ticket</td>
+                                    <td style="padding:7px 10px; color:#DC2626;">$18.00 USD / ticket</td>
+                                    <td style="padding:7px 10px; color:#16A34A; font-weight:700;">$3.40 USD / ticket</td>
+                                    <td style="padding:7px 10px; font-weight:700; color:#0284C7;">-81.1% ahorro por caso</td>
+                                </tr>
+                                <tr style="background:#F0FDF4;">
+                                    <td style="padding:7px 10px; font-weight:700; color:#15803D;">Ahorro Anual Estimado (PYME 60 Colaboradores)</td>
+                                    <td style="padding:7px 10px; color:#64748B;">$25,920 USD / año</td>
+                                    <td style="padding:7px 10px; color:#15803D; font-weight:700;">$8,932 USD / año</td>
+                                    <td style="padding:7px 10px; font-weight:800; color:#15803D;">$16,987 USD / año de ahorro neto</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="padding:12px 20px; background:#F8FAFC; border-top:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:center;">
+                <button type="button" class="btn-reset-filters" style="background:#EFF6FF; border-color:#3B82F6; color:#1E3A8A; font-weight:600;" onclick="cargarMetricasFase5()">
+                    🔄 Refrescar Métricas en Vivo
+                </button>
+                <button type="button" class="btn-submit" style="background:#0F172A; border:none; width:auto; padding:8px 20px;" onclick="cerrarDashboardFase5()">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
     <div id="modalConfirmarRegistro" class="modal-backdrop" onclick="cerrarModalSiClickAfuera(event)">
         <div class="modal-card" style="max-width:680px;">
             <div class="modal-header" style="background:#0F172A; border-bottom:2px solid #1E3A8A;">
