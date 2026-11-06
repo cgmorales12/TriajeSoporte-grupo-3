@@ -14,8 +14,8 @@
 
 ### 2.1. Clonar el Repositorio
 ```bash
-git clone https://github.com/cgmorales12/conectatec-grupo-3.git
-cd conectatec-grupo-3
+git clone https://github.com/cgmorales12/TriajeSoporte-grupo-3.git
+cd TriajeSoporte-grupo-3
 ```
 
 ### 2.2. Instalar Dependencias
