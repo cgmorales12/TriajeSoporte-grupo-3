@@ -6,6 +6,7 @@ Script para configurar exactamente 5 tickets didácticos y diversos en cada colu
 - 5 en Resueltos (resuelto): Validación y Cierre Satisfactorio de SLA
 
 Todos con citas RAG verificables a los 15 manuales técnicos oficiales de Soporte Microinformático para PYMEs.
+Redactados con respuestas claras, empáticas y orientadas al usuario no técnico.
 """
 
 import sqlite3
@@ -35,12 +36,12 @@ TICKETS_PYME = [
         "prioridad": "Media",
         "sla": 120,
         "desc_sla": "Atención técnica en menos de 2 horas (SLA Matriz ITIL)",
-        "solucion": "1. Verifique su identidad con el técnico sin enviar su contraseña.\n2. El administrador desbloqueará su cuenta en la consola de Active Directory.\n3. Ingrese con la clave temporal obligatoria y defina una nueva contraseña de 12 caracteres cumpliendo ISO 27002.",
+        "solucion": "1. Verifique su identidad con el técnico de soporte.\n2. El técnico reactivará su usuario en el sistema.\n3. Inicie sesión con la clave temporal y cree una contraseña personal nueva de al menos 12 caracteres.",
         "citas": [{
             "documento_id": "DOC-01_restablecimiento_contrasenas.md",
             "titulo_documento": "Procedimiento para Restablecimiento de Contraseñas de Dominio Windows y Correo Corporativo",
             "paso_exacto": "Paso 2: Desbloqueo de Cuenta en Active Directory",
-            "fragmento_aplicado": "«El técnico de TI localiza el usuario en Active Directory Users and Computers, desmarca 'Account is locked out' y genera clave temporal.»",
+            "fragmento_aplicado": "«Su cuenta se bloqueó por seguridad tras varios intentos. Para reactivarla, un técnico validará su identidad y le entregará una clave provisional para que cree su nueva contraseña.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-01_restablecimiento_contrasenas.md"
         }],
         "modo_vuln": 0,
@@ -61,12 +62,12 @@ TICKETS_PYME = [
         "prioridad": "Media",
         "sla": 120,
         "desc_sla": "Atención técnica en menos de 2 horas (SLA Matriz ITIL)",
-        "solucion": "1. Abra FortiClient y verifique que la dirección del gateway sea vpn.empresa.com:10443.\n2. Valide que su certificado digital corporativo esté importado en el almacén de Windows.\n3. Desactive temporalmente la conexión proxy de su navegador y reintente la conexión.",
+        "solucion": "1. Cierre FortiClient completamente y vuelva a abrirlo.\n2. Verifique que la dirección sea vpn.empresa.com:10443.\n3. Si el error persiste, un técnico le instalará de forma remota el certificado de seguridad de la empresa.",
         "citas": [{
             "documento_id": "DOC-02_configuracion_vpn_corporativa.md",
             "titulo_documento": "Guía de Conexión y Configuración de VPN Corporativa para Teletrabajo",
             "paso_exacto": "Paso 3: Verificación de Parámetros TLS y Certificados",
-            "fragmento_aplicado": "«Si el cliente SSL-VPN se detiene en 48%, corresponde a un fallo de negociación TLS o certificado no confiable.»",
+            "fragmento_aplicado": "«La conexión VPN se detuvo por falta del certificado de seguridad de la empresa. Reinicie el programa FortiClient o solicite al técnico la instalación del certificado para teletrabajo.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-02_configuracion_vpn_corporativa.md"
         }],
         "modo_vuln": 0,
@@ -87,12 +88,12 @@ TICKETS_PYME = [
         "prioridad": "Baja",
         "sla": 1440,
         "desc_sla": "Atención en jornada laboral / Autoatención guiada en 24 horas",
-        "solucion": "1. Olvide la red Wi-Fi en Windows y vuelva a conectarse seleccionando autenticación WPA2-Enterprise.\n2. Asegúrese de ingresar su usuario corporativo con el prefijo DOMINIO\\usuario.\n3. Acepte el certificado del servidor RADIUS corporativo para habilitar la reconexión automática.",
+        "solucion": "1. Haga clic en el ícono de Wi-Fi, clic derecho en 'PYME-CORP-5G' y elija 'Olvidar'.\n2. Vuelva a conectarse escribiendo su usuario de red corporativo y contraseña.\n3. Cuando Windows le pregunte si confía en la red, presione 'Conectar' para guardar la clave.",
         "citas": [{
             "documento_id": "DOC-08_wifi_corporativo_credenciales.md",
             "titulo_documento": "Conexión Segura al Wi-Fi Corporativo de la Oficina y Red de Visitas",
             "paso_exacto": "Paso 2: Validación de Certificado WPA2-Enterprise y Credenciales",
-            "fragmento_aplicado": "«Para evitar desconexiones periódicas, el equipo debe almacenar la confianza en el certificado RADIUS institucional.»",
+            "fragmento_aplicado": "«En la lista de redes Wi-Fi, seleccione 'Olvidar red' en 'PYME-CORP-5G' y vuelva a conectarse ingresando su usuario y clave corporativa aceptando el certificado de seguridad.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-08_wifi_corporativo_credenciales.md"
         }],
         "modo_vuln": 0,
@@ -113,12 +114,12 @@ TICKETS_PYME = [
         "prioridad": "Baja",
         "sla": 480,
         "desc_sla": "Atención en la jornada laboral (8 horas)",
-        "solucion": "1. Vacíe la carpeta Elementos Eliminados y correo no deseado.\n2. Ejecute la herramienta 'Limpieza de buzón' en Archivo > Herramientas.\n3. Archive los correos de años anteriores en un archivo de datos local .PST para liberar espacio en el servidor.",
+        "solucion": "1. Haga clic derecho en la carpeta 'Elementos eliminados' de Outlook y seleccione 'Vaciar carpeta'.\n2. Revise la carpeta 'Correo no deseado' y elimine los correos innecesarios.\n3. Si requiere ayuda para archivar correos de años anteriores, un técnico le ayudará a moverlos a su equipo local.",
         "citas": [{
             "documento_id": "DOC-11_configuracion_cliente_correo.md",
             "titulo_documento": "Configuración de Cliente de Correo Corporativo, Buzón y Filtro Antispam",
             "paso_exacto": "Paso 3: Depuración y Archivado Local de Mensajes Antiguos",
-            "fragmento_aplicado": "«Cuando el buzón alcanza el umbral de advertencia, se debe archivar localmente los adjuntos pesados en carpetas PST.»",
+            "fragmento_aplicado": "«Su buzón está lleno. Vacíe la papelera de Outlook ('Elementos eliminados') y mueva los correos antiguos con archivos adjuntos a una carpeta local de archivo para liberar espacio.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-11_configuracion_cliente_correo.md"
         }],
         "modo_vuln": 0,
@@ -139,7 +140,7 @@ TICKETS_PYME = [
         "prioridad": "Baja",
         "sla": 1440,
         "desc_sla": "Atención regular / Consulta informativa",
-        "solucion": "No dispongo de un procedimiento técnico registrado para esta consulta en los 15 manuales oficiales de TIC. Esta solicitud no corresponde al soporte tecnológico de la empresa y debe ser canalizada con el departamento de Recursos Humanos o Bienestar Laboral.",
+        "solucion": "Esta solicitud no describe una avería de computadoras, redes o programas corporativos. Por favor consulte directamente con el departamento de Recursos Humanos o Administración General.",
         "citas": [],
         "modo_vuln": 0,
         "aluc_det": 0,
@@ -163,12 +164,12 @@ TICKETS_PYME = [
         "prioridad": "Alta",
         "sla": 30,
         "desc_sla": "Atención departamental prioritaria en menos de 30 minutos",
-        "solucion": "1. El técnico de TI ingresa a la consola de administración del servidor ERP.\n2. Se identifica la sesión huérfana en el monitor de bloqueos de base de datos SQL.\n3. Se ejecuta la desconexión segura del proceso colgado y se confirma que el usuario pueda reingresar al módulo contable.",
+        "solucion": "1. Cierre el programa ERP en su equipo.\n2. Soporte técnico cerrará la sesión colgada en el servidor contable.\n3. En 5 minutos podrá volver a iniciar sesión con normalidad para continuar con la facturación.",
         "citas": [{
             "documento_id": "DOC-05_sistema_contable_erp.md",
             "titulo_documento": "Manual de Usuario y Solución de Bloqueos en el Sistema Contable / ERP Interno",
             "paso_exacto": "Paso 2: Liberación de Sesión Huérfana en el Administrador de Conexiones",
-            "fragmento_aplicado": "«Para liberar licencias concurrentes bloqueadas, el administrador finaliza la tarea huérfana en el servicio ERP Server.»",
+            "fragmento_aplicado": "«Su sesión quedó abierta tras una desconexión. Cierre la ventana del sistema ERP; el equipo de soporte liberará su usuario en el servidor para que pueda ingresar a facturar nuevamente.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-05_sistema_contable_erp.md"
         }],
         "modo_vuln": 0,
@@ -189,12 +190,12 @@ TICKETS_PYME = [
         "prioridad": "Media",
         "sla": 240,
         "desc_sla": "Atención técnica en menos de 4 horas laborables",
-        "solucion": "1. Ejecutar en PowerShell: Test-NetConnection -ComputerName nas01 -Port 445.\n2. Borrar las credenciales obsoletas en el Administrador de Credenciales de Windows.\n3. Ejecutar script de reconexión: net use Z: \\\\nas01\\operaciones /persistent:yes.",
+        "solucion": "1. Guarde y cierre cualquier archivo abierto.\n2. Cierre sesión en Windows y vuelva a ingresar.\n3. Si la unidad sigue con cruz roja, un técnico verificará sus permisos en el servidor de archivos.",
         "citas": [{
             "documento_id": "DOC-04_acceso_carpetas_compartidas_smb.md",
             "titulo_documento": "Mapeo y Diagnóstico de Carpetas Compartidas en Servidor de Archivos (SMB/NAS)",
             "paso_exacto": "Paso 2: Re-mapeo del Recurso Compartido mediante Script Net Use",
-            "fragmento_aplicado": "«Si la unidad aparece desconectada, se debe purgar la caché Kerberos y remapear la unidad con el script corporativo.»",
+            "fragmento_aplicado": "«La carpeta compartida Z: no responde. Cierre sus documentos, reinicie la sesión de Windows y verifique que su cable de red esté conectado para que el sistema reconecte la unidad compartida.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-04_acceso_carpetas_compartidas_smb.md"
         }],
         "modo_vuln": 0,
@@ -215,12 +216,12 @@ TICKETS_PYME = [
         "prioridad": "Media",
         "sla": 240,
         "desc_sla": "Atención técnica en menos de 4 horas laborables",
-        "solucion": "1. El técnico accede remotamente al servidor de impresión.\n2. Se detiene el servicio 'Cola de impresión' (Spooler).\n3. Se purgan los archivos temporales .SPL y .SHD en System32\\spool\\PRINTERS y se reinicia el servicio.",
+        "solucion": "1. No intente enviar más impresiones para no saturar la máquina.\n2. Soporte técnico cancelará de forma remota el documento trabado.\n3. Una vez limpia la cola, se enviará una página de prueba y podrá imprimir sus contratos.",
         "citas": [{
             "documento_id": "DOC-03_impresoras_red_departamentales.md",
             "titulo_documento": "Guía de Conexión y Solución de Problemas en Impresoras Multifunción de Red",
             "paso_exacto": "Paso 2: Reinicio del Servicio Spooler y Purga de Archivos SPL",
-            "fragmento_aplicado": "«Cuando un documento corrupto bloquea la cola departamental, se detiene el spooler y se limpian los archivos residuales.»",
+            "fragmento_aplicado": "«La impresora compartida está pausada por un documento trabado. No envíe más impresiones; soporte técnico está reiniciando la cola de impresión de la red para reanudar los trabajos.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-03_impresoras_red_departamentales.md"
         }],
         "modo_vuln": 0,
@@ -241,12 +242,12 @@ TICKETS_PYME = [
         "prioridad": "Media",
         "sla": 120,
         "desc_sla": "Atención técnica en menos de 2 horas",
-        "solucion": "1. Ejecutar ipconfig /release y ipconfig /renew para renovar la concesión DHCP.\n2. Ejecutar ipconfig /flushdns para purgar la resolución de nombres.\n3. Configurar como servidor DNS secundario la IP interna del cortafuegos corporativo.",
+        "solucion": "1. Verifique que el cable de red detrás de la computadora esté bien encajado (debe hacer 'clic').\n2. Soporte técnico reiniciará la configuración de red de su estación.\n3. Pruebe abrir nuevamente el portal de gestión en el navegador.",
         "citas": [{
             "documento_id": "DOC-07_conectividad_red_cableada_oficina.md",
             "titulo_documento": "Diagnóstico y Solución de Conexión a Internet y Red Cableada en Oficina",
             "paso_exacto": "Paso 2: Liberación de Caché DNS e IP mediante ipconfig",
-            "fragmento_aplicado": "«Si se presenta fallo de resolución de nombres, se renueva la concesión en el switch y se valida el gateway predeterminado.»",
+            "fragmento_aplicado": "«Su equipo no tiene conexión a internet. Desconecte y vuelva a enchufar firmemente el cable de red azul detrás de su computadora; soporte técnico está verificando la señal en el conmutador.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-07_conectividad_red_cableada_oficina.md"
         }],
         "modo_vuln": 0,
@@ -267,12 +268,12 @@ TICKETS_PYME = [
         "prioridad": "Alta",
         "sla": 30,
         "desc_sla": "Atención departamental en menos de 30 minutos",
-        "solucion": "1. Aislar inmediatamente la estación de la red local desconectando el cable Ethernet.\n2. Ejecutar escaneo completo de firmas con Windows Defender en modo offline.\n3. Verificar en el cortafuegos perimetral que no existan intentos de comunicación C2 hacia IPs externas.",
+        "solucion": "1. Desconecte el cable de red o apague el Wi-Fi de su computadora de inmediato.\n2. No abra ni reenvíe el archivo descargado.\n3. Espere al técnico de seguridad informática, quien revisará el equipo para eliminar cualquier amenaza.",
         "citas": [{
             "documento_id": "DOC-09_antivirus_actualizaciones_so.md",
             "titulo_documento": "Protocolo de Actualización de Windows y Antivirus Corporativo en Estaciones",
             "paso_exacto": "Paso 1: Aislamiento Inmediato de Estación y Escaneo Fuera de Línea",
-            "fragmento_aplicado": "«Ante cualquier alerta de amenaza potencial, se aísla el equipo de la red LAN antes de realizar la desinfección preventiva.»",
+            "fragmento_aplicado": "«Por seguridad, desconecte de inmediato el cable de red o desactive el Wi-Fi de su equipo y no abra el archivo adjunto. Un técnico de seguridad acudirá a revisar la computadora.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-09_antivirus_actualizaciones_so.md"
         }],
         "modo_vuln": 0,
@@ -297,12 +298,12 @@ TICKETS_PYME = [
         "prioridad": "Alta",
         "sla": 15,
         "desc_sla": "Atención crítica e inmediata del técnico de TI en el puesto (menos de 15 min)",
-        "solucion": "Requiere intervención técnica física en sitio: Se despacha técnico de TI con multímetro y fuente ATX de repuesto para inspección de hardware y pruebas de memoria RAM.",
+        "solucion": "1. Apague el equipo y desconéctelo de la toma eléctrica por precaución.\n2. No intente encenderlo nuevamente.\n3. Se despachó un técnico de soporte presencial a su puesto con piezas de recambio.",
         "citas": [{
             "documento_id": "DOC-10_falla_estacion_trabajo_pc.md",
             "titulo_documento": "Diagnóstico Inicial ante Bloqueo, Pantalla Azul o Falla de Rendimiento en PC",
             "paso_exacto": "Paso 3: Diagnóstico Físico de Hardware, Memoria RAM y Fuente de Poder",
-            "fragmento_aplicado": "«Ante olores a recalentamiento o pitidos de BIOS continuos, se desconecta el equipo y se reemplaza la fuente de poder.»",
+            "fragmento_aplicado": "«Falla física de energía: desconecte el equipo del tomacorriente por precaución. Un técnico de cuadrilla acudirá a su puesto con una fuente de poder y repuestos para revisarlo.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-10_falla_estacion_trabajo_pc.md"
         }],
         "modo_vuln": 0,
@@ -326,12 +327,12 @@ TICKETS_PYME = [
         "prioridad": "Alta",
         "sla": 30,
         "desc_sla": "Atención departamental en menos de 30 minutos",
-        "solucion": "Despacho presencial en sala de juntas: Reemplazo de jack RJ-45 Cat 6 en roseta de pared, crimpado de patchcord con tester de continuidad Fluke.",
+        "solucion": "1. No intente reparar el cable con cinta ni forzar el conector.\n2. Un técnico de cuadrilla acudirá con herramientas para instalar una toma nueva y un cable certificado.\n3. Se probará la videollamada antes de su reunión de Directorio.",
         "citas": [{
             "documento_id": "DOC-07_conectividad_red_cableada_oficina.md",
             "titulo_documento": "Diagnóstico y Solución de Conexión a Internet y Red Cableada en Oficina",
             "paso_exacto": "Paso 3: Crimpado de Conector RJ-45 y Reemplazo de Patchcord UTP Cat 6",
-            "fragmento_aplicado": "«Cuando el conector o la roseta sufren daño mecánico, se realiza recrimpado según la norma T568B.»",
+            "fragmento_aplicado": "«Daño físico en el cable de red de la sala: no jale el cable dañado. Un técnico presencial acudirá a reemplazar la roseta de pared y colocar un cable nuevo para las reuniones.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-07_conectividad_red_cableada_oficina.md"
         }],
         "modo_vuln": 0,
@@ -355,12 +356,12 @@ TICKETS_PYME = [
         "prioridad": "Baja",
         "sla": 480,
         "desc_sla": "Atención en la jornada laboral (8 horas)",
-        "solucion": "Visita técnica a estación de diseño: Inspección de conector en placa madre y entrega de monitor de respaldo del inventario de TI.",
+        "solucion": "1. Verifique que los cables de corriente y de video del monitor estén firmes.\n2. Un técnico presencial acudirá a su puesto a probar con otro conector.\n3. Si la falla persiste, se le dejará un monitor de respaldo temporal para que continúe trabajando.",
         "citas": [{
             "documento_id": "DOC-14_perifericos_pantallas_oficina.md",
             "titulo_documento": "Instalación de Pantallas Dobles, Periféricos y Estaciones de Trabajo",
             "paso_exacto": "Paso 2: Verificación de Tarjeta de Video, Puerto DisplayPort y Reemplazo",
-            "fragmento_aplicado": "«Ante fallas de puerto de video físico, se reemplaza la tarjeta gráfica dedicada o se asigna adaptador activo certificado.»",
+            "fragmento_aplicado": "«Falso contacto en la pantalla: asegúrese de que el cable de video no esté doblado. Un técnico presencial acudirá a revisar el puerto o entregarle un monitor de respaldo temporal.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-14_perifericos_pantallas_oficina.md"
         }],
         "modo_vuln": 0,
@@ -384,12 +385,12 @@ TICKETS_PYME = [
         "prioridad": "Alta",
         "sla": 15,
         "desc_sla": "Atención crítica e inmediata del técnico de TI (menos de 15 min)",
-        "solucion": "Atención de emergencia en rack de comunicaciones: Revisión de fusible en PDU, verificación de UPS y sustitución preventiva por switch Gigabit de contingencia de 24 puertos.",
+        "solucion": "1. Incidente colectivo reportado en el sector de ventas.\n2. El equipo de redes está revisando la caja de comunicaciones y el regulador de energía.\n3. Se restablecerá la conexión de las 6 computadoras y teléfonos en los próximos minutos.",
         "citas": [{
             "documento_id": "DOC-15_matriz_itil_gestion_incidentes.md",
             "titulo_documento": "Procedimiento Operativo Estándar ITIL 4 para Triaje, Priorización y Escalamiento",
             "paso_exacto": "Paso 3: Procedimiento de Escalamiento Inmediato a Soporte Presencial",
-            "fragmento_aplicado": "«Incidentes que paralicen un departamento completo con falla en switch o enlace central se escalan a Nivel 3 inmediato.»",
+            "fragmento_aplicado": "«Interrupción general del sector: el conmutador principal de ventas se apagó tras la variación eléctrica. Se despachó soporte presencial de emergencia para restablecer la red del área.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-15_matriz_itil_gestion_incidentes.md"
         }],
         "modo_vuln": 0,
@@ -413,12 +414,12 @@ TICKETS_PYME = [
         "prioridad": "Alta",
         "sla": 15,
         "desc_sla": "Atención crítica e inmediata del técnico de TI en el puesto (menos de 15 min)",
-        "solucion": "Extracción inmediata del disco duro magnético averiado para evitar daño en cabezales. Traslado a laboratorio de TI para clonación sector por sector hacia unidad SSD nueva.",
+        "solucion": "1. Apague la computadora de inmediato para no dañar el disco mecánico.\n2. No intente ejecutar programas de recuperación.\n3. Un técnico presencial acudirá a su puesto a extraer la unidad y clonar sus proyectos a un disco nuevo.",
         "citas": [{
             "documento_id": "DOC-13_respaldo_recuperacion_archivos.md",
             "titulo_documento": "Política y Procedimiento de Respaldo y Recuperación de Archivos de Trabajo",
             "paso_exacto": "Paso 3: Extracción Física Preventiva y Clonación de Unidad en Laboratorio",
-            "fragmento_aplicado": "«Ante ruidos mecánicos de cabezales, se apaga de inmediato la unidad para prevenir raspado magnético de platos.»",
+            "fragmento_aplicado": "«Avería física en el disco: apague la computadora de inmediato para proteger sus archivos y no forzar el equipo. Un técnico presencial retirará la unidad para respaldar sus datos.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-13_respaldo_recuperacion_archivos.md"
         }],
         "modo_vuln": 0,
@@ -446,12 +447,12 @@ TICKETS_PYME = [
         "prioridad": "Baja",
         "sla": 480,
         "desc_sla": "Atención en la jornada laboral (8 horas)",
-        "solucion": "Contraseña temporal asignada de forma segura tras validar identidad. El colaborador ingresó su nueva clave y confirmó acceso al correo corporativo.",
+        "solucion": "Contraseña temporal entregada al colaborador. Se confirmó que ingresó exitosamente y configuró su nueva clave personal.",
         "citas": [{
             "documento_id": "DOC-01_restablecimiento_contrasenas.md",
             "titulo_documento": "Procedimiento para Restablecimiento de Contraseñas de Dominio Windows y Correo Corporativo",
             "paso_exacto": "Paso 2: Generación de Contraseña Temporal Obligando Cambio",
-            "fragmento_aplicado": "«Se marca 'User must change password at next logon' y se notifica al usuario por canal seguro.»",
+            "fragmento_aplicado": "«Su clave fue restablecida: ingrese con la contraseña temporal entregada por el técnico. Al entrar, Windows le solicitará crear su nueva contraseña personal de 12 caracteres.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-01_restablecimiento_contrasenas.md"
         }],
         "modo_vuln": 0,
@@ -474,12 +475,12 @@ TICKETS_PYME = [
         "prioridad": "Baja",
         "sla": 480,
         "desc_sla": "Atención en la jornada laboral (8 horas)",
-        "solucion": "Certificado digital renovado e importado en el almacén personal. Túnel VPN establecido a 100 Mbps con acceso verificado a carpetas de RRHH.",
+        "solucion": "Certificado digital actualizado en el equipo de la colaboradora. Conexión VPN probada y funcionando con normalidad.",
         "citas": [{
             "documento_id": "DOC-02_configuracion_vpn_corporativa.md",
             "titulo_documento": "Guía de Conexión y Configuración de VPN Corporativa para Teletrabajo",
             "paso_exacto": "Paso 1: Importación del Certificado Raíz de la Empresa",
-            "fragmento_aplicado": "«Se descarga e instala el certificado raíz con extensión .cer en la entidad de certificación de confianza.»",
+            "fragmento_aplicado": "«Certificado de seguridad renovado con éxito: abra FortiClient VPN y presione 'Conectar'. Ya tiene acceso completo a las carpetas y sistemas de la empresa desde su hogar.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-02_configuracion_vpn_corporativa.md"
         }],
         "modo_vuln": 0,
@@ -502,12 +503,12 @@ TICKETS_PYME = [
         "prioridad": "Baja",
         "sla": 1440,
         "desc_sla": "Atención regular / Autoatención guiada en 24 horas",
-        "solucion": "Hojas atascadas retiradas siguiendo el sentido de tracción de rodillos. Rodillos limpiados con alcohol isopropílico. Impresión de prueba exitosa.",
+        "solucion": "Hojas atascadas retiradas cuidadosamente. Se realizó una impresión de prueba y la máquina quedó completamente operativa.",
         "citas": [{
             "documento_id": "DOC-03_impresoras_red_departamentales.md",
             "titulo_documento": "Guía de Conexión y Solución de Problemas en Impresoras Multifunción de Red",
             "paso_exacto": "Paso 1: Retiro Cuidadoso de Hojas Atascadas en el Sentido de Alimentación",
-            "fragmento_aplicado": "«Abra la compuerta posterior y extraiga el papel tirando firmemente con ambas manos para no rasgarlo.»",
+            "fragmento_aplicado": "«Atasco de papel solucionado: se retiraron las hojas trabadas de la bandeja posterior y se limpiaron los rodillos. La impresora ya está lista y funcionando con normalidad.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-03_impresoras_red_departamentales.md"
         }],
         "modo_vuln": 0,
@@ -530,12 +531,12 @@ TICKETS_PYME = [
         "prioridad": "Baja",
         "sla": 1440,
         "desc_sla": "Atención regular / Autoatención guiada en 24 horas",
-        "solucion": "Usuario creado en Active Directory y vinculado al perfil de facturación según requerimiento de RRHH. Credenciales entregadas mediante sobre cerrado confidencial.",
+        "solucion": "Cuenta de usuario creada con permisos autorizados por la jefatura. Colaboradora validó su ingreso al módulo de ventas.",
         "citas": [{
             "documento_id": "DOC-12_solicitud_nuevos_accesos.md",
             "titulo_documento": "Procedimiento para Solicitud de Nuevos Accesos y Alta de Colaboradores",
             "paso_exacto": "Paso 2: Creación de Cuenta con Permisos de Rol Mínimo Necesario (RBAC)",
-            "fragmento_aplicado": "«El administrador asigna únicamente los grupos de seguridad aprobados por la jefatura inmediata.»",
+            "fragmento_aplicado": "«Su usuario corporativo fue creado y los permisos al sistema contable ERP fueron habilitados. Ya puede iniciar sesión con las credenciales entregadas por su jefatura.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-12_solicitud_nuevos_accesos.md"
         }],
         "modo_vuln": 0,
@@ -558,12 +559,12 @@ TICKETS_PYME = [
         "prioridad": "Media",
         "sla": 120,
         "desc_sla": "Atención técnica en menos de 2 horas",
-        "solucion": "Restauración exitosa del archivo desde instantáneas de volumen (Shadow Copies / VSS) a las 08:00 AM del día en curso sin pérdida de datos.",
+        "solucion": "Archivo de presupuestos restaurado desde la copia de seguridad de las 08:00 AM en la carpeta compartida.",
         "citas": [{
             "documento_id": "DOC-13_respaldo_recuperacion_archivos.md",
             "titulo_documento": "Política y Procedimiento de Respaldo y Recuperación de Archivos de Trabajo",
             "paso_exacto": "Paso 2: Restauración de Archivo desde Instantáneas de Volumen (VSS)",
-            "fragmento_aplicado": "«Haga clic derecho en la carpeta compartida, pestaña 'Versiones anteriores' y seleccione restaurar copia.»",
+            "fragmento_aplicado": "«Hoja de cálculo recuperada exitosamente: el archivo de presupuestos fue restaurado desde la copia de respaldo en la carpeta compartida sin ninguna pérdida de información.»",
             "url": "https://soporte.pyme-estandar.org/manuales/DOC-13_respaldo_recuperacion_archivos.md"
         }],
         "modo_vuln": 0,

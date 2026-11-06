@@ -2811,7 +2811,7 @@
             // Cita obligatoria del manual técnico RAG
             let citaTxt = '';
             if (t.categoria.includes('Fuera de Alcance') || t.categoria.includes('No Técnica')) {
-                const descFuera = "La consulta no describe un fallo técnico de sistemas. Por política institucional, se deriva a gestión administrativa o Recursos Humanos.";
+                const descFuera = "Esta consulta no describe una avería de computadoras o sistemas. Por favor consulte directamente con el departamento de Recursos Humanos o Administración General.";
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge badge-fuera">⚪ FUERA DE ALCANCE</span>
@@ -2864,7 +2864,7 @@
                     </div>
                 `;
             } else if (t.requiere_revision_humana || (t.metadatos_ia && t.metadatos_ia.conmutado)) {
-                const descEscalado = "Caso escalado a personal técnico humano para diagnóstico físico directo e intervención presencial en el puesto de trabajo.";
+                const descEscalado = "Incidente de hardware o cableado físico: un técnico de soporte acudirá presencialmente a su puesto de trabajo para revisar y solucionar el equipo.";
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge badge-escalado">⚠️ DERIVACIÓN</span>
@@ -2880,7 +2880,7 @@
                     </div>
                 `;
             } else {
-                const descGuia = "Procedimiento estándar de autoatención asistida según manuales operativos de soporte microinformático.";
+                const descGuia = "Procedimiento de autoatención asistida: siga los pasos indicados en la solución propuesta para resolver su requerimiento de forma guiada.";
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge">📖 GUÍA OFICIAL</span>
