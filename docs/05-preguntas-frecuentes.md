@@ -1,35 +1,32 @@
-# Levantamiento Real de Información: Preguntas Frecuentes de Soporte Técnico (ISP)
-
-## 1. Contexto del Levantamiento
-* *Proyecto:* ConectaTec - Triaje Inteligente de Solicitudes ISP
-* *Caso de Estudio:* Caso N.º 03 (Grupo 3) - Automatización de proceso con agente
-* *Objetivo:* Recopilación de incidentes, consultas y dudas reales formuladas por usuarios residenciales y corporativos ante la mesa de ayuda de un Proveedor Local de Internet (ISP) para parametrizar el sistema de triaje, la categorización de urgencia/impacto y las pruebas de evaluación de la IA.
+# Levantamiento Real de Información: Preguntas Frecuentes de Soporte Técnico para PYMEs
+**Proyecto:** TecnoAula — Triaje Automático de Solicitudes de Soporte Tecnológico para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES)  
+**Objetivo:** Consolidado de 15 incidencias y consultas tecnológicas cotidianas recopiladas en entornos corporativos ofimáticos de Pequeñas y Medianas Empresas (50 a 100 colaboradores).
 
 ---
 
-## 2. Consolidado de Consultas Reales de Soporte (15 Casos de Estudio)
+## 1. Consolidado de Consultas Frecuentes de Soporte en PYMEs (15 Casos)
 
-| N.º | Pregunta / Incidencia Real del Cliente | Categoría Identificada | Impacto | Urgencia | Procedimiento o Ficha de Soporte Asociada |
+| N.º | Consulta / Incidencia Reportada por el Colaborador | Categoría ITIL | Impacto | Urgencia | Procedimiento Técnico RAG Asociado |
 | :---: | :--- | :--- | :---: | :---: | :--- |
-| *01* | "En mi router parpadea una luz roja que dice LOS y no carga ninguna página web en ningún equipo." | Fibra / Físico | Alto | Alta | DOC-01 / DOC-09 (Detección de rotura física de fibra óptica) |
-| *02* | "Tengo contratados 100 megas pero al hacer test en mi celular solo me llegan 15 megas en el dormitorio." | Wi-Fi / Cobertura | Medio | Media | DOC-05 / DOC-10 (Atenuación por distancia y paredes en 2.4 GHz) |
-| *03* | "En mi computadora conectada con cable de red el Internet funciona rápido, pero los teléfonos por Wi-Fi se desconectan constantemente." | Wi-Fi / Red Local | Medio | Media | DOC-05 / DOC-12 (Interferencia de canal y saturación inalámbrica) |
-| *04* | "¿Cómo puedo cambiar la contraseña de mi red Wi-Fi para que no se conecten los vecinos?" | Configuración / Solicitud | Bajo | Baja | DOC-04 (Guía de cambio de credenciales SSID en 192.168.1.1) |
-| *05* | "Ayer hubo una tormenta eléctrica y hoy todas las luces del módem están apagadas, aunque esté conectado al tomacorriente." | Físico / Hardware | Alto | Alta | DOC-03 (Falla de fuente de poder o daño eléctrico de ONT) |
-| *06* | "No me abre WhatsApp ni Google, pero la luz PON está verde y fija. Me sale error de DNS en el navegador." | Lógico / Configuración | Medio | Media | DOC-07 (Depuración de resolución DNS y vaciado de caché) |
-| *07* | "Se me cayó un mueble encima del cable amarillo delgado que viene de la calle y se dobló feo, desde ahí no tengo servicio." | Fibra / Físico | Alto | Alta | DOC-09 (Atenuación extrema o quiebre de jumper de fibra) |
-| *08* | "El servicio se corta cada 10 minutos y vuelve a conectar solo; mientras juego en línea me bota de las partidas." | Red / Sesión | Medio | Alta | DOC-13 (Intermitencia por renegociación PPPoE o SNR inestable) |
-| *09* | "Me salió una pantalla diciendo que mi servicio está suspendido por falta de pago, pero ya transferí esta mañana." | Comercial / Facturación | Alto | Media | DOC-14 (Verificación de comprobante de pago y reactivación) |
-| *10* | "Compré un repetidor Wi-Fi en la tienda pero no sé cómo enlazarlo al router principal que me instaló la empresa." | Configuración / Wi-Fi | Bajo | Baja | DOC-11 (Configuración en modo puente / Access Point) |
-| *11* | "El cable de red que conecta la computadora al router tiene rota la patita de plástico y se sale a cada rato." | Físico / Cableado | Bajo | Baja | DOC-08 (Reemplazo de conector RJ-45 en cable UTP) |
-| *12* | "Cuando enciendo el microondas en la cocina, la videollamada de mi laptop en la sala se congela por completo." | Wi-Fi / Interferencia | Bajo | Media | DOC-10 (Interferencia electromagnética en la banda de 2.4 GHz) |
-| *13* | "¿Cuál es la diferencia entre la red Wi-Fi normal y la que termina en '_5G'? ¿A cuál me conviene conectar mi Smart TV?" | Consulta General | Bajo | Baja | DOC-05 (Comparativa de rendimiento entre 2.4 GHz y 5 GHz) |
-| *14* | "En mi edificio somos varios vecinos con la misma empresa y a ninguno le funciona el Internet desde las 3 de la tarde." | Masivo / Red Troncal | Alto | Alta | Protocolo de escalamiento a Centro de Operaciones de Red (NOC) |
-| *15* | "Quiero reiniciar mi router de fábrica metiendo un clip en el agujerito de Reset porque olvidé la clave." | Advertencia Técnica | Medio | Alta | DOC-03 / DOC-04 (Alerta: desconfiguración de VLAN y PPPoE) |
+| **01** | *"Olvidé mi contraseña de Windows y tras 5 intentos fallidos mi cuenta en Active Directory aparece bloqueada."* | Accesos y Contraseñas | Medio | Alta | **DOC-01** (Desbloqueo de cuenta y clave temporal de auto-restablecimiento) |
+| **02** | *"Estoy en teletrabajo y el cliente VPN FortiClient se queda colgado en 48% con error de negociación del túnel."* | Redes y Conectividad | Medio | Alta | **DOC-02** (Validación de gateway remoto `vpn.empresa.com`, puerto 443 y token 2FA) |
+| **03** | *"La impresora departamental de Administración tiene la luz naranja intermitente y marca atasco de papel en la bandeja 2."* | Hardware y Periféricos | Medio | Media | **DOC-03** (Retiro manual de papel atascado en rodillos y reinicio del spooler de impresión) |
+| **04** | *"No puedo acceder a la carpeta compartida en la unidad Z: del servidor de archivos, me sale 'Acceso Denegado'."* | Almacenamiento y Archivos | Medio | Media | **DOC-04** (Verificación de pertenencia a grupo de seguridad SMB y comando `net use`) |
+| **05** | *"Al ingresar al sistema contable / ERP me sale el error 'Usuario ya tiene una sesión activa en otra estación'."* | Software Corporativo | Alto | Alta | **DOC-05** (Finalización de proceso bloqueado en el servidor transaccional y validación SRI) |
+| **06** | *"Recibí un correo sospechoso con un archivo .zip solicitando datos bancarios, ¿qué debo hacer?"* | Seguridad de la Información | Alto | Alta | **DOC-06** (Política ISO 27002: aislamiento de phishing y reporte inmediato a seguridad TI) |
+| **07** | *"Mi computadora de escritorio se quedó sin internet y los LEDs del puerto Ethernet de la pared no encienden."* | Redes y Conectividad | Medio | Media | **DOC-07** (Inspección física de cable UTP, conector RJ-45 y verificación de switch de piso) |
+| **08** | *"Cambié de smartphone corporativo y no puedo conectar a la red Wi-Fi de la oficina."* | Redes Inalámbricas | Bajo | Baja | **DOC-08** (Selección de Red-Corporativa-Segura, autenticación WPA2-Enterprise y certificado) |
+| **09** | *"El antivirus Microsoft Defender muestra una alerta de amenaza de malware detectada en la carpeta de descargas."* | Ciberseguridad Endpoint | Alto | Alta | **DOC-09** (Aislamiento en cuarentena, análisis completo del equipo y actualización de firmas) |
+| **10** | *"Mi laptop de trabajo se congeló súbitamente mostrando una pantalla azul (BSOD) y emite un ruido metálico."* | Soporte a Estaciones | Alto | Alta | **DOC-10** (Detección de fallo crítico de disco; escalamiento a soporte presencial Nivel 2) |
+| **11** | *"Outlook no envía ni recibe correos porque me notifica que el buzón de almacenamiento superó los 50 GB."* | Correo y Colaboración | Medio | Media | **DOC-11** (Vaciado de elementos eliminados y autoarchivado de mensajes antiguos en archivo PST) |
+| **12** | *"El lunes se incorpora un nuevo colaborador en Ventas y necesitamos crear su usuario, correo y permisos."* | Identidad y Accesos | Bajo | Media | **DOC-12** (Procedimiento formal de alta en Active Directory y licenciamiento ofimático) |
+| **13** | *"Borré por error una hoja de cálculo compartida en la que trabajé toda la mañana, ¿cómo puedo recuperarla?"* | Respaldo y Continuidad | Medio | Alta | **DOC-13** (Recuperación mediante versiones anteriores de Windows Server - Shadow Copies VSS) |
+| **14** | *"Conecté un segundo monitor mediante cable HDMI al docking station de mi laptop pero no detecta señal."* | Hardware de Oficina | Bajo | Baja | **DOC-14** (Atajo `Win + P` para extender escritorio y ajuste de resolución en Configuración) |
+| **15** | *"¿Cuál es el tiempo máximo de atención (SLA) si se cae el servidor de facturación a fin de mes?"* | Gestión de Incidentes | Alto | Alta | **DOC-15** (Consulta de Matriz ITIL: Prioridad Alta, tiempo de respuesta SLA $\le 15$ minutos) |
 
 ---
 
-## 3. Conclusiones para el Modelo de Triaje
-1. *Priorización Crítica:* Las incidencias con luz LOS roja o quiebre físico de cable (preguntas 1 y 7) representan averías no resolubles por software y se deben escalar directamente a cuadrilla de campo[cite: 1].
-2. *Autogestión de Primer Nivel:* Más del 40% de los incidentes corresponden a dudas de cobertura Wi-Fi, canales o pruebas de velocidad (preguntas 2, 3, 4, 10, 12, 13), casos en los que el agente RAG resuelve la consulta citando el procedimiento oficial sin despachar técnicos innecesariamente.
-3. *Casos Administrativos:* Las consultas de mora y cortes comerciales (pregunta 9) deben filtrarse hacia canales de cobro y no saturar la cola operativa técnica.
+## 2. Conclusiones para el Modelo de Triaje
+1. **Alta Tasa de Autoatención Nivel 1 ($\ge 70\%$):** Las consultas 1, 2, 3, 4, 7, 8, 11, 13 y 14 pueden ser resueltas por el propio colaborador siguiendo las guías paso a paso del RAG, liberando al técnico de TI.
+2. **Escalamiento Obligatorio a Nivel 2:** Las incidencias 5, 10 y 12 requieren intervención física del técnico o privilegios de administrador de dominio.
+3. **Seguridad y LOPDP:** Casos como el 1 y el 6 exigen blindaje de contraseñas y detección de phishing según la política ISO 27002.

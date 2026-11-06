@@ -1,116 +1,107 @@
-# Ingeniería de Requisitos: ConectaTec
+# Ingeniería de Requisitos: TecnoAula (Mesa de Ayuda PYME)
 
 ## 1. Introducción
-El presente documento describe los requisitos funcionales y no funcionales de *ConectaTec* (Caso N.º 03 - Grupo 3), sistema de triaje automático de incidentes de soporte técnico para un Proveedor Local de Internet (ISP).
-Las historias de usuario siguen el estándar *INVEST* y sus criterios de aceptación están redactados bajo el formato *Gherkin* (Dado... Cuando... Entonces...).
-# 2. Historias de Usuario (Mínimo 8 Requisitos Funcionales)
-
-### HU-01: Reporte y triaje de falla por corte físico de fibra (Luz LOS roja)
-* *Como* cliente de Internet residencial,
-* *quiero* reportar que mi router ONT presenta una luz roja en el indicador LOS,
-* *para* conocer si mi acometida de fibra óptica sufrió una rotura y recibir asistencia inmediata.
-* *Criterios de Aceptación (Gherkin):*
-  * *Escenario 1:* Detección de daño físico de fibra óptica.
-    * *Dado* que el cliente ingresa una descripción que incluye "luz roja", "LOS en rojo" o "cable cortado",
-    * *cuando* el sistema analiza la solicitud,
-    * *entonces* clasifica la solicitud en la categoría "Fibra/Físico", asigna urgencia "Alta" y genera una alerta de daño físico.
-  * *Escenario 2:* Escalamiento preventivo.
-    * *Dado* que el incidente fue catalogado como daño físico de fibra,
-    * *cuando* se crea el ticket en el sistema,
-    * *entonces* se escala automáticamente para inspección de cuadrilla técnica de campo sin exigir pruebas de software al usuario.
+El presente documento describe los requisitos funcionales y no funcionales de **TecnoAula** (Caso N.º 03 · Grupo 3 UNIANDES), sistema de triaje automático de incidentes de soporte tecnológico para Pequeñas y Medianas Empresas (PYMEs).
+Las historias de usuario siguen el estándar **INVEST** y sus criterios de aceptación están redactados bajo la sintaxis **Gherkin (Dado... Cuando... Entonces...)**.
 
 ---
 
-### HU-02: Diagnóstico guiado de lentitud de navegación
-* *Como* usuario del servicio de Internet,
-* *quiero* recibir instrucciones paso a paso para verificar mi velocidad de conexión,
-* *para* descartar saturación local o interferencias antes de reportar una avería general.
-* *Criterios de Aceptación (Gherkin):*
-  * *Escenario 1:* Solicitud de prueba cableada oficial.
-    * *Dado* que el cliente reporta "Internet lento" o "baja velocidad",
-    * *cuando* el sistema procesa el requerimiento,
-    * *entonces* responde con el procedimiento oficial de test de velocidad citando el manual DOC-06 e instruye realizar la medición conectando un cable Ethernet directo al router.
+## 2. Historias de Usuario (8 Requisitos Funcionales Esenciales)
+
+### HU-01: Desbloqueo y Restablecimiento de Credenciales de Red (Active Directory)
+* **Como** colaborador de la PYME,
+* **quiero** solicitar asistencia cuando mi cuenta corporativa se bloquee por intentos fallidos,
+* **para** reanudar mis labores de oficina sin esperar horas la intervención manual del técnico.
+* **Criterios de Aceptación (Gherkin):**
+  * *Escenario 1: Detección y guía de auto-restablecimiento.*
+    * **Dado** que el colaborador describe "cuenta bloqueada" u "olvidé mi clave de Windows",
+    * **cuando** el sistema realiza el triaje semántico,
+    * **entonces** clasifica la solicitud en "Accesos y Contraseñas", cita el procedimiento oficial DOC-01 e indica los pasos para desbloqueo seguro.
+  * *Escenario 2: Protección LOPDP de contraseñas accidentales.*
+    * **Dado** que el usuario escribe su contraseña accidentalmente en el formulario,
+    * **cuando** el backend recibe el payload,
+    * **entonces** la anonimiza inmediatamente como `[CONFIDENCIAL_REMOVIDO]` antes de persistir o enviar al LLM.
 
 ---
 
-### HU-03: Optimización y cambio de canal de red Wi-Fi
-* *Como* cliente con problemas de cobertura inalámbrica en habitaciones alejadas,
-* *quiero* consultar cómo mejorar la señal Wi-Fi de mi hogar,
-* *para* optimizar la ubicación de mi router y evitar zonas muertas.
-* *Criterios de Aceptación (Gherkin):*
-  * *Escenario 1:* Guía de ubicación y cambio de frecuencia.
-    * *Dado* que el usuario consulta que "la señal no llega a mi habitación" o "baja señal Wi-Fi",
-    * *cuando* el sistema consulta la base de conocimiento,
-    * *entonces* devuelve los pasos de la guía DOC-05 sobre ubicación libre de obstáculos e instruye conectar dispositivos de alto consumo a la banda de 5 GHz.
+### HU-02: Diagnóstico y Configuración de VPN Corporativa para Teletrabajo
+* **Como** empleado en modalidad de teletrabajo,
+* **quiero** diagnosticar fallas de conexión en mi cliente FortiClient / OpenVPN,
+* **para** conectarme de forma segura a los servidores internos de la empresa.
+* **Criterios de Aceptación (Gherkin):**
+  * *Escenario 1: Error de túnel remoto.*
+    * **Dado** que el usuario reporta "error en VPN" o "FortiClient se queda en 48%",
+    * **cuando** el sistema consulta la base RAG,
+    * **entonces** retorna las instrucciones del manual DOC-02 verificando el gateway `vpn.empresa.com`, puerto SSL 443 y token 2FA.
 
 ---
 
-### HU-04: Consulta de estado comercial y suspensión por pago pendiente
-* *Como* suscriptor del ISP,
-* *quiero* verificar si la pérdida de señal se debe a un corte administrativo por facturación,
-* *para* evitar esperas técnicas innecesarias si mantengo valores pendientes.
-* *Criterios de Aceptación (Gherkin):*
-  * *Escenario 1:* Orientación ante corte por falta de pago.
-    * *Dado* que el cliente consulta por falta de servicio y tiene corte comercial registrado,
-    * *cuando* el sistema evalúa los datos del cliente,
-    * *entonces* clasifica la solicitud como "Comercial/Facturación", informa el estado de cuenta y proporciona los canales oficiales de pago sin generar ticket de cuadrilla técnica.
+### HU-03: Solución de Problemas en Impresoras Departamentales de Red
+* **Como** colaborador de oficina,
+* **quiero** resolver incidencias de atasco de papel o fallas en la cola de impresión,
+* **para** imprimir documentos urgentes sin detener los procesos del área.
+* **Criterios de Aceptación (Gherkin):**
+  * *Escenario 1: Atasco o error de spooler.*
+    * **Dado** que se reporta "atasco de papel en bandeja" o "la impresora no imprime",
+    * **cuando** el motor RAG evalúa la solicitud,
+    * **entonces** recupera el procedimiento DOC-03 con los pasos para despejar el recorrido de papel y reiniciar el spooler local.
 
 ---
 
-### HU-05: Solicitud de cambio de credenciales de red Wi-Fi
-* *Como* usuario que desea renovar la seguridad de su red local,
-* *quiero* solicitar la actualización del nombre (SSID) y clave de mi red inalámbrica,
-* *para* gestionar los dispositivos autorizados en mi domicilio.
-* *Criterios de Aceptación (Gherkin):*
-  * *Escenario 1:* Entrega del procedimiento de autogestión.
-    * *Dado* que el usuario solicita "cambiar contraseña de mi Wi-Fi",
-    * *cuando* el sistema analiza la consulta,
-    * *entonces* cita el manual DOC-04 y explica los pasos para acceder a la puerta de enlace predeterminada (192.168.1.1) de forma segura.
+### HU-04: Mapeo y Acceso a Carpetas Compartidas en Red (SMB / NAS)
+* **Como** miembro de un departamento (Finanzas, Ventas, Operaciones),
+* **quiero** restaurar mi acceso a la unidad compartida de red (Unidad Z:),
+* **para** acceder a los archivos de trabajo corporativos.
+* **Criterios de Aceptación (Gherkin):**
+  * *Escenario 1: Acceso denegado en unidad de red.*
+    * **Dado** que el colaborador indica "error de red en carpeta compartida",
+    * **cuando** el sistema procesa el incidente,
+    * **entonces** provee el procedimiento DOC-04 indicando la reconexión mediante comando `net use` y validación de permisos.
 
 ---
 
-### HU-06: Escalamiento automático de incidentes no resueltos
-* *Como* operador de mesa de ayuda,
-* *quiero* que los incidentes que no pudieron resolverse mediante las guías de primer nivel se deriven automáticamente,
-* *para* despachar una cuadrilla técnica con el historial completo de pruebas realizadas.
-* *Criterios de Aceptación (Gherkin):*
-  * *Escenario 1:* Marcado de falla persistente.
-    * *Dado* que el cliente indica que siguió los pasos guiados pero el problema persiste,
-    * *cuando* se actualiza el ticket,
-    * *entonces* el estado cambia de "En atención" a "Escalado", adjuntando el motivo y asignándose a la cola del equipo técnico de campo.
+### HU-05: Desbloqueo de Sesiones en Sistema Contable / ERP Interno
+* **Como** usuario del sistema contable,
+* **quiero** liberar mi usuario cuando el sistema reporte una sesión concurrente colgada,
+* **para** continuar con la emisión de facturas electrónicas sin duplicar registros.
+* **Criterios de Aceptación (Gherkin):**
+  * *Escenario 1: Sesión colgada en ERP.*
+    * **Dado** que el usuario reporta "usuario ya tiene una sesión activa en ERP",
+    * **cuando** el sistema clasifica la incidencia,
+    * **entonces** asigna Prioridad Alta según la matriz ITIL y deriva la solicitud a Nivel 2 para liberación de sesión en la base de datos transaccional.
 
 ---
 
-### HU-07: Tablero de control de tickets priorizados para soporte
-* *Como* técnico de soporte de guardia,
-* *quiero* visualizar un tablero con los tickets organizados por estados y nivel de prioridad,
-* *para* atender con urgencia los incidentes críticos y masivos antes que las dudas cotidianas.
-* *Criterios de Aceptación (Gherkin):*
-  * *Escenario 1:* Ordenamiento por matriz de prioridad ITIL.
-    * *Dado* que existen tickets registrados con diferentes prioridades (Crítica, Alta, Media, Baja),
-    * *cuando* el técnico consulta el tablero web,
-    * *entonces* los tickets se presentan agrupados por columnas de estado (Nuevo, En atención, Resuelto, Escalado) y ordenados descendentemente por su prioridad calculada.
+### HU-06: Escalamiento Presencial ante Fallas Críticas de Hardware (BSOD / Disco)
+* **Como** técnico único de TI,
+* **quiero** que las averías físicas no solucionables por software se escalen de inmediato con alerta,
+* **para** acudir presencialmente al puesto de trabajo del colaborador con los repuestos adecuados.
+* **Criterios de Aceptación (Gherkin):**
+  * *Escenario 1: Detección de fallo de hardware.*
+    * **Dado** que el reporte describe "pantalla azul BSOD", "ruido metálico de disco" o "humo",
+    * **cuando** el sistema evalúa la solicitud,
+    * **entonces** activa la bandera `requiere_visita_campo=True`, asigna Prioridad Alta (SLA 15m) y notifica al técnico para atención en sitio.
 
 ---
 
-### HU-08: Protección y sanitización de contraseñas compartidas
-* *Como* oficial de seguridad de la información y privacidad,
-* *quiero* que el sistema impida el almacenamiento de contraseñas de red o de router ingresadas por los usuarios,
-* *para* proteger las credenciales privadas y cumplir la Ley Orgánica de Protección de Datos Personales (LOPDP).
-* *Criterios de Aceptación (Gherkin):*
-  * *Escenario 1:* Detección y censura de contraseñas.
-    * *Dado* que el cliente escribe un mensaje que contiene frases como "mi contraseña es...", "mi clave es 12345" o credenciales explícitas,
-    * *cuando* el backend valida la entrada antes de procesarla con el modelo,
-    * *entonces* sanitiza el texto reemplazando la clave por [DATO_CONFIDENCIAL_REMOVIDO], advierte al usuario no compartir contraseñas y garantiza que dicho dato no se guarde en la base de datos ni en los registros (logs).
+### HU-07: Priorización Determinista ITIL v4 (Cálculo sin Tokens)
+* **Como** responsable de soporte,
+* **quiero** que el cálculo de prioridad y tiempo SLA se gobierne por código determinista leyendo un archivo JSON,
+* **para** garantizar tiempos contractuales exactos sin depender de la temperatura del LLM.
+* **Criterios de Aceptación (Gherkin):**
+  * *Escenario 1: Matriz determinista.*
+    * **Dado** cualquier incidente con Impacto y Urgencia extraídos por IA,
+    * **cuando** el backend calcula la prioridad,
+    * **entonces** una función pura en Python consulta `config/matriz_prioridad.json` con 0 gasto de tokens.
 
 ---
 
-## 3. Requisitos No Funcionales (RNF Medibles)
-
-| ID | Parámetro | Requisito Medible | Criterio de Verificación |
-| :--- | :--- | :--- | :--- |
-| *RNF-01* | *Tiempo de respuesta (Latencia)* | El endpoint de clasificación y triaje debe responder en un tiempo $\le 3.0$ segundos en el percentil 95 (P95). | Medido en logs del servidor backend por solicitud. |
-| *RNF-02* | *Salida Estructurada* | El 100% de las respuestas de clasificación deben entregarse en formato JSON válido bajo el esquema de Pydantic. | Validación de tipos y campos obligatorios antes del retorno HTTP. |
-| *RNF-03* | *Tolerancia a Fallos (Disponibilidad)* | Ante fallas consecutivas o límite de tasa (código HTTP 429) del proveedor principal, el sistema debe conmutar al proveedor de respaldo en menos de 2 segundos. | Prueba de caída simulada con proveedor secundario (Groq). |
-| *RNF-04* | *Privacidad y Seguridad (LOPDP)* | Cero contraseñas o datos personales sensibles deben persistirse en bases de datos relacionales o archivos de logs. | Verificado mediante pruebas automatizadas de seguridad con expresiones regulares. |
-| *RNF-05* | *Determinismo de Prioridad* | El cálculo de la prioridad debe realizarse estrictamente en código mediante la matriz ITIL versionada, con tolerancia cero a discrepancias numéricas. | Pruebas unitarias con pytest sobre matriz impacto-urgencia. |
+### HU-08: Gestión Visual en Tablero Kanban con Compuertas HITL
+* **Como** técnico de TI y supervisor,
+* **quiero** gestionar las solicitudes en un tablero Kanban con estados (`Nuevo`, `En Atención`, `Escalado N2`, `Resuelto N1`),
+* **para** supervisar la carga de trabajo y autorizar acciones de alto riesgo con confirmación humana.
+* **Criterios de Aceptación (Gherkin):**
+  * *Escenario 1: Compuerta Human-in-the-Loop.*
+    * **Dado** un ticket que requiere derivación presencial,
+    * **cuando** el agente propone la acción,
+    * **entonces** exige confirmación explícita del operador antes de emitir la orden formal.
