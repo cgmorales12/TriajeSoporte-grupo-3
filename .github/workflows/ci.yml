@@ -44,3 +44,4 @@ jobs:
           ADMIN_PASSWORD: "test_admin_password_ci_environment"
         run: |
           python run_eval.py
+

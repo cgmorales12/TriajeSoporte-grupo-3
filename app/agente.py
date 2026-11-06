@@ -17,7 +17,7 @@ import re
 import json
 import logging
 import hashlib
-from typing import List, Dict, Any, Optional, Literal, Tuple
+from typing import List, Dict, Any, Optional, Literal, Tuple, Callable
 from datetime import datetime
 from pydantic import BaseModel, Field, ConfigDict, ValidationError
 
@@ -709,7 +709,7 @@ def reiniciar_servidor(params: ParamsReiniciarServidor) -> ResultadoReiniciarSer
 # 4. Catálogo y Registro Cerrado de Herramientas (Whitelist)
 # ============================================================================
 
-CATALOGO_HERRAMIENTAS = {
+CATALOGO_HERRAMIENTAS: Dict[str, Dict[str, Any]] = {
     # 5 Herramientas Canónicas del Caso N.º 03 (Triaje de Soporte Tecnológico)
     "buscar_base_conocimiento": {
         "esquema": ParamsBuscarSolucion,
@@ -913,8 +913,8 @@ class AgenteTriajeTecnico:
         if not definicion:
             return False, {"error": "herramienta_no_definida"}, f"Herramienta '{nombre_tool}' no registrada en catálogo."
 
-        esquema_cls = definicion["esquema"]
-        funcion_fn = definicion["funcion"]
+        esquema_cls: Any = definicion["esquema"]
+        funcion_fn: Callable[..., Any] = definicion["funcion"]
 
         # 2. Validación de Contrato Pydantic (extra="forbid")
         try:
@@ -939,12 +939,12 @@ class AgenteTriajeTecnico:
                     )
                     logger.info(msg_hitl)
                     # La herramienta escalar retorna su resultado de pausa controlada
-                    resultado_obj = funcion_fn(params_validados)
+                    resultado_obj = funcion_fn(params_validados)  # type: ignore[call-arg]
                     return True, resultado_obj.model_dump(), msg_hitl
 
         # 4. Ejecución Determinista
         try:
-            resultado_obj = funcion_fn(params_validados)
+            resultado_obj = funcion_fn(params_validados)  # type: ignore[call-arg]
             resultado_dict = resultado_obj.model_dump()
             return True, resultado_dict, f"Herramienta '{nombre_tool}' ejecutada con éxito."
         except Exception as ex:
