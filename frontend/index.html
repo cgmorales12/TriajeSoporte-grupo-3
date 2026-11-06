@@ -797,9 +797,9 @@
             font-size: 9.5px;
             font-weight: 500;
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
+            border: 1px solid #CBD5E1;
             border-radius: 4px;
-            padding: 3px 5px;
+            padding: 4px 6px;
             height: 32px;
             line-height: 1.25;
             display: -webkit-box;
@@ -808,6 +808,12 @@
             overflow: hidden;
             text-overflow: ellipsis;
             box-sizing: border-box;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+        .cita-fragmento:hover {
+            border-color: #1E3A8A;
+            background: #F8FAFC;
         }
         .cita-footer {
             display: flex;
@@ -2039,6 +2045,10 @@
             border-color: #1C2B47 !important;
             color: #CBD5E1 !important;
         }
+        body.dark-theme .cita-fragmento:hover {
+            border-color: #38BDF8 !important;
+            background: #0E1626 !important;
+        }
         body.dark-theme .link-fuente {
             color: #93C5FD !important;
             background: #172554 !important;
@@ -2783,6 +2793,7 @@
             // Cita obligatoria del manual técnico RAG
             let citaTxt = '';
             if (t.categoria.includes('Fuera de Alcance') || t.categoria.includes('No Técnica')) {
+                const descFuera = "La consulta no describe un fallo técnico de sistemas. Por política institucional, se deriva a gestión administrativa o Recursos Humanos.";
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge badge-fuera">⚪ FUERA DE ALCANCE</span>
@@ -2790,7 +2801,7 @@
                     </div>
                     <div class="cita-doc" title="No corresponde a avería en infraestructura tecnológica">⚠️ No corresponde a soporte de TI</div>
                     <div class="cita-paso">📍 <b>Canal sugerido:</b> Recursos Humanos / Administración</div>
-                    <div class="cita-fragmento">«La consulta no describe un fallo técnico de sistemas. Por política institucional, se deriva a gestión administrativa.»</div>
+                    <div class="cita-fragmento" title="${escaparTextoHtml(descFuera)}">«${descFuera}»</div>
                     <div class="cita-footer">
                         <span class="link-fuente" style="color:#64748B !important;">🛡️ Mesa TI PYME</span>
                         <small style="color:#64748B; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">✓ Clasificado</small>
@@ -2813,6 +2824,12 @@
                 const pasoLimpio = (c.paso_exacto || 'Procedimiento estándar').replace(/^Sección:\s*/i, '');
                 const urlLink = `<span class="link-fuente" title="Manual Técnico Oficial: ${docId}">📄 ${docCodigo}</span>`;
 
+                // Fragmento completo y limpio para el tooltip y la visualización
+                let fragLimpio = (c.fragmento_aplicado || t.solucion_propuesta || '').trim();
+                if (fragLimpio.startsWith('«')) fragLimpio = fragLimpio.slice(1).trim();
+                if (fragLimpio.endsWith('»')) fragLimpio = fragLimpio.slice(0, -1).trim();
+                const fragCorto = fragLimpio.slice(0, 105) + (fragLimpio.length > 105 ? '...' : '');
+
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge">📖 CITA RAG OBLIGATORIA</span>
@@ -2820,13 +2837,14 @@
                     </div>
                     <div class="cita-doc" title="${docId}: ${titLimpio}"><b>${docId}:</b> ${titLimpio}</div>
                     <div class="cita-paso" title="${pasoLimpio}">📍 <b>Paso:</b> ${pasoLimpio}</div>
-                    <div class="cita-fragmento">«${(c.fragmento_aplicado || '').slice(0, 105)}${(c.fragmento_aplicado || '').length > 105 ? '...' : ''}»</div>
+                    <div class="cita-fragmento" title="${escaparTextoHtml(fragLimpio)}">«${fragCorto}»</div>
                     <div class="cita-footer">
                         ${urlLink}
                         <small style="color:#0F172A; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">✓ Cita verificada</small>
                     </div>
                 `;
             } else if (t.requiere_revision_humana || (t.metadatos_ia && t.metadatos_ia.conmutado)) {
+                const descEscalado = "Caso escalado a personal técnico humano para diagnóstico físico directo e intervención presencial en el puesto de trabajo.";
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge badge-escalado">⚠️ DERIVACIÓN</span>
@@ -2834,13 +2852,14 @@
                     </div>
                     <div class="cita-doc" title="RAG con umbral de abstención activado o contingencia">RAG con umbral de contingencia</div>
                     <div class="cita-paso">📍 <b>Derivación:</b> Diagnóstico presencial</div>
-                    <div class="cita-fragmento">«Caso escalado a personal técnico humano para diagnóstico físico directo.»</div>
+                    <div class="cita-fragmento" title="${escaparTextoHtml(descEscalado)}">«${descEscalado}»</div>
                     <div class="cita-footer">
                         <span class="link-fuente" style="color:#B45309 !important;">🚚 ODT Soporte</span>
                         <small style="color:#B45309; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">En curso</small>
                     </div>
                 `;
             } else {
+                const descGuia = "Procedimiento estándar de autoatención asistida según manuales operativos de soporte microinformático.";
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge">📖 GUÍA OFICIAL</span>
@@ -2848,7 +2867,7 @@
                     </div>
                     <div class="cita-doc" title="Mesa de Ayuda TIC para PYMEs">Mesa de Ayuda TIC PYME</div>
                     <div class="cita-paso">📍 <b>Procedimiento:</b> Triaje N1</div>
-                    <div class="cita-fragmento">«Procedimiento estándar de autoatención asistida según manuales operativos.»</div>
+                    <div class="cita-fragmento" title="${escaparTextoHtml(descGuia)}">«${descGuia}»</div>
                     <div class="cita-footer">
                         <span class="link-fuente">📄 Guía ConectaTec</span>
                         <small style="color:#0F172A; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">✓ Verificado</small>
@@ -2919,8 +2938,8 @@
                     </div>
                     <span class="ticket-prio">${t.prioridad} · SLA ${t.sla_minutos}m</span>
                 </div>
-                <div class="ticket-client" title="${t.nombre_cliente}">${t.nombre_cliente}</div>
-                <div class="ticket-desc" title="${t.descripcion_problema}">${t.descripcion_problema}</div>
+                <div class="ticket-client" title="${escaparTextoHtml(t.nombre_cliente)}">${t.nombre_cliente}</div>
+                <div class="ticket-desc" title="${escaparTextoHtml(t.descripcion_problema)}">${t.descripcion_problema}</div>
                 <div class="ticket-meta">
                     <div class="meta-row"><span class="meta-lbl">Nivel ITIL:</span> <span class="badge-nivel ${nivelClase}">${nivelIcono} ${nivelTexto}</span></div>
                     <div class="meta-row"><span class="meta-lbl">Categoría:</span> <span class="meta-val" title="${t.categoria}"><b>${t.categoria}</b></span></div>
