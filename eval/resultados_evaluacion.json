@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-05 19:38:17",
-  "duracion_segundos": 36.06,
+  "timestamp": "2026-11-05 21:49:14",
+  "duracion_segundos": 34.48,
   "aprobado_global": true,
   "metricas": {
-    "rag_hit_5": 1.0,
+    "rag_hit_5": 0.9285714285714286,
     "abstencion_tasa": 1.0,
     "calculos_tasa": 1.0,
     "flujo_errores_silenciosos": 0,
@@ -12,12 +12,12 @@
   },
   "detalles": {
     "rag": {
-      "total_preguntas": 20,
-      "total_con_manual": 17,
-      "aciertos_rag": 17,
-      "tasa_rag": 1.0,
-      "total_abstencion": 3,
-      "aciertos_abstencion": 3,
+      "total_preguntas": 30,
+      "total_con_manual": 28,
+      "aciertos_rag": 26,
+      "tasa_rag": 0.9285714285714286,
+      "total_abstencion": 2,
+      "aciertos_abstencion": 2,
       "tasa_abstencion": 1.0,
       "detalles": [
         {
@@ -25,76 +25,76 @@
           "tipo": "recuperacion_rag",
           "esperado": "DOC-01",
           "obtenido": [
-            "DOC-11",
             "DOC-01",
             "DOC-01",
-            "DOC-03",
-            "DOC-03"
+            "DOC-01",
+            "DOC-10",
+            "DOC-01"
           ],
           "exito": true
         },
         {
           "id": 2,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-05",
+          "esperado": "DOC-01",
           "obtenido": [
-            "DOC-06",
-            "DOC-06",
-            "DOC-05",
-            "DOC-04",
-            "DOC-06"
+            "DOC-01",
+            "DOC-01",
+            "DOC-10",
+            "DOC-10",
+            "DOC-01"
           ],
           "exito": true
         },
         {
           "id": 3,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-01",
+          "esperado": "DOC-02",
           "obtenido": [
-            "DOC-14",
-            "DOC-14",
-            "DOC-14",
-            "DOC-01",
-            "DOC-14"
+            "DOC-02",
+            "DOC-02",
+            "DOC-02",
+            "DOC-02",
+            "DOC-02"
           ],
           "exito": true
         },
         {
           "id": 4,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-04",
+          "esperado": "DOC-02",
           "obtenido": [
-            "DOC-04",
-            "DOC-04",
-            "DOC-04",
-            "DOC-04",
-            "DOC-12"
+            "DOC-02",
+            "DOC-02",
+            "DOC-12",
+            "DOC-02",
+            "DOC-02"
           ],
           "exito": true
         },
         {
           "id": 5,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-08",
+          "esperado": "DOC-03",
           "obtenido": [
-            "DOC-08",
-            "DOC-08",
-            "DOC-09",
-            "DOC-01",
-            "DOC-09"
+            "DOC-07",
+            "DOC-07",
+            "DOC-07",
+            "DOC-07",
+            "DOC-03"
           ],
           "exito": true
         },
         {
           "id": 6,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-07",
+          "esperado": "DOC-03",
           "obtenido": [
-            "DOC-07",
-            "DOC-07",
-            "DOC-14",
-            "DOC-07",
-            "DOC-14"
+            "DOC-03",
+            "DOC-01",
+            "DOC-10",
+            "DOC-01",
+            "DOC-11"
           ],
           "exito": true
         },
@@ -105,7 +105,7 @@
           "obtenido": [
             "DOC-03",
             "DOC-03",
-            "DOC-03",
+            "DOC-15",
             "DOC-03",
             "DOC-03"
           ],
@@ -114,70 +114,252 @@
         {
           "id": 8,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-09",
+          "esperado": "DOC-04",
           "obtenido": [
-            "DOC-09",
-            "DOC-09",
-            "DOC-03",
-            "DOC-06",
-            "DOC-08"
+            "DOC-04",
+            "DOC-13",
+            "DOC-04",
+            "DOC-04",
+            "DOC-04"
           ],
           "exito": true
         },
         {
           "id": 9,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-10",
+          "esperado": "DOC-04",
           "obtenido": [
-            "DOC-13",
-            "DOC-10",
             "DOC-04",
-            "DOC-10",
-            "DOC-12"
+            "DOC-04",
+            "DOC-15",
+            "DOC-13",
+            "DOC-06"
           ],
           "exito": true
         },
         {
           "id": 10,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-11",
+          "esperado": "DOC-04",
           "obtenido": [
-            "DOC-11",
-            "DOC-11",
-            "DOC-03",
-            "DOC-11",
-            "DOC-08"
+            "DOC-10",
+            "DOC-08",
+            "DOC-07",
+            "DOC-08",
+            "DOC-07"
           ],
-          "exito": true
+          "exito": false
         },
         {
           "id": 11,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-12",
+          "esperado": "DOC-05",
           "obtenido": [
-            "DOC-04",
-            "DOC-12",
+            "DOC-05",
+            "DOC-05",
             "DOC-06",
-            "DOC-12",
-            "DOC-11"
+            "DOC-05",
+            "DOC-05"
           ],
           "exito": true
         },
         {
           "id": 12,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-13",
+          "esperado": "DOC-05",
+          "obtenido": [
+            "DOC-05",
+            "DOC-07",
+            "DOC-03",
+            "DOC-05",
+            "DOC-05"
+          ],
+          "exito": true
+        },
+        {
+          "id": 13,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-05",
+          "obtenido": [
+            "DOC-05",
+            "DOC-05",
+            "DOC-06",
+            "DOC-06",
+            "DOC-11"
+          ],
+          "exito": true
+        },
+        {
+          "id": 14,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-06",
+          "obtenido": [
+            "DOC-06",
+            "DOC-06",
+            "DOC-06",
+            "DOC-01",
+            "DOC-14"
+          ],
+          "exito": true
+        },
+        {
+          "id": 15,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-06",
+          "obtenido": [
+            "DOC-06",
+            "DOC-06",
+            "DOC-11",
+            "DOC-06",
+            "DOC-01"
+          ],
+          "exito": true
+        },
+        {
+          "id": 16,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-07",
+          "obtenido": [
+            "DOC-07",
+            "DOC-07",
+            "DOC-07",
+            "DOC-07",
+            "DOC-07"
+          ],
+          "exito": true
+        },
+        {
+          "id": 17,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-07",
+          "obtenido": [
+            "DOC-07",
+            "DOC-07",
+            "DOC-08",
+            "DOC-03",
+            "DOC-07"
+          ],
+          "exito": true
+        },
+        {
+          "id": 18,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-08",
+          "obtenido": [
+            "DOC-08",
+            "DOC-08",
+            "DOC-08",
+            "DOC-08",
+            "DOC-08"
+          ],
+          "exito": true
+        },
+        {
+          "id": 19,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-08",
+          "obtenido": [
+            "DOC-08",
+            "DOC-08",
+            "DOC-08",
+            "DOC-08",
+            "DOC-08"
+          ],
+          "exito": true
+        },
+        {
+          "id": 20,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-09",
+          "obtenido": [
+            "DOC-09",
+            "DOC-09",
+            "DOC-09",
+            "DOC-09",
+            "DOC-09"
+          ],
+          "exito": true
+        },
+        {
+          "id": 21,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-09",
           "obtenido": [
             "DOC-13",
             "DOC-13",
+            "DOC-12",
             "DOC-13",
+            "DOC-13"
+          ],
+          "exito": false
+        },
+        {
+          "id": 22,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-10",
+          "obtenido": [
+            "DOC-10",
+            "DOC-10",
+            "DOC-06",
+            "DOC-15",
+            "DOC-06"
+          ],
+          "exito": true
+        },
+        {
+          "id": 23,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-10",
+          "obtenido": [
+            "DOC-10",
+            "DOC-10",
+            "DOC-10",
+            "DOC-10",
+            "DOC-10"
+          ],
+          "exito": true
+        },
+        {
+          "id": 24,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-11",
+          "obtenido": [
+            "DOC-11",
+            "DOC-11",
+            "DOC-04",
+            "DOC-10",
+            "DOC-15"
+          ],
+          "exito": true
+        },
+        {
+          "id": 25,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-12",
+          "obtenido": [
+            "DOC-12",
+            "DOC-15",
+            "DOC-05",
             "DOC-13",
             "DOC-13"
           ],
           "exito": true
         },
         {
-          "id": 13,
+          "id": 26,
+          "tipo": "recuperacion_rag",
+          "esperado": "DOC-13",
+          "obtenido": [
+            "DOC-13",
+            "DOC-04",
+            "DOC-12",
+            "DOC-13",
+            "DOC-13"
+          ],
+          "exito": true
+        },
+        {
+          "id": 27,
           "tipo": "recuperacion_rag",
           "esperado": "DOC-14",
           "obtenido": [
@@ -190,76 +372,30 @@
           "exito": true
         },
         {
-          "id": 14,
+          "id": 28,
           "tipo": "recuperacion_rag",
-          "esperado": "DOC-02",
+          "esperado": "DOC-15",
           "obtenido": [
-            "DOC-09",
-            "DOC-01",
-            "DOC-02",
-            "DOC-01",
-            "DOC-02"
+            "DOC-15",
+            "DOC-15",
+            "DOC-12",
+            "DOC-15",
+            "DOC-15"
           ],
           "exito": true
         },
         {
-          "id": 15,
+          "id": 29,
           "tipo": "abstencion",
           "esperado": "ABSTENCIÓN",
           "obtenido": "ABSTENIDO",
           "exito": true
         },
         {
-          "id": 16,
+          "id": 30,
           "tipo": "abstencion",
           "esperado": "ABSTENCIÓN",
           "obtenido": "ABSTENIDO",
-          "exito": true
-        },
-        {
-          "id": 17,
-          "tipo": "abstencion",
-          "esperado": "ABSTENCIÓN",
-          "obtenido": "ABSTENIDO",
-          "exito": true
-        },
-        {
-          "id": 18,
-          "tipo": "recuperacion_rag",
-          "esperado": "DOC-09",
-          "obtenido": [
-            "DOC-09",
-            "DOC-09",
-            "DOC-09",
-            "DOC-09",
-            "DOC-09"
-          ],
-          "exito": true
-        },
-        {
-          "id": 19,
-          "tipo": "recuperacion_rag",
-          "esperado": "DOC-04",
-          "obtenido": [
-            "DOC-04",
-            "DOC-14",
-            "DOC-14",
-            "DOC-03",
-            "DOC-14"
-          ],
-          "exito": true
-        },
-        {
-          "id": 20,
-          "tipo": "recuperacion_rag",
-          "esperado": "DOC-09",
-          "obtenido": [
-            "DOC-03",
-            "DOC-03",
-            "DOC-09",
-            "DOC-03",
-            "DOC-09"
-          ],
           "exito": true
         }
       ]

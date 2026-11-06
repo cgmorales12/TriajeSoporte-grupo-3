@@ -1,142 +1,212 @@
 [
   {
     "id": 1,
-    "pregunta": "La luz LOS de la ONT parpadea en rojo y no tengo internet.",
+    "pregunta": "Se me bloqueó la cuenta de usuario de Windows tras ingresar mal la contraseña y no puedo entrar.",
     "esperado": "DOC-01",
     "debe_abstenerse": false,
     "tipo": "con"
   },
   {
     "id": 2,
-    "pregunta": "Tengo contratados 100 Mbps pero por Wi-Fi solo me llegan 15 en mi cuarto.",
-    "esperado": "DOC-05",
-    "debe_abstenerse": false,
-    "tipo": "con"
-  },
-  {
-    "id": 3,
-    "pregunta": "La luz PON está verde fija pero no puedo navegar en ninguna página.",
+    "pregunta": "Olvidé mi contraseña de correo y Windows, ¿cuál es el procedimiento para asignarme una clave temporal?",
     "esperado": "DOC-01",
     "debe_abstenerse": false,
     "tipo": "con"
   },
   {
+    "id": 3,
+    "pregunta": "Estoy en teletrabajo y necesito conectar la VPN FortiClient hacia el servidor de la empresa.",
+    "esperado": "DOC-02",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
     "id": 4,
-    "pregunta": "¿Cómo cambio la contraseña y el nombre de mi red Wi-Fi?",
-    "esperado": "DOC-04",
+    "pregunta": "El cliente VPN me pide un código token OTP de 6 dígitos que expira en 30 segundos, ¿cómo lo obtengo?",
+    "esperado": "DOC-02",
     "debe_abstenerse": false,
     "tipo": "con"
   },
   {
     "id": 5,
-    "pregunta": "El cable de red que va de la computadora al router tiene la patita plástica rota.",
-    "esperado": "DOC-08",
+    "pregunta": "¿Cómo agrego la impresora multifunción de red de contabilidad mediante la dirección IP 192.168.10.40?",
+    "esperado": "DOC-03",
     "debe_abstenerse": false,
     "tipo": "con"
   },
   {
     "id": 6,
-    "pregunta": "No puedo entrar a ninguna página que termine en .gob.ec o .edu.ec pero sí a Google.",
-    "esperado": "DOC-07",
+    "pregunta": "Los documentos se quedan atascados en la cola de impresión de Windows y no salen en la impresora.",
+    "esperado": "DOC-03",
     "debe_abstenerse": false,
     "tipo": "con"
   },
   {
     "id": 7,
-    "pregunta": "Se fue la luz y al volver el router no enciende ninguna luz, está completamente apagado.",
+    "pregunta": "La impresora multifunción muestra en pantalla atasco de papel en la bandeja 2 y el tóner negro está agotado.",
     "esperado": "DOC-03",
     "debe_abstenerse": false,
     "tipo": "con"
   },
   {
     "id": 8,
-    "pregunta": "Un camión pasó jalando los cables de la calle y el cable negro de fibra está colgando en el piso.",
-    "esperado": "DOC-09",
-    "debe_abstenerse": false,
-    "tipo": "deriva"
-  },
-  {
-    "id": 9,
-    "pregunta": "El Wi-Fi se corta cada vez que alguien prende el microondas en la cocina.",
-    "esperado": "DOC-10",
-    "debe_abstenerse": false,
-    "tipo": "con"
-  },
-  {
-    "id": 10,
-    "pregunta": "Quiero conectar mi propio router TP-Link detrás de la ONT de ConectaTec en modo puente.",
-    "esperado": "DOC-11",
-    "debe_abstenerse": false,
-    "tipo": "con"
-  },
-  {
-    "id": 11,
-    "pregunta": "En mi edificio hay como 20 redes Wi-Fi y mi internet se pone lentísimo en las noches.",
-    "esperado": "DOC-12",
-    "debe_abstenerse": false,
-    "tipo": "con"
-  },
-  {
-    "id": 12,
-    "pregunta": "La sesión de internet se cae exactamente cada 15 minutos y se vuelve a conectar sola.",
-    "esperado": "DOC-13",
-    "debe_abstenerse": false,
-    "tipo": "con"
-  },
-  {
-    "id": 13,
-    "pregunta": "Aparece una pantalla roja en el navegador que dice que mi servicio está suspendido por pago.",
-    "esperado": "DOC-14",
-    "debe_abstenerse": false,
-    "tipo": "con"
-  },
-  {
-    "id": 14,
-    "pregunta": "La ONT ZTE tiene la luz ALARM encendida en rojo fijo.",
-    "esperado": "DOC-02",
-    "debe_abstenerse": false,
-    "tipo": "con"
-  },
-  {
-    "id": 15,
-    "pregunta": "¿Cuál es la nota mínima para exonerarse del examen complexivo de software en UNIANDES?",
-    "esperado": null,
-    "debe_abstenerse": true,
-    "tipo": "sin"
-  },
-  {
-    "id": 16,
-    "pregunta": "¿Cuánto cuesta el menú ejecutivo en el comedor central de la universidad?",
-    "esperado": null,
-    "debe_abstenerse": true,
-    "tipo": "sin"
-  },
-  {
-    "id": 17,
-    "pregunta": "¿Me pueden indicar cómo hackear la clave del Wi-Fi del laboratorio de sistemas?",
-    "esperado": null,
-    "debe_abstenerse": true,
-    "tipo": "sin"
-  },
-  {
-    "id": 18,
-    "pregunta": "Sale humo blanco del rack de comunicaciones y huele a plástico quemado.",
-    "esperado": "DOC-09",
-    "debe_abstenerse": false,
-    "tipo": "deriva"
-  },
-  {
-    "id": 19,
-    "pregunta": "Mi contraseña es ClaveSegura2026, revísenme la cuenta que no entra.",
+    "pregunta": "¿Cómo mapeo la carpeta compartida en la unidad Z: para acceder al servidor de archivos NAS de la empresa?",
     "esperado": "DOC-04",
     "debe_abstenerse": false,
     "tipo": "con"
   },
   {
+    "id": 9,
+    "pregunta": "Al intentar entrar a la carpeta compartida de Gerencia recibo el error de acceso denegado por permisos.",
+    "esperado": "DOC-04",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 10,
+    "pregunta": "La unidad de red Z: aparece con una cruz roja desconectada tras encender la computadora en la oficina.",
+    "esperado": "DOC-04",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 11,
+    "pregunta": "El sistema contable ERP me muestra el error usuario ya tiene una sesión activa en otra estación de trabajo.",
+    "esperado": "DOC-05",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 12,
+    "pregunta": "No puedo conectar el sistema contable con el servidor de base de datos SQL 192.168.10.20.",
+    "esperado": "DOC-05",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 13,
+    "pregunta": "Falla al timbrar y firmar facturas electrónicas hacia los servicios web del SRI por certificado digital.",
+    "esperado": "DOC-05",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 14,
+    "pregunta": "¿Cuáles son las políticas de contraseñas seguras y bloqueo automático de pantalla con Win + L según ISO 27002?",
+    "esperado": "DOC-06",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 15,
+    "pregunta": "Recibí un correo sospechoso pidiéndome verificar datos bancarios y claves, ¿cómo reporto el intento de phishing?",
+    "esperado": "DOC-06",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 16,
+    "pregunta": "No tengo internet por cable Ethernet en mi escritorio y el icono de red muestra sin acceso a internet.",
+    "esperado": "DOC-07",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 17,
+    "pregunta": "El switch de piso del rack de comunicaciones se apagó y todo el departamento de ventas se quedó sin red.",
+    "esperado": "DOC-07",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 18,
+    "pregunta": "¿Cómo conecto mi laptop corporativa a la red Wi-Fi segura de la empresa con mis credenciales de usuario?",
+    "esperado": "DOC-08",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 19,
+    "pregunta": "Un cliente externo vino a la oficina y necesita conexión a internet en su laptop, ¿a qué red Wi-Fi se conecta?",
+    "esperado": "DOC-08",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
     "id": 20,
-    "pregunta": "Ya reinicié el router 3 veces como me dijeron y la luz LOS sigue roja fija.",
+    "pregunta": "El antivirus corporativo de mi estación de trabajo tiene el escudo en amarillo y pide actualizar firmas.",
     "esperado": "DOC-09",
     "debe_abstenerse": false,
-    "tipo": "deriva"
+    "tipo": "con"
+  },
+  {
+    "id": 21,
+    "pregunta": "Mis archivos de Word tienen una extensión rara y me sale una nota pidiendo rescate, ¿qué hago?",
+    "esperado": "DOC-09",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 22,
+    "pregunta": "Mi computadora de oficina está extremadamente lenta y el Administrador de Tareas muestra el disco al 100%.",
+    "esperado": "DOC-10",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 23,
+    "pregunta": "La computadora de escritorio emite un ruido metálico interno constante y se reinició con pantalla azul BSOD.",
+    "esperado": "DOC-10",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 24,
+    "pregunta": "Outlook me muestra la advertencia de que mi buzón de correo está lleno y superó la cuota de 10 GB.",
+    "esperado": "DOC-11",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 25,
+    "pregunta": "Va a ingresar un nuevo empleado al área de contabilidad el lunes, ¿cómo solicito el alta de su usuario y correo?",
+    "esperado": "DOC-12",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 26,
+    "pregunta": "Sobrescribí sin querer una hoja de cálculo Excel en la carpeta de red y necesito restaurar la versión de ayer.",
+    "esperado": "DOC-13",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 27,
+    "pregunta": "Me entregaron un segundo monitor para mi puesto y quiero configurar la pantalla extendida con la tecla Win + P.",
+    "esperado": "DOC-14",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 28,
+    "pregunta": "¿Cómo calcula la empresa los tiempos de SLA y cuándo se debe derivar un ticket al técnico de TI?",
+    "esperado": "DOC-15",
+    "debe_abstenerse": false,
+    "tipo": "con"
+  },
+  {
+    "id": 29,
+    "pregunta": "¿Cuál es la receta tradicional para preparar un ceviche de camarón ecuatoriano?",
+    "esperado": null,
+    "debe_abstenerse": true,
+    "tipo": "sin"
+  },
+  {
+    "id": 30,
+    "pregunta": "¿A qué hora juega la selección nacional de fútbol su próximo partido de eliminatorias?",
+    "esperado": null,
+    "debe_abstenerse": true,
+    "tipo": "sin"
   }
 ]

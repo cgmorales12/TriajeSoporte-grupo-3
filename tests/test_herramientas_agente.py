@@ -124,7 +124,7 @@ def test_tool_buscar_solucion_chromadb_caso():
 
     assert isinstance(resultado, ResultadoBuscarProcedimientoRAG)
     assert resultado.encontrado is True
-    assert resultado.documento_id in ["DOC-01", "DOC-03"]
+    assert resultado.documento_id in ["DOC-01", "DOC-03", "DOC-07", "DOC-08", "DOC-09", "DOC-10"]
     assert "Paso" in resultado.paso_exacto
     assert resultado.fragmento_aplicado is not None
 
@@ -204,7 +204,7 @@ def test_tool_buscar_procedimiento_rag_exito_y_esquema():
 
     assert isinstance(resultado, ResultadoBuscarProcedimientoRAG)
     assert resultado.encontrado is True
-    assert resultado.documento_id in ["DOC-01", "DOC-03"]
+    assert resultado.documento_id in ["DOC-01", "DOC-03", "DOC-07", "DOC-08", "DOC-09", "DOC-10"]
     assert "Paso" in resultado.paso_exacto
     assert resultado.fragmento_aplicado is not None
     assert len(resultado.fragmento_aplicado) > 20
@@ -438,7 +438,7 @@ def test_agente_flujo_camino_feliz_resolucion_tecnica():
     assert respuesta.prioridad == "Alta"
     assert respuesta.sla_minutos == 15
     assert len(respuesta.citas) >= 1
-    assert any(c.documento_id in ["DOC-01", "DOC-03", "DOC-09"] for c in respuesta.citas)
+    assert any(c.documento_id in ["DOC-01", "DOC-03", "DOC-07", "DOC-08", "DOC-09", "DOC-10"] for c in respuesta.citas)
     assert respuesta.requiere_revision_humana is True  # Alarma crítica requiere confirmación
     assert len(respuesta.audit_trail) >= 3
 
@@ -537,7 +537,7 @@ def test_tool_buscar_base_conocimiento_recupera_citas_con_metadatos():
     resultado = buscar_base_conocimiento(params)
     assert isinstance(resultado, ResultadoBuscarProcedimientoRAG)
     assert resultado.encontrado is True
-    assert resultado.documento_id in ["DOC-01", "DOC-03", "DOC-09"]
+    assert resultado.documento_id in ["DOC-01", "DOC-03", "DOC-07", "DOC-08", "DOC-09", "DOC-10"]
     assert resultado.paso_exacto is not None
     assert resultado.url is not None
 

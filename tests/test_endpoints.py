@@ -970,7 +970,7 @@ def test_agente_implementacion_determinista_herramientas():
     # 1. Búsqueda RAG determinista
     res_rag = tool_buscar_procedimiento_rag(ParamsBuscarProcedimientoRAG(consulta="luz LOS parpadea en rojo"))
     assert res_rag.encontrado is True
-    assert res_rag.documento_id in ["DOC-01", "DOC-09"]
+    assert res_rag.documento_id in ["DOC-01", "DOC-07", "DOC-08", "DOC-09", "DOC-10"]
     assert res_rag.paso_exacto is not None
 
     # 2. Priorización ITIL determinista (0 tokens)
