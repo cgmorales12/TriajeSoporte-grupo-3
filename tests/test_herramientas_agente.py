@@ -47,7 +47,15 @@ from app.agente import (
     tool_escalar_cuadrilla_presencial,
     tool_consultar_estado_nodo,
     tool_consultar_tarifas_repuestos,
-    tool_consultar_calendario_soporte
+    tool_consultar_calendario_soporte,
+    buscar_base_conocimiento,
+    priorizar_ticket,
+    crear_ticket,
+    derivar_a_tecnico,
+    reiniciar_servidor,
+    ParamsReiniciarServidor,
+    ResultadoReiniciarServidor,
+    HERRAMIENTAS_DEL_CASO
 )
 
 
@@ -490,4 +498,126 @@ def test_agente_decision_cognitiva_dinamica_cuatro_fases_react():
     for p in pasos_pensar:
         assert "Pensamiento cognitivo:" in p.observacion
         assert len(p.observacion) > 25
+
+
+# ============================================================================
+# 6. Pruebas de las 5 Herramientas Canónicas del Caso 3 (Rúbrica Oficial)
+# Nombres estandarizados:
+#   1. buscar_base_conocimiento (Nivel L · Solo lee)
+#   2. priorizar_ticket         (Nivel L · Cálculo determinista)
+#   3. crear_ticket             (Nivel C · Cambia el sistema / HITL)
+#   4. derivar_a_tecnico        (Nivel C · Llega a otra persona / HITL)
+#   5. reiniciar_servidor       (Nivel F · Acción irreversible fuera de lista)
+# ============================================================================
+
+def test_cinco_herramientas_canonicas_del_caso_declaracion_y_niveles():
+    """Valida que las 5 herramientas canónicas del Caso 3 existan en catálogo con sus niveles L, C, F."""
+    assert len(HERRAMIENTAS_DEL_CASO) == 5
+    esperadas = [
+        ("buscar_base_conocimiento", "L"),
+        ("priorizar_ticket", "L"),
+        ("crear_ticket", "C"),
+        ("derivar_a_tecnico", "C"),
+        ("reiniciar_servidor", "F"),
+    ]
+    for nombre, nivel in esperadas:
+        assert nombre in CATALOGO_HERRAMIENTAS, f"Herramienta '{nombre}' no encontrada en catálogo"
+        meta = CATALOGO_HERRAMIENTAS[nombre]
+        assert meta.get("nivel_caso") == nivel, f"Nivel de caso para '{nombre}' no coincide con '{nivel}'"
+        assert meta["esquema"] is not None
+        assert callable(meta["funcion"])
+
+
+def test_tool_buscar_base_conocimiento_recupera_citas_con_metadatos():
+    """Valida que buscar_base_conocimiento recupere citas válidas con sus metadatos oficiales."""
+    params = ParamsBuscarSolucion(
+        texto="La luz LOS está en rojo fija en el módem de fibra óptica y no hay internet",
+        categoria="Conectividad y Fibra Óptica"
+    )
+    resultado = buscar_base_conocimiento(params)
+    assert isinstance(resultado, ResultadoBuscarProcedimientoRAG)
+    assert resultado.encontrado is True
+    assert resultado.documento_id in ["DOC-01", "DOC-03", "DOC-09"]
+    assert resultado.paso_exacto is not None
+    assert resultado.url is not None
+
+
+def test_tool_priorizar_ticket_determinista():
+    """Valida que priorizar_ticket calcule la prioridad con la matriz ITIL determinista (0 tokens)."""
+    params = ParamsCalcularPrioridadITIL(impacto="Alto", urgencia="Alta")
+    resultado = priorizar_ticket(params)
+    assert isinstance(resultado, ResultadoCalcularPrioridadITIL)
+    assert resultado.prioridad == "Alta"
+    assert resultado.sla_minutos == 15
+
+    params_baja = ParamsCalcularPrioridadITIL(impacto="Bajo", urgencia="Baja")
+    res_baja = priorizar_ticket(params_baja)
+    assert res_baja.prioridad == "Baja"
+    assert res_baja.sla_minutos == 1440
+
+
+def test_tool_crear_ticket_kanban_persistencia():
+    """Valida que crear_ticket persista el registro en la base de datos de soporte."""
+    params = ParamsRegistrarTicketKanban(
+        nombre_cliente="Docente Prueba Canonica",
+        email_cliente="docente.prueba@uniandes.edu.ec",
+        descripcion_problema="Falla en punto de red del aula de sistemas para clase presencial",
+        categoria="Infraestructura de Red",
+        prioridad="Media",
+        sla_minutos=120,
+        solucion_propuesta="Verificación de latiguillo UTP y comprobación de negociación en switch",
+        documento_id="DOC-08"
+    )
+    resultado = crear_ticket(params)
+    assert isinstance(resultado, ResultadoRegistrarTicketKanban)
+    assert resultado.registrado is True
+    assert resultado.ticket_codigo.startswith("TCK-")
+    assert resultado.ticket_id > 0
+
+
+def test_tool_derivar_a_tecnico_compuerta_hitl():
+    """Valida que derivar_a_tecnico pause si confirmado=False y despache si confirmado=True."""
+    # 1. Sin confirmación -> Pausado por HITL
+    params_sin_conf = ParamsEscalar(
+        ticket="TCK-CANON-01",
+        motivo="Rotura de drop exterior por poda de árboles en campus",
+        confirmado=False
+    )
+    resultado_pausado = derivar_a_tecnico(params_sin_conf)
+    assert isinstance(resultado_pausado, ResultadoEscalar)
+    assert resultado_pausado.requiere_confirmacion_humana is True
+    assert resultado_pausado.estado == "pendiente_aprobacion_humana"
+    assert resultado_pausado.orden_despacho_id is None
+
+    # 2. Con confirmación -> Despachado
+    params_con_conf = ParamsEscalar(
+        ticket="TCK-CANON-01",
+        motivo="Rotura de drop exterior por poda de árboles en campus",
+        confirmado=True
+    )
+    resultado_despachado = derivar_a_tecnico(params_con_conf)
+    assert resultado_despachado.requiere_confirmacion_humana is False
+    assert resultado_despachado.estado == "despachado"
+    assert resultado_despachado.orden_despacho_id is not None
+    assert "ODT-FIBRA-" in resultado_despachado.orden_despacho_id
+
+
+def test_tool_reiniciar_servidor_bloqueo_determinista_owasp_llm08():
+    """
+    Valida que la herramienta de Nivel 'F' (reiniciar_servidor) esté bloqueada
+    de manera determinista para mitigar exceso de agencia (OWASP LLM08 / ASI02).
+    """
+    params = ParamsReiniciarServidor(
+        servidor_id="SRV-PROD-MOODLE-01",
+        motivo="Servidor lento durante examen final",
+        confirmacion_humana=True  # Incluso con True debe ser denegada por el agente
+    )
+    resultado = reiniciar_servidor(params)
+    assert isinstance(resultado, ResultadoReiniciarServidor)
+    assert resultado.ejecutado is False
+    assert resultado.bloqueado_por_seguridad is True
+    assert "F (" in resultado.nivel_riesgo
+    assert "ACCIÓN DENEGADA POR SEGURIDAD" in resultado.mensaje
+    assert "SRV-PROD-MOODLE-01" in resultado.mensaje
+
 

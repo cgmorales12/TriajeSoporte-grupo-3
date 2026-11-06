@@ -765,12 +765,6 @@ CATALOGO_HERRAMIENTAS = {
         "nivel": 1,
         "descripcion": "Recupera manuales técnicos oficiales desde ChromaDB con ID y paso exacto"
     },
-    "crear_ticket": {
-        "esquema": ParamsRegistrarTicketKanban,
-        "funcion": tool_registrar_ticket_kanban,
-        "nivel": 2,
-        "descripcion": "Persiste un ticket estructurado en la base de datos (Kanban)"
-    },
     "escalar": {
         "esquema": ParamsEscalar,
         "funcion": tool_escalar,
