@@ -532,3 +532,18 @@ def confirmar_derivacion_cuadrilla_endpoint(ticket_id: int, payload: ConfirmarDe
         ticket_actualizado=TicketOut(**ticket_actualizado) if ticket_actualizado else None
     )
 
+
+@router.post("/v1/tickets/restablecer-ejemplos", summary="Restablece los 20 tickets de demostración oficiales (5 por estado)")
+@router.post("/tickets/restablecer-ejemplos", summary="Alias para restablecer 20 tickets")
+def restablecer_ejemplos():
+    """Restablece exactamente 20 tickets didácticos (5 por columna del Kanban)."""
+    from app.database import sembrar_tickets_demo, _obtener_conexion
+    conn = _obtener_conexion()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM tickets")
+    conn.commit()
+    conn.close()
+    sembrar_tickets_demo()
+    return {"status": "ok", "mensaje": "Tablero restablecido con 20 tickets (5 por cada estado)", "total_tickets": 20}
+
+

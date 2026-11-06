@@ -152,9 +152,81 @@ def inicializar_bd():
             INSERT OR IGNORE INTO usuarios_tic (usuario, nombre_completo, rol, hash_password, salt, activo, fecha_creacion)
             VALUES (?, ?, ?, ?, ?, 1, ?)
         """, ("admin", "Administrador TIC - ConectaTec", "administrador_tic", hash_pass, salt, ahora_iso))
+
+    # Sembrar automáticamente los 20 tickets de demostración (5 por cada estado) si la tabla está vacía
+    conteo_tickets = cursor.execute("SELECT COUNT(*) FROM tickets WHERE (eliminado IS NULL OR eliminado = 0)").fetchone()[0]
+    if conteo_tickets == 0:
+        sembrar_tickets_demo(cursor)
     
     conn.commit()
     conn.close()
+
+def sembrar_tickets_demo(cursor=None):
+    """Siembra los 20 tickets de demostración oficiales (5 por estado) en la base de datos."""
+    cierre_manual = False
+    conn = None
+    if cursor is None:
+        conn = _obtener_conexion()
+        cursor = conn.cursor()
+        cierre_manual = True
+    
+    try:
+        from app.datos_semilla import TICKETS_PYME
+        ahora_iso = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        for t in TICKETS_PYME:
+            cursor.execute("""
+                INSERT OR IGNORE INTO tickets (
+                    ticket_codigo, fecha_creacion, nombre_cliente, email_cliente,
+                    descripcion_problema, categoria, impacto, urgencia, prioridad,
+                    sla_minutos, descripcion_sla, solucion_propuesta, citas_json,
+                    estado, requiere_revision_humana, proveedor_ia, modelo_ia,
+                    conmutado, motivo_conmutacion, latencia_ms, justificacion, sintomas_json,
+                    tokens_prompt, tokens_completado, tokens_total, modo_vulnerable, alucinacion_detectada,
+                    eliminado, confirmado_por, fecha_confirmacion, accion_confirmada,
+                    notificacion_enviada, cuadrilla_despachada, orden_despacho_id
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+            """, (
+                t["codigo"],
+                ahora_iso,
+                t["cliente"],
+                t["email"],
+                t["problema"],
+                t["categoria"],
+                t["impacto"],
+                t["urgencia"],
+                t["prioridad"],
+                t["sla"],
+                t["desc_sla"],
+                t["solucion"],
+                json.dumps(t.get("citas", [])),
+                t["estado"],
+                1 if t.get("modo_vuln") or t["prioridad"] == "Alta" else 0,
+                t.get("proveedor", "gemini"),
+                "gemini-3.5-flash-lite" if "gemini" in t.get("proveedor", "") else "llama-3.3-70b-versatile",
+                1 if t.get("proveedor") == "groq" else 0,
+                "Simulación Failover Automático por Cuota 429" if t.get("proveedor") == "groq" else None,
+                380.0,
+                t.get("justif", ""),
+                json.dumps([t["categoria"], t["prioridad"]]),
+                t.get("tokens", 400) - 90,
+                90,
+                t.get("tokens", 400),
+                t.get("modo_vuln", 0),
+                t.get("aluc_det", 0),
+                t.get("confirmado_por"),
+                ahora_iso if t.get("confirmado_por") else None,
+                "autorizar_alta" if t.get("confirmado_por") else None,
+                1 if t.get("notificacion_enviada") else 0,
+                1 if t.get("cuadrilla_despachada") else 0,
+                t.get("orden_despacho_id")
+            ))
+        logger.info("Base de datos inicializada con 20 tickets de demostración (5 por estado)")
+    except Exception as err:
+        logger.warning("No se pudieron sembrar tickets iniciales: %s", err)
+    
+    if cierre_manual and conn:
+        conn.commit()
+        conn.close()
 
 # Asegurar inicialización al importar el módulo
 inicializar_bd()
