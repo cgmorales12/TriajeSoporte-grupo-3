@@ -87,8 +87,8 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="ConectaTec - Grupo 3 API · Triaje Inteligente ISP (Caso 03 UNIANDES)",
-    description="Sistema de triaje automático, priorización determinista ITIL y resolución con RAG sobre 15 manuales técnicos oficiales (Grupo 3).",
+    title="TecnoAula - Grupo 3 API · Triaje de Soporte Microinformático TIC para PYMEs (Caso 03 UNIANDES)",
+    description="Sistema de triaje automático, priorización determinista ITIL y resolución con RAG sobre 15 manuales técnicos oficiales para PYMEs (Grupo 3).",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
@@ -291,9 +291,9 @@ app.include_router(manuales_router)
 @app.get("/", tags=["Raíz"])
 def raiz():
     return {
-        "sistema": "ConectaTec - Grupo 3",
+        "sistema": "TecnoAula - Grupo 3",
         "caso": "Caso N.º 03 · Grupo 3 UNIANDES",
-        "descripcion": "Triaje Inteligente de Incidentes ISP con IA y RAG",
+        "descripcion": "Triaje Inteligente de Soporte Microinformático TIC para PYMEs con IA y RAG",
         "version": "1.0.0",
         "grupo": "Grupo 3",
         "integrantes": [
