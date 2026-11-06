@@ -815,14 +815,6 @@
             transform: translateY(-1px);
             box-shadow: 0 2px 4px rgba(20, 83, 45, 0.15);
         }
-            gap: 6px;
-            transition: all 0.2s ease;
-        }
-        .exp-btn:hover {
-            background: #DCFCE7;
-            border-color: #86EFAC;
-            box-shadow: 0 2px 4px rgba(22, 101, 52, 0.1);
-        }
 
         /* Estilos de Human-in-the-Loop (HITL · OWASP LLM08) */
         .badge-hitl-ok {
@@ -1279,6 +1271,424 @@
         @media (max-width: 700px) {
             .kanban-board { grid-template-columns: 1fr; }
         }
+
+        /* ========================================================================== */
+        /* Selector de Modo Oscuro / Modo Claro (Fondo Negro vs Fondo Blanco)         */
+        /* ========================================================================== */
+        .btn-theme-toggle {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(255, 255, 255, 0.28);
+            color: #FFFFFF !important;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s ease;
+            user-select: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .btn-theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #38BDF8;
+            color: #38BDF8 !important;
+            transform: translateY(-1px);
+        }
+
+        /* ========================================================================== */
+        /* MODO OSCURO (FONDO NEGRO Y TIPOGRAFÍA DE ALTO CONTRASTE)                   */
+        /* ========================================================================== */
+        body.dark-theme {
+            --bg: #0B0F19;
+            --panel: #131D31;
+            --header: #070B14;
+            --line: #263552;
+            --text: #F8FAFC;
+            --muted: #94A3B8;
+            background: #0B0F19 !important;
+            color: #F8FAFC !important;
+        }
+
+        /* Encabezado y Barra Chaos en Modo Oscuro */
+        body.dark-theme header {
+            background: #070B14;
+            border-bottom-color: #10B981;
+        }
+        body.dark-theme .header-title h1 {
+            color: #FFFFFF !important;
+        }
+        body.dark-theme .header-title p {
+            color: #94A3B8 !important;
+        }
+        body.dark-theme .btn-theme-toggle {
+            background: #1E293B;
+            border-color: #F59E0B;
+            color: #FCD34D !important;
+        }
+        body.dark-theme .btn-theme-toggle:hover {
+            background: #334155;
+            color: #FFFFFF !important;
+            border-color: #FBBF24;
+        }
+        body.dark-theme .chaos-bar {
+            background: #0A0F1D;
+            border-bottom-color: #1E293B;
+        }
+
+        /* Panel lateral y formulario en Modo Oscuro */
+        body.dark-theme .sidebar {
+            background: #131D31;
+            border-color: #263552;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+        }
+        body.dark-theme .sidebar h2 {
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .form-group label {
+            color: #E2E8F0 !important;
+        }
+        body.dark-theme .form-control {
+            background: #0B1120 !important;
+            border-color: #334155 !important;
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .form-control:focus {
+            background: #0F172A !important;
+            border-color: #38BDF8 !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
+        }
+        body.dark-theme ::placeholder {
+            color: #64748B !important;
+        }
+        body.dark-theme .quick-presets {
+            border-top-color: #263552;
+        }
+        body.dark-theme .quick-presets p {
+            color: #E2E8F0 !important;
+        }
+        body.dark-theme .preset-btn {
+            background: #1A243A;
+            border-color: #334366;
+            color: #F1F5F9 !important;
+        }
+        body.dark-theme .preset-btn:hover {
+            background: #253456;
+            border-color: #38BDF8;
+            color: #38BDF8 !important;
+        }
+        body.dark-theme .preset-alucinacion {
+            background: #2B111D;
+            border-color: #9F1239;
+            color: #FDA4AF !important;
+        }
+        body.dark-theme .preset-alucinacion:hover {
+            background: #4C1D2F;
+            border-color: #F43F5E;
+            color: #FFFFFF !important;
+        }
+
+        /* Barra de Filtros por Metadatos en Modo Oscuro */
+        body.dark-theme .meta-filters-bar {
+            background: #131D31;
+            border-color: #263552;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        }
+        body.dark-theme .meta-filters-header {
+            border-bottom-color: #1E293B;
+        }
+        body.dark-theme .filters-title {
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .filter-field label {
+            color: #CBD5E1 !important;
+        }
+        body.dark-theme .filter-input,
+        body.dark-theme .filter-select {
+            background: #0B1120 !important;
+            border-color: #334155 !important;
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .filter-input:focus,
+        body.dark-theme .filter-select:focus {
+            border-color: #38BDF8 !important;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25) !important;
+        }
+        body.dark-theme .filter-select option {
+            background: #0B1120;
+            color: #F8FAFC;
+        }
+        body.dark-theme .filtro-count-badge {
+            background: #1E293B;
+            border: 1px solid #334155;
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .btn-reset-filters {
+            background: #1E293B;
+            border-color: #475569;
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .btn-reset-filters:hover {
+            background: #334155;
+            color: #FFFFFF !important;
+        }
+
+        /* Tablero Kanban y Columnas en Modo Oscuro */
+        body.dark-theme .kanban-col {
+            background: #0E1626;
+            border: 1px solid #1E293B;
+        }
+        body.dark-theme .kanban-col-header {
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .col-badge {
+            background: #1E293B;
+            color: #F8FAFC !important;
+            border: 1px solid #334155;
+        }
+        body.dark-theme .mini-pag-btn {
+            background: #162035;
+            border-color: #334155;
+            color: #CBD5E1;
+        }
+        body.dark-theme .mini-pag-btn:hover:not(:disabled) {
+            background: #334155;
+            color: #FFFFFF;
+        }
+        body.dark-theme .mini-pag-btn:disabled {
+            background: #0E1626;
+            color: #475569;
+            border-color: #1E293B;
+        }
+        body.dark-theme .col-paginacion {
+            background: #131D31;
+            border-color: #263552;
+        }
+        body.dark-theme .pag-btn {
+            background: #162035;
+            border-color: #334155;
+            color: #CBD5E1;
+        }
+        body.dark-theme .pag-btn:hover:not(:disabled) {
+            background: #334155;
+            color: #FFFFFF;
+        }
+        body.dark-theme .pag-btn:disabled {
+            background: #0E1626;
+            border-color: #1E293B;
+            color: #475569;
+        }
+        body.dark-theme .pag-rango {
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .pag-sub {
+            color: #94A3B8 !important;
+        }
+        body.dark-theme .empty-col-msg {
+            color: #64748B;
+        }
+
+        /* Tarjetas de Ticket en Modo Oscuro */
+        body.dark-theme .ticket-card {
+            background: #141F36;
+            border: 1.5px solid #233355;
+            border-left-width: 4px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-theme .ticket-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+            border-color: #334770;
+        }
+        body.dark-theme .ticket-code {
+            color: #CBD5E1 !important;
+        }
+        body.dark-theme .ticket-client {
+            color: #FFFFFF !important;
+        }
+        body.dark-theme .ticket-desc {
+            color: #E2E8F0 !important;
+        }
+        body.dark-theme .ticket-meta {
+            background: #0C1222;
+            border-color: #202E4B;
+            color: #CBD5E1;
+        }
+        body.dark-theme .meta-lbl {
+            color: #E2E8F0 !important;
+        }
+        body.dark-theme .ticket-card small {
+            color: #94A3B8 !important;
+        }
+        body.dark-theme .ticket-card b {
+            color: #F8FAFC !important;
+        }
+
+        /* Prioridades en Modo Oscuro */
+        body.dark-theme .p-alta .ticket-prio {
+            background: rgba(185, 28, 28, 0.3) !important;
+            color: #FCA5A5 !important;
+            border: 1px solid #EF4444 !important;
+        }
+        body.dark-theme .p-media .ticket-prio {
+            background: rgba(194, 65, 12, 0.3) !important;
+            color: #FDBA74 !important;
+            border: 1px solid #F97316 !important;
+        }
+        body.dark-theme .p-baja .ticket-prio {
+            background: rgba(21, 128, 61, 0.3) !important;
+            color: #86EFAC !important;
+            border: 1px solid #22C55E !important;
+        }
+
+        /* Niveles ITIL */
+        body.dark-theme .nivel-1 {
+            background: rgba(21, 128, 61, 0.25);
+            color: #86EFAC !important;
+            border-color: #22C55E;
+        }
+        body.dark-theme .nivel-2 {
+            background: rgba(217, 119, 6, 0.25);
+            color: #FCD34D !important;
+            border-color: #F59E0B;
+        }
+        body.dark-theme .nivel-3 {
+            background: rgba(220, 38, 38, 0.25);
+            color: #FCA5A5 !important;
+            border-color: #EF4444;
+        }
+        body.dark-theme .nivel-0 {
+            background: rgba(100, 116, 139, 0.25);
+            color: #CBD5E1 !important;
+            border-color: #64748B;
+        }
+
+        /* Citas RAG en Modo Oscuro */
+        body.dark-theme .ticket-cita {
+            background: #0C1527;
+            border-color: #1E2F4D;
+            border-left-color: #0284C7;
+            color: #E2E8F0 !important;
+        }
+        body.dark-theme .cita-doc {
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .cita-paso {
+            color: #38BDF8 !important;
+        }
+        body.dark-theme .cita-fragmento {
+            background: #080D1A !important;
+            border-color: #1C2B47 !important;
+            color: #CBD5E1 !important;
+        }
+        body.dark-theme .link-fuente {
+            color: #60A5FA !important;
+        }
+        body.dark-theme .link-fuente:hover {
+            color: #93C5FD !important;
+        }
+
+        /* Botón de Explicabilidad y Botones de Acción de Tarjetas */
+        body.dark-theme .exp-btn {
+            background: #06281E;
+            border-color: #059669;
+            color: #6EE7B7 !important;
+        }
+        body.dark-theme .exp-btn:hover {
+            background: #0B3D2F;
+            border-color: #10B981;
+            color: #A7F3D0 !important;
+        }
+        body.dark-theme .ticket-actions .act-btn {
+            background: #18233C !important;
+            border-color: #2F4166 !important;
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .ticket-actions .act-btn:hover {
+            background: #27385E !important;
+            border-color: #38BDF8 !important;
+            color: #38BDF8 !important;
+        }
+
+        /* Modales en Modo Oscuro */
+        body.dark-theme .modal-card {
+            background: #111827;
+            border-color: #1F2937;
+            color: #F8FAFC;
+        }
+        body.dark-theme .modal-header {
+            background: #0B0F19;
+            border-bottom-color: #1E6F64;
+        }
+        body.dark-theme .xai-section {
+            background: #0D1424;
+            border-color: #1E293B;
+        }
+        body.dark-theme .xai-title {
+            color: #94A3B8;
+        }
+        body.dark-theme .xai-item {
+            background: #131B2E;
+            border-color: #1E293B;
+        }
+        body.dark-theme .xai-item-label {
+            color: #94A3B8;
+        }
+        body.dark-theme .xai-item-val {
+            color: #F8FAFC;
+        }
+        body.dark-theme .xai-quote {
+            background: #131B2E;
+            color: #E2E8F0;
+            border-left-color: #1E6F64;
+        }
+        body.dark-theme .hitl-alert-box {
+            background: #0E1626;
+            border-color: #1E293B;
+            color: #CBD5E1;
+        }
+        body.dark-theme .tabla-manuales th {
+            background: #0E1626;
+            color: #CBD5E1;
+            border-bottom-color: #1E293B;
+        }
+        body.dark-theme .tabla-manuales td {
+            border-bottom-color: #1E293B;
+            color: #F1F5F9;
+        }
+        body.dark-theme .tabla-manuales tr:hover td {
+            background: #131B2E;
+        }
+        body.dark-theme .editor-textarea {
+            background: #0B0F19;
+            color: #F8FAFC;
+            border-color: #1E293B;
+        }
+        body.dark-theme .editor-preview {
+            background: #0B0F19;
+            color: #F8FAFC;
+            border-color: #1E293B;
+        }
+        body.dark-theme .dropzone-box {
+            background: #0B132B;
+            border-color: #0284C7;
+        }
+        body.dark-theme .dropzone-title {
+            color: #38BDF8;
+        }
+        body.dark-theme .dropzone-sub {
+            color: #94A3B8;
+        }
+        body.dark-theme .modal-tabs {
+            background: #070B14;
+            border-bottom-color: #1E293B;
+        }
+        body.dark-theme .app-footer {
+            background: #070B14;
+            border-top-color: #1E6F64;
+        }
     </style>
 </head>
 <body>
@@ -1299,6 +1709,10 @@
                     📚 15 Manuales RAG
                 </button>
             </div>
+            <!-- Selector de Modo Oscuro / Modo Claro (Fondo Negro vs Blanco con Alto Contraste) -->
+            <button type="button" id="btnToggleTheme" class="btn-theme-toggle" onclick="alternarTemaVisual()" title="Cambiar a Modo Oscuro (Fondo Negro)">
+                🌙 Modo Oscuro
+            </button>
         </div>
     </header>
 
@@ -3220,7 +3634,48 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
         }
 
 
-        // Inicializar estado de simulación, sesión TIC y cargar tickets
+        function alternarTemaVisual() {
+            const body = document.body;
+            const btn = document.getElementById('btnToggleTheme');
+            const esOscuro = body.classList.toggle('dark-theme');
+            if (esOscuro) {
+                if (btn) {
+                    btn.innerHTML = '☀️ Modo Claro';
+                    btn.setAttribute('title', 'Cambiar a Modo Claro (Fondo Blanco)');
+                }
+                try { localStorage.setItem('conectatec_tema_visual', 'dark'); } catch (e) {}
+                mostrarToast('🌙 Modo Oscuro activado (Fondo negro y alto contraste)', 'exito');
+            } else {
+                if (btn) {
+                    btn.innerHTML = '🌙 Modo Oscuro';
+                    btn.setAttribute('title', 'Cambiar a Modo Oscuro (Fondo Negro)');
+                }
+                try { localStorage.setItem('conectatec_tema_visual', 'light'); } catch (e) {}
+                mostrarToast('☀️ Modo Claro activado (Fondo blanco estándar)', 'exito');
+            }
+        }
+
+        function cargarTemaGuardado() {
+            let tema = null;
+            try { tema = localStorage.getItem('conectatec_tema_visual'); } catch (e) {}
+            const btn = document.getElementById('btnToggleTheme');
+            if (tema === 'dark') {
+                document.body.classList.add('dark-theme');
+                if (btn) {
+                    btn.innerHTML = '☀️ Modo Claro';
+                    btn.setAttribute('title', 'Cambiar a Modo Claro (Fondo Blanco)');
+                }
+            } else {
+                document.body.classList.remove('dark-theme');
+                if (btn) {
+                    btn.innerHTML = '🌙 Modo Oscuro';
+                    btn.setAttribute('title', 'Cambiar a Modo Oscuro (Fondo Negro)');
+                }
+            }
+        }
+
+        // Inicializar estado de tema visual, simulación, sesión TIC y tickets
+        cargarTemaGuardado();
         actualizarEstadoSimulacion();
         cargarSesionGuardada();
         cargarTickets();
