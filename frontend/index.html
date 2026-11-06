@@ -2305,20 +2305,20 @@
             </form>
 
             <div class="quick-presets" style="margin-top:14px;">
-                <p id="tituloPresets" style="font-weight:700; margin-bottom:6px;">Casos de Prueba Rápidos (Ejemplos):</p>
-                <button type="button" class="preset-btn" onclick="cargarPreset('ad_pass')">Clave AD Bloqueada (DOC-01)</button>
-                <button type="button" class="preset-btn" onclick="cargarPreset('vpn')">Fallo VPN FortiClient (DOC-02)</button>
-                <button type="button" class="preset-btn" onclick="cargarPreset('impresora')">Atasco Impresora Red (DOC-03)</button>
-                <button type="button" class="preset-btn" onclick="cargarPreset('erp')">Sesión Colgada ERP (DOC-05)</button>
-                <button type="button" class="preset-btn" onclick="cargarPreset('pc_falla')">Pantalla Azul / Hardware (DOC-10)</button>
-                <button type="button" id="btnPresetAbstencion" class="preset-btn" onclick="cargarPreset('menu_almuerzo')" style="display:none;">Menú Almuerzo (Abstención)</button>
-                <button type="button" id="btnPresetInyeccion" class="preset-btn preset-alucinacion" onclick="cargarPreset('alucinacion')" title="Carga un caso adverso de inyección y desactiva Gemini automáticamente" style="display:none;">Inyección Prompt & Failover</button>
+                <p id="tituloPresets" style="font-weight:700; margin-bottom:6px;">EJEMPLOS:</p>
+                <button type="button" class="preset-btn" onclick="cargarPreset('ad_pass')">🔑 Clave AD Bloqueada (DOC-01)</button>
+                <button type="button" class="preset-btn" onclick="cargarPreset('vpn')">🌐 Fallo VPN FortiClient (DOC-02)</button>
+                <button type="button" class="preset-btn" onclick="cargarPreset('impresora')">🖨️ Atasco Impresora Red (DOC-03)</button>
+                <button type="button" class="preset-btn" onclick="cargarPreset('erp')">📊 Sesión Colgada ERP (DOC-05)</button>
+                <button type="button" class="preset-btn" onclick="cargarPreset('pc_falla')">🖥️ Pantalla Azul / Hardware (DOC-10)</button>
+                <button type="button" id="btnPresetAbstencion" class="preset-btn" onclick="cargarPreset('menu_almuerzo')" style="display:none;">🍽️ Menú Almuerzo (Abstención)</button>
+                <button type="button" id="btnPresetInyeccion" class="preset-btn preset-alucinacion" onclick="cargarPreset('alucinacion')" title="Carga un caso adverso de inyección y desactiva Gemini automáticamente" style="display:none;">🌀 Inyección Prompt & Failover</button>
             </div>
 
             <!-- Aviso de IA, Limitaciones y Tratamiento de Datos Personales (LOPDP Ecuador) -->
             <div class="lopdp-privacy-card" style="margin-top:14px; padding:10px 12px; background:rgba(30, 58, 138, 0.04); border:1px solid rgba(30, 58, 138, 0.14); border-radius:8px; font-size:11.5px; color:#334155; line-height:1.45;">
                 <div style="font-weight:700; color:#1E3A8A; display:flex; align-items:center; gap:6px; margin-bottom:5px;">
-                    <span>Aviso de IA y Tratamiento de Datos (LOPDP)</span>
+                    <span>🛡️ Aviso de IA y Tratamiento de Datos (LOPDP)</span>
                 </div>
                 <p style="margin:0 0 5px 0;">
                     • <b>Aviso de IA y Limitaciones:</b> Este sistema utiliza modelos de Inteligencia Artificial (Gemini / Groq) como asistente de clasificación y autoatención. No sustituye la intervención técnica para diagnósticos físicos de hardware. Toda acción operativa requiere confirmación humana (HITL).
@@ -2335,12 +2335,12 @@
             <div class="meta-filters-bar">
                 <div class="meta-filters-header">
                     <div class="filters-title">
-                        <span>Filtros de Visualización por Metadatos (RAG & ITIL 4):</span>
+                        <span>🔍 Filtros de Visualización por Metadatos (RAG & ITIL 4):</span>
                         <span id="filtroContadorBadge" class="filtro-count-badge">Mostrando todos</span>
                     </div>
                     <div>
-                        <button type="button" class="btn-reset-filters" onclick="restablecerFiltrosMetadatos()" title="Restablecer todos los filtros aplicados">Limpiar Filtros</button>
-                        <button type="button" class="btn-reset-filters" style="margin-left:8px; border-color:#3B82F6; color:#1E3A8A; font-weight:600; background:#EFF6FF;" onclick="actualizarTablero()" title="Actualizar tablero y sincronizar tickets">Actualizar</button>
+                        <button type="button" class="btn-reset-filters" onclick="restablecerFiltrosMetadatos()" title="Restablecer todos los filtros aplicados">🔄 Limpiar Filtros</button>
+                        <button type="button" class="btn-reset-filters" style="margin-left:8px; border-color:#3B82F6; color:#1E3A8A; font-weight:600; background:#EFF6FF;" onclick="actualizarTablero()" title="Actualizar tablero y sincronizar tickets">🔄 Actualizar</button>
                     </div>
                 </div>
                 <div class="meta-filters-grid">
