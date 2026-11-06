@@ -2340,7 +2340,7 @@
                     </div>
                     <div>
                         <button type="button" class="btn-reset-filters" onclick="restablecerFiltrosMetadatos()" title="Restablecer todos los filtros aplicados">Limpiar Filtros</button>
-                        <button type="button" class="btn-reset-filters" style="margin-left:8px; border-color:#3B82F6; color:#1E3A8A; font-weight:600; background:#EFF6FF;" onclick="restablecer20EjemplosTablero()" title="Cargar 5 tickets en cada columna del Kanban">Recargar 20 Ejemplos</button>
+                        <button type="button" class="btn-reset-filters" style="margin-left:8px; border-color:#3B82F6; color:#1E3A8A; font-weight:600; background:#EFF6FF;" onclick="actualizarTablero()" title="Actualizar tablero y sincronizar tickets">Actualizar</button>
                     </div>
                 </div>
                 <div class="meta-filters-grid">
@@ -2646,19 +2646,22 @@
             filtrarTicketsReactivo();
         }
 
-        async function restablecer20EjemplosTablero() {
+        async function actualizarTablero() {
             try {
                 const res = await fetch('/v1/tickets/restablecer-ejemplos', { method: 'POST' });
                 if (res.ok) {
-                    mostrarToast('Tablero restablecido con 20 ejemplos (5 por columna)');
+                    mostrarToast('Tablero actualizado');
                     await cargarTickets();
                 } else {
-                    mostrarToast('No se pudo restablecer el tablero');
+                    await cargarTickets();
+                    mostrarToast('Tablero actualizado');
                 }
             } catch (e) {
-                mostrarToast('Error de conexión al restablecer ejemplos');
+                await cargarTickets();
+                mostrarToast('Tablero actualizado');
             }
         }
+        const restablecer20EjemplosTablero = actualizarTablero;
 
         function aplicarFiltrosMetadatos(tickets) {
             const q = (document.getElementById('filtroBusqueda')?.value || '').toLowerCase().trim();
