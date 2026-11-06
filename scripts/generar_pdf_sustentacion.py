@@ -470,7 +470,7 @@ def construir_presentacion(ruta_pdf):
 
     # Construir documento PDF con canvas numerado
     doc.build(story, canvasmaker=NumberedCanvas)
-    print(f"✅ PDF generado exitosamente en: {ruta_pdf}")
+    print(f"PDF generado exitosamente en: {ruta_pdf}")
 
 if __name__ == "__main__":
     salida = os.path.join("docs", "presentacion-sustentacion-12-minutos.pdf")
@@ -478,3 +478,4 @@ if __name__ == "__main__":
     # Crear copia con nombre alternativo para máxima compatibilidad
     copia = os.path.join("docs", "08-presentacion-sustentacion.pdf")
     construir_presentacion(copia)
+

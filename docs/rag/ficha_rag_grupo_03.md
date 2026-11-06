@@ -21,21 +21,21 @@ Clasificar una solicitud de soporte microinformático interno de una PYME (60 co
 
 | # | Fuente Técnica | Dominio / Alcance | Archivo en `data/raw/` | Formato PDF | Estado |
 | :---: | :--- | :--- | :--- | :---: | :---: |
-| **01** | Restablecimiento y desbloqueo de contraseñas de red / Active Directory | Identidad y Credenciales | `DOC-01_restablecimiento_contrasenas.md` | `DOC-01.pdf` | ✅ Oficial |
-| **02** | Configuración y resolución de incidencias en VPN corporativa | Acceso Remoto Seguro | `DOC-02_configuracion_vpn_corporativa.md` | `DOC-02.pdf` | ✅ Oficial |
-| **03** | Configuración y desatasco de impresoras de red departamentales | Periféricos de Oficina | `DOC-03_impresoras_red_departamentales.md` | `DOC-03.pdf` | ✅ Oficial |
-| **04** | Diagnóstico y acceso a carpetas compartidas en red (SMB / NAS) | Almacenamiento Local | `DOC-04_acceso_carpetas_compartidas_smb.md` | `DOC-04.pdf` | ✅ Oficial |
-| **05** | Errores de concurrencia y bloqueo de sesiones en sistema ERP/Contable | Software Empresarial | `DOC-05_sistema_contable_erp.md` | `DOC-05.pdf` | ✅ Oficial |
-| **06** | Cumplimiento de políticas de seguridad de la información (ISO 27002 / LOPDP) | Seguridad y Cumplimiento | `DOC-06_politica_seguridad_iso27002.md` | `DOC-06.pdf` | ✅ Oficial |
-| **07** | Diagnóstico de conectividad en red cableada Ethernet corporativa | Conectividad LAN | `DOC-07_conectividad_red_cableada_oficina.md` | `DOC-07.pdf` | ✅ Oficial |
-| **08** | Conexión y credenciales en red Wi-Fi corporativa WPA2/WPA3 Enterprise | Red Inalámbrica | `DOC-08_wifi_corporativo_credenciales.md` | `DOC-08.pdf` | ✅ Oficial |
-| **09** | Actualizaciones de antivirus corporativo y parches de sistema operativo | Endpoint Security | `DOC-09_antivirus_actualizaciones_so.md` | `DOC-09.pdf` | ✅ Oficial |
-| **10** | Diagnóstico preliminar de fallas físicas en computadoras de escritorio y laptops | Hardware y Puestos | `DOC-10_falla_estacion_trabajo_pc.md` | `DOC-10.pdf` | ✅ Oficial |
-| **11** | Configuración de cuentas y perfiles en cliente de correo electrónico | Comunicación Interna | `DOC-11_configuracion_cliente_correo.md` | `DOC-11.pdf` | ✅ Oficial |
-| **12** | Procedimiento para solicitud y asignación de nuevos accesos a plataformas | Gestión de Altas | `DOC-12_solicitud_nuevos_accesos.md` | `DOC-12.pdf` | ✅ Oficial |
-| **13** | Restauración y recuperación de archivos desde respaldos locales/en la nube | Continuidad Operativa | `DOC-13_respaldo_recuperacion_archivos.md` | `DOC-13.pdf` | ✅ Oficial |
-| **14** | Verificación y reemplazo de periféricos de oficina (monitores, docking stations) | Accesorios de Puesto | `DOC-14_perifericos_pantallas_oficina.md` | `DOC-14.pdf` | ✅ Oficial |
-| **15** | Matriz ITIL de clasificación, impacto, urgencia y tiempos de resolución SLA | Gobernanza ITIL 4 | `DOC-15_matriz_itil_gestion_incidentes.md` | `DOC-15.pdf` | ✅ Oficial |
+| **01** | Restablecimiento y desbloqueo de contraseñas de red / Active Directory | Identidad y Credenciales | `DOC-01_restablecimiento_contrasenas.md` | `DOC-01.pdf` | Oficial |
+| **02** | Configuración y resolución de incidencias en VPN corporativa | Acceso Remoto Seguro | `DOC-02_configuracion_vpn_corporativa.md` | `DOC-02.pdf` | Oficial |
+| **03** | Configuración y desatasco de impresoras de red departamentales | Periféricos de Oficina | `DOC-03_impresoras_red_departamentales.md` | `DOC-03.pdf` | Oficial |
+| **04** | Diagnóstico y acceso a carpetas compartidas en red (SMB / NAS) | Almacenamiento Local | `DOC-04_acceso_carpetas_compartidas_smb.md` | `DOC-04.pdf` | Oficial |
+| **05** | Errores de concurrencia y bloqueo de sesiones en sistema ERP/Contable | Software Empresarial | `DOC-05_sistema_contable_erp.md` | `DOC-05.pdf` | Oficial |
+| **06** | Cumplimiento de políticas de seguridad de la información (ISO 27002 / LOPDP) | Seguridad y Cumplimiento | `DOC-06_politica_seguridad_iso27002.md` | `DOC-06.pdf` | Oficial |
+| **07** | Diagnóstico de conectividad en red cableada Ethernet corporativa | Conectividad LAN | `DOC-07_conectividad_red_cableada_oficina.md` | `DOC-07.pdf` | Oficial |
+| **08** | Conexión y credenciales en red Wi-Fi corporativa WPA2/WPA3 Enterprise | Red Inalámbrica | `DOC-08_wifi_corporativo_credenciales.md` | `DOC-08.pdf` | Oficial |
+| **09** | Actualizaciones de antivirus corporativo y parches de sistema operativo | Endpoint Security | `DOC-09_antivirus_actualizaciones_so.md` | `DOC-09.pdf` | Oficial |
+| **10** | Diagnóstico preliminar de fallas físicas en computadoras de escritorio y laptops | Hardware y Puestos | `DOC-10_falla_estacion_trabajo_pc.md` | `DOC-10.pdf` | Oficial |
+| **11** | Configuración de cuentas y perfiles en cliente de correo electrónico | Comunicación Interna | `DOC-11_configuracion_cliente_correo.md` | `DOC-11.pdf` | Oficial |
+| **12** | Procedimiento para solicitud y asignación de nuevos accesos a plataformas | Gestión de Altas | `DOC-12_solicitud_nuevos_accesos.md` | `DOC-12.pdf` | Oficial |
+| **13** | Restauración y recuperación de archivos desde respaldos locales/en la nube | Continuidad Operativa | `DOC-13_respaldo_recuperacion_archivos.md` | `DOC-13.pdf` | Oficial |
+| **14** | Verificación y reemplazo de periféricos de oficina (monitores, docking stations) | Accesorios de Puesto | `DOC-14_perifericos_pantallas_oficina.md` | `DOC-14.pdf` | Oficial |
+| **15** | Matriz ITIL de clasificación, impacto, urgencia y tiempos de resolución SLA | Gobernanza ITIL 4 | `DOC-15_matriz_itil_gestion_incidentes.md` | `DOC-15.pdf` | Oficial |
 
 > *Principio Rector:* «El modelo propone, el código dispone». La matriz de prioridades ITIL y los catálogos de SLA se calculan de manera determinista mediante `app/tools/priorizar.py` leyendo `config/matriz_prioridad.json`.
 

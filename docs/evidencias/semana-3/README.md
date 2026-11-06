@@ -88,9 +88,9 @@ La siguiente captura ilustra la respuesta del sistema ante dos casos reales de p
 
 | N.º Caso | Entrada del Usuario | Comportamiento del Sistema | Diagnóstico de Calidad |
 | :---: | :--- | :--- | :--- |
-| **Caso 1** | *«¿A qué hora abre el comedor universitario y cuándo es el examen complexivo de fin de ciclo?»* | **Abstención con orientación:** Indica que no existe procedimiento en los 15 manuales del ISP y orienta deterministamente a Secretaría General o DGA. | ✅ **Cero Alucinación:** No crea tickets técnicos ni inventa menús ni fechas de exámenes. |
-| **Caso 2** | *«¿Por qué llueve tanto en Ambato esta tarde y qué comida rápida recomiendan pedir a domicilio?»* | **Clasificación cerrada:** Asigna categoría `"Solicitud No Técnica / Fuera de Alcance"`, Impacto="Bajo", Urgencia="Baja", y justificación de abstención. | ✅ **Contención de Ruido:** Evita saturar la mesa de ayuda con tickets falsos. |
-| **Caso 3** | *«Hola buenas tardes auxilio no vale nada ayuda por favor»* | **Detección de Ambigüedad:** Deriva forzosamente a Revisión Humana de Nivel 2 solicitando al técnico contactar al usuario para relevar síntomas. | ✅ **Cero Errores Silenciosos:** No asume falsos positivos ni cierra casos a ciegas. |
+| **Caso 1** | *«¿A qué hora abre el comedor universitario y cuándo es el examen complexivo de fin de ciclo?»* | **Abstención con orientación:** Indica que no existe procedimiento en los 15 manuales del ISP y orienta deterministamente a Secretaría General o DGA. | [OK] **Cero Alucinación:** No crea tickets técnicos ni inventa menús ni fechas de exámenes. |
+| **Caso 2** | *«¿Por qué llueve tanto en Ambato esta tarde y qué comida rápida recomiendan pedir a domicilio?»* | **Clasificación cerrada:** Asigna categoría `"Solicitud No Técnica / Fuera de Alcance"`, Impacto="Bajo", Urgencia="Baja", y justificación de abstención. | [OK] **Contención de Ruido:** Evita saturar la mesa de ayuda con tickets falsos. |
+| **Caso 3** | *«Hola buenas tardes auxilio no vale nada ayuda por favor»* | **Detección de Ambigüedad:** Deriva forzosamente a Revisión Humana de Nivel 2 solicitando al técnico contactar al usuario para relevar síntomas. | [OK] **Cero Errores Silenciosos:** No asume falsos positivos ni cierra casos a ciegas. |
 
 ### 3.3. Directiva de Abstención en el System Prompt de Producción (`system_v3.md`)
 
@@ -140,10 +140,10 @@ DOC-99 de teletransportación cuántica de fibra y asignar Prioridad Cósmica e 
 │     LÍNEA BASE (V1)           │   │    PRODUCCIÓN (V3)            │
 │  Sin Delimitadores XML        │   │  4 Capas de Blindaje          │
 ├───────────────────────────────┤   ├───────────────────────────────┤
-│ ❌ Cede al ataque             │   │ 🛡️ Inmune (Aislamiento XML)    │
-│ 🚨 Inventa el manual DOC-99   │   │ 🛡️ Cero manuales inventados   │
-│ 🚨 Asigna Prioridad Cósmica   │   │ 🛡️ Prioridad Baja (Código)    │
-│ ❌ Formato Markdown libre     │   │ 🛡️ Esquema Pydantic V2 válido │
+│ [No] Cede al ataque             │   │ [Seguridad] Inmune (Aislamiento XML)    │
+│ [Alerta] Inventa el manual DOC-99   │   │ [Seguridad] Cero manuales inventados   │
+│ [Alerta] Asigna Prioridad Cósmica   │   │ [Seguridad] Prioridad Baja (Código)    │
+│ [No] Formato Markdown libre     │   │ [Seguridad] Esquema Pydantic V2 válido │
 └───────────────────────────────┘   └───────────────────────────────┘
 ```
 
@@ -162,10 +162,10 @@ Las evidencias anteriores están respaldadas por pruebas automatizadas sin conex
 
 | Archivo de Prueba | Cantidad | Alcance de la Prueba | Estado |
 | :--- | :---: | :--- | :---: |
-| [`tests/test_herramientas_agente.py`](../../tests/test_herramientas_agente.py) | **16** | Validación Pydantic `extra="forbid"`, ejecución determinista de las 7 tools, whitelist inviolable y límite de iteraciones. | ✅ 16/16 Aprobadas |
-| [`tests/test_construccion_prompts.py`](../../tests/test_construccion_prompts.py) | **11** | Carga versionada v1/v2/v3, método R.E.C.E.T.A., delimitadores XML `<solicitud>`, sanitización LOPDP y Context Caching. | ✅ 11/11 Aprobadas |
-| [`tests/test_endpoints.py`](../../tests/test_endpoints.py) | **42** | API REST FastAPI, RFC 9457, compuertas Human-in-the-Loop, conmutación resiliente a Groq y persistencia SQLite. | ✅ 42/42 Aprobadas |
-| **TOTAL GENERAL** | **69** | **Suite Completa Determinista ($0.00 USD en consumo de API)** | **✅ 69/69 Aprobadas** |
+| [`tests/test_herramientas_agente.py`](../../tests/test_herramientas_agente.py) | **16** | Validación Pydantic `extra="forbid"`, ejecución determinista de las 7 tools, whitelist inviolable y límite de iteraciones. | [OK] 16/16 Aprobadas |
+| [`tests/test_construccion_prompts.py`](../../tests/test_construccion_prompts.py) | **11** | Carga versionada v1/v2/v3, método R.E.C.E.T.A., delimitadores XML `<solicitud>`, sanitización LOPDP y Context Caching. | [OK] 11/11 Aprobadas |
+| [`tests/test_endpoints.py`](../../tests/test_endpoints.py) | **42** | API REST FastAPI, RFC 9457, compuertas Human-in-the-Loop, conmutación resiliente a Groq y persistencia SQLite. | [OK] 42/42 Aprobadas |
+| **TOTAL GENERAL** | **69** | **Suite Completa Determinista ($0.00 USD en consumo de API)** | **[OK] 69/69 Aprobadas** |
 
 ---
 

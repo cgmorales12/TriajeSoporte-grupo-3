@@ -12,7 +12,7 @@
 
 ---
 
-## 🎯 1. Guion y Estructura de la Presentación Oral (12 Minutos)
+##  1. Guion y Estructura de la Presentación Oral (12 Minutos)
 
 Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquema ágil de 12 minutos repartidos equitativamente entre los tres integrantes:
 
@@ -65,7 +65,7 @@ Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquem
 
 ---
 
-## 🛡️ 2. Banco de Preguntas Críticas de la Rúbrica Oficial (Caso 03 · Fase 5)
+## [Seguridad] 2. Banco de Preguntas Críticas de la Rúbrica Oficial (Caso 03 · Fase 5)
 
 ### Pregunta Oficial 1 (Fase 5): *«¿Qué porcentaje de solicitudes se resolvieron sin intervención humana y cómo lo demostraron?»*
 * **Respuesta del Equipo:**  
@@ -108,7 +108,7 @@ Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquem
 
 ---
 
-## 🛡️ 3. Banco de Preguntas Adicionales del Tribunal y Respuestas de Alto Nivel
+## [Seguridad] 3. Banco de Preguntas Adicionales del Tribunal y Respuestas de Alto Nivel
 
 ### Pregunta 1: *«¿Por qué no le pidieron al LLM que calcule directamente la prioridad y el tiempo SLA de resolución?»*
 * **Respuesta del Equipo:**  
@@ -173,7 +173,7 @@ Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquem
 
 ---
 
-## 📋 3. Matriz de Trazabilidad: Concepto Teórico vs. Archivo en el Repositorio
+##  3. Matriz de Trazabilidad: Concepto Teórico vs. Archivo en el Repositorio
 
 | Concepto Evaluado por el Tribunal | Archivo Principal de Implementación | Justificación Técnica Breve |
 |---|---|---|
@@ -192,7 +192,7 @@ Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquem
 
 ---
 
-## 🚀 4. Protocolo de Demostración en Vivo ante el Tribunal
+##  4. Protocolo de Demostración en Vivo ante el Tribunal
 
 1. **Paso 1: Demostrar la Suite de Pruebas Offline:**
    ```powershell
@@ -205,9 +205,9 @@ Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquem
    ```
    *Mensaje al jurado:* *"Verificamos con este script automatizado el cumplimiento al 100% de la política de Cero Secretos en el historial de Git."*
 3. **Paso 3: Triaje en Vivo en el Frontend (`http://127.0.0.1:8000/tablero`):**
-   - Hacer clic en el botón de escenario rápido: **`🔴 LOS Roja ONT`**.
+   - Hacer clic en el botón de escenario rápido: **`[Falla] LOS Roja ONT`**.
    - Presionar **`Diagnosticar e Iniciar Triaje`**.
-   - Mostrar cómo el botón se deshabilita con el spinner `⏳ Analizando con IA y RAG...`.
+   - Mostrar cómo el botón se deshabilita con el spinner ` Analizando con IA y RAG...`.
    - Mostrar el ticket generado en la columna **`Nuevos`** con Prioridad Alta, SLA de 15m y la cita técnica obligatoria del manual oficial **`DOC-01`**.
 4. **Paso 4: Demostración del Modo Vulnerable (Chaos Engineering):**
    - En el Simulador de Caída y Ataque, desactivar **"Defensas IA"** e ingresar una inyección de prompt adversa.

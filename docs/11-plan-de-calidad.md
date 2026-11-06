@@ -17,9 +17,9 @@ La base de conocimiento oficial se compone de 15 manuales técnicos en `data/raw
 
 | Métrica | Cómo se Mide | Meta | Resultado Obtenido |
 | :--- | :--- | :---: | :---: |
-| **Acierto de Recuperación (`hit@5`)** | La fuente correcta (`DOC-01` a `DOC-15`) aparece entre los primeros 5 resultados recuperados sobre el banco de 20 preguntas en `eval/preguntas.json`. | $\ge 85\%$ | **100.0%** ✅ |
-| **Fidelidad y Citas Verificables** | Respuestas que citan el ID del manual y el paso operativo exacto (`DOC-XX: Paso Y`). | $\ge 90\%$ | **100.0%** ✅ |
-| **Silencio y Abstención Correcta** | Preguntas fuera de alcance (no técnicas o de materias ajenas) donde el sistema se abstiene deterministamente de alucinar. | $100\%$ | **100.0%** ✅ |
+| **Acierto de Recuperación (`hit@5`)** | La fuente correcta (`DOC-01` a `DOC-15`) aparece entre los primeros 5 resultados recuperados sobre el banco de 20 preguntas en `eval/preguntas.json`. | $\ge 85\%$ | **100.0%** [OK] |
+| **Fidelidad y Citas Verificables** | Respuestas que citan el ID del manual y el paso operativo exacto (`DOC-XX: Paso Y`). | $\ge 90\%$ | **100.0%** [OK] |
+| **Silencio y Abstención Correcta** | Preguntas fuera de alcance (no técnicas o de materias ajenas) donde el sistema se abstiene deterministamente de alucinar. | $100\%$ | **100.0%** [OK] |
 
 ---
 
@@ -54,11 +54,11 @@ Evaluado sobre el **conjunto dorado de 20 casos** en [`eval/casos_flujo.jsonl`](
 
 | Práctica de Calidad | Herramienta / Estándar | Estado en el Proyecto |
 | :--- | :--- | :---: |
-| **Pruebas Unitarias Automatizadas** | `pytest tests/` con mocks aislados (0 costo de API) | ✅ 28/28 pruebas pasando |
-| **Esquemas Estrictos de Entrada/Salida** | Pydantic V2 con `extra="forbid"` | ✅ 100% implementado |
-| **Análisis de Vulnerabilidades (SAST)** | `bandit -r app/` | ✅ Aprobado |
-| **Auditoría de Cero Secretos en Git** | `python scripts/auditar_cero_secretos.py` | ✅ Cero fugas (.env en .gitignore) |
-| **Evaluación Continua en CI** | `python eval/evaluar.py` en GitHub Actions | ✅ Integrado |
+| **Pruebas Unitarias Automatizadas** | `pytest tests/` con mocks aislados (0 costo de API) | [OK] 28/28 pruebas pasando |
+| **Esquemas Estrictos de Entrada/Salida** | Pydantic V2 con `extra="forbid"` | [OK] 100% implementado |
+| **Análisis de Vulnerabilidades (SAST)** | `bandit -r app/` | Aprobado |
+| **Auditoría de Cero Secretos en Git** | `python scripts/auditar_cero_secretos.py` | [OK] Cero fugas (.env en .gitignore) |
+| **Evaluación Continua en CI** | `python eval/evaluar.py` en GitHub Actions | [OK] Integrado |
 
 ---
 

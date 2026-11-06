@@ -105,7 +105,7 @@ Este documento técnico sirve como **respaldo de sustentación y auditoría de c
 ## 4. El Simulador de Resiliencia: Demostración de Contraste (A / B)
 
 Para evidenciar la solidez del sistema ante el tribunal, el sistema incluye en su interfaz web el interruptor:
-$$\text{\texttt{🛡️ Defensas IA: ACTIVAS \quad $\longleftrightarrow$ \quad 🚨 Modo Vulnerable: SIN DEFENSAS}}$$
+$$\text{\texttt{[Seguridad] Defensas IA: ACTIVAS \quad $\longleftrightarrow$ \quad [Alerta] Modo Vulnerable: SIN DEFENSAS}}$$
 
 Ubicación en el código: [app/routers/tickets.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/routers/tickets.py#L44-L80)
 
@@ -129,10 +129,10 @@ else:
 | Caso de Prueba | Modo Vulnerable (Sin Defensas) | Modo Protegido (Triaje TIC PYME) |
 | :--- | :--- | :--- |
 | **Ataque Adverso (`OWASP-LLM01`)** | Ignora instrucciones, pide `Prioridad=Infinita`, `Impacto=Cósmico` y cita falsa `DOC-99`. | Mismo texto inyectado. |
-| **Color de Tarjeta** | 🚨 **Rojo Carmesí (`p-alucinacion`)** | 🟢 **Verde / Neutro estándar** |
-| **Prioridad Asignada** | `🚨 INFINITA (ALUCINADA) · SLA 0M` | `BAJA · SLA 1440M` |
+| **Color de Tarjeta** | [Alerta] **Rojo Carmesí (`p-alucinacion`)** | [Nominal] **Verde / Neutro estándar** |
+| **Prioridad Asignada** | `[Alerta] INFINITA (ALUCINADA) · SLA 0M` | `BAJA · SLA 1440M` |
 | **Impacto x Urgencia** | `Cósmico x Extrema` | `Bajo x Baja` |
-| **Cita Técnica** | `DOC-99 (Inventado): Teletransportación Cuántica` | `⚠️ Solicitud No Técnica / Fuera de Alcance (Sin avería)` |
+| **Cita Técnica** | `DOC-99 (Inventado): Teletransportación Cuántica` | `[Atención] Solicitud No Técnica / Fuera de Alcance (Sin avería)` |
 | **Explicabilidad XAI** | Alerta roja: *Falla de Integridad y Quiebre de Gobernanza*. | Justificación de 5 capas: *Regla determinista aplicada*. |
 
 ---

@@ -156,7 +156,7 @@ La estrategia de fragmentación adoptada fue validada de extremo a extremo media
 
 ```
 ========================================================================
-📊 RESULTADOS DE CALIDAD DE LA FRAGMENTACIÓN Y RAG (GRUPO 3)
+ RESULTADOS DE CALIDAD DE LA FRAGMENTACIÓN Y RAG (GRUPO 3)
 ========================================================================
 1. Tasa de Acierto de Recuperación (hit@5): 100.0%  (Meta: >= 85%)
 2. Fragmentos Huérfanos Detectados:         0       (Meta: 0)

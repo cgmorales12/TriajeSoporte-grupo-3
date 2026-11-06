@@ -166,16 +166,16 @@ Todas las solicitudes entrantes y salientes son interceptadas por `middleware_ob
 2. **Buffer Circular en Memoria:** Mantiene en cola de longitud fija (`deque(maxlen=300)`) las métricas agregadas de solicitudes para consulta en tiempo real.
 3. **Registro Estructurado en Consola:**
    - Para solicitudes generales:
-     `📊 [SOLICITUD HTTP] GET /tablero -> 200 | Tiempo: 2.15ms | ReqID: req-3c5f2a1b`
+     `[SOLICITUD HTTP] GET /tablero -> 200 | Tiempo: 2.15ms | ReqID: req-3c5f2a1b`
    - Para solicitudes con inferencia IA:
-     `📊 [SOLICITUD HTTP] POST /clasificar -> 201 | Tiempo: 18.5ms | ReqID: req-7e8d9c1a | IA: gemini:gemini-1.5-flash | Tokens: in=142, out=58, total=200`
+     `[SOLICITUD HTTP] POST /clasificar -> 201 | Tiempo: 18.5ms | ReqID: req-7e8d9c1a | IA: gemini:gemini-1.5-flash | Tokens: in=142, out=58, total=200`
 
 ### 7.2. Log de Inferencia en el Cliente Encapsulado (`app/services/llm.py`)
 Cada invocación a los proveedores externos registra el desglose específico de consumo de tokens:
 ```text
-🪙 [INFERENCIA LLM] Proveedor: gemini | Modelo: gemini-1.5-flash | Latencia: 420.5ms | Tokens: in=152, out=64, total=216
-🪙 [INFERENCIA LLM] Proveedor: groq | Modelo: llama-3.3-70b-versatile | Latencia: 280.1ms | Tokens: in=165, out=59, total=224
-🪙 [INFERENCIA LLM] Proveedor: conmutador-local-offline | Modelo: analizador-itil-heuristico | Latencia: 1.2ms | Tokens: in=0, out=0, total=0 (Motor Heurístico Determinista)
+[INFERENCIA LLM] Proveedor: gemini | Modelo: gemini-1.5-flash | Latencia: 420.5ms | Tokens: in=152, out=64, total=216
+[INFERENCIA LLM] Proveedor: groq | Modelo: llama-3.3-70b-versatile | Latencia: 280.1ms | Tokens: in=165, out=59, total=224
+[INFERENCIA LLM] Proveedor: conmutador-local-offline | Modelo: analizador-itil-heuristico | Latencia: 1.2ms | Tokens: in=0, out=0, total=0 (Motor Heurístico Determinista)
 ```
 
 ### 7.3. Endpoint de Telemetría: `GET /v1/metricas/solicitudes`
@@ -207,6 +207,6 @@ Expone en formato JSON el resumen consolidado de operaciones y consumo acumulado
 
 ### 7.4. Visualización en Interfaz de Usuario (`frontend/index.html`)
 El badge superior de estado y el modal de explicabilidad XAI reflejan en vivo la latencia y los tokens consumidos:
-- **Badge superior:** `🟢 Proveedor: Google Gemini (gemini-1.5-flash) · ⏱️ 42ms · 🪙 200 tokens`
+- **Badge superior:** `Proveedor: Google Gemini (gemini-1.5-flash) · 42ms · 200 tokens`
 - **Modal de Explicabilidad (XAI):** Muestra el desglose de tokens de entrada (prompt), salida (JSON estructurado) y total.
 

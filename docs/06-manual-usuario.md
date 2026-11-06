@@ -14,8 +14,8 @@
    - **Local:** [http://localhost:8501](http://localhost:8501) (Streamlit) o [http://localhost:8000/tablero](http://localhost:8000/tablero)
    - **Producción Azure:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero)
 3. En la parte superior observará el distintivo en tiempo real del motor de IA:
-   - `🟢 Proveedor: Gemini 1.5 Flash (Nominal)`: Operación estándar de alta velocidad.
-   - `🟠 Respaldo Activo: Groq Cloud (Llama 3.3)`: Conmutación automática por contingencia.
+   - `[Nominal] Proveedor: Gemini 1.5 Flash (Nominal)`: Operación estándar de alta velocidad.
+   - `[Respaldo] Respaldo Activo: Groq Cloud (Llama 3.3)`: Conmutación automática por contingencia.
 
 ---
 
@@ -34,14 +34,14 @@ En el panel lateral izquierdo encontrará el formulario de ingreso:
 │ [ Olvidé mi contraseña de Windows y mi     ] │
 │ [ cuenta de Active Directory se bloqueó.   ] │
 ├──────────────────────────────────────────────┤
-│ [ ⚡ Clasificar con IA y Crear Ticket ]       │
+│ [  Clasificar con IA y Crear Ticket ]       │
 └──────────────────────────────────────────────┘
 ```
 
 ### Pasos:
 1. Complete los campos obligatorios: Nombre, Correo y Descripción del problema (mínimo 10 caracteres).
 2. O seleccione un escenario rápido de prueba (Desbloqueo de clave, Error en VPN, Atasco de impresora, Sesión ERP).
-3. Haga clic en **«⚡ Clasificar con IA y Crear Ticket»**.
+3. Haga clic en **« Clasificar con IA y Crear Ticket»**.
 4. El sistema en menos de 1 segundo:
    - Sanitiza automáticamente contraseñas si las escribió por error (cumplimiento LOPDP).
    - Extrae la categoría técnica, impacto y urgencia con IA.
@@ -52,11 +52,11 @@ En el panel lateral izquierdo encontrará el formulario de ingreso:
 
 ## 4. Gestión de Tickets en el Tablero Kanban (Técnico de TI)
 El tablero Kanban organiza las incidencias en **4 columnas operativas**:
-1. **🆕 Nuevos:** Solicitudes recién ingresadas pendientes de atención.
-2. **⚙️ En Atención:** Incidentes en proceso de diagnóstico o resolución.
-3. **🛠️ Escalados (Nivel 2):** Casos que requieren atención presencial del técnico de TI en el puesto del usuario o permisos administrativos de servidor.
-4. **✅ Resueltos (Nivel 1):** Incidentes solucionados mediante autoatención guiada con citas del manual técnico.
+1. **[Nuevo] Nuevos:** Solicitudes recién ingresadas pendientes de atención.
+2. ** En Atención:** Incidentes en proceso de diagnóstico o resolución.
+3. ** Escalados (Nivel 2):** Casos que requieren atención presencial del técnico de TI en el puesto del usuario o permisos administrativos de servidor.
+4. **[OK] Resueltos (Nivel 1):** Incidentes solucionados mediante autoatención guiada con citas del manual técnico.
 
 ### Acciones Human-in-the-Loop (HITL):
-- **✉️ Notificar:** Envía formalmente la resolución al colaborador previa aprobación del técnico.
-- **🧑‍💻 Derivar a Técnico:** Genera la orden de intervención presencial con firma del responsable de soporte.
+- ** Notificar:** Envía formalmente la resolución al colaborador previa aprobación del técnico.
+- ** Derivar a Técnico:** Genera la orden de intervención presencial con firma del responsable de soporte.

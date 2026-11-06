@@ -301,8 +301,8 @@ def ejecutar_evaluacion_completa() -> int:
     fecha_iso = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     print("\n" + "=" * 76)
-    print("🎯 CONECTATEC / TECNOAULA — SUITE DE EVALUACIÓN OFICIAL (run_eval.py)")
-    print(f"📅 Fecha de Ejecución: {fecha_iso} | Caso N.º 03 · Grupo 3 UNIANDES")
+    print("CONECTATEC / TECNOAULA — SUITE DE EVALUACIÓN OFICIAL (run_eval.py)")
+    print(f"Fecha de Ejecución: {fecha_iso} | Caso N.º 03 · Grupo 3 UNIANDES")
     print("=" * 76)
 
     ruta_preguntas = os.path.join(RAIZ, "eval", "preguntas.json")
@@ -322,10 +322,10 @@ def ejecutar_evaluacion_completa() -> int:
     res_calc = evaluar_casos_calculo(casos_calc)
     print(f"\n2. Casos de Cálculo Determinista ({res_calc['total_casos_calculo']} casos en eval/casos_calculo.json):")
     print(f"   • Tasa de Acierto Matemático:      {res_calc['tasa']:.1%} ({res_calc['aciertos']}/{res_calc['total_casos_calculo']}) [Meta: {METAS['calculos_acierto']:.0%}]")
-    print("   • Prioridad y SLA ITIL v4:        ✅ 100% Determinista (0 tokens)")
-    print("   • Presupuestos y Tarifa IVA 15%:  ✅ 100% Conforme a config/tarifas.json")
-    print("   • Penalización según SBU ($482):  ✅ 100% Conforme a config/parametros.yaml")
-    print("   • Feriados Nacionales Ecuador:    ✅ 100% Conforme a config/calendario.json")
+    print("   • Prioridad y SLA ITIL v4:        100% Determinista (0 tokens)")
+    print("   • Presupuestos y Tarifa IVA 15%:  100% Conforme a config/tarifas.json")
+    print("   • Penalización según SBU ($482):  100% Conforme a config/parametros.yaml")
+    print("   • Feriados Nacionales Ecuador:    100% Conforme a config/calendario.json")
 
     # 3. Evaluar Cinta de Triaje y Flujo
     casos_flujo = leer_jsonl(ruta_flujo)
@@ -340,11 +340,11 @@ def ejecutar_evaluacion_completa() -> int:
     res_agente = evaluar_agente_react()
     print(f"\n4. Agente ReAct con Guardrails y Human-in-the-Loop ({res_agente['total_escenarios']} escenarios):")
     print(f"   • Tasa de Cumplimiento:           {res_agente['tasa']:.1%} ({res_agente['aciertos']}/{res_agente['total_escenarios']}) [Meta: >= {METAS['agente_cumplimiento']:.0%}]")
-    print(f"   • Escenario A (Camino Feliz RAG): {'✅ Aprobado' if res_agente['camino_feliz'] else '❌ Falló'}")
-    print(f"   • Escenario B (Fuera de Alcance): {'✅ Aprobado' if res_agente['fuera_de_alcance'] else '❌ Falló'}")
-    print(f"   • Escenario C (Corte Tope MAX):   {'✅ Aprobado' if res_agente['corte_tope'] else '❌ Falló'}")
-    print(f"   • Escenario D (Tool Prohibida):   {'✅ Aprobado' if res_agente['rechazo_prohibida'] else '❌ Falló'}")
-    print(f"   • Escenario E (Guardrail HITL):   {'✅ Aprobado' if res_agente['guardrail_hitl'] else '❌ Falló'}")
+    print(f"   • Escenario A (Camino Feliz RAG): {'Aprobado' if res_agente['camino_feliz'] else 'Falló'}")
+    print(f"   • Escenario B (Fuera de Alcance): {'Aprobado' if res_agente['fuera_de_alcance'] else 'Falló'}")
+    print(f"   • Escenario C (Corte Tope MAX):   {'Aprobado' if res_agente['corte_tope'] else 'Falló'}")
+    print(f"   • Escenario D (Tool Prohibida):   {'Aprobado' if res_agente['rechazo_prohibida'] else 'Falló'}")
+    print(f"   • Escenario E (Guardrail HITL):   {'Aprobado' if res_agente['guardrail_hitl'] else 'Falló'}")
 
     duracion_segundos = round(time.time() - inicio, 2)
 
@@ -382,12 +382,12 @@ def ejecutar_evaluacion_completa() -> int:
 
     print("\n" + "-" * 76)
     if aprobado:
-        print(f"🏆 EVALUACIÓN SUPERADA CON ÉXITO: 100% de las metas alcanzadas ({duracion_segundos}s).")
-        print(f"📄 Reporte de auditoría persistido en: eval/resultados_evaluacion.json")
+        print(f"EVALUACIÓN SUPERADA CON ÉXITO: 100% de las metas alcanzadas ({duracion_segundos}s).")
+        print(f"Reporte de auditoría persistido en: eval/resultados_evaluacion.json")
         print("-" * 76 + "\n")
         return 0
     else:
-        print("❌ ALERTA: Algunas metas no cumplieron los umbrales requeridos.")
+        print("[ALERTA]: Algunas metas no cumplieron los umbrales requeridos.")
         print("-" * 76 + "\n")
         return 1
 

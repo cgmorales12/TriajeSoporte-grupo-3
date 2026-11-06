@@ -151,35 +151,35 @@
 
     <div class="btn-toolbar">
         <button class="btn btn-primary" onclick="descargarPNG()">
-            📥 Descargar como Imagen PNG
+            Descargar como Imagen PNG
         </button>
         <button class="btn btn-success" onclick="descargarSVG()">
-            📥 Descargar como Vector SVG
+            Descargar como Vector SVG
         </button>
         <button class="btn btn-outline" onclick="copiarAlPortapapeles()">
-            📋 Copiar Imagen al Portapapeles
+            Copiar Imagen al Portapapeles
         </button>
         <a class="btn btn-outline" href="https://mermaid.live" target="_blank" rel="noopener">
-            🌐 Abrir en Mermaid Live
+            Abrir en Mermaid Live
         </a>
     </div>
 
     <div class="canvas-card" id="contenedorDiagrama">
         <div class="mermaid" id="diagramaMermaid">
 flowchart TD
-    A["Mensaje del Usuario / Docente:<br><i>'me sale Error 400'</i> o <i>'falla de Wi-Fi'</i>"] --> B["🤖 Triaje por IA (Gemini / Groq):<br><b>Clasificación Estructurada Pydantic</b>"]
+    A["Mensaje del Usuario / Colaborador:<br><i>'Error de correo'</i> o <i>'falla de Wi-Fi'</i>"] --> B["Triaje por IA (Gemini / Groq):<br><b>Clasificación Estructurada Pydantic</b>"]
     
-    B --> C{"¿Avería de Red ISP<br/>sustentada en Manuales?"}
+    B --> C{"¿Incidencia Tecnológica<br/>sustentada en Manuales?"}
     
-    C -->|"❌ NO (Fuera de Alcance)"| D["🚨 Protocolo de Abstención<br><b>(Regla de Silencio Determinista)</b>"]
+    C -->|"NO (Fuera de Alcance)"| D["Protocolo de Abstención<br><b>(Regla de Silencio Determinista)</b>"]
     D --> E["Cero Alucinaciones (Zero-Hallucination):<br><b>Citas RAG = Vacías [ ]</b>"]
-    E --> F["Clasificación en Tablero Kanban:<br><b>🔘 Nivel 0 · Fuera de Alcance</b>"]
-    F --> G["💡 Orientación Transparente al Usuario:<br><i>'No corresponde a infraestructura de Internet.<br/>Acuda al soporte de su aplicación o Secretaría.'</i>"]
+    E --> F["Clasificación en Tablero Kanban:<br><b>Nivel 0 · Fuera de Alcance</b>"]
+    F --> G["Orientación Transparente al Usuario:<br><i>'No corresponde a soporte de infraestructura.<br/>Acuda al área correspondiente.'</i>"]
     
-    C -->|"✅ SÍ (Wi-Fi, Fibra, ONT, PPPoE)"| H["📚 Motor RAG (ChromaDB Vectorial):<br><b>Búsqueda en los 15 Manuales Oficiales</b>"]
+    C -->|"SÍ (Red, Correo, ERP, VPN, etc.)"| H["Motor RAG (ChromaDB Vectorial):<br><b>Búsqueda en los 15 Manuales Oficiales</b>"]
     H --> I["Cita RAG Verificada:<br><b>DOC-XX: Paso Y exacto + URL oficial</b>"]
     I --> J["Matriz ITIL Determinista:<br><b>Cálculo Matemático de Prioridad y SLA</b>"]
-    J --> K["Compuertas Human-in-the-Loop:<br><b>Aprobación del Operador antes de actuar</b>"]
+    J --> K["Compuertas Human-in-the-Loop:<br><b>Aprobación del Técnico antes de actuar</b>"]
     
     %% Estilos de Nodos
     style A fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1

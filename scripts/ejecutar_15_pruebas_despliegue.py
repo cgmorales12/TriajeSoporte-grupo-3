@@ -246,7 +246,7 @@ CASOS = [
 ]
 
 def ejecutar_suite():
-    print(f"🚀 Ejecutando {len(CASOS)} casos de prueba contra: {URL_BASE}\n")
+    print(f"Ejecutando {len(CASOS)} casos de prueba contra: {URL_BASE}\n")
     resultados = []
     
     for c in CASOS:
@@ -296,7 +296,7 @@ def ejecutar_suite():
                 detalle = f"HTTP {status_code} · Doc: {doc_hallado} (Esperado: {doc_esperado}) · Prioridad: {data.get('prioridad')} · SLA: {data.get('sla_minutos')}m"
             
             estado_str = "APROBADO" if pasa else "REVISAR"
-            simbolo = "✅" if pasa else "⚠️"
+            simbolo = "[OK]" if pasa else "[!]"
             print(f"{simbolo} {estado_str} ({duracion_ms}ms)")
             
             resultados.append({
@@ -309,7 +309,7 @@ def ejecutar_suite():
             })
         except Exception as e:
             duracion_ms = round((time.time() - t0) * 1000, 1)
-            print(f"❌ ERROR ({duracion_ms}ms): {e}")
+            print(f"[ERROR] ({duracion_ms}ms): {e}")
             resultados.append({
                 "caso": c,
                 "status": 0,
@@ -368,7 +368,7 @@ El equipo de aseguramiento de calidad (QA) ejecutó una batería de **16 casos d
 """
     for r in resultados:
         c = r["caso"]
-        icono = "✅ PASS" if r["pasa"] else "❌ FAIL"
+        icono = "Aprobado" if r["pasa"] else "En revisión"
         md += f"| **{c['id']}** | {c['tipo']} | {c['descripcion']} | `{c['endpoint']}` | `{r['status']}` | `{r['duracion_ms']} ms` | **{icono}** | {r['detalle']} |\n"
 
     md += f"""
@@ -399,7 +399,7 @@ La batería de 16 casos ejecutada contra la URL oficial desplegada certifica que
 """
     with open("docs/08-pruebas.md", "w", encoding="utf-8") as f:
         f.write(md)
-    print("\n✅ Documento oficial generado con éxito en: docs/08-pruebas.md")
+    print("\nDocumento oficial generado con éxito en: docs/08-pruebas.md")
 
 if __name__ == "__main__":
     ejecutar_suite()

@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-11-06 12:36:21",
-  "duracion_segundos": 28.53,
+  "timestamp": "2026-11-06 15:23:21",
+  "duracion_segundos": 39.66,
   "aprobado_global": true,
   "metricas": {
     "rag_hit_5": 0.9285714285714286,

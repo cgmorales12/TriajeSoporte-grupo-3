@@ -238,7 +238,7 @@ class ClienteLLM:
         if modo_vulnerable:
             latencia = round((time.time() - t_inicio) * 1000, 2)
             clasificacion = ClasificacionIA(
-                categoria="🚨 Inyección Exitosa / Alucinación Libre (OWASP LLM01)",
+                categoria="Inyección Exitosa / Alucinación Libre (OWASP LLM01)",
                 impacto="Cósmico (Alucinado por LLM)",
                 urgencia="Extrema (Alucinada por LLM)",
                 sintomas_detectados=["Inyección adversa de prueba", "Bypass de delimitadores", "Manual inventado DOC-99"],
@@ -346,7 +346,7 @@ class ClienteLLM:
             tokens_total=0
         )
         logger_llm.info(
-            f"🪙 [INFERENCIA LLM] Proveedor: {metadatos.proveedor} | Modelo: {metadatos.modelo} | "
+            f"[INFERENCIA LLM] Proveedor: {metadatos.proveedor} | Modelo: {metadatos.modelo} | "
             f"Latencia: {latencia}ms | Tokens: in=0, out=0, total=0 (Motor Heurístico Determinista)"
         )
         return clasificacion, metadatos
@@ -452,7 +452,7 @@ class ClienteLLM:
                     tokens_total = usage.get("totalTokenCount")
 
                     logger_llm.info(
-                        f"🪙 [INFERENCIA LLM] Proveedor: gemini | Modelo: {mod_gemini} | "
+                        f"[INFERENCIA LLM] Proveedor: gemini | Modelo: {mod_gemini} | "
                         f"Latencia: {latencia}ms | Tokens: in={tokens_prompt}, out={tokens_completado}, total={tokens_total}"
                     )
 
@@ -562,7 +562,7 @@ class ClienteLLM:
                     tokens_total = getattr(usage, "total_tokens", None) if usage else None
 
                     logger_llm.info(
-                        f"🪙 [INFERENCIA LLM] Proveedor: groq | Modelo: {mod} | "
+                        f"[INFERENCIA LLM] Proveedor: groq | Modelo: {mod} | "
                         f"Latencia: {latencia}ms | Tokens: in={tokens_prompt}, out={tokens_completado}, total={tokens_total}"
                     )
 
@@ -835,7 +835,7 @@ class ClienteLLM:
             tokens_total=tokens_in + tokens_out
         )
         logger_llm.info(
-            f"🪙 [INFERENCIA LLM] Análisis Técnico | Proveedor: {meta.proveedor} | "
+            f"[INFERENCIA LLM] Análisis Técnico | Proveedor: {meta.proveedor} | "
             f"Latencia: {latencia}ms | Tokens: in={tokens_in}, out={tokens_out}, total={meta.tokens_total}"
         )
         return ResultadoAnalizarOut(

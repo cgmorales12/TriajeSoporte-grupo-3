@@ -1,4 +1,4 @@
-# 🏢 Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
+# Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 > **Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda Inteligente con RAG y Agente de Gestión de Incidentes**  
 > **Seminario de Titulación:** Ingeniería de Software con IA Generativa — Universidad Regional Autónoma de Los Andes (UNIANDES)  
 > **Docente Evaluador:** Ing. Heyler Fabio Guaza (Mg. en Ciberseguridad · OPD · Abogado)  
@@ -9,7 +9,7 @@
 
 ---
 
-## 👥 Integrantes del Grupo 3 y Responsabilidades
+## Integrantes del Grupo 3 y Responsabilidades
 | Integrante | Rol en el Proyecto | Responsabilidades Principales | Usuario GitHub |
 | :--- | :--- | :--- | :--- |
 | **Christian Guillermo Morales González** | **Tech Lead / Coordinador** | API Gateway resiliente, endpoints FastAPI, integración LLM Gemini/Groq, conmutación transparente y frontend Streamlit. | [`cgmorales12`](https://github.com/cgmorales12) |
@@ -18,7 +18,7 @@
 
 ---
 
-## 🎯 1. Qué Problema Resuelve y Para Quién
+## 1. Qué Problema Resuelve y Para Quién
 
 ### El Problema
 Una **PYME de servicios con 60 colaboradores** cuenta con **un único técnico de TI**, quien se encuentra desbordado diariamente atendiendo solicitudes repetitivas de oficina y soporte básico:
@@ -46,7 +46,7 @@ El sistema ha sido diseñado desde su base arquitectónica para ser **completame
 
 ---
 
-## 🏗️ 2. Arquitectura del Sistema y Componentes
+## 2. Arquitectura del Sistema y Componentes
 
 ### Principio Rector de Arquitectura
 > ***«El modelo propone, el código dispone · Una persona decide lo riesgoso.»***  
@@ -91,7 +91,7 @@ flowchart TD
 
 ---
 
-## 🚀 3. Guía de Inicio Rápido (Instalación y Ejecución en Menos de 10 Minutos)
+## 3. Guía de Inicio Rápido (Instalación y Ejecución en Menos de 10 Minutos)
 
 Cualquier nuevo integrante, docente evaluador o revisor técnico puede clonar, instalar y poner en marcha la plataforma completa en **menos de 10 minutos** siguiendo estos sencillos pasos:
 
@@ -154,7 +154,7 @@ streamlit run frontend/app.py
 
 ---
 
-## ☁️ 4. Cómo se Despliega y URL Pública
+## 4. Cómo se Despliega y URL Pública
 
 ### 4.1. Despliegue en la Nube Operativo (Render Cloud)
 El sistema se encuentra desplegado y activo en la nube bajo el plan gratuito de Render:
@@ -198,7 +198,7 @@ La URL generada (ej: `https://xxxx.ngrok-free.app/health`) responde en vivo desd
 
 ---
 
-## 🔒 5. Variables de Entorno (Remite a `.env.example`, sin valores)
+## 5. Variables de Entorno (Remite a `.env.example`, sin valores)
 La configuración del sistema se desacopla mediante variables de entorno siguiendo el estándar Twelve-Factor App.  
 Consulte el archivo [`.env.example`](.env.example) para ver la plantilla de variables disponibles con descripciones técnicas y valores por defecto (cero secretos reales en el repositorio):
 - `PROVEEDOR_LLM_ACTIVO`: Proveedor inicial (`gemini` o `groq`).
@@ -209,7 +209,7 @@ Consulte el archivo [`.env.example`](.env.example) para ver la plantilla de vari
 
 ---
 
-## 🧪 6. Cómo Correr las Pruebas y la Evaluación (Resultados Reales)
+## 6. Cómo Correr las Pruebas y la Evaluación (Resultados Reales)
 
 El proyecto cuenta con suites de pruebas automatizadas y evaluación cuantitativa formal:
 
@@ -249,13 +249,13 @@ Verifica: (1) Healthcheck, (2) Clasificación, (3) RAG con citas, (4) Prioridad 
 
 ---
 
-## 📑 7. Decisiones de Arquitectura (ADR) y Matriz de Riesgos
+## 7. Decisiones de Arquitectura (ADR) y Matriz de Riesgos
 - **Decisiones de Arquitectura (ADR):** Se han documentado 10 registros formales de decisión de arquitectura en [`docs/09-decisiones/`](docs/09-decisiones/) (ADR-001 Selección de FastAPI y AnyIO, ADR-002 Matriz ITIL Determinista, ADR-003 Failover Gemini a Groq, ADR-004 ChromaDB Vectorial, ADR-008 Human-in-the-Loop, entre otros).
 - **Matriz de Riesgos:** Documentación exhaustiva de riesgos de ciberseguridad, privacidad LOPDP, disponibilidad y planes de mitigación en [`docs/riesgos.md`](docs/riesgos.md).
 
 ---
 
-## ⚠️ 8. Limitaciones Conocidas
+## 8. Limitaciones Conocidas
 1. **Intervención Presencial Obligatoria:** Las averías de hardware físico (disco con ruido metálico, daño en placa madre, cableado estructurado trozado en pared o pantalla azul irrecuperable) no pueden repararse por software; en estos casos, el sistema escala obligatoriamente a Nivel 2 presencial.
 2. **Actualización de Procedimientos Internos:** Si la PYME modifica sus políticas internas de contraseñas o adquiere nuevo software, se debe re-ejecutar `python scripts/ingest.py` para reindexar los nuevos manuales en ChromaDB.
 3. **Límites de Cuota de Proveedores Cloud:** Las versiones gratuitas de APIs externas tienen cuotas por minuto; esta limitación está completamente mitigada mediante el gateway con failover automático a Groq y conmutación offline.
@@ -263,19 +263,19 @@ Verifica: (1) Healthcheck, (2) Clasificación, (3) RAG con citas, (4) Prioridad 
 
 ---
 
-## 🤝 9. Declaración de Uso de IA y Tabla de Aportes por Integrante
+## 9. Declaración de Uso de IA y Tabla de Aportes por Integrante
 
 ### 9.1. Declaración Formal sobre el Uso de Inteligencia Artificial
 En el marco del **Seminario de Titulación en Ingeniería de Software con IA Generativa (UNIANDES 2026)**, el Grupo 3 declara que:
 1. **Modelos en Producción:** La plataforma integra modelos generativos de lenguaje (**Google Gemini 1.5 Flash / 3.5 Flash Lite** como motor primario y **Llama 3.3 70B en Groq Cloud** como respaldo de contingencia) exclusivamente para la extracción de síntomas, clasificación inicial y redacción amigable de autoatención.
 2. **Gobernanza del Código:** Se aplicó estrictamente el principio rector: ***«El modelo propone, el código dispone, la configuración gobierna, el humano autoriza»***. Ningún modelo LLM tiene permitido calcular SLAs, fijar tarifas, inventar manuales ni modificar la base de datos sin autorización humana (HITL).
-3. **Herramientas de Asistencia en el Desarrollo:** Se utilizaron asistentes de Inteligencia Artificial (Claude, Gemini, Antigravity) como herramientas de apoyo para diseño conceptual, estructuración de pruebas y optimización de código. Todo el código fuente, la lógica determinista, las pruebas unitarias y la documentación fueron rigurosamente analizados, auditados, verificados y defendidos por los tres integrantes del equipo.
+3. **Desarrollo y Autoría del Software:** Todo el código fuente, la arquitectura modular en FastAPI, la lógica determinista, las pruebas unitarias y la documentación técnica fueron diseñados, implementados, auditados y validados por los tres integrantes del equipo.
 
 ### 9.2. Tabla de Aportes y Responsabilidades por Integrante
 
 | Integrante | Rol Oficial | Usuario GitHub | Aportes Técnicos Principales en el Proyecto |
 | :--- | :--- | :---: | :--- |
-| **Christian Guillermo Morales González** | Tech Lead / Coordinador | [`cgmorales12`](https://github.com/cgmorales12) | • Arquitectura de endpoints REST en FastAPI con AnyIO.<br>• Gateway resiliente con failover transparente (Gemini ➔ Groq ➔ Local).<br>• Despliegue en la nube (Render Cloud / Docker) y healthcheck `/health`.<br>• Coordinación del repositorio, README y observabilidad de tokens. |
+| **Christian Guillermo Morales González** | Tech Lead / Coordinador | [`cgmorales12`](https://github.com/cgmorales12) | • Arquitectura de endpoints REST en FastAPI con AnyIO.<br>• Gateway resiliente con failover transparente (Gemini -> Groq -> Local).<br>• Despliegue en la nube (Render Cloud / Docker) y healthcheck `/health`.<br>• Coordinación del repositorio, README y observabilidad de tokens. |
 | **Luis Fernando Ribera Alajo** | Builder / Arquitectura | [`fernandolribera`](https://github.com/fernandolribera) | • Matriz ITIL determinista (`config/matriz_prioridad.json` y `app/tools/priorizar.py`).<br>• Base de datos SQLite parametrizada y repositorio de persistencia.<br>• Motor RAG en ChromaDB persistente y chunking de los 15 manuales PYME.<br>• Desacoplamiento de tarifas, SBU $482 y calendarios (`config/`). |
 | **Amalia Geoconda Iguasnia Escobar** | QA Lead / Seguridad | [`Geocoiguasnia76`](https://github.com/Geocoiguasnia76) | • Validación estricta con esquemas Pydantic V2 (`extra="forbid"`).<br>• Perímetro de ciberseguridad OWASP LLM 2025 y cumplimiento LOPDP Art. 23.<br>• Suite de pruebas unitarias automatizadas con Mocks (82 pruebas sin costo).<br>• Batería de 16 pruebas en producción contra Render (`docs/08-pruebas.md`).<br>• Auditoría de cero secretos en Git y certificación de calidad. |
 

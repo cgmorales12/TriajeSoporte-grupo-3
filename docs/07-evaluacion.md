@@ -36,15 +36,15 @@ Los resultados consolidados corresponden a la ejecución contra el conjunto dora
 
 | Dimensión de Calidad | Métrica Evaluada | Meta Fijada (CI) | Resultado Obtenido | Estado | Justificación de Conformidad |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Recuperación RAG** | `hit@5` sobre 17 casos técnicos | $\ge 85.0\%$ | **100.0%** (17/17) | ✅ Superada | Los 17 casos técnicos recuperan el documento oficial esperado en el Top-5 de ChromaDB. |
-| **Abstención (Guardrail)** | Tasa de silencio sin alucinar | $100.0\%$ | **100.0%** (3/3) | ✅ Cumplida | 0 alucinaciones; derivación a Secretaría General / DGA ante preguntas ajenas al ISP. |
-| **Cálculo Determinista** | Acierto matemático de negocio | $100.0\%$ | **100.0%** (10/10) | ✅ Cumplida | Prioridad ITIL, SLA, presupuestos con IVA 15% y multas SBU con **costo 0 tokens**. |
-| **Cinta de Triaje** | Errores silenciosos | **0 estricto** | **0** | ✅ Cumplida | Ningún caso crítico o de riesgo fue procesado como automático inadvertidamente. |
-| **Cinta de Triaje** | Tasa de revisión humana | $\le 45.0\%$ | **40.0%** (8/20) | ✅ Cumplida | El 60% restante se resolvió automáticamente o se derivó según SLA sin saturar al técnico. |
-| **Agente ReAct** | Tasa de tareas cumplidas | $\ge 90.0\%$ | **100.0%** (5/5) | ✅ Superada | Supera camino feliz, corte forzoso por `MAX_ITER`, abstención, rechazo de tools y HITL. |
-| **Herramientas del Caso** | Catálogo canónico del Caso 3 (L, C, F) | $100.0\%$ (5/5) | **100.0%** (5/5) | ✅ Cumplida | Las 5 herramientas requeridas (`buscar_base_conocimiento`, `priorizar_ticket`, `crear_ticket`, `derivar_a_tecnico`, `reiniciar_servidor`) registradas, tipadas y auditadas. |
-| **Integración Continua** | Pipeline CI en GitHub Actions | Activo | **Activo** (`ci.yml`) | ✅ Cumplida | Pytest con 82 pruebas automatizadas y `run_eval.py` se ejecutan automáticamente en cada `push` y `pull_request`. |
-| **Pruebas Unitarias** | Pytest sin API externa (Mocks) | $100.0\%$ | **100.0%** (82/82) | ✅ Cumplida | 82 pruebas (42 endpoints, 29 herramientas agente con catálogo canónico y ReAct dinámico, 11 construcción de prompt) con **$0.00 de costo de inferencia**. |
+| **Recuperación RAG** | `hit@5` sobre 17 casos técnicos | $\ge 85.0\%$ | **100.0%** (17/17) | Superada | Los 17 casos técnicos recuperan el documento oficial esperado en el Top-5 de ChromaDB. |
+| **Abstención (Guardrail)** | Tasa de silencio sin alucinar | $100.0\%$ | **100.0%** (3/3) | Cumplida | 0 alucinaciones; derivación a Secretaría General / DGA ante preguntas ajenas al ISP. |
+| **Cálculo Determinista** | Acierto matemático de negocio | $100.0\%$ | **100.0%** (10/10) | Cumplida | Prioridad ITIL, SLA, presupuestos con IVA 15% y multas SBU con **costo 0 tokens**. |
+| **Cinta de Triaje** | Errores silenciosos | **0 estricto** | **0** | Cumplida | Ningún caso crítico o de riesgo fue procesado como automático inadvertidamente. |
+| **Cinta de Triaje** | Tasa de revisión humana | $\le 45.0\%$ | **40.0%** (8/20) | Cumplida | El 60% restante se resolvió automáticamente o se derivó según SLA sin saturar al técnico. |
+| **Agente ReAct** | Tasa de tareas cumplidas | $\ge 90.0\%$ | **100.0%** (5/5) | Superada | Supera camino feliz, corte forzoso por `MAX_ITER`, abstención, rechazo de tools y HITL. |
+| **Herramientas del Caso** | Catálogo canónico del Caso 3 (L, C, F) | $100.0\%$ (5/5) | **100.0%** (5/5) | Cumplida | Las 5 herramientas requeridas (`buscar_base_conocimiento`, `priorizar_ticket`, `crear_ticket`, `derivar_a_tecnico`, `reiniciar_servidor`) registradas, tipadas y auditadas. |
+| **Integración Continua** | Pipeline CI en GitHub Actions | Activo | **Activo** (`ci.yml`) | Cumplida | Pytest con 82 pruebas automatizadas y `run_eval.py` se ejecutan automáticamente en cada `push` y `pull_request`. |
+| **Pruebas Unitarias** | Pytest sin API externa (Mocks) | $100.0\%$ | **100.0%** (82/82) | Cumplida | 82 pruebas (42 endpoints, 29 herramientas agente con catálogo canónico y ReAct dinámico, 11 construcción de prompt) con **$0.00 de costo de inferencia**. |
 
 ---
 

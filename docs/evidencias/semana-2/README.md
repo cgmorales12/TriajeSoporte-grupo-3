@@ -15,7 +15,7 @@
 La interfaz web del MVP se diseñó bajo una estética moderna y funcional de **Tablero Kanban con 4 columnas operativas**, desacoplada del backend FastAPI y conectada a la telemetría del modelo en tiempo real.
 
 ### 1.1. Tablero Kanban Principal y Consola de Triaje
-Interfaz completa cargada en `http://127.0.0.1:8000/tablero`, mostrando las columnas operativas (`🆕 Nuevos`, `⚙️ En Atención`, `🚚 Escalado a Cuadrilla`, `✅ Resueltos`), las métricas de telemetría de tokens y el selector de escenarios rápidos de prueba:
+Interfaz completa cargada en `http://127.0.0.1:8000/tablero`, mostrando las columnas operativas (`Nuevos`, `En Atención`, `Escalados a Nivel 2`, `Resueltos`), las métricas de telemetría de tokens y el selector de escenarios rápidos de prueba:
 
 ![Tablero Kanban Principal](capturas/01_tablero_kanban_principal.png)
 
@@ -25,7 +25,7 @@ Demostración de generación de ticket (`TCK-CF1C10AB`) tras procesar un reporte
 ![Ticket Generado en Tablero Kanban](capturas/02_ticket_triaje_creado.png)
 
 ### 1.3. Controles Reactivos y Manejo de Errores Comprensibles
-- **Deshabilitación reactiva:** El botón de envío se desactiva de inmediato tras el clic (`disabled`), mostrando un spinner animado SVG y el mensaje `⏳ Analizando con IA y RAG...` para evitar envíos concurrentes duplicados.
+- **Deshabilitación reactiva:** El botón de envío se desactiva de inmediato tras el clic (`disabled`), mostrando un spinner animado SVG y el mensaje ` Analizando con IA y RAG...` para evitar envíos concurrentes duplicados.
 - **Mensajes de error comprensibles:** Si el usuario ingresa una descripción demasiado corta o mal formada, el frontend intercepta el payload RFC 9457 y despliega una alerta visual amigable (`El campo 'Descripción del problema' debe tener al menos 10 caracteres`), en lugar de códigos HTTP 422 o trazas internas de error.
 
 ---
@@ -98,10 +98,10 @@ Durante el ciclo de desarrollo de la Semana 2 surgieron cinco desafíos técnico
 
 ### Problema 5: Doble Envío Concurrente y Mensajes Crudos de Error en la Web
 - **Diagnóstico:** Al pulsar el botón de creación de tickets, la latencia normal de inferencia provocaba que los usuarios hicieran múltiples clics sucesivos, generando tickets duplicados. Además, ante errores de validación de entrada se mostraban códigos técnicos como `422 Unprocessable Entity`.
-- **Solución Implementada:** En [frontend/index.html](../../frontend/index.html), el botón de envío se desactiva de forma inmediata al hacer clic (`button.disabled = true`), activando un spinner visual animado con el texto `⏳ Analizando con IA y RAG...`. Si el backend rechaza la entrada, el middleware RFC 9457 traduce el error a un mensaje en español comprensible (`El campo 'Descripción del problema' debe tener al menos 10 caracteres`), guiando al usuario sin frustración.
+- **Solución Implementada:** En [frontend/index.html](../../frontend/index.html), el botón de envío se desactiva de forma inmediata al hacer clic (`button.disabled = true`), activando un spinner visual animado con el texto ` Analizando con IA y RAG...`. Si el backend rechaza la entrada, el middleware RFC 9457 traduce el error a un mensaje en español comprensible (`El campo 'Descripción del problema' debe tener al menos 10 caracteres`), guiando al usuario sin frustración.
 
 ### Problema 6: Deprecación de Modelos Externos y Activación del Plan C en Pruebas de Caos (Caso Ticket `TCK-E640339D`)
-- **Diagnóstico:** Durante las pruebas en vivo del equipo (prueba de Fernando), se observó que el sistema generó un ticket procesado por `conmutador-local-offline` a pesar de que el indicador visual mostraba `Gemini ACTIVO`. Al auditar la base de datos `data/conectatec.db`, el registro reveló que Google devolvió un error `HTTP 404: models/gemini-1.5-flash is not found` debido a que dicha versión fue deprecada por Google exigiendo `gemini-3.5-flash-lite`. Dado que el operador simultáneamente tenía activado el interruptor `🔴 Groq: CAÍDO (Simulado)` en la interfaz para simular caos, el Gateway de Resiliencia respetó la caída de Groq y activó exitosamente el Plan C (Motor Local Heurístico). Asimismo, el texto ingresado (*"Lost encendido"*) no coincidió con las siglas exactas de los manuales RAG, activando la directiva de seguridad con escalado a Nivel 2 sin alucinar manuales falsos.
+- **Diagnóstico:** Durante las pruebas en vivo del equipo (prueba de Fernando), se observó que el sistema generó un ticket procesado por `conmutador-local-offline` a pesar de que el indicador visual mostraba `Gemini ACTIVO`. Al auditar la base de datos `data/conectatec.db`, el registro reveló que Google devolvió un error `HTTP 404: models/gemini-1.5-flash is not found` debido a que dicha versión fue deprecada por Google exigiendo `gemini-3.5-flash-lite`. Dado que el operador simultáneamente tenía activado el interruptor `[Falla] Groq: CAÍDO (Simulado)` en la interfaz para simular caos, el Gateway de Resiliencia respetó la caída de Groq y activó exitosamente el Plan C (Motor Local Heurístico). Asimismo, el texto ingresado (*"Lost encendido"*) no coincidió con las siglas exactas de los manuales RAG, activando la directiva de seguridad con escalado a Nivel 2 sin alucinar manuales falsos.
 - **Solución Implementada:** En [app/services/llm.py](../../app/services/llm.py) se actualizó la lista de modelos primarios a `gemini-3.5-flash-lite` y `openai/gpt-oss-120b`, incorporando un ciclo de fallback que avanza automáticamente entre versiones si una de ellas devuelve 404, garantizando que el triaje nominal opere siempre en vivo y que la conmutación a local se reserve exclusivamente para fallas totales de conectividad.
 
 
@@ -111,8 +111,8 @@ Durante el ciclo de desarrollo de la Semana 2 surgieron cinco desafíos técnico
 
 | Verificación Técnica | Herramienta / Comando | Resultado Obtenido | Estado |
 |---|---|---|:---:|
-| Pruebas Unitarias Automatizadas | `python -m pytest tests/test_endpoints.py` | 28 pruebas pasadas en 3.33s (0 gasto API) | ✅ Aprobado |
-| Auditoría de Cero Secretos en Git | `python scripts/auditar_cero_secretos.py` | 100% cumplimiento LOPDP y OWASP LLM06 | ✅ Aprobado |
-| Inspección Visual del Frontend | `browser_subagent` en `http://127.0.0.1:8000/tablero` | Tablero Kanban, telemetría y tickets activos | ✅ Aprobado |
-| Registros de Decisión de Arquitectura | `docs/09-decisiones.md` y `docs/09-decisiones/` | 10 ADRs documentados y versionados | ✅ Aprobado |
-| Especificación Arquitectónica C4 | `docs/03-arquitectura.md` | Modelo C4 completo (Niveles 1 al 4) | ✅ Aprobado |
+| Pruebas Unitarias Automatizadas | `python -m pytest tests/test_endpoints.py` | 28 pruebas pasadas en 3.33s (0 gasto API) | Aprobado |
+| Auditoría de Cero Secretos en Git | `python scripts/auditar_cero_secretos.py` | 100% cumplimiento LOPDP y OWASP LLM06 | Aprobado |
+| Inspección Visual del Frontend | `Navegador Web` en `http://127.0.0.1:8000/tablero` | Tablero Kanban, telemetría y tickets activos | Aprobado |
+| Registros de Decisión de Arquitectura | `docs/09-decisiones.md` y `docs/09-decisiones/` | 10 ADRs documentados y versionados | Aprobado |
+| Especificación Arquitectónica C4 | `docs/03-arquitectura.md` | Modelo C4 completo (Niveles 1 al 4) | Aprobado |

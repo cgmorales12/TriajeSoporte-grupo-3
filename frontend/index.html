@@ -2465,7 +2465,7 @@
 
             <div class="kanban-col" id="col-resuelto">
                 <div class="kanban-col-header">
-                    <span>✅ Resueltos</span>
+                    <span>Resueltos</span>
                     <div class="header-pag-mini">
                         <button type="button" class="mini-pag-btn" id="mini-prev-resuelto" onclick="cambiarPagina('resuelto', -1)" title="Página anterior">◀</button>
                         <span class="col-badge" id="count-resuelto">0</span>
@@ -3601,7 +3601,7 @@
                     sessionStorage.setItem('conectatec_tic_sesion', JSON.stringify(data));
                     cerrarModalLoginTIC();
                     actualizarEstadoSesionTIC();
-                    mostrarToast(`✅ Sesión iniciada: Bienvenido, ${data.nombre_completo}`);
+                    mostrarToast(`Sesión iniciada: Bienvenido, ${data.nombre_completo}`);
                     
                     // Si el usuario intentaba quitar un ticket antes de loguearse, abrir confirmación
                     if (_ticketIdAEliminar && _ticketCodigoAEliminar) {
@@ -3958,7 +3958,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                         const data = await res.json();
                         statusBox.innerHTML = `
                             <div style="background:#ECFDF5; border:1px solid #6EE7B7; color:#065F46; padding:12px; border-radius:8px;">
-                                <div style="font-weight:700;">✅ ¡Conversión Exitosa a Markdown RAG!</div>
+                                <div style="font-weight:700;">Conversión Exitosa a Markdown RAG</div>
                                 <div style="font-size:12.5px; margin-top:4px;">
                                     • Código Asignado: <b>${data.documento_id}</b><br>
                                     • Título Detectado: <b>${data.titulo}</b><br>
@@ -3966,22 +3966,22 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                                 </div>
                                 <div style="margin-top:10px;">
                                     <button type="button" class="btn-tic-action" onclick="cargarConvertidoEnEditor('${data.nombre_archivo_md}')">
-                                        ✏️ Abrir y Revisar en el Editor
+                                        Abrir y Revisar en el Editor
                                     </button>
                                 </div>
                             </div>
                         `;
                         window._ultimoDocConvertido = data;
                         if (guardarDirecto) {
-                            mostrarToast(`🎉 Guardado como data/raw/${data.nombre_archivo_md}`);
+                            mostrarToast(`Guardado como data/raw/${data.nombre_archivo_md}`);
                             cargarManualesTIC();
                         }
                     } else {
                         const err = await res.json();
-                        statusBox.innerHTML = `<div style="color:#DC2626; padding:10px;">❌ Error: ${err.detail || 'Fallo al convertir'}</div>`;
+                        statusBox.innerHTML = `<div style="color:#DC2626; padding:10px;">Error: ${err.detail || 'Fallo al convertir'}</div>`;
                     }
                 } catch (err) {
-                    statusBox.innerHTML = `<div style="color:#DC2626; padding:10px;">❌ Fallo de conexión durante la conversión.</div>`;
+                    statusBox.innerHTML = `<div style="color:#DC2626; padding:10px;">Fallo de conexión durante la conversión.</div>`;
                 }
             };
             reader.readAsDataURL(file);
@@ -4244,11 +4244,11 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             // 5. Botones adaptados
             const btnDescartar = document.getElementById('btnDescartarModalRegistro');
             if (btnDescartar) {
-                btnDescartar.textContent = esTIC ? '❌ Descartar Consulta' : '❌ Cancelar (Ya no requiero ticket)';
+                btnDescartar.textContent = esTIC ? 'Descartar Consulta' : 'Cancelar (Ya no requiero ticket)';
             }
             const btnRegistrar = document.getElementById('btnEjecutarConfirmarRegistro');
             if (btnRegistrar) {
-                btnRegistrar.textContent = esTIC ? '✅ Confirmar y Registrar Ticket' : '✅ Enviar Solicitud a Soporte Técnico';
+                btnRegistrar.textContent = esTIC ? 'Confirmar y Registrar Ticket' : 'Enviar Solicitud a Soporte Técnico';
             }
 
             const esNoTecnica = (propuesta.categoria_propuesta === 'Solicitud No Técnica / Fuera de Alcance') ||
@@ -4387,7 +4387,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 alert('Error de conexión al confirmar ticket: ' + e);
             } finally {
                 btn.disabled = false;
-                btn.textContent = '✅ Confirmar y Registrar Ticket';
+                btn.textContent = 'Confirmar y Registrar Ticket';
             }
         }
 
@@ -4891,8 +4891,8 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:10px;">
-                    <button type="button" id="btnDescartarModalRegistro" class="btn-reset-filters" style="padding:9px 16px; font-size:12.5px; font-weight:600; color:#1E293B !important; background:#FFFFFF; border:1px solid #CBD5E1;" onclick="cerrarModalConfirmarRegistro()">❌ Cancelar (Ya no requiero ticket)</button>
-                    <button type="button" id="btnEjecutarConfirmarRegistro" class="btn-submit" style="background:#1E3A8A; color:#FFFFFF !important; border:1px solid #1E3A8A; padding:9px 18px; width:auto; font-size:12.5px;" onclick="ejecutarConfirmarRegistro()">✅ Enviar Solicitud a Soporte Técnico</button>
+                    <button type="button" id="btnDescartarModalRegistro" class="btn-reset-filters" style="padding:9px 16px; font-size:12.5px; font-weight:600; color:#1E293B !important; background:#FFFFFF; border:1px solid #CBD5E1;" onclick="cerrarModalConfirmarRegistro()">Cancelar (Ya no requiero ticket)</button>
+                    <button type="button" id="btnEjecutarConfirmarRegistro" class="btn-submit" style="background:#1E3A8A; color:#FFFFFF !important; border:1px solid #1E3A8A; padding:9px 18px; width:auto; font-size:12.5px;" onclick="ejecutarConfirmarRegistro()">Enviar Solicitud a Soporte Técnico</button>
                 </div>
             </div>
         </div>

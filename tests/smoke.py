@@ -44,7 +44,7 @@ def hacer_peticion(metodo: str, endpoint: str, body: dict = None) -> tuple:
 
 def main():
     print(f"\n=======================================================")
-    print(f"🚀 INICIANDO SMOKE TESTS (6/6) EN: {URL_BASE}")
+    print(f"INICIANDO SMOKE TESTS (6/6) EN: {URL_BASE}")
     print(f"=======================================================\n")
 
     pruebas_pasadas = 0
@@ -56,10 +56,10 @@ def main():
     if status != 200:
         status, body, ms = hacer_peticion("GET", "/health")
     if status == 200:
-        print(f"✅ PASÓ (200 OK · {ms:.1f}ms)")
+        print(f"[OK] PASÓ (200 OK · {ms:.1f}ms)")
         pruebas_pasadas += 1
     else:
-        print(f"❌ FALLÓ (Status {status}: {body})")
+        print(f"[ERROR] FALLÓ (Status {status}: {body})")
 
     # 2. Clasificación de Incidente Técnico
     print("2/6 Clasificación de Incidente Técnico...", end=" ")
@@ -72,27 +72,27 @@ def main():
     if status != 201:
         status, body, ms = hacer_peticion("POST", "/v1/tickets/clasificar", payload_incidente)
     if status == 201 and "prioridad" in body:
-        print(f"✅ PASÓ (201 Created · Código: {body.get('ticket_codigo', 'OK')} · {ms:.1f}ms)")
+        print(f"[OK] PASÓ (201 Created · Código: {body.get('ticket_codigo', 'OK')} · {ms:.1f}ms)")
         pruebas_pasadas += 1
     else:
-        print(f"❌ FALLÓ (Status {status}: {body})")
+        print(f"[ERROR] FALLÓ (Status {status}: {body})")
 
     # 3. Recuperación RAG con Citas Verificables
     print("3/6 Recuperación RAG sobre 15 Manuales Oficiales...", end=" ")
     if status == 201 and body.get("citas") and len(body["citas"]) > 0:
         doc = body["citas"][0].get("documento_id")
-        print(f"✅ PASÓ (Cita oficial: {doc} · {ms:.1f}ms)")
+        print(f"[OK] PASÓ (Cita oficial: {doc} · {ms:.1f}ms)")
         pruebas_pasadas += 1
     else:
-        print(f"❌ FALLÓ (Sin citas verificables)")
+        print(f"[ERROR] FALLÓ (Sin citas verificables)")
 
     # 4. Cálculo Determinista de Prioridad ITIL (0 tokens)
     print("4/6 Cálculo Determinista ITIL (Prioridad y SLA)...", end=" ")
     if status == 201 and body.get("prioridad") in ["Alta", "Media", "Baja"] and body.get("sla_minutos", 0) > 0:
-        print(f"✅ PASÓ (Prioridad: {body['prioridad']} · SLA: {body['sla_minutos']} min)")
+        print(f"[OK] PASÓ (Prioridad: {body['prioridad']} · SLA: {body['sla_minutos']} min)")
         pruebas_pasadas += 1
     else:
-        print(f"❌ FALLÓ (Prioridad o SLA no conforme a matriz determinista)")
+        print(f"[ERROR] FALLÓ (Prioridad o SLA no conforme a matriz determinista)")
 
     # 5. Regla de Silencio y Abstención (Zero-Hallucination)
     print("5/6 Protocolo de Silencio y Abstención Fuera de Alcance...", end=" ")
@@ -105,10 +105,10 @@ def main():
     if status_f != 201:
         status_f, body_f, ms_f = hacer_peticion("POST", "/v1/tickets/clasificar", payload_fuera)
     if status_f == 201 and len(body_f.get("citas", [])) == 0 and "orientación" in body_f.get("solucion_propuesta", "").lower():
-        print(f"✅ PASÓ (Abstención estricta: 0 citas alucinadas)")
+        print(f"[OK] PASÓ (Abstención estricta: 0 citas alucinadas)")
         pruebas_pasadas += 1
     else:
-        print(f"❌ FALLÓ (No aplicó regla de silencio)")
+        print(f"[ERROR] FALLÓ (No aplicó regla de silencio)")
 
     # 6. Resiliencia, Fallback y Failover
     print("6/6 Resiliencia y Conmutación Transparente (Groq/Offline)...", end=" ")
@@ -123,10 +123,10 @@ def main():
         status_c, body_c, ms_c = hacer_peticion("POST", "/v1/tickets/clasificar", payload_caida)
     if status_c == 201 and body_c.get("metadatos_ia", {}).get("conmutado") is True:
         prov = body_c["metadatos_ia"]["proveedor"]
-        print(f"✅ PASÓ (Conmutado exitosamente a: {prov})")
+        print(f"[OK] PASÓ (Conmutado exitosamente a: {prov})")
         pruebas_pasadas += 1
     else:
-        print(f"❌ FALLÓ (No se registró la conmutación transparente)")
+        print(f"[ERROR] FALLÓ (No se registró la conmutación transparente)")
 
     print(f"\n=======================================================")
     print(f"RESULTADO SMOKE TESTS: {pruebas_pasadas}/{total_pruebas} APROBADAS")

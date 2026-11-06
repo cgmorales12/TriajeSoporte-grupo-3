@@ -42,3 +42,4 @@ Se adopta una gobernanza ética integral en la arquitectura y en la experiencia 
 - **Positivas:**
   - Sistema completamente auditable y éticamente defendible ante tribunales de titulación y entidades regulatorias.
   - Cero fugas de contraseñas hacia proveedores de nube o historiales de Git.
+

@@ -318,7 +318,7 @@ def buscar_solucion(
         logger.info("[CHAOS ENGINEERING] Simulación de desconexión inducida del corpus RAG.")
         return DiagnosticoRAG(
             solucion_propuesta=(
-                "⚠️ [CONTINGENCIA RAG ACTIVADA] El repositorio documental de los 15 manuales técnicos "
+                "[CONTINGENCIA RAG ACTIVADA] El repositorio documental de los 15 manuales técnicos "
                 "se encuentra temporalmente fuera de línea por simulación de fallo. No es posible brindar autoatención guiada de Nivel 1. "
                 "El incidente ha sido derivado a Nivel 2 para diagnóstico y atención directa por personal técnico humano."
             ),

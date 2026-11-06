@@ -63,14 +63,14 @@ flowchart TD
 ## 3. Demostrabilidad en la Interfaz de Usuario
 El sistema hace visible e interactivo este control en:
 1. **Formulario Web (`frontend/index.html`):**
-   - Interruptor destacado: `🛡️ Confirmación Humana Previa (HITL)`. Al enviar, despliega la ventana modal de pre-triaje donde el operador valida o ajusta la categoría y prioridad antes de impactar el Kanban.
+   - Interruptor destacado: `[Seguridad] Confirmación Humana Previa (HITL)`. Al enviar, despliega la ventana modal de pre-triaje donde el operador valida o ajusta la categoría y prioridad antes de impactar el Kanban.
 2. **Tarjetas Kanban:**
-   - Botón directo `✉️ Enviar Notif.` con modal de vista previa y edición de correo.
-   - Botón directo `🚨 Derivar Cuadrilla` con justificación de herramientas ópticas y orden ODT.
+   - Botón directo ` Enviar Notif.` con modal de vista previa y edición de correo.
+   - Botón directo `[Alerta] Derivar Cuadrilla` con justificación de herramientas ópticas y orden ODT.
    - Insignias visuales auditadas:
-     * `🛡️ Aprobado HITL por: {operador}`
-     * `✉️ Notificación Enviada al Usuario`
-     * `👷 Cuadrilla Despachada: {ODT-FIBRA-XXXX}`
+     * `[Seguridad] Aprobado HITL por: {operador}`
+     * ` Notificación Enviada al Usuario`
+     * ` Cuadrilla Despachada: {ODT-FIBRA-XXXX}`
 3. **Aplicación Streamlit (`frontend/app.py`):**
    - Controles interactivos en cada contenedor de ticket para disparar la confirmación y refrescar el estado.
 

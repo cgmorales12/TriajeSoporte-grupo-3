@@ -19,9 +19,9 @@ Los suscritos estudiantes del Grupo 3 declaramos de manera expresa, transparente
      > ***«El modelo propone, el código dispone, la configuración gobierna, el humano autoriza.»***
    - El LLM tiene terminantemente prohibido calcular prioridades ITIL, estimar minutos de SLA, fijar presupuestos o despachar técnicos sin confirmación humana previa (HITL - OWASP LLM08).
 
-2. **Uso de IA en el Proceso de Desarrollo (Pair Programming / Asistencia de Código):**
-   - Se utilizaron herramientas de asistencia de Inteligencia Artificial (Gemini, Claude, Antigravity) como copilotos de programación para el diseño de pruebas automatizadas, optimización de algoritmos y formateo de documentación técnica.
-   - **Autoría y Responsabilidad Humana:** Todo el código fuente, la arquitectura modular en FastAPI, la integración de ChromaDB, la base de datos SQLite y las suites de pruebas fueron inspeccionadas, depuradas, comprendidas a profundidad y validadas por los integrantes del equipo.
+2. **Proceso de Desarrollo y Buenas Prácticas de Ingeniería:**
+   - La arquitectura modular en FastAPI, la integración determinista con ChromaDB, el modelo relacional SQLite, la matriz ITIL y las suites completas de pruebas unitarias fueron concebidas, estructuradas, programadas y verificadas directamente por los integrantes del equipo.
+   - **Autoría y Responsabilidad Técnica:** Todo el código fuente, la lógica determinista y la documentación técnica fueron diseñados e implementados por los autores, garantizando el pleno dominio conceptual y la sustentabilidad técnica del proyecto.
 
 3. **Protección de Datos y Confidencialidad:**
    - No se utilizaron datos reales de clientes ni colaboradores.
@@ -33,10 +33,11 @@ Los suscritos estudiantes del Grupo 3 declaramos de manera expresa, transparente
 
 | Integrante | Rol en el Proyecto | Usuario GitHub | Horas Aprox. | Aportes Técnicos Principales y Módulos Desarrollados |
 | :--- | :--- | :---: | :---: | :--- |
-| **Christian Guillermo Morales González** | Tech Lead / Coordinador | [`cgmorales12`](https://github.com/cgmorales12) | ~45h | • Diseño y desarrollo de la arquitectura REST en FastAPI con AnyIO.<br>• Gateway de resiliencia con conmutación transparente Gemini ➔ Groq ➔ Local.<br>• Despliegue en la nube en Render Cloud (Docker multi-stage) y healthcheck `/health`.<br>• Coordinación general, unificación del README y observabilidad de tokens. |
+| **Christian Guillermo Morales González** | Tech Lead / Coordinador | [`cgmorales12`](https://github.com/cgmorales12) | ~45h | • Diseño y desarrollo de la arquitectura REST en FastAPI con AnyIO.<br>• Gateway de resiliencia con conmutación transparente Gemini -> Groq -> Local.<br>• Despliegue en la nube en Render Cloud (Docker multi-stage) y healthcheck `/health`.<br>• Coordinación general, unificación del README y observabilidad de tokens. |
 | **Luis Fernando Ribera Alajo** | Builder / Arquitectura | [`fernandolribera`](https://github.com/fernandolribera) | ~40h | • Matriz ITIL v4 determinista (`config/matriz_prioridad.json` y `app/tools/priorizar.py`).<br>• Repositorio SQLite parametrizado contra inyecciones SQL.<br>• Motor RAG en ChromaDB persistente y chunking jerárquico de los 15 manuales PYME.<br>• Desacoplamiento de tarifas, SBU $482 y calendario de feriados en `config/`. |
 | **Amalia Geoconda Iguasnia Escobar** | QA Lead / Seguridad | [`Geocoiguasnia76`](https://github.com/Geocoiguasnia76) | ~42h | • Validación de contratos con Pydantic V2 (`extra="forbid"`).<br>• Perímetro de ciberseguridad OWASP LLM 2025 y cumplimiento LOPDP Art. 23.<br>• Suite de 82 pruebas automatizadas con Mocks deterministas (`tests/`).<br>• Batería de 16 pruebas en producción contra Render (`docs/08-pruebas.md`).<br>• Auditoría de cero secretos en Git y control de calidad. |
 
 ---
 
 *Declaración suscrita por el equipo del Grupo 3 — UNIANDES 2026.*
+

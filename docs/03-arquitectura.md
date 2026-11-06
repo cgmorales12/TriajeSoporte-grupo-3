@@ -14,20 +14,20 @@ El diagrama de contexto ilustra la posición de la **Plataforma de Triaje Autom�
 ```mermaid
 flowchart TD
     subgraph Actores_Humanos["Usuarios y Operadores"]
-        C["👤 Colaborador / Usuario Final<br/><i>(Contabilidad, Ventas, RRHH, Operaciones)</i><br/>Reporta incidencias, consulta diagnósticos y guías."]
-        T["👷 Técnico de Soporte TIC<br/><i>(Mesa de Ayuda y Soporte Presencial)</i><br/>Visualiza tablero Kanban, actualiza estados y ejecuta soluciones."]
-        O["👨‍💼 Supervisor de Mesa de Ayuda TIC<br/><i>(Coordinador de Operaciones)</i><br/>Supervisa SLA, reasigna tickets y audita métricas de IA."]
+        C[" Colaborador / Usuario Final<br/><i>(Contabilidad, Ventas, RRHH, Operaciones)</i><br/>Reporta incidencias, consulta diagnósticos y guías."]
+        T[" Técnico de Soporte TIC<br/><i>(Mesa de Ayuda y Soporte Presencial)</i><br/>Visualiza tablero Kanban, actualiza estados y ejecuta soluciones."]
+        O[" Supervisor de Mesa de Ayuda TIC<br/><i>(Coordinador de Operaciones)</i><br/>Supervisa SLA, reasigna tickets y audita métricas de IA."]
     end
 
     subgraph Sistema_Triaje["Sistema Central"]
-        CT["🖥️ Plataforma de Triaje TIC<br/><b>Soporte Tecnológico para PYMEs (60 Colaboradores)</b><br/>Triaje automatizado, priorización ITIL determinista,<br/>RAG con citas de manuales y tablero de tickets."]
+        CT[" Plataforma de Triaje TIC<br/><b>Soporte Tecnológico para PYMEs (60 Colaboradores)</b><br/>Triaje automatizado, priorización ITIL determinista,<br/>RAG con citas de manuales y tablero de tickets."]
     end
 
     subgraph Sistemas_Externos["Servicios Externos y Proveedores"]
-        GEMINI["☁️ Google Gemini API<br/><i>(Modelo Primario: Gemini 3.5 Flash)</i><br/>Inferencia estructurada, context caching y streaming."]
-        GROQ["⚡ Groq Cloud API<br/><i>(Modelo de Respaldo: Llama 3.3 70B)</i><br/>Failover de ultra baja latencia ante fallas 429/503."]
-        CHROMA["📚 Corpus de Manuales RAG<br/><i>(15 Manuales Técnicos PYME)</i><br/>ChromaDB / Búsqueda semántica de procedimientos."]
-        SMTP["✉️ Servidor SMTP / Notificaciones<br/><i>(Simulación de Correo)</i><br/>Envío de confirmaciones de tickets y alertas SLA."]
+        GEMINI[" Google Gemini API<br/><i>(Modelo Primario: Gemini 3.5 Flash)</i><br/>Inferencia estructurada, context caching y streaming."]
+        GROQ[" Groq Cloud API<br/><i>(Modelo de Respaldo: Llama 3.3 70B)</i><br/>Failover de ultra baja latencia ante fallas 429/503."]
+        CHROMA[" Corpus de Manuales RAG<br/><i>(15 Manuales Técnicos PYME)</i><br/>ChromaDB / Búsqueda semántica de procedimientos."]
+        SMTP[" Servidor SMTP / Notificaciones<br/><i>(Simulación de Correo)</i><br/>Envío de confirmaciones de tickets y alertas SLA."]
     end
 
     C -->|1. Envía reporte de falla o mensaje de chat HTTPS| CT
@@ -50,26 +50,26 @@ El diagrama de contenedores describe la arquitectura física y lógica de alto n
 ```mermaid
 flowchart TD
     subgraph Cliente_Navegador["Navegador Web del Cliente / Operador"]
-        SPA["🌐 Frontend Web (SPA)<br/><b>HTML5 + CSS3 Nativo + JavaScript Vanilla</b><br/>Formulario reactivo, botón deshabilitado con spinner,<br/>tablero Kanban interactivo, consola de chat streaming y badge de telemetría."]
+        SPA[" Frontend Web (SPA)<br/><b>HTML5 + CSS3 Nativo + JavaScript Vanilla</b><br/>Formulario reactivo, botón deshabilitado con spinner,<br/>tablero Kanban interactivo, consola de chat streaming y badge de telemetría."]
     end
 
     subgraph Servidor_Aplicacion["Perímetro de Aplicación (Host Local / VPS)"]
-        API["⚙️ Backend API REST<br/><b>FastAPI (Python 3.10+) + Uvicorn + AnyIO</b><br/>Endpoints asíncronos y síncronos en threadpool,<br/>validación estricta Pydantic V2, rate limiting Token Bucket,<br/>control de errores RFC 9457 y filtro LOPDP."]
+        API[" Backend API REST<br/><b>FastAPI (Python 3.10+) + Uvicorn + AnyIO</b><br/>Endpoints asíncronos y síncronos en threadpool,<br/>validación estricta Pydantic V2, rate limiting Token Bucket,<br/>control de errores RFC 9457 y filtro LOPDP."]
 
-        LLM_GW["🛡️ Gateway de Inferencia LLM<br/><b>app/services/llm.py (ClienteLLM)</b><br/>Patrón Gateway/Strategy, manejo de errores 429 con backoff exponencial,<br/>timeout de 12s, mitigación de respuestas vacías y registro de tokens."]
+        LLM_GW["[Seguridad] Gateway de Inferencia LLM<br/><b>app/services/llm.py (ClienteLLM)</b><br/>Patrón Gateway/Strategy, manejo de errores 429 con backoff exponencial,<br/>timeout de 12s, mitigación de respuestas vacías y registro de tokens."]
 
-        ITIL_CORE["📐 Motor Determinista ITIL<br/><b>app/tools/priorizar.py</b><br/>Cálculo matemático de prioridad (Alta/Media/Baja) y tiempos SLA<br/>leyendo <code>config/matriz_prioridad.json</code>."]
+        ITIL_CORE[" Motor Determinista ITIL<br/><b>app/tools/priorizar.py</b><br/>Cálculo matemático de prioridad (Alta/Media/Baja) y tiempos SLA<br/>leyendo <code>config/matriz_prioridad.json</code>."]
 
-        RAG_SRV["🔍 Servicio RAG de Búsqueda<br/><b>app/services/rag.py</b><br/>Recuperación de fragmentos técnicos verificables<br/>con citas exactas (DOC-01 a DOC-15)."]
+        RAG_SRV[" Servicio RAG de Búsqueda<br/><b>app/services/rag.py</b><br/>Recuperación de fragmentos técnicos verificables<br/>con citas exactas (DOC-01 a DOC-15)."]
 
-        SQLITE[("💾 Base de Datos Relacional<br/><b>SQLite (data/conectatec.db)</b><br/>Persistencia parametrizada de tickets, estados,<br/>marcas de tiempo y citas asociadas.")]
+        SQLITE[(" Base de Datos Relacional<br/><b>SQLite (data/conectatec.db)</b><br/>Persistencia parametrizada de tickets, estados,<br/>marcas de tiempo y citas asociadas.")]
 
-        TELEMETRIA[("📊 Almacén de Observabilidad<br/><b>Memoria / logs de auditoría</b><br/>Telemetría de tokens consumidos (in/out/total)<br/>y latencia de respuesta por solicitud.")]
+        TELEMETRIA[(" Almacén de Observabilidad<br/><b>Memoria / logs de auditoría</b><br/>Telemetría de tokens consumidos (in/out/total)<br/>y latencia de respuesta por solicitud.")]
     end
 
     subgraph Nube_IA["Proveedores Externos de IA"]
-        GEMINI_EXT["☁️ Google Gemini 1.5 Flash"]
-        GROQ_EXT["⚡ Groq Cloud Llama 3.3 70B"]
+        GEMINI_EXT[" Google Gemini 1.5 Flash"]
+        GROQ_EXT[" Groq Cloud Llama 3.3 70B"]
     end
 
     SPA -->|JSON REST / SSE Streaming| API
@@ -260,7 +260,7 @@ sequenceDiagram
     GROQ-->>GW: JSON válido {categoria, impacto, urgencia}
     GW-->>BE: TicketClasificado + metadatos (conmutado=True, proveedor="groq")
     BE-->>LOG: Registrar 120 tokens, tiempo 185ms, proveedor groq
-    BE-->>FE: HTTP 200 OK con badge: "🟠 Respaldo Activo: Groq Llama 3.3"
+    BE-->>FE: HTTP 200 OK con badge: "[Respaldo] Respaldo Activo: Groq Llama 3.3"
 ```
 
 ---

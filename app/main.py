@@ -201,13 +201,13 @@ async def middleware_observabilidad_solicitudes(request: Request, call_next):
     # Registro en log por solicitud con formato estructurado
     if tokens_total is not None and tokens_total > 0:
         logger_solicitudes.info(
-            f"📊 [SOLICITUD HTTP] {request.method} {request.url.path} -> {response.status_code} | "
+            f"[SOLICITUD HTTP] {request.method} {request.url.path} -> {response.status_code} | "
             f"Tiempo: {duracion_ms}ms | ReqID: {req_id} | "
             f"IA: {proveedor}:{modelo} | Tokens: in={tokens_prompt}, out={tokens_completado}, total={tokens_total}"
         )
     else:
         logger_solicitudes.info(
-            f"📊 [SOLICITUD HTTP] {request.method} {request.url.path} -> {response.status_code} | "
+            f"[SOLICITUD HTTP] {request.method} {request.url.path} -> {response.status_code} | "
             f"Tiempo: {duracion_ms}ms | ReqID: {req_id}"
         )
 

@@ -13,29 +13,29 @@ API_BASE_URL = "http://localhost:8000"
 
 st.set_page_config(
     page_title="Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso 03 · Grupo 3)",
-    page_icon="🏢",
+    
     layout="wide"
 )
 
 # Cabecera Institucional
-st.title("🏢 Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME")
+st.title("Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME")
 st.caption("Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda ITIL v4 Modular y Configurable para Cualquier Pequeña y Mediana Empresa | Christian Morales · Fernando Ribera · Geoconda Iguasnia")
 
 # Verificación de salud y estado del proveedor LLM
 try:
     res_salud = requests.get(f"{API_BASE_URL}/v1/salud", timeout=2)
     if res_salud.status_code == 200:
-        st.success("🟢 Backend FastAPI Conectado | Base de Datos: SQLite | IA: Gemini 1.5 Flash (Respaldo: Groq Cloud)")
+        st.success("Backend FastAPI Conectado | Base de Datos: SQLite | IA: Gemini 1.5 Flash (Respaldo: Groq Cloud)")
     else:
-        st.warning("🟠 Backend en línea pero con advertencia de estado.")
+        st.warning("Backend en línea pero con advertencia de estado.")
 except Exception:
-    st.error("🔴 Backend desconectado. Asegúrate de ejecutar: uvicorn app.main:app --reload")
+    st.error("Backend desconectado. Asegúrate de ejecutar: uvicorn app.main:app --reload")
 
 # Layout de dos columnas
 col_izq, col_der = st.columns([1, 2])
 
 with col_izq:
-    st.subheader("📝 Ingreso de Solicitud de Soporte")
+    st.subheader("Ingreso de Solicitud de Soporte")
     with st.form("form_reporte"):
         nombre = st.text_input("Nombre del Colaborador", placeholder="Ej. Carlos Mendoza")
         email = st.text_input("Correo Institucional / Departamento", placeholder="carlos.mendoza@empresa.com (Finanzas)")
@@ -45,11 +45,11 @@ with col_izq:
             placeholder="Ej. Bloqueo de contraseña en Active Directory, error en VPN para teletrabajo, atasco de impresora, fallo en sistema ERP...",
             height=120
         )
-        enviado = st.form_submit_button("⚡ Clasificar con IA y Crear Ticket", use_container_width=True)
+        enviado = st.form_submit_button("Clasificar con IA y Crear Ticket", use_container_width=True)
 
     if enviado:
         if len(descripcion.strip()) < 10:
-            st.error("⚠️ **Descripción Demasiado Corta:** La descripción de la incidencia debe contener al menos 10 caracteres para que la IA realice el triaje.")
+            st.error("**Descripción Demasiado Corta:** La descripción de la incidencia debe contener al menos 10 caracteres para que la IA realice el triaje.")
         else:
             payload = {
                 "nombre_cliente": nombre,
@@ -59,15 +59,15 @@ with col_izq:
             }
             try:
                 # Indicador visual de espera mientras el backend procesa el triaje
-                with st.spinner("⏳ Analizando incidencia con IA y consultando 15 manuales técnicos internos (RAG)..."):
+                with st.spinner("Analizando incidencia con IA y consultando 15 manuales técnicos internos (RAG)..."):
                     res = requests.post(f"{API_BASE_URL}/v1/tickets/clasificar", json=payload, timeout=20)
                 
                 if res.status_code == 201:
                     t = res.json()
-                    st.success(f"⚡ **Ticket Creado:** `{t['ticket_codigo']}` | Prioridad: **{t['prioridad']}** | SLA: **{t['sla_minutos']} min**")
+                    st.success(f"**Ticket Creado:** `{t['ticket_codigo']}` | Prioridad: **{t['prioridad']}** | SLA: **{t['sla_minutos']} min**")
                     if t.get("metadatos_ia", {}).get("conmutado"):
                         proveedor_respaldo = t["metadatos_ia"]["proveedor"]
-                        st.warning(f"🟠 **Respaldo Activo:** Atendido mediante contingencia ({proveedor_respaldo}) por indisponibilidad del modelo primario.")
+                        st.warning(f"**Respaldo Activo:** Atendido mediante contingencia ({proveedor_respaldo}) por indisponibilidad del modelo primario.")
                     st.rerun()
                 else:
                     # Deserializar y presentar errores comprensibles según RFC 9457
@@ -80,25 +80,25 @@ with col_izq:
                         titulo = "Error en la Solicitud"
 
                     if res.status_code == 422:
-                        st.error(f"⚠️ **Datos de Entrada Inválidos (RFC 9457 · 422):** {detalle}")
-                        st.info("💡 **Acción Sugerida:** Revise los campos del formulario y asegúrese de detallar los síntomas técnicos.")
+                        st.error(f"**Datos de Entrada Inválidos (RFC 9457 · 422):** {detalle}")
+                        st.info("**Acción Sugerida:** Revise los campos del formulario y asegúrese de detallar los síntomas técnicos.")
                     elif res.status_code == 429:
-                        st.warning(f"⏳ **Límite de Consultas Alcanzado (RFC 6585 · 429):** {detalle}")
-                        st.info("💡 **Acción Sugerida:** Espere unos segundos para que se recarguen las fichas de su sesión de trabajo.")
+                        st.warning(f"**Límite de Consultas Alcanzado (RFC 6585 · 429):** {detalle}")
+                        st.info("**Acción Sugerida:** Espere unos segundos para que se recarguen las fichas de su sesión de trabajo.")
                     elif res.status_code in [500, 503]:
-                        st.error(f"🚨 **Servicio Temporalmente No Disponible ({res.status_code}):** {detalle}")
-                        st.info("💡 **Acción Sugerida:** El sistema activará el conmutador offline en el siguiente reintento.")
+                        st.error(f"**Servicio Temporalmente No Disponible ({res.status_code}):** {detalle}")
+                        st.info("**Acción Sugerida:** El sistema activará el conmutador offline en el siguiente reintento.")
                     else:
-                        st.error(f"⚠️ **{titulo} ({res.status_code}):** {detalle}")
+                        st.error(f"**{titulo} ({res.status_code}):** {detalle}")
 
             except requests.exceptions.ConnectionError:
-                st.error(f"🔌 **Error de Conexión:** No fue posible establecer comunicación con el backend FastAPI en `{API_BASE_URL}`.")
-                st.info("💡 **Acción Sugerida:** Verifique que el servidor backend esté iniciado ejecutando: `uvicorn app.main:app --reload --port 8000`.")
+                st.error(f"**Error de Conexión:** No fue posible establecer comunicación con el backend FastAPI en `{API_BASE_URL}`.")
+                st.info("**Acción Sugerida:** Verifique que el servidor backend esté iniciado ejecutando: `uvicorn app.main:app --reload --port 8000`.")
             except Exception as e:
-                st.error(f"⚠️ **Error Inesperado:** {str(e)}")
+                st.error(f"**Error Inesperado:** {str(e)}")
 
 with col_der:
-    st.subheader("📋 Tablero Kanban de Incidentes (ITIL 4)")
+    st.subheader("Tablero Kanban de Incidentes (ITIL 4)")
     
     # Obtener tickets desde la API
     tickets = []
@@ -110,7 +110,7 @@ with col_der:
         pass
 
     # Barra de Filtros por Metadatos (RAG & ITIL 4)
-    with st.expander("🔍 Filtros de Visualización por Metadatos (RAG & ITIL 4)", expanded=True):
+    with st.expander("Filtros de Visualización por Metadatos (RAG & ITIL 4)", expanded=True):
         f_col1, f_col2, f_col3, f_col4 = st.columns([1.5, 1, 1, 1])
         with f_col1:
             q_buscar = st.text_input("Búsqueda Rápida", placeholder="Síntoma, cliente o ticket...", key="filtro_q")
@@ -145,42 +145,42 @@ with col_der:
                 continue
         tickets_filtrados.append(t)
 
-    st.caption(f"📊 Mostrando **{len(tickets_filtrados)}** de **{len(tickets)}** tickets según los filtros de metadatos seleccionados.")
+    st.caption(f"Mostrando **{len(tickets_filtrados)}** de **{len(tickets)}** tickets según los filtros de metadatos seleccionados.")
 
     def renderizar_tarjeta_ticket(t):
         """Renderiza una tarjeta de ticket con sus fuentes técnicas y citas obligatorias RAG."""
         with st.container(border=True):
-            st.caption(f"🏷️ **{t['ticket_codigo']}** · Prioridad: **{t['prioridad']}** (SLA {t['sla_minutos']}m)")
+            st.caption(f"**{t['ticket_codigo']}** · Prioridad: **{t['prioridad']}** (SLA {t['sla_minutos']}m)")
             st.markdown(f"**Cliente:** {t['nombre_cliente']}")
             st.markdown(f"*{t['descripcion_problema']}*")
             
             # Cita obligatoria de fuente RAG
             if t.get("citas") and len(t["citas"]) > 0:
                 c = t["citas"][0]
-                st.markdown(f"📖 **Cita RAG:** `{c.get('documento_id')}` · {c.get('paso_exacto')}")
+                st.markdown(f"**Cita RAG:** `{c.get('documento_id')}` · {c.get('paso_exacto')}")
                 st.caption(f"**Fuente:** {c.get('titulo_documento', 'Manual Oficial')} ({c.get('vigencia', '2026-V1')})")
                 st.info(f"«{c.get('fragmento_aplicado', '')}»")
                 if c.get("url"):
-                    st.markdown(f"[🔗 Consultar Fuente Técnica Oficial]({c['url']})")
+                    st.markdown(f"[Consultar Fuente Técnica Oficial]({c['url']})")
             elif "Fuera de Alcance" in t.get("categoria", ""):
-                st.caption("⚪ *Sin cita técnica: Solicitud No Técnica / Fuera de Alcance (Regla de Silencio)*")
+                st.caption("*Sin cita técnica: Solicitud No Técnica / Fuera de Alcance (Regla de Silencio)*")
             elif t.get("requiere_revision_humana"):
-                st.warning("⚠️ *Caso derivado a Nivel 2 humano (Umbral de confianza o contingencia).*")
+                st.warning("*Caso derivado a Nivel 2 humano (Umbral de confianza o contingencia).*")
 
             # Indicadores Human-in-the-Loop (HITL · OWASP LLM08)
             if t.get("confirmado_por"):
-                st.success(f"🛡️ **Aprobado HITL por:** {t['confirmado_por']}")
+                st.success(f"**Aprobado HITL por:** {t['confirmado_por']}")
             if t.get("notificacion_enviada"):
-                st.info("✉️ **Notificación Oficial Remitida al Colaborador**")
+                st.info("**Notificación Oficial Remitida al Colaborador**")
             if t.get("cuadrilla_despachada"):
-                st.warning(f"🧑‍💻 **Derivado a Técnico TI:** `{t.get('orden_despacho_id', 'ODT-TECNICO')}`")
+                st.warning(f"**Derivado a Técnico TI:** `{t.get('orden_despacho_id', 'ODT-TECNICO')}`")
 
             st.caption(f"IA: {t.get('metadatos_ia', {}).get('proveedor', 'gemini')} | Cat: {t.get('categoria', '')}")
 
             # Botones interactivos HITL
             b_col1, b_col2 = st.columns(2)
             with b_col1:
-                if st.button("✉️ Notificar", key=f"btn_notif_{t['id']}", help="Confirmación humana antes de enviar notificación"):
+                if st.button("Notificar", key=f"btn_notif_{t['id']}", help="Confirmación humana antes de enviar notificación"):
                     try:
                         res_p = requests.get(f"{API_BASE_URL}/v1/tickets/{t['id']}/proponer-envio", timeout=2)
                         if res_p.status_code == 200:
@@ -192,13 +192,13 @@ with col_der:
                                 "mensaje_final": data_env["mensaje_propuesto"],
                                 "operador_confirmador": "Operador TIC Streamlit"
                             }, timeout=2)
-                            st.toast("✉️ Notificación autorizada y enviada al colaborador.")
+                            st.toast("Notificación autorizada y enviada al colaborador.")
                             st.rerun()
                     except Exception as ex:
                         st.error(f"Error: {ex}")
             with b_col2:
                 if t["estado"] != "escalado_cuadrilla":
-                    if st.button("🧑‍💻 Derivar", key=f"btn_cuad_{t['id']}", help="Confirmación humana antes de derivar a técnico presencial"):
+                    if st.button("Derivar", key=f"btn_cuad_{t['id']}", help="Confirmación humana antes de derivar a técnico presencial"):
                         try:
                             res_c = requests.get(f"{API_BASE_URL}/v1/tickets/{t['id']}/proponer-derivacion", timeout=2)
                             if res_c.status_code == 200:
@@ -211,7 +211,7 @@ with col_der:
                                     "operador_confirmador": "Operador TIC Streamlit",
                                     "autoriza_despacho_presencial": True
                                 }, timeout=2)
-                                st.toast("🧑‍💻 Derivación a técnico presencial confirmada.")
+                                st.toast("Derivación a técnico presencial confirmada.")
                                 st.rerun()
                         except Exception as ex:
                             st.error(f"Error: {ex}")
@@ -219,7 +219,7 @@ with col_der:
     col_nuevo, col_atencion, col_cuadrilla, col_resuelto = st.columns(4)
 
     with col_nuevo:
-        st.markdown("### 🆕 Nuevos")
+        st.markdown("### Nuevos")
         col_t = [x for x in tickets_filtrados if x["estado"] == "nuevo"]
         if not col_t:
             st.caption("Sin tickets en esta columna")
@@ -227,7 +227,7 @@ with col_der:
             renderizar_tarjeta_ticket(t)
 
     with col_atencion:
-        st.markdown("### ⚙️ En Atención")
+        st.markdown("### En Atención")
         col_t = [x for x in tickets_filtrados if x["estado"] == "en_atencion"]
         if not col_t:
             st.caption("Sin tickets en esta columna")
@@ -235,7 +235,7 @@ with col_der:
             renderizar_tarjeta_ticket(t)
 
     with col_cuadrilla:
-        st.markdown("### 🛠️ Escalados (Nivel 2)")
+        st.markdown("### Escalados (Nivel 2)")
         col_t = [x for x in tickets_filtrados if x["estado"] == "escalado_cuadrilla"]
         if not col_t:
             st.caption("Sin tickets en esta columna")
@@ -243,7 +243,7 @@ with col_der:
             renderizar_tarjeta_ticket(t)
 
     with col_resuelto:
-        st.markdown("### ✅ Resueltos (Nivel 1)")
+        st.markdown("### Resueltos (Nivel 1)")
         col_t = [x for x in tickets_filtrados if x["estado"] == "resuelto"]
         if not col_t:
             st.caption("Sin tickets en esta columna")
