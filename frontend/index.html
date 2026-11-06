@@ -9,21 +9,26 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #F4F6F8;
+            /* Paleta Corporativa ConectaTec: Sobria, Ejecutiva y Agradable a la Vista */
+            --bg: #F8FAFC;
             --panel: #FFFFFF;
-            --header: #0E1A30;
-            --line: #CBD5E1;
+            --header: #0F172A;
+            --line: #E2E8F0;
             --text: #0F172A;
-            --muted: #334155;
-            --brand: #1E6F64;
-            --brand-light: #E3F2EE;
-            --alta: #B91C1C;
-            --alta-bg: #FEE2E2;
-            --media: #C2410C;
-            --media-bg: #FFEDD5;
-            --baja: #15803D;
-            --baja-bg: #DCFCE7;
-            --card-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            --muted: #64748B;
+            --brand: #1E3A8A;
+            --brand-hover: #1E40AF;
+            --brand-light: #EFF6FF;
+            --alta: #DC2626;
+            --alta-bg: #FEF2F2;
+            --alta-text: #991B1B;
+            --media: #D97706;
+            --media-bg: #FFFBEB;
+            --media-text: #92400E;
+            --baja: #2563EB;
+            --baja-bg: #EFF6FF;
+            --baja-text: #1E40AF;
+            --card-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
             --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
@@ -32,7 +37,7 @@
         body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.5; }
 
         ::placeholder {
-            color: #64748B !important;
+            color: #94A3B8 !important;
             opacity: 1 !important;
             font-weight: 500;
         }
@@ -40,41 +45,42 @@
         header {
             background: var(--header);
             color: #FFFFFF;
-            padding: 16px 24px;
+            padding: 14px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid var(--brand);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .header-title h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
-        .header-title p { font-size: 13px; color: #919EAB; }
+        .header-title h1 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: #F8FAFC; }
+        .header-title p { font-size: 12.5px; color: #94A3B8; }
 
         .ia-status-badge {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 8px 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 6px 14px;
             border-radius: 999px;
-            font-size: 13px;
+            font-size: 12.5px;
+            color: #E2E8F0;
         }
 
-        .dot-green { width: 10px; height: 10px; border-radius: 50%; background: #4CAF50; box-shadow: 0 0 8px #4CAF50; }
-        .dot-orange { width: 10px; height: 10px; border-radius: 50%; background: #FF9800; box-shadow: 0 0 8px #FF9800; }
-        .dot-blue { width: 10px; height: 10px; border-radius: 50%; background: #2196F3; box-shadow: 0 0 8px #2196F3; }
-        .dot-red { width: 10px; height: 10px; border-radius: 50%; background: #F44336; box-shadow: 0 0 8px #F44336; }
+        .dot-green { width: 9px; height: 9px; border-radius: 50%; background: #10B981; }
+        .dot-orange { width: 9px; height: 9px; border-radius: 50%; background: #F59E0B; }
+        .dot-blue { width: 9px; height: 9px; border-radius: 50%; background: #3B82F6; }
+        .dot-red { width: 9px; height: 9px; border-radius: 50%; background: #EF4444; }
 
         /* Barra de Control Chaos Engineering / Simulación de Resiliencia */
         .chaos-bar {
-            background: #111A2C;
+            background: #0B1120;
             color: #FFFFFF;
-            padding: 12px 24px;
+            padding: 10px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.12);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             flex-wrap: wrap;
             gap: 12px;
         }
@@ -86,18 +92,19 @@
         }
 
         .chaos-tag {
-            background: linear-gradient(135deg, #FF6B6B, #EE5253);
-            color: #FFF;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 8px;
-            border-radius: 6px;
+            background: #334155;
+            border: 1px solid #475569;
+            color: #F8FAFC;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 5px;
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
 
-        .chaos-info strong { font-size: 13.5px; color: #FFF; display: block; }
-        .chaos-info p { font-size: 11.5px; color: #919EAB; margin: 0; }
+        .chaos-info strong { font-size: 13px; color: #F8FAFC; display: block; }
+        .chaos-info p { font-size: 11px; color: #94A3B8; margin: 0; }
 
         .chaos-switches {
             display: flex;
@@ -172,13 +179,13 @@
             display: inline-block;
             padding: 2px 6px;
             border-radius: 4px;
-            font-size: 10.5px;
-            font-weight: 700;
+            font-size: 10px;
+            font-weight: 600;
             margin-left: 4px;
         }
-        .badge-groq { background: #FFF4E5; color: #B76E00; border: 1px solid #FFE0B2; }
-        .badge-local { background: #E3F2FD; color: #1565C0; border: 1px solid #BBDEFB; }
-        .badge-norag { background: #FDEDED; color: #D32F2F; border: 1px solid #FFCDD2; }
+        .badge-groq { background: #FFFBEB; color: #92400E; border: 1px solid #FDE68A; }
+        .badge-local { background: #F1F5F9; color: #334155; border: 1px solid #CBD5E1; }
+        .badge-norag { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
 
         .container {
             display: grid;
@@ -192,52 +199,59 @@
         /* Formulario lateral */
         .sidebar {
             background: var(--panel);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 20px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--line);
             height: fit-content;
         }
 
-        .sidebar h2 { font-size: 17px; margin-bottom: 12px; color: var(--header); }
+        .sidebar h2 { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--header); }
 
         .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: 6px; color: #0F172A; }
+        .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #1E293B; }
         .form-control {
             width: 100%;
-            padding: 10px 12px;
-            border: 1.5px solid #CBD5E1;
-            border-radius: 8px;
+            padding: 9px 12px;
+            border: 1px solid #CBD5E1;
+            border-radius: 6px;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 500;
             background: #FFFFFF;
             color: #0F172A !important;
+            transition: all 0.15s ease;
         }
-        .form-control:focus { outline: none; border-color: var(--brand); background: #FFF; box-shadow: 0 0 0 3px rgba(30, 111, 100, 0.15); }
-        textarea.form-control { resize: vertical; min-height: 110px; }
+        .form-control:focus {
+            outline: none;
+            border-color: #1E3A8A;
+            background: #FFF;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.12);
+        }
+        textarea.form-control { resize: vertical; min-height: 100px; }
 
         .btn-submit {
             width: 100%;
-            background: var(--brand);
+            background: #1E3A8A;
             color: #FFFFFF !important;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
+            border: 1px solid #1E3A8A;
+            padding: 11px;
+            border-radius: 6px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13.5px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 2px 6px rgba(30, 111, 100, 0.2);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         }
         .btn-submit:hover:not(:disabled) {
-            background: #15544B;
+            background: #1E40AF;
+            border-color: #1E40AF;
             transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(27, 75, 68, 0.35);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
         }
         .btn-submit:disabled {
             background: #94A3B8;
@@ -330,19 +344,19 @@
             75% { transform: translateX(4px); }
         }
 
-        .quick-presets { margin-top: 14px; border-top: 1.5px solid #CBD5E1; padding-top: 12px; }
-        .quick-presets p { font-size: 12.5px; font-weight: 700; color: #0F172A; margin-bottom: 8px; }
+        .quick-presets { margin-top: 14px; border-top: 1px solid #E2E8F0; padding-top: 12px; }
+        .quick-presets p { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
         .preset-btn {
             background: #FFFFFF;
-            color: #0F172A !important;
-            border: 1.5px solid #CBD5E1;
+            color: #1E293B !important;
+            border: 1px solid #E2E8F0;
             padding: 7px 11px;
             border-radius: 6px;
             font-size: 11.5px;
             font-weight: 600;
             margin-bottom: 6px;
             cursor: pointer;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
             transition: all 0.15s ease;
             width: 100%;
             display: flex;
@@ -357,21 +371,21 @@
             text-align: left;
         }
         .preset-btn:hover {
-            background: #F1F5F9;
-            border-color: var(--brand);
-            color: var(--brand) !important;
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A !important;
             transform: translateY(-1px);
         }
         .preset-alucinacion {
-            background: #FFF1F2;
-            border-color: #FDA4AF;
-            color: #9F1239 !important;
-            font-weight: 700;
+            background: #F8FAFC;
+            border-color: #CBD5E1;
+            color: #475569 !important;
+            font-weight: 600;
         }
         .preset-alucinacion:hover {
-            background: #FFE4E6;
-            border-color: #F43F5E;
-            color: #881337 !important;
+            background: #F1F5F9;
+            border-color: #94A3B8;
+            color: #0F172A !important;
         }
 
         /* Tablero Kanban */
@@ -383,9 +397,10 @@
         }
 
         .kanban-col {
-            background: #EBEEF2;
-            border-radius: 12px;
-            padding: 14px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px;
             min-height: 520px;
             display: flex;
             flex-direction: column;
@@ -396,9 +411,9 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            font-size: 13.5px;
-            font-weight: 800;
-            color: #0F172A;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1E293B;
             height: 28px;
         }
 
@@ -410,8 +425,8 @@
 
         .mini-pag-btn {
             background: #FFFFFF;
-            border: 1.5px solid #94A3B8;
-            color: #0F172A;
+            border: 1px solid #CBD5E1;
+            color: #475569;
             border-radius: 4px;
             width: 22px;
             height: 22px;
@@ -419,31 +434,35 @@
             align-items: center;
             justify-content: center;
             font-size: 10px;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
             padding: 0;
             transition: all 0.15s ease;
         }
 
         .mini-pag-btn:hover:not(:disabled) {
-            background: #0F172A;
+            background: #1E293B;
             color: #FFFFFF;
-            border-color: #0F172A;
+            border-color: #1E293B;
         }
 
         .mini-pag-btn:disabled {
-            opacity: 0.25;
+            opacity: 0.35;
             cursor: not-allowed;
             background: #F1F5F9;
             color: #94A3B8;
         }
 
         .col-badge {
-            background: #0E1A30;
-            color: #FFFFFF !important;
+            background: #FFFFFF;
+            color: #475569 !important;
+            border: 1px solid #CBD5E1;
             padding: 2px 8px;
             border-radius: 12px;
-            font-size: 11.5px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
             font-family: var(--font-mono);
             font-weight: 800;
             box-shadow: 0 1px 3px rgba(0,0,0,0.15);
@@ -463,40 +482,39 @@
             align-items: center;
             justify-content: space-between;
             background: #FFFFFF;
-            border-radius: 8px;
-            padding: 7px 12px;
+            border-radius: 6px;
+            padding: 6px 10px;
             margin-top: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-            border: 1.5px solid #CBD5E1;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            border: 1px solid #E2E8F0;
         }
 
         .pag-btn {
             background: #FFFFFF;
-            border: 1.5px solid #94A3B8;
-            color: #0F172A;
-            border-radius: 6px;
-            width: 32px;
-            height: 30px;
+            border: 1px solid #CBD5E1;
+            color: #334155;
+            border-radius: 5px;
+            width: 28px;
+            height: 26px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 11px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
         }
 
         .pag-btn:hover:not(:disabled) {
-            background: #0F172A;
-            border-color: #0F172A;
+            background: #1E293B;
+            border-color: #1E293B;
             color: #FFFFFF;
-            transform: scale(1.05);
         }
 
         .pag-btn:disabled {
-            opacity: 0.3;
+            opacity: 0.35;
             cursor: not-allowed;
-            background: #F1F5F9;
+            background: #F8FAFC;
             border-color: #E2E8F0;
             color: #94A3B8;
         }
@@ -510,16 +528,16 @@
         }
 
         .pag-rango {
-            font-size: 11.5px;
-            font-weight: 800;
-            color: #0F172A;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1E293B;
             font-family: var(--font-mono);
         }
 
         .pag-sub {
-            font-size: 10.5px;
-            font-weight: 600;
-            color: #334155;
+            font-size: 10px;
+            font-weight: 500;
+            color: #64748B;
         }
 
         .empty-col-msg {
@@ -530,20 +548,24 @@
             font-style: italic;
         }
 
-        /* Tarjeta de Ticket Estandarizada y Homogénea */
+        /* Tarjeta de Ticket Estandarizada y Corporativa */
         .ticket-card {
-            background: var(--panel);
-            border-radius: 10px;
+            background: #FFFFFF;
+            border-radius: 8px;
             padding: 12px 14px;
             box-shadow: var(--card-shadow);
-            border-left: 4px solid #9E9E9E;
-            transition: transform 0.15s;
+            border: 1px solid var(--line);
+            border-left: 3.5px solid #94A3B8;
+            transition: transform 0.15s, box-shadow 0.15s;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
             min-height: 462px;
         }
-        .ticket-card:hover { transform: translateY(-2px); }
+        .ticket-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+        }
 
         .ticket-card.p-alta { border-left-color: var(--alta); }
         .ticket-card.p-media { border-left-color: var(--media); }
@@ -551,14 +573,14 @@
         .ticket-card.p-alucinacion {
             border-left-color: #E11D48;
             background: #FFF1F2;
-            border: 2px solid #FDA4AF;
+            border: 1px solid #FDA4AF;
         }
 
         .p-alucinacion .ticket-prio {
             background: #FFE4E6;
             color: #BE123C;
             border: 1px solid #FECDD3;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         .ticket-header {
@@ -569,21 +591,21 @@
             margin-bottom: 6px;
         }
 
-        .ticket-code { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: #0F172A; }
+        .ticket-code { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: #1E293B; }
         .ticket-prio {
-            font-size: 10.5px;
-            font-weight: 800;
-            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
             border-radius: 4px;
             text-transform: uppercase;
             white-space: nowrap;
         }
-        .p-alta .ticket-prio { background: #FEE2E2; color: #991B1B !important; border: 1px solid #FCA5A5; }
-        .p-media .ticket-prio { background: #FFEDD5; color: #9A3412 !important; border: 1px solid #FDBA74; }
-        .p-baja .ticket-prio { background: #DCFCE7; color: #166534 !important; border: 1px solid #86EFAC; }
+        .p-alta .ticket-prio { background: #FEF2F2; color: #991B1B !important; border: 1px solid #FECACA; }
+        .p-media .ticket-prio { background: #FFFBEB; color: #92400E !important; border: 1px solid #FDE68A; }
+        .p-baja .ticket-prio { background: #EFF6FF; color: #1E40AF !important; border: 1px solid #BFDBFE; }
 
         .ticket-client {
-            font-weight: 800;
+            font-weight: 700;
             font-size: 13.5px;
             color: #0F172A;
             margin-bottom: 6px;
@@ -594,8 +616,8 @@
             text-overflow: ellipsis;
         }
         .ticket-desc {
-            font-size: 12.5px;
-            color: #0F172A;
+            font-size: 12px;
+            color: #334155;
             margin-bottom: 8px;
             line-height: 1.4;
             font-weight: 500;
@@ -610,11 +632,11 @@
 
         .ticket-meta {
             background: #F8FAFC;
-            border: 1.5px solid #CBD5E1;
+            border: 1px solid #E2E8F0;
             border-radius: 6px;
             padding: 8px 10px;
-            font-size: 11.5px;
-            color: #0F172A;
+            font-size: 11px;
+            color: #334155;
             margin-bottom: 8px;
             display: flex;
             flex-direction: column;
@@ -631,13 +653,15 @@
         }
         .meta-row:last-child { margin-bottom: 0; }
         .meta-lbl {
-            color: #0F172A !important;
-            font-weight: 700;
-            font-size: 11px;
+            color: #64748B !important;
+            font-weight: 600;
+            font-size: 10.5px;
             flex-shrink: 0;
         }
         .meta-val {
             font-size: 11px;
+            color: #1E293B !important;
+            font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -647,13 +671,13 @@
         }
 
         .ticket-cita {
-            background: #F1F5F9;
-            border: 1.5px solid #CBD5E1;
-            border-left: 4px solid #0284C7;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-left: 3.5px solid #1E3A8A;
             border-radius: 6px;
             padding: 8px 10px;
-            font-size: 11.5px;
-            color: #0F172A;
+            font-size: 11px;
+            color: #334155;
             margin-bottom: 8px;
             line-height: 1.35;
             height: 142px;
@@ -670,39 +694,29 @@
             margin-bottom: 3px;
         }
         .cita-badge {
-            background: #0369A1;
+            background: #1E293B;
             color: #FFFFFF !important;
             font-size: 9.5px;
-            font-weight: 800;
+            font-weight: 700;
             padding: 2px 6px;
             border-radius: 4px;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
             white-space: nowrap;
         }
         .cita-badge.badge-fuera {
-            background: #334155;
+            background: #475569;
             color: #FFFFFF !important;
-            font-size: 9.5px;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-            white-space: nowrap;
         }
         .cita-badge.badge-escalado {
-            background: #B45309;
+            background: #92400E;
             color: #FFFFFF !important;
-            font-size: 9.5px;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-            white-space: nowrap;
         }
         .badge-vigencia {
-            background: #047857;
-            color: #FFFFFF !important;
-            border: 1px solid #065F46;
-            font-size: 9.5px;
-            font-weight: 800;
+            background: #FFFFFF;
+            color: #475569 !important;
+            border: 1px solid #CBD5E1;
+            font-size: 9px;
+            font-weight: 700;
             padding: 2px 6px;
             border-radius: 3px;
             white-space: nowrap;
@@ -713,8 +727,8 @@
             vertical-align: middle;
         }
         .cita-doc {
-            font-size: 11.5px;
-            font-weight: 800;
+            font-size: 11px;
+            font-weight: 700;
             color: #0F172A !important;
             margin-bottom: 2px;
             white-space: nowrap;
@@ -724,9 +738,9 @@
             line-height: 17px;
         }
         .cita-paso {
-            font-size: 11px;
-            font-weight: 700;
-            color: #0369A1 !important;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #1E3A8A !important;
             margin-bottom: 3px;
             white-space: nowrap;
             overflow: hidden;
@@ -736,11 +750,11 @@
         }
         .cita-fragmento {
             font-style: italic;
-            color: #0F172A !important;
-            font-size: 10.5px;
+            color: #334155 !important;
+            font-size: 10px;
             font-weight: 500;
             background: #FFFFFF;
-            border: 1px solid #CBD5E1;
+            border: 1px solid #E2E8F0;
             border-radius: 4px;
             padding: 4px 6px;
             height: 38px;
@@ -764,25 +778,25 @@
             display: inline-flex;
             align-items: center;
             gap: 3px;
-            font-size: 10.5px;
-            font-weight: 800;
-            color: #1D4ED8 !important;
+            font-size: 10px;
+            font-weight: 700;
+            color: #1E3A8A !important;
             text-decoration: none;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 140px;
         }
-        .link-fuente:hover { text-decoration: underline; color: #1E3A8A !important; }
+        .link-fuente:hover { text-decoration: underline; color: #1E40AF !important; }
 
         /* Barra de Filtros por Metadatos */
         .meta-filters-bar {
             background: #FFFFFF;
-            border: 1.5px solid #CBD5E1;
-            border-radius: 10px;
-            padding: 14px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 12px 16px;
             margin-bottom: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
         }
         .meta-filters-header {
             display: flex;
@@ -796,32 +810,34 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 13.5px;
-            font-weight: 800;
-            color: #0F172A;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1E293B;
         }
         .filtro-count-badge {
-            background: #1E1B4B;
-            color: #FFFFFF !important;
-            font-size: 11.5px;
-            font-weight: 800;
-            padding: 3px 10px;
+            background: #F1F5F9;
+            color: #475569 !important;
+            border: 1px solid #CBD5E1;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
             border-radius: 12px;
         }
         .btn-reset-filters {
-            background: #0F172A;
-            border: 1px solid #0F172A;
-            color: #FFFFFF !important;
+            background: #F8FAFC;
+            border: 1px solid #CBD5E1;
+            color: #334155 !important;
             padding: 5px 12px;
             border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 11.5px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.15s;
         }
         .btn-reset-filters:hover {
-            background: #1E293B;
-            color: #FFFFFF !important;
+            background: #F1F5F9;
+            border-color: #94A3B8;
+            color: #0F172A !important;
         }
         .meta-filters-grid {
             display: grid;
@@ -844,45 +860,48 @@
             gap: 4px;
         }
         .filter-field label {
-            font-size: 11px;
-            font-weight: 800;
-            color: #0F172A !important;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #475569 !important;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .filter-input, .filter-select {
-            padding: 7px 10px;
-            border: 1.5px solid #94A3B8;
+            padding: 6px 10px;
+            border: 1px solid #CBD5E1;
             border-radius: 6px;
-            font-size: 12.5px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 500;
             background: #FFFFFF;
             color: #0F172A !important;
             outline: none;
             transition: border-color 0.15s;
         }
         .filter-input:focus, .filter-select:focus {
-            border-color: #2563EB;
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+            border-color: #1E3A8A;
+            box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
         }
 
         .badge-nivel {
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 10px;
-            font-weight: 800;
+            font-weight: 600;
             display: inline-block;
             white-space: nowrap;
+            background: #F1F5F9;
+            color: #334155 !important;
+            border: 1px solid #CBD5E1;
         }
-        .nivel-1 { background: #DCFCE7; color: #14532D !important; border: 1.5px solid #86EFAC; }
-        .nivel-2 { background: #FEF3C7; color: #78350F !important; border: 1.5px solid #FCD34D; }
-        .nivel-3 { background: #FEE2E2; color: #7F1D1D !important; border: 1.5px solid #FCA5A5; }
-        .nivel-0 { background: #F1F5F9; color: #1E293B !important; border: 1.5px solid #CBD5E1; }
+        .nivel-1 { background: #F8FAFC; color: #334155 !important; border: 1px solid #E2E8F0; }
+        .nivel-2 { background: #F8FAFC; color: #1E293B !important; border: 1px solid #CBD5E1; }
+        .nivel-3 { background: #F1F5F9; color: #0F172A !important; border: 1px solid #94A3B8; font-weight: 700; }
+        .nivel-0 { background: #F8FAFC; color: #64748B !important; border: 1px solid #E2E8F0; }
 
         .ticket-seguimiento-user {
             margin-top: auto;
             padding-top: 8px;
-            border-top: 1px dashed #CBD5E1;
+            border-top: 1px dashed #E2E8F0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -899,14 +918,14 @@
         }
         .act-btn {
             background: #FFFFFF;
-            color: #0F172A !important;
-            border: 1.5px solid #CBD5E1;
+            color: #334155 !important;
+            border: 1px solid #CBD5E1;
             padding: 4px 6px;
             border-radius: 5px;
             font-size: 10.5px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
             transition: all 0.15s ease;
             height: 28px;
             box-sizing: border-box;
@@ -916,28 +935,52 @@
             text-align: center;
         }
         .act-btn:hover {
-            background: #0F172A;
-            border-color: #0F172A;
+            background: #F1F5F9;
+            border-color: #94A3B8;
+            color: #0F172A !important;
+        }
+        .act-btn-primary {
+            background: #1E3A8A !important;
             color: #FFFFFF !important;
-            transform: translateY(-1px);
+            border-color: #1E3A8A !important;
+            font-weight: 700;
+        }
+        .act-btn-primary:hover {
+            background: #1E40AF !important;
+            border-color: #1E40AF !important;
+            color: #FFFFFF !important;
+        }
+        .act-btn-danger {
+            background: #FFFFFF !important;
+            color: #991B1B !important;
+            border-color: #FECACA !important;
+        }
+        .act-btn-danger:hover {
+            background: #FEF2F2 !important;
+            border-color: #F87171 !important;
         }
 
         .exp-btn {
-            background: #F0FDF4;
-            color: #14532D !important;
-            border: 1.5px solid #86EFAC;
-            font-weight: 800;
+            background: #F8FAFC;
+            color: #1E3A8A !important;
+            border: 1px solid #CBD5E1;
+            font-weight: 600;
             width: 100%;
-            margin-bottom: 8px;
-            padding: 7px 10px;
-            border-radius: 6px;
+            height: 26px;
+            font-size: 11px;
+            margin-bottom: 4px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.15s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            font-size: 12px;
-            transition: all 0.15s ease;
-            cursor: pointer;
+        }
+        .exp-btn:hover {
+            background: #F1F5F9;
+            border-color: #94A3B8;
+            color: #1E40AF !important;
         }
         .exp-btn:hover {
             background: #DCFCE7;
@@ -999,7 +1042,7 @@
         .app-footer {
             background: var(--header);
             color: #94A3B8;
-            border-top: 3px solid var(--brand);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 24px 20px;
             margin-top: 40px;
             text-align: center;
@@ -1012,7 +1055,7 @@
 
         .footer-creadores {
             color: #FFFFFF;
-            font-size: 14.5px;
+            font-size: 14px;
             font-weight: 600;
             letter-spacing: 0.02em;
             display: flex;
@@ -1023,7 +1066,7 @@
         }
 
         .footer-creadores .footer-label {
-            color: #A7F3D0;
+            color: #CBD5E1;
             font-weight: 700;
             margin-right: 4px;
         }
@@ -1229,20 +1272,20 @@
         }
 
         .btn-tic-action {
-            background: #2563EB;
+            background: #1E3A8A;
             color: #FFF;
-            border: none;
+            border: 1px solid #2563EB;
             padding: 7px 12px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.15s;
+            transition: all 0.15s ease;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        .btn-tic-action:hover { background: #1D4ED8; }
+        .btn-tic-action:hover { background: #1E40AF; border-color: #3B82F6; }
 
         .btn-tic-logout {
             background: rgba(239, 68, 68, 0.2);
@@ -1407,25 +1450,24 @@
         /* Selector de Modo Oscuro / Modo Claro (Fondo Negro vs Fondo Blanco)         */
         /* ========================================================================== */
         .btn-theme-toggle {
-            background: rgba(255, 255, 255, 0.12);
-            border: 1.5px solid rgba(255, 255, 255, 0.28);
-            color: #FFFFFF !important;
-            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #F8FAFC !important;
+            padding: 7px 13px;
             border-radius: 999px;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            transition: all 0.2s ease;
+            gap: 6px;
+            transition: all 0.15s ease;
             user-select: none;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
         .btn-theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #38BDF8;
-            color: #38BDF8 !important;
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #FFFFFF !important;
             transform: translateY(-1px);
         }
 
@@ -1446,7 +1488,7 @@
         /* Encabezado y Barra Chaos en Modo Oscuro */
         body.dark-theme header {
             background: #070B14;
-            border-bottom-color: #10B981;
+            border-bottom-color: #1E293B;
         }
         body.dark-theme .header-title h1 {
             color: #FFFFFF !important;
@@ -1456,13 +1498,13 @@
         }
         body.dark-theme .btn-theme-toggle {
             background: #1E293B;
-            border-color: #F59E0B;
-            color: #FCD34D !important;
+            border-color: #334155;
+            color: #CBD5E1 !important;
         }
         body.dark-theme .btn-theme-toggle:hover {
             background: #334155;
             color: #FFFFFF !important;
-            border-color: #FBBF24;
+            border-color: #475569;
         }
         body.dark-theme .chaos-bar {
             background: #0A0F1D;
@@ -1683,40 +1725,39 @@
             border: 1px solid #22C55E !important;
         }
 
-        /* Niveles ITIL */
-        body.dark-theme .nivel-1 {
-            background: rgba(21, 128, 61, 0.25);
-            color: #86EFAC !important;
-            border-color: #22C55E;
-        }
-        body.dark-theme .nivel-2 {
-            background: rgba(217, 119, 6, 0.25);
-            color: #FCD34D !important;
-            border-color: #F59E0B;
-        }
-        body.dark-theme .nivel-3 {
-            background: rgba(220, 38, 38, 0.25);
-            color: #FCA5A5 !important;
-            border-color: #EF4444;
-        }
-        body.dark-theme .nivel-0 {
-            background: rgba(100, 116, 139, 0.25);
+        /* Niveles ITIL en Modo Oscuro */
+        body.dark-theme .badge-nivel {
+            background: #162035;
             color: #CBD5E1 !important;
-            border-color: #64748B;
+            border-color: #2D3D5E;
         }
+        body.dark-theme .nivel-1 { background: #162035; color: #94A3B8 !important; border-color: #2D3D5E; }
+        body.dark-theme .nivel-2 { background: #162035; color: #CBD5E1 !important; border-color: #334366; }
+        body.dark-theme .nivel-3 { background: #1A2744; color: #F8FAFC !important; border-color: #3B82F6; }
+        body.dark-theme .nivel-0 { background: #111827; color: #64748B !important; border-color: #1F2937; }
 
         /* Citas RAG en Modo Oscuro */
         body.dark-theme .ticket-cita {
             background: #0C1527;
             border-color: #1E2F4D;
-            border-left-color: #0284C7;
+            border-left-color: #3B82F6;
             color: #E2E8F0 !important;
+        }
+        body.dark-theme .cita-badge {
+            background: #1E293B !important;
+            color: #F8FAFC !important;
+            border: 1px solid #334155;
+        }
+        body.dark-theme .badge-vigencia {
+            background: #162035 !important;
+            border-color: #2D3D5E !important;
+            color: #94A3B8 !important;
         }
         body.dark-theme .cita-doc {
             color: #F8FAFC !important;
         }
         body.dark-theme .cita-paso {
-            color: #38BDF8 !important;
+            color: #60A5FA !important;
         }
         body.dark-theme .cita-fragmento {
             background: #080D1A !important;
@@ -1730,26 +1771,44 @@
             color: #93C5FD !important;
         }
 
-        /* Botón de Explicabilidad y Botones de Acción de Tarjetas */
+        /* Botón de Explicabilidad y Botones de Acción de Tarjetas en Modo Oscuro */
         body.dark-theme .exp-btn {
-            background: #06281E;
-            border-color: #059669;
-            color: #6EE7B7 !important;
+            background: #162035;
+            border-color: #2D3D5E;
+            color: #93C5FD !important;
         }
         body.dark-theme .exp-btn:hover {
-            background: #0B3D2F;
-            border-color: #10B981;
-            color: #A7F3D0 !important;
+            background: #1E2B48;
+            border-color: #3B82F6;
+            color: #FFFFFF !important;
         }
         body.dark-theme .ticket-actions .act-btn {
-            background: #18233C !important;
-            border-color: #2F4166 !important;
-            color: #F8FAFC !important;
+            background: #162035 !important;
+            border-color: #2D3D5E !important;
+            color: #E2E8F0 !important;
         }
         body.dark-theme .ticket-actions .act-btn:hover {
-            background: #27385E !important;
-            border-color: #38BDF8 !important;
-            color: #38BDF8 !important;
+            background: #1E2B48 !important;
+            border-color: #3B82F6 !important;
+            color: #FFFFFF !important;
+        }
+        body.dark-theme .ticket-actions .act-btn-primary {
+            background: #2563EB !important;
+            border-color: #3B82F6 !important;
+            color: #FFFFFF !important;
+        }
+        body.dark-theme .ticket-actions .act-btn-primary:hover {
+            background: #1D4ED8 !important;
+            color: #FFFFFF !important;
+        }
+        body.dark-theme .ticket-actions .act-btn-danger {
+            background: #1E1218 !important;
+            border-color: #7F1D1D !important;
+            color: #FCA5A5 !important;
+        }
+        body.dark-theme .ticket-actions .act-btn-danger:hover {
+            background: #3B1219 !important;
+            color: #FECACA !important;
         }
 
         /* Modales en Modo Oscuro */
@@ -1827,7 +1886,7 @@
         }
         body.dark-theme .app-footer {
             background: #070B14;
-            border-top-color: #1E6F64;
+            border-top-color: #1E293B;
         }
     </style>
 </head>
@@ -1850,8 +1909,8 @@
                 </button>
             </div>
             <!-- Botón para alternar entre Vista Usuario y Vista Personal TIC -->
-            <button type="button" id="btnToggleVista" class="btn-tic-action" style="background:#0D9488; font-weight:700;" onclick="alternarVista()" title="Alternar entre Vista Usuario y Vista Personal TIC">
-                👨‍💻 Vista Personal TIC
+            <button type="button" id="btnToggleVista" class="btn-tic-action" onclick="alternarVista()" title="Alternar entre Vista Usuario y Vista Personal TIC">
+                👨‍💻 Vista TIC
             </button>
             <!-- Selector de Modo Oscuro / Modo Claro (Fondo Negro vs Blanco con Alto Contraste) -->
             <button type="button" id="btnToggleTheme" class="btn-theme-toggle" onclick="alternarTemaVisual()" title="Cambiar a Modo Oscuro (Fondo Negro)">
@@ -1912,12 +1971,12 @@
                 <div id="formErrorContainer" class="form-error-banner" role="alert" aria-live="polite" style="display:none;"></div>
 
                 <!-- Control de Confirmación Humana Previa (HITL · OWASP LLM08 - Visible solo en Vista TIC) -->
-                <div id="boxFormHitl" style="display:none; background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:8px; padding:10px 12px; margin-bottom:12px;">
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; color:#14532D; cursor:pointer;">
-                        <input type="checkbox" id="chkModoHITL" checked style="width:16px; height:16px; accent-color:#16A34A;">
+                <div id="boxFormHitl" style="display:none; background:#F8FAFC; border:1px solid #E2E8F0; border-left:3.5px solid #1E3A8A; border-radius:6px; padding:10px 12px; margin-bottom:12px;">
+                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:#1E293B; cursor:pointer;">
+                        <input type="checkbox" id="chkModoHITL" checked style="width:15px; height:15px; accent-color:#1E3A8A;">
                         <span>🛡️ Confirmación Humana Previa (HITL)</span>
                     </label>
-                    <small style="display:block; font-size:11px; color:#166534; font-weight:600; margin-top:3px;">
+                    <small style="display:block; font-size:11px; color:#64748B; font-weight:500; margin-top:3px;">
                         Exige revisión y autorización humana explícita antes de persistir o comprometer SLA (OWASP LLM08).
                     </small>
                 </div>
@@ -2309,12 +2368,14 @@
             if (badgeFiltro) {
                 if (ticketsFiltrados.length === tickets.length) {
                     badgeFiltro.textContent = `Mostrando todos (${tickets.length})`;
-                    badgeFiltro.style.background = '#E0E7FF';
-                    badgeFiltro.style.color = '#3730A3';
+                    badgeFiltro.style.background = '#F1F5F9';
+                    badgeFiltro.style.color = '#475569';
+                    badgeFiltro.style.border = '1px solid #CBD5E1';
                 } else {
                     badgeFiltro.textContent = `Filtrados: ${ticketsFiltrados.length} de ${tickets.length}`;
-                    badgeFiltro.style.background = '#FEF3C7';
-                    badgeFiltro.style.color = '#B45309';
+                    badgeFiltro.style.background = '#F8FAFC';
+                    badgeFiltro.style.color = '#1E3A8A';
+                    badgeFiltro.style.border = '1px solid #93C5FD';
                 }
             }
 
@@ -2515,7 +2576,7 @@
                     iaTxt += ` <span class="badge-failover badge-local">Local Offline</span>`;
                 }
             } else {
-                iaTxt += ` <span style="font-size:10px; color:#15803D; font-weight:700;">🟢 Principal</span>`;
+                iaTxt += ` <span style="font-size:10px; color:#64748B; font-weight:600;">(Principal)</span>`;
             }
 
             // Tokens consumidos
@@ -2546,16 +2607,16 @@
 
             const accionesHtml = esModoTIC ? `
                 <div class="ticket-actions">
-                    <button type="button" class="act-btn" style="background:#EFF6FF; color:#1E3A8A; border-color:#93C5FD;" onclick="abrirModalConfirmarEnvio(${t.id})" title="Enviar notificación oficial">✉️ Enviar Notif.</button>
-                    <button type="button" class="act-btn" style="background:#FFFBEB; color:#78350F; border-color:#FCD34D;" onclick="abrirModalConfirmarDerivacion(${t.id})" title="Derivar soporte presencial">🚨 Presencial</button>
-                    ${estado !== 'en_atencion' ? `<button class="act-btn" style="background:#F0FDF4; color:#14532D; border-color:#86EFAC;" onclick="cambiarEstado(${t.id}, 'en_atencion')">⚙️ Atender</button>` : ''}
-                    ${estado !== 'escalado_cuadrilla' ? `<button class="act-btn" style="background:#FFF7ED; color:#7C2D12; border-color:#FDBA74;" onclick="cambiarEstado(${t.id}, 'escalado_cuadrilla')">🚚 Cuadrilla</button>` : ''}
-                    ${estado !== 'resuelto' ? `<button class="act-btn" style="background:#F0FDF4; color:#15803D; border-color:#86EFAC;" onclick="cambiarEstado(${t.id}, 'resuelto')">✅ Resolver</button>` : ''}
-                    ${estado === 'resuelto' ? `<button class="act-btn" style="background:#FEF2F2; color:#7F1D1D; border-color:#FCA5A5;" onclick="solicitarQuitarTicket(${t.id}, '${t.ticket_codigo}')" title="Quitar ticket resuelto">🗑️ Quitar</button>` : ''}
+                    <button type="button" class="act-btn" onclick="abrirModalConfirmarEnvio(${t.id})" title="Enviar notificación oficial">✉️ Notificar</button>
+                    <button type="button" class="act-btn" onclick="abrirModalConfirmarDerivacion(${t.id})" title="Derivar soporte presencial">🚨 Presencial</button>
+                    ${estado !== 'en_atencion' ? `<button type="button" class="act-btn" onclick="cambiarEstado(${t.id}, 'en_atencion')">⚙️ Atender</button>` : ''}
+                    ${estado !== 'escalado_cuadrilla' ? `<button type="button" class="act-btn" onclick="cambiarEstado(${t.id}, 'escalado_cuadrilla')">🚚 Cuadrilla</button>` : ''}
+                    ${estado !== 'resuelto' ? `<button type="button" class="act-btn act-btn-primary" onclick="cambiarEstado(${t.id}, 'resuelto')">✅ Resolver</button>` : ''}
+                    ${estado === 'resuelto' ? `<button type="button" class="act-btn act-btn-danger" onclick="solicitarQuitarTicket(${t.id}, '${t.ticket_codigo}')" title="Quitar ticket resuelto">🗑️ Quitar</button>` : ''}
                 </div>
             ` : `
                 <div class="ticket-seguimiento-user">
-                    <span style="font-weight:700; font-size:11px; color:#475569; white-space:nowrap;">📌 Seguimiento:</span>
+                    <span style="font-weight:600; font-size:11px; color:#64748B; white-space:nowrap;">📌 Seguimiento:</span>
                     <span class="badge-nivel ${nivelClase}" style="white-space:nowrap; font-size:10px;">${nivelIcono} ${nivelTexto}</span>
                 </div>
             `;
@@ -3900,11 +3961,13 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 if (esTIC) {
                     btnToggleVista.innerHTML = '👤 Vista Usuario';
                     btnToggleVista.title = 'Cambiar a Portal de Autoatención del Usuario';
-                    btnToggleVista.style.background = '#2563EB';
+                    btnToggleVista.style.background = '#1E3A8A';
+                    btnToggleVista.style.borderColor = '#2563EB';
                 } else {
                     btnToggleVista.innerHTML = '👨‍💻 Vista TIC';
                     btnToggleVista.title = 'Cambiar a Consola de Gestión Técnica TIC';
-                    btnToggleVista.style.background = '#0D9488';
+                    btnToggleVista.style.background = '#1E293B';
+                    btnToggleVista.style.borderColor = '#334155';
                 }
             }
 
