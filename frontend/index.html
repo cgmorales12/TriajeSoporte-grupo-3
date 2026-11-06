@@ -2952,13 +2952,17 @@
                 </div>
             `;
 
+            const prioBadge = esModoTIC 
+                ? `${t.prioridad} · SLA ${t.sla_minutos}m`
+                : `${t.prioridad} · ${t.sla_minutos >= 1440 ? '24h' : (t.sla_minutos >= 60 ? `${Math.floor(t.sla_minutos/60)}h` : `${t.sla_minutos}m`)}`;
+
             card.innerHTML = `
                 <div class="ticket-header">
                     <div style="display:flex; align-items:center; gap:6px;">
                         <span class="ticket-code">${t.ticket_codigo}</span>
                         ${botonEliminarHtml}
                     </div>
-                    <span class="ticket-prio">${t.prioridad} · SLA ${t.sla_minutos}m</span>
+                    <span class="ticket-prio">${prioBadge}</span>
                 </div>
                 <div class="ticket-client" title="${escaparTextoHtml(t.nombre_cliente)}">${t.nombre_cliente}</div>
                 <div class="ticket-desc" title="${escaparTextoHtml(t.descripcion_problema)}">${t.descripcion_problema}</div>
@@ -4018,7 +4022,27 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             document.getElementById('hitlRegProblema').textContent = propuesta.descripcion_problema;
             document.getElementById('hitlRegCategoria').value = propuesta.categoria_propuesta;
             document.getElementById('hitlRegPrioridad').value = propuesta.prioridad_itil;
-            document.getElementById('hitlRegSla').value = propuesta.sla_minutos;
+
+            const esTIC = (window._vistaActual === 'tic');
+
+            const slaMins = parseInt(propuesta.sla_minutos) || 1440;
+            const hiddenSla = document.getElementById('hitlRegSlaMinutos');
+            if (hiddenSla) hiddenSla.value = slaMins;
+
+            const slaInput = document.getElementById('hitlRegSla');
+            const lblSla = document.getElementById('hitlLblSla');
+            if (lblSla) {
+                lblSla.textContent = esTIC ? 'SLA Comprometido (Minutos)' : '⏱️ Tiempo Estimado de Respuesta';
+            }
+            if (slaInput) {
+                if (esTIC) {
+                    slaInput.value = `${slaMins} min`;
+                } else {
+                    if (slaMins >= 1440) slaInput.value = '24 horas (1 día laborable)';
+                    else if (slaMins >= 60) slaInput.value = `${Math.floor(slaMins / 60)} ${slaMins >= 120 ? 'horas' : 'hora'}`;
+                    else slaInput.value = `${slaMins} minutos`;
+                }
+            }
 
             // Limpieza preventiva de la solución para garantizar pasos operativos limpios y claros
             let solTexto = (propuesta.solucion_propuesta || '').trim();
@@ -4026,8 +4050,6 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 .filter(l => !l.toLowerCase().startsWith('términos clave:') && !l.toLowerCase().startsWith('terminos clave:'))
                 .join('\n').trim();
             document.getElementById('hitlRegSolucion').value = solTexto;
-
-            const esTIC = (window._vistaActual === 'tic');
 
             // 1. Título adaptativo de la modal
             const tituloModal = document.getElementById('hitlModalTitulo');
@@ -4114,34 +4136,50 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 if (btnRegistrar) btnRegistrar.style.display = 'inline-flex';
             }
 
-            // 6. Citas RAG con eliminación de duplicados en título
+            // 6. Citas RAG con lenguaje adaptado
             const citasCont = document.getElementById('hitlRegCitasContainer');
             if (propuesta.citas && propuesta.citas.length > 0) {
-                const tituloSeccion = esTIC ? '📖 Fuente Oficial Verificada en Manuales (RAG):' : '📖 Manual de Referencia Institucional (RAG):';
-                citasCont.innerHTML = `
-                    <div style="font-size:12px; font-weight:700; color:#1E3A8A; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                        <span>${tituloSeccion}</span>
-                    </div>
-                    ${propuesta.citas.map(c => {
-                        const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
-                        let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial')
-                            .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
-                            .replace(/^DOC-\d+:?\s*/i, '')
-                            .trim();
-                        return `
-                        <div class="hitl-cita-card">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
-                                <span class="hitl-cita-title">📄 ${docId}: ${titLimpio}</span>
-                                <span style="font-size:10.5px; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #BFDBFE;">🛡️ ${c.vigencia || 'Vigencia 2026'}</span>
-                            </div>
-                            <div class="hitl-cita-sec">
-                                <strong>Sección Oficial:</strong> ${c.paso_exacto}
-                            </div>
+                if (esTIC) {
+                    citasCont.innerHTML = `
+                        <div style="font-size:12px; font-weight:700; color:#1E3A8A; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                            <span>📖 Fuente Oficial Verificada en Manuales (RAG):</span>
                         </div>
-                    `;}).join('')}
-                `;
+                        ${propuesta.citas.map(c => {
+                            const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
+                            let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial')
+                                .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
+                                .replace(/^DOC-\d+:?\s*/i, '')
+                                .trim();
+                            return `
+                            <div class="hitl-cita-card">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
+                                    <span class="hitl-cita-title">📄 ${docId}: ${titLimpio}</span>
+                                    <span style="font-size:10.5px; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #BFDBFE;">🛡️ ${c.vigencia || 'Vigencia 2026'}</span>
+                                </div>
+                                <div class="hitl-cita-sec">
+                                    <strong>Sección Oficial:</strong> ${c.paso_exacto}
+                                </div>
+                            </div>
+                        `;}).join('')}
+                    `;
+                } else {
+                    // En Vista Usuario: diseño sutil y elegante de una sola línea
+                    const c = propuesta.citas[0];
+                    const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
+                    let titLimpio = (c.titulo_documento || 'Manual de Soporte de la Empresa')
+                        .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
+                        .replace(/^DOC-\d+:?\s*/i, '')
+                        .trim();
+                    citasCont.innerHTML = `
+                        <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:7px 11px; font-size:11.5px; color:#166534; display:flex; align-items:center; gap:6px;">
+                            <span>📗 <b>Guía Oficial de Consulta:</b> ${titLimpio}</span>
+                        </div>
+                    `;
+                }
             } else {
-                citasCont.innerHTML = '<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; color:#475569; font-size:11.5px; font-style:italic;">ℹ️ Sin citas documentales requeridas (solicitud fuera de alcance o administrativa).</div>';
+                citasCont.innerHTML = esTIC
+                    ? '<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; color:#475569; font-size:11.5px; font-style:italic;">ℹ️ Sin citas documentales requeridas (solicitud fuera de alcance o administrativa).</div>'
+                    : '';
             }
 
             document.getElementById('modalConfirmarRegistro').classList.add('activo');
@@ -4155,9 +4193,23 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
         function actualizarSlaSegunPrioridadHitl() {
             const p = document.getElementById('hitlRegPrioridad').value;
             const slaInput = document.getElementById('hitlRegSla');
-            if (p === 'Alta') slaInput.value = 15;
-            else if (p === 'Media') slaInput.value = 240;
-            else slaInput.value = 480;
+            const hiddenSla = document.getElementById('hitlRegSlaMinutos');
+            const esTIC = (window._vistaActual === 'tic');
+            let m = 480;
+            if (p === 'Alta') m = 15;
+            else if (p === 'Media') m = 240;
+            else m = 1440;
+
+            if (hiddenSla) hiddenSla.value = m;
+            if (slaInput) {
+                if (esTIC) {
+                    slaInput.value = `${m} min`;
+                } else {
+                    if (m >= 1440) slaInput.value = '24 horas (1 día laborable)';
+                    else if (m >= 60) slaInput.value = `${Math.floor(m / 60)} horas`;
+                    else slaInput.value = `${m} minutos`;
+                }
+            }
         }
 
         async function ejecutarConfirmarRegistro() {
@@ -4176,7 +4228,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 impacto: p.impacto_propuesto,
                 urgencia: p.urgencia_propuesta,
                 prioridad: document.getElementById('hitlRegPrioridad').value,
-                sla_minutos: parseInt(document.getElementById('hitlRegSla').value) || p.sla_minutos,
+                sla_minutos: parseInt(document.getElementById('hitlRegSlaMinutos') ? document.getElementById('hitlRegSlaMinutos').value : document.getElementById('hitlRegSla').value) || p.sla_minutos,
                 descripcion_sla: p.descripcion_sla,
                 solucion_propuesta: document.getElementById('hitlRegSolucion').value,
                 citas: p.citas || [],
@@ -4682,9 +4734,9 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     <div class="form-group">
                         <label id="hitlLblPrioridad" style="font-size:12px; font-weight:700; color:#0F172A;">Prioridad y Tiempo Estimado de Atención</label>
                         <select id="hitlRegPrioridad" class="form-control" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600; cursor:not-allowed;" disabled>
-                            <option value="Alta">Alta (Crítico · SLA 15m - 1h)</option>
-                            <option value="Media">Media (Atención regular · SLA 2h - 4h)</option>
-                            <option value="Baja">Baja (Consulta / Autoatención · SLA 8h - 24h)</option>
+                            <option value="Alta">Alta (Atención inmediata · Respuesta en 15m a 1h)</option>
+                            <option value="Media">Media (Atención regular · Respuesta en 2h a 4h)</option>
+                            <option value="Baja">Baja (Consulta / Autoatención · Respuesta en el día)</option>
                         </select>
                     </div>
                 </div>
@@ -4704,8 +4756,9 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                         <input type="text" id="hitlRegOperador" class="form-control" value="Christian Morales (Tech Lead)" readonly style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600;">
                     </div>
                     <div class="form-group">
-                        <label style="font-size:12px; font-weight:700; color:#0F172A;">SLA Comprometido (Minutos)</label>
-                        <input type="number" id="hitlRegSla" class="form-control" readonly style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600;">
+                        <label id="hitlLblSla" style="font-size:12px; font-weight:700; color:#0F172A;">⏱️ Tiempo Estimado de Respuesta</label>
+                        <input type="text" id="hitlRegSla" class="form-control" readonly style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600;">
+                        <input type="hidden" id="hitlRegSlaMinutos" value="1440">
                     </div>
                 </div>
 
