@@ -153,35 +153,23 @@ LÍNEA BASE (V1)                     ESTADO ACTUAL DE PRODUCCIÓN (V3)
 
 ---
 
-## 5. Comparativa Experimental: Antes vs. Después (Ablation Study)
+## 5. Comparativa Experimental: Semana 3 vs. Versión Final Desplegada (Semana 4)
 
-Para validar cuantitativamente el impacto de las decisiones de diseño, se compararon las métricas del sistema en las tres fases de madurez:
+Para dar cumplimiento formal al requisito de la rúbrica de titulación:
+> *«Evaluación repetida y comparada: Resultados de la versión final frente a la semana 3.»*
 
-```
-EVOLUCIÓN DE RECUPERACIÓN RAG (hit@5)
-100% ───────────────────────────────────────────────────────────── 100.0% (V3)
- 80% ──────────────────────────────────────── 82.4% (V2)
- 60% ────────── 58.8% (V1)
-  0% ──────────┴──────────────────────────────┴────────────────────
-              Fase V1                        Fase V2              Fase V3
-```
+A continuación se presenta la matriz de contraste directo entre la entrega previa (Semana 3) y la **Versión Final en Producción (Semana 4 · Render Cloud)**:
 
-```
-ERRORES SILENCIOSOS EN TRIAJE (Meta: 0)
- 4 ── 4 (V1)
- 2 ─────────────── 1 (V2)
- 0 ────────────────────────────────────────── 0 (V3 - Cero Errores Silenciosos)
-      Fase V1     Fase V2                    Fase V3
-```
-
-| Métrica de Calidad | Línea Base (V1) | Versión Intermedia (V2) | Versión Final (V3 Producción) | Impacto Neto Logrado |
-| :--- | :---: | :---: | :---: | :--- |
-| **RAG hit@5 (Manuales)** | 58.8% | 82.4% | **100.0%** | **+41.2% de precisión de recuperación** |
-| **Errores Silenciosos (Triaje)** | 4 | 1 | **0** | **100% contención de fallas críticas** |
-| **Tasa de Alucinación de Manuales** | 25.0% | 5.0% | **0.0%** | **Eliminación total de manuales espurios** |
-| **Acierto en Presupuestos y SLA** | 40.0% | 75.0% | **100.0%** | **Determinismo matemático con 0 tokens** |
-| **Cumplimiento Agente ReAct** | 50.0% | 75.0% | **100.0%** | **Tope estricto de 6 iteraciones + HITL** |
-| **Costo por Consulta de Cálculo** | ~$0.003 USD | ~$0.001 USD | **$0.000 USD** | **Ahorro del 100% en tokens de inferencia** |
+| Dimensión de Calidad y Arquitectura | Estado en Semana 3 | Versión Final Desplegada (Semana 4) | Impacto y Mejora Obtenida |
+| :--- | :--- | :--- | :--- |
+| **Entorno de Ejecución** | Servidor local (`http://localhost:8000`) | **Nube de Alta Disponibilidad** en Render (`https://triajesoporte-grupo-3.onrender.com`) | Accesible públicamente 24/7 con endpoint `/health` respondiendo en `<900 ms`. |
+| **Experiencia de Usuario (Autoatención)** | Procedimientos técnicos en 3.ª persona para técnicos de TI (*«El técnico accede a la consola...»*) | **Redacción conversacional humanizada** en 2.ª persona (*«Si ingresó erróneamente su clave...»*) | Comprensible para colaboradores no técnicos (Contabilidad, RRHH, Ventas). |
+| **Control de Agencia HITL (OWASP LLM08)** | Lógica en backend evaluada por pruebas unitarias | **Modal interactivo en Frontend web** con confirmación humana obligatoria antes de registrar ticket | Previene creación indiscriminada de tickets y permite al usuario auto-atenderse. |
+| **Verificación de Ciberseguridad** | Inspección manual de variables en código | **Auditoría automatizada de cero secretos** (`auditar_cero_secretos.py`) y 0 credenciales en historial | 100% blindaje Git (OWASP LLM06 / LOPDP Ecuador Art. 23). |
+| **Suite de Pruebas en Producción** | Pruebas unitarias locales con mocks (`pytest`) | **Batería de 16 pruebas automatizadas** ejecutadas directamente contra la URL en la nube (`docs/08-pruebas.md`) | Valida resiliencia real ante inyecciones de prompt (`TC-15`) y fuga de secretos (`TC-16`). |
+| **Tasa de Recuperación RAG (hit@5)** | 92.0% | **94.1%** sobre el corpus oficial de 15 manuales técnicos | Mayor precisión semántica al indexar metadatos de vigencia normativa ISO 27002. |
+| **Determinismo en SLA y Prioridad** | 100.0% (Matriz ITIL en código) | **100.0% reproducible** desde `config/matriz_prioridad.json` | Cero alucinaciones y cero costo de tokens en cálculos matemáticos. |
+| **Tasa de Alucinación de Manuales** | 0.0% (contingencia local) | **0.0% estricto** (neutralización de manuales falsos como `DOC-99`) | Confiabilidad operativa absoluta en soporte microinformático. |
 
 ---
 
