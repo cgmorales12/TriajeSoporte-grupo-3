@@ -13,7 +13,7 @@ Implementar un arnés de pruebas unitarias automatizadas con `pytest` y `monkeyp
 3. Se incluye una prueba de garantía que elimina las claves de API del entorno (`test_mock_garantia_cero_consumo_api_y_cero_red`) para verificar que la suite corre en entornos 100% desconectados de internet.
 
 ## Justificación
-1. **Velocidad de Ejecución:** La suite de 28 pruebas pasa en **3.4 segundos** (reducción del 72% en tiempo).
+1. **Velocidad de Ejecución:** La suite de **83 pruebas unitarias** se ejecuta de manera determinista, veloz y sin fallas intermitentes.
 2. **Cero Dependencia de Red:** Las pruebas pueden ejecutarse en servidores de integración continua (CI) sin configurar secretos ni depender de conectividad externa.
 3. **Pruebas Deterministas:** Elimina por completo las pruebas intermitentes (*flaky tests*).
 
