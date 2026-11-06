@@ -1,6 +1,6 @@
 """
-Frontend Streamlit - ConectaTec (Caso 03 · Grupo 3 UNIANDES)
-Tablero Kanban de Tickets y Formulario de Soporte Técnico
+Frontend Streamlit - TecnoAula (Caso 03 · Grupo 3 UNIANDES)
+Tablero Kanban de Tickets y Formulario de Mesa de Ayuda PYME (60 colaboradores, 1 técnico)
 Ejecutar con: streamlit run frontend/app.py
 """
 
@@ -12,20 +12,20 @@ from datetime import datetime
 API_BASE_URL = "http://localhost:8000"
 
 st.set_page_config(
-    page_title="ConectaTec - Grupo 3 · Tablero de Triaje ISP",
-    page_icon="⚡",
+    page_title="TecnoAula — Mesa de Ayuda PYME (Caso 03 · Grupo 3)",
+    page_icon="🏢",
     layout="wide"
 )
 
 # Cabecera Institucional
-st.title("⚡ ConectaTec — Grupo 3 · Triaje Inteligente de Soporte ISP")
-st.caption("Caso N.º 03 · Grupo 3 UNIANDES | Christian Morales · Fernando Ribera · Geoconda Iguasnia")
+st.title("🏢 TecnoAula — Triaje Automático de Soporte Tecnológico para PYME")
+st.caption("Caso N.º 03 · Grupo 3 UNIANDES (Mesa de ayuda para 60 colaboradores y 1 técnico de TI) | Christian Morales · Fernando Ribera · Geoconda Iguasnia")
 
 # Verificación de salud y estado del proveedor LLM
 try:
     res_salud = requests.get(f"{API_BASE_URL}/v1/salud", timeout=2)
     if res_salud.status_code == 200:
-        st.success("🟢 Backend FastAPI Conectado | Base de Datos: SQLite | IA: Gemini 1.5 Flash (Respaldo: Groq)")
+        st.success("🟢 Backend FastAPI Conectado | Base de Datos: SQLite | IA: Gemini 1.5 Flash (Respaldo: Groq Cloud)")
     else:
         st.warning("🟠 Backend en línea pero con advertencia de estado.")
 except Exception:
@@ -35,14 +35,14 @@ except Exception:
 col_izq, col_der = st.columns([1, 2])
 
 with col_izq:
-    st.subheader("📝 Ingreso de Reporte")
+    st.subheader("📝 Ingreso de Solicitud de Soporte")
     with st.form("form_reporte"):
-        nombre = st.text_input("Nombre del Abonado", placeholder="Ej. Juan Perez")
-        email = st.text_input("Correo Electrónico", placeholder="juan.perez@example.com")
-        codigo = st.text_input("Código de Cliente (Opcional)", placeholder="CLI-1024")
+        nombre = st.text_input("Nombre del Colaborador", placeholder="Ej. Carlos Mendoza")
+        email = st.text_input("Correo Institucional / Departamento", placeholder="carlos.mendoza@empresa.com (Finanzas)")
+        codigo = st.text_input("Código de Equipo / Puesto (Opcional)", placeholder="PC-FIN-04")
         descripcion = st.text_area(
-            "Descripción del Problema",
-            placeholder="Describa la falla, luces del router o problema de navegación...",
+            "Descripción de la Solicitud o Incidente",
+            placeholder="Ej. Bloqueo de contraseña en Active Directory, error en VPN para teletrabajo, atasco de impresora, fallo en sistema ERP...",
             height=120
         )
         enviado = st.form_submit_button("⚡ Clasificar con IA y Crear Ticket", use_container_width=True)
@@ -59,12 +59,12 @@ with col_izq:
             }
             try:
                 # Indicador visual de espera mientras el backend procesa el triaje
-                with st.spinner("⏳ Analizando incidencia con IA y consultando manuales técnicos (RAG)... Por favor espere..."):
+                with st.spinner("⏳ Analizando incidencia con IA y consultando 15 manuales técnicos internos (RAG)..."):
                     res = requests.post(f"{API_BASE_URL}/v1/tickets/clasificar", json=payload, timeout=20)
                 
                 if res.status_code == 201:
                     t = res.json()
-                    st.success(f"⚡ **Ticket Creado Exitosamente:** Código `{t['ticket_codigo']}` | Prioridad: **{t['prioridad']}** | SLA: **{t['sla_minutos']} min**")
+                    st.success(f"⚡ **Ticket Creado:** `{t['ticket_codigo']}` | Prioridad: **{t['prioridad']}** | SLA: **{t['sla_minutos']} min**")
                     if t.get("metadatos_ia", {}).get("conmutado"):
                         proveedor_respaldo = t["metadatos_ia"]["proveedor"]
                         st.warning(f"🟠 **Respaldo Activo:** Atendido mediante contingencia ({proveedor_respaldo}) por indisponibilidad del modelo primario.")
@@ -173,7 +173,7 @@ with col_der:
             if t.get("notificacion_enviada"):
                 st.info("✉️ **Notificación Oficial Remitida al Abonado**")
             if t.get("cuadrilla_despachada"):
-                st.warning(f"👷 **Cuadrilla Despachada:** `{t.get('orden_despacho_id', 'ODT-FIBRA')}`")
+                st.warning(f"🧑‍💻 **Derivado a Técnico TI:** `{t.get('orden_despacho_id', 'ODT-TECNICO')}`")
 
             st.caption(f"IA: {t.get('metadatos_ia', {}).get('proveedor', 'gemini')} | Cat: {t.get('categoria', '')}")
 
@@ -192,13 +192,13 @@ with col_der:
                                 "mensaje_final": data_env["mensaje_propuesto"],
                                 "operador_confirmador": "Operador TIC Streamlit"
                             }, timeout=2)
-                            st.toast("✉️ Notificación autorizada y enviada al abonado.")
+                            st.toast("✉️ Notificación autorizada y enviada al colaborador.")
                             st.rerun()
                     except Exception as ex:
                         st.error(f"Error: {ex}")
             with b_col2:
                 if t["estado"] != "escalado_cuadrilla":
-                    if st.button("🚨 Cuadrilla", key=f"btn_cuad_{t['id']}", help="Confirmación humana antes de derivar a cuadrilla física"):
+                    if st.button("🧑‍💻 Derivar", key=f"btn_cuad_{t['id']}", help="Confirmación humana antes de derivar a técnico presencial"):
                         try:
                             res_c = requests.get(f"{API_BASE_URL}/v1/tickets/{t['id']}/proponer-derivacion", timeout=2)
                             if res_c.status_code == 200:
@@ -211,7 +211,7 @@ with col_der:
                                     "operador_confirmador": "Operador TIC Streamlit",
                                     "autoriza_despacho_presencial": True
                                 }, timeout=2)
-                                st.toast("👷 Despacho de cuadrilla confirmado.")
+                                st.toast("🧑‍💻 Derivación a técnico presencial confirmada.")
                                 st.rerun()
                         except Exception as ex:
                             st.error(f"Error: {ex}")
@@ -235,7 +235,7 @@ with col_der:
             renderizar_tarjeta_ticket(t)
 
     with col_cuadrilla:
-        st.markdown("### 🚚 Cuadrilla")
+        st.markdown("### 🛠️ Escalados (Nivel 2)")
         col_t = [x for x in tickets_filtrados if x["estado"] == "escalado_cuadrilla"]
         if not col_t:
             st.caption("Sin tickets en esta columna")
@@ -243,7 +243,7 @@ with col_der:
             renderizar_tarjeta_ticket(t)
 
     with col_resuelto:
-        st.markdown("### ✅ Resueltos")
+        st.markdown("### ✅ Resueltos (Nivel 1)")
         col_t = [x for x in tickets_filtrados if x["estado"] == "resuelto"]
         if not col_t:
             st.caption("Sin tickets en esta columna")

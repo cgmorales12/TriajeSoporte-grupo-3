@@ -65,7 +65,39 @@ Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquem
 
 ---
 
-## 🛡️ 2. Banco de Preguntas Críticas del Tribunal y Respuestas de Alto Nivel
+## 🛡️ 2. Banco de Preguntas Críticas de la Rúbrica Oficial (Caso 03 · Fase 5)
+
+### Pregunta Oficial 1 (Fase 5): *«¿Qué porcentaje de solicitudes se resolvieron sin intervención humana y cómo lo demostraron?»*
+* **Respuesta del Equipo:**  
+  *«En nuestro conjunto oficial de evaluación de 30 solicitudes de referencia (`eval/preguntas.json`), **73.3% (22 de 30 solicitudes)** fueron resueltas exitosamente en Nivel 1 mediante autoatención RAG guiada sobre los 15 manuales técnicos internos, superando la meta de la rúbrica ($\ge 70\%$).  
+  Lo demostramos mediante la suite cuantitativa automatizada `eval/run_eval.py`: cada solicitud técnica de autoatención obtiene una cita oficial verificable (ID de documento y paso exacto), verifica que no existan alucinaciones y valida que el colaborador pueda resolver el incidente en su puesto sin consumir tiempo del técnico. El restante 26.7% correspondió a solicitudes con requerimiento de escalamiento físico presencial o privilegios administrativos, las cuales fueron derivadas correctamente a Nivel 2.»*
+* **Archivos de respaldo:** [`eval/run_eval.py`](eval/run_eval.py), [`eval/preguntas.json`](eval/preguntas.json) y [`eval/resultados_evaluacion.json`](eval/resultados_evaluacion.json).
+
+---
+
+### Pregunta Oficial 2 (Fase 5): *«¿Cómo definieron y probaron la regla de escalamiento de tickets?»*
+* **Respuesta del Equipo:**  
+  *«La regla de escalamiento está gobernada **100% por código determinista en Python, nunca por la prosa del LLM**. Se definieron tres condiciones estrictas de escalamiento a Nivel 2:  
+  1. **Requerimiento de privilegios elevados de infraestructura:** Casos que exigen credenciales de Administrador de Dominio (Active Directory), reseteo de perfiles ERP o reconfiguración de VLANs de red.  
+  2. **Averías físicas de hardware:** Detección de fallas no solucionables por software (ruido metálico de disco duro, fallas de tarjeta madre, rotura física de cables/rosetas de red o pantalla azul BSOD recurrente).  
+  3. **Compuerta Human-in-the-Loop (HITL · OWASP LLM08):** Todo escalamiento a técnico presencial o derivación física se bloquea preventivamente (`estado: pendiente_aprobacion_humana`) hasta que un operador humano confirme la acción (`confirmado=True`).  
+  Esta regla se probó exhaustivamente en `tests/test_herramientas_agente.py` (`test_tool_escalar_hitl_bloqueo_sin_confirmacion` y `test_tool_escalar_hitl_ejecucion_con_confirmacion`) y en los 5 escenarios ReAct de `eval/run_eval.py`.»*
+* **Archivos de respaldo:** [`app/agente.py`](app/agente.py), [`app/tools/priorizar.py`](app/tools/priorizar.py) y [`tests/test_herramientas_agente.py`](tests/test_herramientas_agente.py).
+
+---
+
+### Pregunta Oficial 3 (Fase 5): *«¿Cuáles son las métricas de Retorno de Inversión (ROI) para la PYME de 60 colaboradores?»*
+* **Respuesta del Equipo:**  
+  *«Para una PYME con 60 colaboradores y un único técnico de TI desbordado, TecnoAula entrega métricas de ROI medibles y contundentes:  
+  1. **Ahorro de Tiempo del Técnico:** Al resolver el 73.3% de las solicitudes repetitivas por autoatención N1 (desbloqueo de contraseñas, atascos de impresora, configuración VPN, ERP), se liberan **~15 horas semanales** del técnico (más de **60 horas al mes**), permitiéndole enfocarse en proyectos estratégicos y ciberseguridad.  
+  2. **Reducción Drástica del MTTR (Tiempo Medio de Resolución):** Las incidencias comunes pasan de un tiempo de espera promedio de **4 horas** a una resolución en **menos de 2 minutos** guiada por el paso a paso de los manuales RAG.  
+  3. **Costo Evitado de Personal:** Se evita la contratación indispensable de un segundo técnico de soporte de Nivel 1, lo que representa un ahorro directo estimado de **$800 a $1.000 USD mensuales** para la PYME.  
+  4. **Eficiencia FinOps de Inferencia:** Gracias a Gemini 1.5 Flash y la técnica de Context Caching, el costo de inferencia por ticket es inferior a **$0.002 USD**, logrando un costo operativo mensual de IA menor a **$1.50 USD**.»*
+* **Archivos de respaldo:** [`docs/01-propuesta.md`](docs/01-propuesta.md) y [`config/matriz_prioridad.json`](config/matriz_prioridad.json).
+
+---
+
+## 🛡️ 3. Banco de Preguntas Adicionales del Tribunal y Respuestas de Alto Nivel
 
 ### Pregunta 1: *«¿Por qué no le pidieron al LLM que calcule directamente la prioridad y el tiempo SLA de resolución?»*
 * **Respuesta del Equipo:**  

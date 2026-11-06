@@ -17,41 +17,41 @@ logger = logging.getLogger("conectatec.rag")
 RAW_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "raw")
 CHROMA_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "chroma")
 
-# Mapeo de términos clave para recuperación de respaldo determinista (fallback)
+# Mapeo de términos clave para recuperación de respaldo determinista (fallback) en PYME
 PALABRAS_CLAVE_MANUALES = {
-    "DOC-01": ["huawei", "los roja", "pon", "echolife", "hg8245", "hg8546", "luz roja", "led los"],
-    "DOC-02": ["zte", "f660", "f670", "indicador pon", "los zte", "alarma zte"],
-    "DOC-03": ["reiniciar", "reinicio", "desconectar", "corriente", "30 segundos", "ciclo", "electrico", "transformador", "apagar", "no navega", "sin navegacion"],
-    "DOC-04": ["clave wifi", "contrasena", "ssid", "cambiar clave", "wpa2", "wpa3", "192.168.1.1", "nombre de red"],
-    "DOC-05": ["5g", "5ghz", "2.4g", "2.4ghz", "cobertura", "alcance", "banda", "muro", "pared"],
-    "DOC-06": ["velocidad", "lento", "lentitud", "speedtest", "megas", "bajada", "subida", "test ethernet", "ookla", "demora en cargar"],
-    "DOC-07": ["dns", "no se puede acceder", "err_name_not_resolved", "flushdns", "8.8.8.8", "1.1.1.1", "ping", "no carga", "no cargan", "no abre", "no abren", "pagina", "paginas", "página", "páginas", "sitio", "navegacion", "navegación", "navegar"],
-    "DOC-08": ["cable", "utp", "rj45", "rj-45", "cat6", "cat5", "100 mbps", "cobre"],
-    "DOC-09": ["rotura", "fibra rota", "corte fibra", "atenuacion", "splitter", "cuadrilla", "fusionadora", "aplastado"],
-    "DOC-10": ["microondas", "interferencia", "espejo", "bluetooth", "ruido", "concreto"],
-    "DOC-11": ["modo puente", "bridge", "repetidor", "doble nat", "router propio", "dhcp"],
-    "DOC-12": ["canal", "canales", "saturacion", "wifi analyzer", "canal 1", "canal 6", "canal 11", "solapamiento"],
-    "DOC-13": ["microcorte", "intermitencia", "caida cada", "pppoe", "desconexion", "mtu", "1492"],
-    "DOC-14": ["pago", "factura", "facturacion", "mora", "corte por pago", "reactivacion", "banco", "saldo"],
-    "DOC-15": ["itil", "impacto", "urgencia", "prioridad", "sla", "clasificacion", "tiempo de resolucion"]
+    "DOC-01": ["contraseña", "clave", "password", "desbloqueo", "active directory", "windows", "bloqueada", "olvido de clave", "usuario bloqueado", "cuenta bloqueada"],
+    "DOC-02": ["vpn", "forticlient", "openvpn", "teletrabajo", "acceso remoto", "gateway", "túnel", "2fa", "otp", "token", "conexión remota"],
+    "DOC-03": ["impresora", "imprimir", "papel atascado", "atasco de papel", "tóner", "cola de impresión", "spooler", "ip impresora", "multifunción", "no imprime"],
+    "DOC-04": ["carpeta compartida", "unidad de red", "servidor de archivos", "smb", "nas", "unidad z", "acceso denegado", "permisos", "file server", "recurso compartido"],
+    "DOC-05": ["sistema contable", "erp", "facturación", "sql server", "sesión duplicada", "usuario conectado", "comprobante", "sri", "sesión colgada"],
+    "DOC-06": ["política de seguridad", "iso 27002", "complejidad de contraseñas", "win l", "bloqueo de pantalla", "phishing", "confidencialidad", "escritorio limpio"],
+    "DOC-07": ["red cableada", "cable de red", "ethernet", "rj45", "roseta", "ipconfig", "dhcp", "gateway", "switch", "sin internet en oficina"],
+    "DOC-08": ["wifi corporativo", "red inalámbrica", "ssid", "innova-corp", "wpa2 enterprise", "radius", "wifi invitados", "olvidar red"],
+    "DOC-09": ["antivirus", "endpoint", "windows update", "parches", "ransomware", "cuarentena", "malware", "actualizaciones", "seguridad"],
+    "DOC-10": ["computadora lenta", "pantalla azul", "bsod", "bloqueo de pc", "administrador de tareas", "reinicio", "disco 100", "hardware", "ruido metálico"],
+    "DOC-11": ["outlook", "correo", "buzón lleno", "pst", "filtro antispam", "spam", "adjunto", "email", "autoarchivar"],
+    "DOC-12": ["nuevo usuario", "alta de personal", "solicitud de accesos", "permisos", "nuevo colaborador", "onboarding", "crear cuenta"],
+    "DOC-13": ["respaldo", "backup", "recuperación", "versiones anteriores", "archivo borrado", "onedrive", "shadow copies", "vss", "restaurar archivo"],
+    "DOC-14": ["pantalla doble", "segundo monitor", "extender pantalla", "win p", "hdmi", "displayport", "teclado", "ratón", "monitor adicional"],
+    "DOC-15": ["itil", "matriz itil", "prioridad", "urgencia", "impacto", "escalamiento", "ticket kanban", "nivel 1", "nivel 2", "sla", "derivar a técnico"]
 }
 
 # URLs oficiales reales y verificables por manual (Cero dominios inventados)
 URLS_REALES_MANUALES = {
-    "DOC-01": "https://support.huawei.com/carrier/",
-    "DOC-02": "https://support.zte.com.cn/",
-    "DOC-03": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-03_reinicio_electrico_equipos.md",
-    "DOC-04": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-04_cambio_clave_wifi.md",
-    "DOC-05": "https://www.wi-fi.org/discover-wi-fi",
-    "DOC-06": "https://www.speedtest.net/about/knowledge",
-    "DOC-07": "https://datatracker.ietf.org/doc/html/rfc1035",
-    "DOC-08": "https://tiaonline.org/",
-    "DOC-09": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-09_rotura_fibra_optica.md",
-    "DOC-10": "https://www.tp-link.com/support/faq/",
-    "DOC-11": "https://help.mikrotik.com/docs/",
-    "DOC-12": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-12_canales_wifi_saturacion.md",
-    "DOC-13": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-13_intermitencia_pppoe.md",
-    "DOC-14": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-14_facturacion_cortes_mora.md",
+    "DOC-01": "https://learn.microsoft.com/es-es/windows-server/identity/ad-ds/",
+    "DOC-02": "https://docs.fortinet.com/product/forticlient/",
+    "DOC-03": "https://support.hp.com/es-es/document/ish_2026_impresoras_red",
+    "DOC-04": "https://learn.microsoft.com/es-es/windows-server/storage/file-server/",
+    "DOC-05": "https://www.sri.gob.ec/facturacion-electronica",
+    "DOC-06": "https://www.iso.org/standard/75652.html",
+    "DOC-07": "https://standards.ieee.org/ieee/802.3/",
+    "DOC-08": "https://www.wi-fi.org/discover-wi-fi/security",
+    "DOC-09": "https://learn.microsoft.com/es-es/windows/security/threat-protection/",
+    "DOC-10": "https://learn.microsoft.com/es-es/troubleshoot/windows-client/performance/",
+    "DOC-11": "https://support.microsoft.com/es-es/office/configuracion-de-correo-outlook",
+    "DOC-12": "https://learn.microsoft.com/es-es/azure/active-directory/governance/",
+    "DOC-13": "https://support.microsoft.com/es-es/office/recuperar-versiones-anteriores",
+    "DOC-14": "https://support.microsoft.com/es-es/windows/como-usar-varios-monitores-en-windows",
     "DOC-15": "https://www.axelos.com/certifications/itil-service-management"
 }
 
@@ -64,11 +64,12 @@ def _resolver_url_manual(doc_id: str, url_meta: Optional[str] = None) -> str:
     return f"https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/{doc_id.lower()}.md"
 
 
-# Términos que disparan orden de trabajo presencial (cuadrilla de planta externa)
+# Términos que disparan intervención física presencial del técnico de TI en el puesto de trabajo
 TERMINOS_DESPACHO_PRESENCIAL = [
-    "los roja", "luz roja", "corte de fibra", "rotura", "mordido",
-    "fibra rota", "los parpadea", "cable colgando", "cable en el piso",
-    "humo blanco", "plástico quemado", "rack quemado", "splitter", "atenuacion severa"
+    "humo", "olor a quemado", "chispa", "disco dañado", "ruido metálico",
+    "pantalla azul", "bsod", "reemplazo físico", "cable roto", "roseta dañada",
+    "puerto dañado", "placa madre", "fuente de poder", "ventilador parado",
+    "los roja", "luz roja", "alarma óptica", "los parpadea", "corte de fibra"
 ]
 
 # Términos para el protocolo oficial de abstención (misión de silencio determinista)
@@ -78,7 +79,8 @@ TERMINOS_ABSTENCION_EXTERNA = [
     "llueve", "lluvia", "clima", "tiempo libre", "nómina", "nomina", "sueldo", "dinero",
     "hackear", "hack", "crackear", "menu ejecutivo", "menú ejecutivo", "materia", "profesor",
     "aula magna", "tarea", "medico", "médico", "salud", "enfermo", "cita médica", "cita medica",
-    "futbol", "fútbol", "partido"
+    "futbol", "fútbol", "partido", "receta", "ceviche", "camarón", "camaron", "cocina",
+    "selección", "seleccion", "poema", "cine", "película", "pelicula"
 ]
 
 _cliente_chroma = None
@@ -165,8 +167,14 @@ def buscar_solucion(
     # 1.2 Solicitudes maliciosas o de vulneración de seguridad: Abstención obligatoria inmediata
     es_adversarial = any(h in texto_lower for h in ["hackear", "hack", "crackear", "vulnerar", "piratear", "sniffear"])
 
-    # 1.3 Detecta consultas ajenas a la infraestructura técnica de telecomunicaciones / campus
-    terminos_ti = ["los", "ont", "router", "fibra", "wifi", "wi-fi", "cable", "red", "ethernet", "internet", "pon", "dns", "lan"]
+    # 1.3 Detecta consultas de infraestructura técnica de la PYME (60 colaboradores)
+    terminos_ti = [
+        "vpn", "impresora", "imprimir", "contraseña", "clave", "password", "usuario", 
+        "outlook", "correo", "servidor", "carpeta", "erp", "contable", "pantalla", 
+        "monitor", "antivirus", "switch", "pyme", "itil", "red", "ethernet", "wifi", 
+        "internet", "dns", "active directory", "smb", "nas", "pc", "docking", "backup", 
+        "respaldo", "disco", "atasco", "spooler", "roseta", "cable", "windows"
+    ]
     tiene_termino_ti = any(t in texto_lower for t in terminos_ti)
     es_fuera_de_alcance = (
         es_categoria_fuera_de_alcance or
@@ -177,23 +185,19 @@ def buscar_solucion(
     if es_fuera_de_alcance or (len(texto_lower) < 4 and not tiene_termino_ti):
         return DiagnosticoRAG(
             solucion_propuesta=(
-                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec. "
-                "La consulta no describe ninguna avería técnica ni falla en la infraestructura de Internet o telecomunicaciones. "
-                "No se requiere despacho de cuadrilla ni manipulación de equipos. "
-                "Orientación al usuario: Si su solicitud corresponde a trámites administrativos, académicos (como notas o certificaciones) o asuntos personales, "
-                "por favor acuda a Secretaría General o al portal institucional de autoservicio. "
-                "Si experimenta problemas de conectividad o luces anómalas en el módem/ONT (POWER, PON, LOS, LAN), por favor descríbalos detalladamente."
+                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de TecnoAula / Soporte PYME. "
+                "La consulta no describe ninguna avería técnica ni incidencia en la infraestructura de TI (Active Directory, VPN, impresoras, carpetas SMB, ERP, correo u ofimática). "
+                "No se requiere intervención técnica en el puesto de trabajo. "
+                "Orientación al usuario: Si su solicitud corresponde a trámites administrativos, académicos (como notas, matrículas o certificaciones) o de Recursos Humanos, "
+                "por favor acuda a Secretaría General o al departamento correspondiente. "
+                "Si experimenta problemas con su equipo de trabajo, red corporativa o accesos, por favor descríbalos detalladamente."
             ),
             citas=[],
             requiere_visita_campo=False
         )
 
-    # 2. Evaluación de Alarma Crítica Física (Despacho presencial)
-    requiere_cuadrilla = (
-        any(termino in texto_lower for termino in TERMINOS_DESPACHO_PRESENCIAL) or
-        ("los" in texto_lower and "roj" in texto_lower) or
-        ("los" in texto_lower and "parpade" in texto_lower)
-    )
+    # 2. Evaluación de Alarma Crítica Física (Intervención presencial del técnico de TI)
+    requiere_visita_campo = any(termino in texto_lower for termino in TERMINOS_DESPACHO_PRESENCIAL)
 
     # 3. Consulta a la Colección Vectorial Persistente de ChromaDB
     coleccion = _obtener_coleccion_chroma()
@@ -222,21 +226,11 @@ def buscar_solucion(
                 for meta, doc_texto, dist in zip(metas, docs, dists):
                     doc_id = meta.get("documento", "DOC-01")
 
-                    # Filtros de consistencia y prevención de falsos positivos léxicos:
-                    # 1. DOC-14 (Corte por mora / Canales de pago): Solo si el usuario menciona facturación, cobros o deudas
-                    if doc_id == "DOC-14":
-                        terminos_pago = ["pago", "pagar", "factura", "mora", "cobro", "deuda", "suspensi", "recibo", "banco", "saldo", "cancelar", "comercial", "corte por", "dinero"]
-                        if not any(tp in texto_lower for tp in terminos_pago):
-                            continue
-
-                    # 2. DOC-09 (Rotura de fibra exterior): Solo si la consulta menciona daño físico o alarmas ópticas
-                    if doc_id == "DOC-09":
-                        terminos_fibra = ["fibra", "rotura", "corte", "los", "mordid", "colgando", "piso", "partid", "quebrad", "curvatura", "atenuaci", "camion", "camión", "arbol", "árbol", "cable roto"]
-                        if not any(tf in texto_lower for tf in terminos_fibra):
-                            continue
-
-                    # 3. DOC-15 (Matriz ITIL interna): No es un manual operativo de solución técnica para usuarios
+                    # Filtro DOC-15 (Matriz ITIL interna): Solo si se consulta por gestión/clasificación ITIL
                     if doc_id == "DOC-15":
+                        terminos_itil = ["itil", "sla", "prioridad", "urgencia", "impacto", "escalamiento", "matriz"]
+                        if not any(ti in texto_lower for ti in terminos_itil):
+                            continue
                         continue
 
                     if doc_id not in docs_recuperados:
@@ -282,17 +276,17 @@ def buscar_solucion(
                 puntajes.append((doc_id, score))
         puntajes.sort(key=lambda x: x[1], reverse=True)
 
-        docs_a_citar = [p[0] for p in puntajes[:top_k]] if puntajes else (["DOC-01"] if requiere_cuadrilla else [])
+        docs_a_citar = [p[0] for p in puntajes[:top_k]] if puntajes else (["DOC-10"] if requiere_visita_campo else [])
 
-        if not docs_a_citar and not requiere_cuadrilla:
+        if not docs_a_citar and not requiere_visita_campo:
             return DiagnosticoRAG(
                 solucion_propuesta=(
-                    "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec. "
-                    "La consulta no describe ninguna avería técnica ni falla en la infraestructura de Internet o telecomunicaciones. "
-                    "No se requiere despacho de cuadrilla ni manipulación de equipos. "
-                    "Orientación al usuario: Si su solicitud corresponde a trámites administrativos o académicos (como notas, matrículas o certificaciones), "
-                    "por favor acuda a Secretaría General o al portal institucional de autoservicio. "
-                    "Si experimenta problemas de conectividad o luces anómalas en el módem/ONT (POWER, PON, LOS, LAN), por favor descríbalos detalladamente."
+                    "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de TecnoAula / Soporte PYME. "
+                    "La consulta no describe ninguna avería técnica ni incidencia en la infraestructura de TI (Active Directory, VPN, impresoras, carpetas SMB, ERP, correo u ofimática). "
+                    "No se requiere intervención técnica en el puesto de trabajo. "
+                    "Orientación al usuario: Si su solicitud corresponde a trámites administrativos, académicos (como notas, matrículas o certificaciones) o de Recursos Humanos, "
+                    "por favor acuda a Secretaría General o al departamento correspondiente. "
+                    "Si experimenta problemas con su equipo de trabajo, red corporativa o accesos, por favor descríbalos detalladamente."
                 ),
                 citas=[],
                 requiere_visita_campo=False
@@ -331,20 +325,20 @@ def buscar_solucion(
                 ))
 
     # 5. Formular Solución Propuesta Determinista
-    if requiere_cuadrilla:
+    if requiere_visita_campo:
         solucion = (
-            "Se detectó una alarma óptica crítica (posible rotura de fibra o atenuación severa). "
-            "Se ha generado una orden de trabajo con Prioridad Alta para despacho inmediato de cuadrilla técnica de campo con fusionadora óptica."
+            "Se detectó un fallo crítico de hardware en la estación de trabajo (DOC-10). "
+            "Se ha generado un ticket con Prioridad Alta para atención presencial inmediata por parte del técnico de TI en el puesto del colaborador."
         )
     elif citas:
         solucion = f"Procedimiento recomendado según {citas[0].documento_id} ({citas[0].paso_exacto}): {citas[0].fragmento_aplicado}"
     else:
-        solucion = "Proceda a realizar un ciclo eléctrico de 30 segundos (DOC-03). Si el problema persiste, el ticket será derivado a un operador de Nivel 1."
+        solucion = "Proceda a verificar los cables y reiniciar el equipo (DOC-10). Si el inconveniente persiste, el ticket será derivado al técnico de TI."
 
     return DiagnosticoRAG(
         solucion_propuesta=solucion,
         citas=citas,
-        requiere_visita_campo=requiere_cuadrilla
+        requiere_visita_campo=requiere_visita_campo
     )
 
 

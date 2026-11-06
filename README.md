@@ -1,90 +1,91 @@
-# ⚡ ConectaTec — Grupo 3 (Caso N.º 03 · UNIANDES)
-> **Mesa de Ayuda Inteligente y Triaje Automatizado de Incidentes ISP con RAG y Agente ReAct**  
+# 🏢 TecnoAula — Triaje Automático de Solicitudes de Soporte Tecnológico para PYME
+> **Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda Inteligente con RAG y Agente de Gestión de Incidentes**  
 > **Seminario de Titulación:** Ingeniería de Software con IA Generativa — Universidad Regional Autónoma de Los Andes (UNIANDES)  
 > **Docente Evaluador:** Ing. Heyler Fabio Guaza (Mg. en Ciberseguridad · OPD · Abogado)  
-> **Repositorio Oficial:** `https://github.com/cgmorales12/conectatec-grupo-3`  
+> **Repositorio Oficial en GitHub:** [https://github.com/cgmorales12/conectatec-grupo-3#readme](https://github.com/cgmorales12/conectatec-grupo-3#readme)  
+> **Despliegue en Producción (Azure Container Apps):** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io)  
 
 ---
 
-## 👥 Integrantes del Grupo 3
-| Integrante | Rol en el Proyecto | Usuario GitHub |
-| :--- | :--- | :--- |
-| **Christian Guillermo Morales González** | Tech Lead / Coordinador | [`cgmorales12`](https://github.com/cgmorales12) |
-| **Luis Fernando Ribera Alajo** | Builder / Arquitectura RAG & DB | [`fernandolribera`](https://github.com/fernandolribera) |
-| **Amalia Geoconda Iguasnia Escobar** | QA / Seguridad & Requerimientos | [`Geocoiguasnia76`](https://github.com/Geocoiguasnia76) |
+## 👥 Integrantes del Grupo 3 y Responsabilidades
+| Integrante | Rol en el Proyecto | Responsabilidades Principales | Usuario GitHub |
+| :--- | :--- | :--- | :--- |
+| **Christian Guillermo Morales González** | **Tech Lead / Coordinador** | API Gateway resiliente, endpoints FastAPI, integración LLM Gemini/Groq, conmutación transparente y frontend Streamlit. | [`cgmorales12`](https://github.com/cgmorales12) |
+| **Luis Fernando Ribera Alajo** | **Builder / Arquitectura** | Base vectorial ChromaDB, corpus de 15 manuales técnicos PYME, Matriz ITIL v4 determinista, base SQLite y RAG. | [`fernandolribera`](https://github.com/fernandolribera) |
+| **Amalia Geoconda Iguasnia Escobar** | **QA / Seguridad & Requerimientos** | Contratos Pydantic V2 (`extra="forbid"`), anonimización LOPDP, suite de pruebas unitarias con Mocks y evaluación `run_eval.py`. | [`Geocoiguasnia76`](https://github.com/Geocoiguasnia76) |
 
 ---
 
-## 🎯 Identificación del Caso de Estudio
-* **Número de Caso Asignado:** **Caso N.º 03**
-* **Nombre del Equipo:** **Grupo 3**
-* **Sistema:** **ConectaTec / TecnoAula — Triaje de Soporte Tecnológico**
+## 🎯 1. Qué Problema Resuelve y Para Quién
+
+### El Problema
+Una **PYME de servicios con 60 colaboradores** cuenta con **un único técnico de TI**, quien se encuentra desbordado diariamente atendiendo solicitudes repetitivas de oficina y soporte básico:
+- Restablecimiento y desbloqueo de contraseñas de red / Active Directory / Windows.
+- Configuración de VPN corporativa (FortiClient / OpenVPN) para teletrabajo.
+- Atascos de papel, colas de impresión y configuración de impresoras de red departamentales.
+- Permisos y mapeo de unidades en carpetas compartidas (SMB / NAS).
+- Desbloqueo de sesiones colgadas en el sistema contable / ERP interno.
+- Conectividad a la red cableada de oficina y Wi-Fi corporativo (WPA2/3-Enterprise).
+
+Este cuello de botella provoca tiempos de espera prolongados (MTTR inicial de 4 horas), interrupción de labores de los colaboradores y distracción del técnico de sus responsabilidades estratégicas de infraestructura y ciberseguridad.
+
+### La Solución
+**TecnoAula** es una mesa de ayuda inteligente basada en un **Tablero Kanban de Tickets** que automatiza el triaje de incidencias:
+1. **Autoatención Nivel 1 ($\ge 70\%$ de solicitudes):** Resuelve incidentes guiando al colaborador paso a paso con citas exactas (ID de documento y paso operativo) sobre **15 manuales técnicos oficiales** indexados en **ChromaDB**.
+2. **Priorización Determinista (Código Python):** Clasifica impacto y urgencia con IA, pero el cálculo matemático de la prioridad (`Alta`, `Media`, `Baja`) y SLA de resolución los calcula una función pura en Python leyendo `config/matriz_prioridad.json` bajo el estándar ITIL v4. **El LLM nunca calcula la prioridad ni inventa tiempos contractuales.**
+3. **Escalamiento y Derivación a Nivel 2:** Si la incidencia requiere intervención física en el puesto de trabajo (falla de hardware, pantalla azul BSOD, disco averiado) o permisos administrativos elevados, se genera un ticket escalado con alerta para el técnico de TI bajo compuertas **Human-in-the-Loop (HITL)**.
 
 ---
 
-## 🚀 1. Descripción del Proyecto y Problema Real
-**ConectaTec** es una plataforma web inteligente diseñada para automatizar la recepción, diagnóstico de primer nivel y priorización de averías de telecomunicaciones para abonados y operadores de mesa de ayuda en proveedores de servicios de internet (ISP).
+## 🏗️ 2. Arquitectura del Sistema y Componentes
 
 ### Principio Rector de Arquitectura
-> ***«El modelo propone, el código dispone.»***  
-> El Modelo de Lenguaje (LLM) es probabilístico y falible. La extracción de impacto y urgencia se delega a la IA con validación estricta en esquemas Pydantic V2 (`extra="forbid"`), pero **la prioridad matemática y el tiempo máximo de resolución (SLA) los calcula de forma determinista una función pura en Python** leyendo `config/matriz_prioridad.json`. El LLM nunca calcula la prioridad ni inventa tiempos contractuales.
+> ***«El modelo propone, el código dispone · Una persona decide lo riesgoso.»***  
+> El Modelo de Lenguaje (LLM) es un componente externo, probabilístico y falible. Todo su comportamiento está gobernado por código backend determinista, esquemas Pydantic V2 cerrados (`extra="forbid"`), limitador de tasa Token Bucket, manejo estructurado de errores RFC 9457 y compuertas de confirmación humana (OWASP LLM08).
 
----
-
-## 🛠️ 2. Arquitectura del MVP (Semana 2)
-
-```text
-CONECTATEC-MVP/
-├── app/
-│   ├── main.py              # Punto de entrada FastAPI, middleware Token Bucket y manejadores RFC 9457
-│   ├── schemas.py           # Contratos DTO con Pydantic V2 (extra="forbid")
-│   ├── database.py          # Repositorio SQLite parametrizado con consultas seguras '?'
-│   ├── routers/
-│   │   ├── tickets.py       # Endpoints de clasificación, listado y cambio de estados Kanban
-│   │   ├── salud.py         # Diagnóstico operativo (/v1/salud)
-│   │   ├── auth.py          # Autenticación y roles de personal técnico TIC
-│   │   └── manuales.py      # Gestión documental de la base de conocimiento
-│   ├── services/
-│   │   ├── llm.py           # Gateway con failover: Gemini 1.5 Flash -> Groq Llama 3.3 -> Motor Local
-│   │   ├── rag.py           # Búsqueda semántica con citas verificables (DOC-XX y paso exacto)
-│   │   └── auth.py          # Control de acceso y tokens JWT
-│   └── tools/
-│       └── priorizar.py     # Cálculo determinista de prioridad ITIL (config/matriz_prioridad.json)
-├── config/
-│   └── matriz_prioridad.json# Matriz ITIL de Impacto x Urgencia y tiempos SLA
-├── data/
-│   ├── raw/                 # 15 manuales técnicos oficiales en formato Markdown (.md)
-│   ├── pdf/                 # 15 manuales técnicos oficiales en formato PDF (.pdf)
-│   └── conectatec.db        # Base de datos persistente SQLite
-├── docs/                    # Documentación técnica, académica y evidencias
-│   ├── 01-propuesta.md      # Propuesta formal del proyecto
-│   ├── 02-requisitos.md     # Historias de usuario INVEST con Gherkin BDD
-│   ├── 03-arquitectura.md   # Modelo C4 y diagramas Mermaid
-│   ├── 04-fuentes.md        # Inventario de los 15 manuales técnicos oficiales
-│   ├── 05-preguntas-frecuentes.md # Levantamiento de 15 casos reales de soporte
-│   ├── 05-prompts.md        # Catálogo de prompts bajo método R.E.C.E.T.A.
-│   ├── 06-manual-usuario.md # Manual de uso del sistema
-│   ├── 07-manual-tecnico.md # Manual técnico y de despliegue
-│   ├── 09-decisiones/       # Registros de Decisiones de Arquitectura (ADR-001 a 004)
-│   ├── 10-perimetro-seguridad-y-defensas-llm.md # Auditoría OWASP LLM 2025 y LOPDP
-│   └── evidencias/
-│       ├── semana-1/        # Evidencias y decisiones de la Semana 1
-│       └── semana-2/        # Evidencias, failover y pruebas unitarias de la Semana 2
-├── frontend/
-│   └── index.html           # Tablero Kanban interactivo, formulario y simulador en vivo
-├── tests/
-│   └── test_endpoints.py    # Suite de 12 pruebas unitarias con Mocks (100% offline)
-├── .env.example             # Plantilla de variables de entorno con claves vacías
-├── .gitignore               # Configuración estricta de exclusión de secretos y temporales
-└── requirements.txt         # Dependencias fijadas por versión
+### Diagrama de Componentes
+```mermaid
+flowchart TD
+    User["Docente / Colaborador PYME (60 usuarios)"] -->|Formulario Web / Solicitud| FE["Frontend (Streamlit / HTML5 Kanban)"]
+    FE -->|HTTP / JSON| API["FastAPI Backend (AnyIO 40 Threads)"]
+    
+    subgraph Seguridad ["Perímetro de Seguridad & Privacidad"]
+        TB["Token Bucket (15 fichas / IP)"]
+        Sanitizer["Anonimizador Regex LOPDP Art. 23\n([CONFIDENCIAL_REMOVIDO])"]
+        Pydantic["Pydantic V2 (extra='forbid')"]
+    end
+    
+    API --> TB --> Sanitizer --> Pydantic
+    
+    subgraph Gateway ["Gateway Resiliente de Inferencia (ClienteLLM)"]
+        Gemini["Primario: Gemini 1.5 Flash\n(Context Caching Prefijo Fijo)"]
+        Groq["Respaldo: Groq Cloud Llama 3.3 70B\n(Failover HTTP 429/503)"]
+        Offline["Contingencia: Motor Heurístico Offline\n(0 tokens / Cero Red)"]
+        Gemini -->|Timeout / 429| Groq
+        Groq -->|Falla Total| Offline
+    end
+    
+    Pydantic --> Gateway
+    
+    subgraph Determinismo ["Lógica Determinista del Negocio (Código Python Puro)"]
+        MatrizITIL["Matriz ITIL v4\nconfig/matriz_prioridad.json"]
+        Chroma["ChromaDB Vectorial Persistente\n(15 Manuales Técnicos PYME)"]
+        DB[(SQLite Parametrizado '?')]
+    end
+    
+    Gateway -->|Impacto + Urgencia| MatrizITIL
+    MatrizITIL -->|Prioridad + SLA| DB
+    API -->|Consulta Semántica| Chroma
+    Chroma -->|Citas Oficiales + Paso Exacto| DB
+    DB -->|Estado Kanban| FE
 ```
 
 ---
 
-## ⚡ 3. Instalación y Puesta en Marcha en Local
+## 🚀 3. Cómo Ejecutarlo en Local Paso a Paso
 
 ### 3.1. Requisitos Previos
-- Python 3.10 o superior (verificado con Python 3.14).
+- Python 3.10 o superior (validado en Python 3.11, 3.12 y 3.14).
 - Git instalado.
 
 ### 3.2. Clonar el Repositorio
@@ -93,91 +94,123 @@ git clone https://github.com/cgmorales12/conectatec-grupo-3.git
 cd conectatec-grupo-3
 ```
 
-### 3.3. Instalar Dependencias
+### 3.3. Crear y Activar Entorno Virtual
+```bash
+# En Windows (PowerShell)
+python -m venv venv
+.\venv\Scripts\activate
+
+# En Linux / macOS
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3.4. Instalar Dependencias
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3.4. Configurar Variables de Entorno
-Copiar la plantilla de entorno:
+### 3.5. Configurar Variables de Entorno
+Copiar la plantilla oficial (nunca escribir claves en Git):
 ```bash
 cp .env.example .env
 ```
-*(Nota: Si no se configuran claves de API, el sistema activa automáticamente el conmutador heurístico local offline para pruebas 100% funcionales).*
+Editar el archivo `.env` para ingresar opcionalmente sus API Keys:
+- `GEMINI_API_KEY`: Clave de Google AI Studio.
+- `GROQ_API_KEY`: Clave de Groq Cloud (modelo de respaldo).
+*(Nota: Si no se configuran claves de API, el sistema activa automáticamente el motor heurístico determinista local para pruebas 100% funcionales y sin gastar saldo).*
 
-### 3.5. Iniciar la Aplicación
+### 3.6. Vectorizar los 15 Manuales Técnicos Oficiales
+```bash
+python scripts/ingest.py
+```
+*(Extrae, limpia, fragmenta y persiste 90 chunks estructurados con metadatos de vigencia, documento y URL oficial en `data/chroma`).*
+
+### 3.7. Iniciar el Backend (FastAPI)
 ```bash
 uvicorn app.main:app --reload --port 8000
 ```
+- **Documentación Swagger / OpenAPI:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Endpoint de Salud Operativo:** [http://localhost:8000/v1/salud](http://localhost:8000/v1/salud) o [http://localhost:8000/health](http://localhost:8000/health)
 
-Acceso a servicios en el navegador:
-- **Tablero Kanban Web:** [http://localhost:8000/tablero](http://localhost:8000/tablero)
-- **Documentación Interactiva Swagger:** [http://localhost:8000/docs](http://localhost:8000/docs)
-- **Diagnóstico Operativo:** [http://localhost:8000/v1/salud](http://localhost:8000/v1/salud)
-- **Proveedor LLM Encapsulado:** [http://localhost:8000/v1/llm/proveedor](http://localhost:8000/v1/llm/proveedor)
-
-### 3.6. Endpoints Principales del Sistema
-- `POST /chat`: Endpoint conversacional interactivo con **Streaming en tiempo real** (`StreamingResponse` token a token).
-- `POST /clasificar`: Inferencia técnica y triaje determinista retornando JSON validado con esquemas estrictos Pydantic V2.
-- `POST /analizar`: Diagnóstico de averías y severidad estructurado con Pydantic V2 (`extra="forbid"`).
-- `GET /v1/llm/proveedor`: Introspección del proveedor activo en el **Cliente LLM Encapsulado** (cambiar de proveedor no toca los endpoints).
-- `GET /v1/metricas/solicitudes`: Métricas de **Observabilidad y Log por Solicitud** (latencia promedio, tokens consumidos y registros recientes).
-
----
-
-## 🧩 4. Cliente LLM Encapsulado (`app/services/llm.py`)
-> ***«El cliente del modelo está encapsulado: cambiar de proveedor no toca los endpoints.»***
-
-La clase `ClienteLLM` centraliza toda la interacción con modelos de lenguaje externo (Google Gemini 1.5 Flash, Groq Cloud Llama 3.3 y conmutador determinista offline).
-- **Desacoplamiento total:** Los endpoints consumen `cliente_llm.clasificar()`, `cliente_llm.chat_stream()` y `cliente_llm.analizar()`.
-- **Conmutación transparente:** Cambiar de proveedor mediante `PROVEEDOR_LLM_ACTIVO=groq` en `.env` o `cliente_llm.cambiar_proveedor()` opera internamente sin alterar ningún endpoint de FastAPI ni sus contratos Pydantic.
-
----
-
-## 🧪 5. Ejecución de Pruebas Automatizadas con Mocks (Cero Gasto de API)
-El proyecto cuenta con una suite de **28 pruebas unitarias automatizadas con Mocks** que validan la priorización ITIL, la sanitización LOPDP, la conmutación por error, el streaming conversacional, el encapsulamiento del cliente LLM, la política de cero secretos, el **manejo determinista de errores del proveedor (429 con reintentos exponenciales, timeouts y respuestas vacías)**, el **log por solicitud con medición de tokens y tiempo de respuesta**, y **pruebas con un mock del modelo donde pytest prueba todos los endpoints sin gastar API ni requerir conexión a internet**:
-
+### 3.8. Iniciar el Frontend (Streamlit)
+En otra terminal con el entorno virtual activo:
 ```bash
-python -m pytest tests/ -v
+streamlit run frontend/app.py
 ```
-*(Tiempo de ejecución de la suite completa: **~3.29 segundos** gracias al aislamiento con mocks).*
+- **Tablero Kanban Interactivo:** [http://localhost:8501](http://localhost:8501)
 
 ---
 
-## 🛡️ 6. Ciberseguridad y Privacidad (OWASP LLM 2025 y LOPDP)
-- **Cero Secretos en Git (OWASP LLM06 / LOPDP Art. 23):** Las claves de API existen únicamente en variables de entorno locales. El archivo `.env` está blindado en `.gitignore` y verificado formalmente mediante pruebas automatizadas y `scripts/auditar_cero_secretos.py`: **nunca ha aparecido en ningún commit de la historia del repositorio**. Se distribuye únicamente la plantilla pública `.env.example` con marcadores vacíos.
-- **Manejo de Errores del Proveedor:** Reintentos automáticos con retroceso exponencial (*Exponential Backoff*) ante errores HTTP 429, captura de tiempos agotados (*Timeouts* a 12s) y detección de respuestas vacías (*Empty/Blocked Outputs*) con failover transparente.
-- **Anonimización previa de contraseñas (Art. 23 LOPDP):** Detección automática por Regex y reemplazo por `[CONFIDENCIAL_REMOVIDO]`.
-- **Aislamiento semántico (OWASP LLM01):** Delimitación estricta de la entrada del usuario mediante etiquetas `<solicitud>...</solicitud>`.
-- **Contratos Pydantic V2 cerrados (OWASP LLM05):** Parámetro `extra="forbid"` para neutralizar salidas maliciosas o inyecciones de campos.
-- **Limitador de tasa Token Bucket (OWASP LLM04):** Capacidad de 15 fichas por IP con respuesta HTTP 429 (`Retry-After`) según RFC 6585.
-- **Simulador de Caída de la IA y Ataque en vivo:** Demostración de contraste entre el Modo Vulnerable (sin defensas) y el Sistema Seguro ConectaTec.
+## ☁️ 4. Cómo se Despliega y URL Pública
+
+### Despliegue en la Nube
+El sistema está contenedorizado mediante Dockerfile multi-stage optimizado y desplegado en **Azure Container Apps** (Azure for Students) bajo alta disponibilidad:
+- **URL Pública del Servicio:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io)
+- **Endpoint de Salud / Healthcheck:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/health](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/health)
+- **Tablero Web en Vivo:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero)
 
 ---
 
-## 📋 7. Estado de Cumplimiento de Entregables (Semanas 1 y 2)
+## 🔒 5. Variables de Entorno (Remite a `.env.example`, sin valores)
+La configuración del sistema se desacopla mediante variables de entorno siguiendo el estándar Twelve-Factor App.  
+Consulte el archivo [`.env.example`](.env.example) para ver la plantilla de variables disponibles con descripciones técnicas y valores por defecto (cero secretos reales en el repositorio):
+- `PROVEEDOR_LLM_ACTIVO`: Proveedor inicial (`gemini` o `groq`).
+- `GEMINI_API_KEY`: Token de API de Google Gemini (vacío en ejemplo).
+- `GROQ_API_KEY`: Token de API de Groq Cloud (vacío en ejemplo).
+- `CHROMA_PERSIST_DIR`: Directorio persistente de la base vectorial (`./data/chroma`).
+- `ENVIRONMENT`: Entorno de ejecución (`development` / `production`).
 
-| Fase | Entregable Oficial | Ubicación en el Repositorio | Estado |
-| :---: | :--- | :--- | :---: |
-| **Semana 1** | Propuesta del Proyecto | `docs/01-propuesta.md` | ✅ Completo |
-| **Semana 1** | Ingeniería de Requisitos (8 HU + Gherkin) | `docs/02-requisitos.md` | ✅ Completo |
-| **Semana 1** | Diseño de Arquitectura (C4 + Mermaid) | `docs/03-arquitectura.md` | ✅ Completo |
-| **Semana 1** | Inventario del Corpus (15 Manuales) | `docs/04-fuentes.md` | ✅ Completo |
-| **Semana 1** | Levantamiento Real (15 Casos de Estudio) | `docs/05-preguntas-frecuentes.md` | ✅ Completo |
-| **Semana 1** | Evidencias y Práctica de Clase | `docs/evidencias/semana-1/README.md` | ✅ Completo |
-| **Semana 2** | Backend FastAPI con Salida Estructurada | `app/main.py`, `app/schemas.py`, `app/routers/` | ✅ Completo |
-| **Semana 2** | Endpoint Principal POST /chat y /clasificar | `POST /chat` (Streaming) y `POST /clasificar` (Pydantic) | ✅ Completo |
-| **Semana 2** | Cliente del Modelo Encapsulado | `app/services/llm.py` (ClienteLLM desacoplado) | ✅ Completo |
-| **Semana 2** | Módulo de Servicio LLM con Failover | `app/services/llm.py` | ✅ Completo |
-| **Semana 2** | Manejo de Errores de Proveedor (429, Timeout, Vacía) | `app/services/llm.py` (Backoff exponencial + Timeouts) | ✅ Completo |
-| **Semana 2** | Log por Solicitud (Tokens y Tiempo Respuesta) | `app/main.py`, `app/services/llm.py`, `GET /v1/metricas/solicitudes` | ✅ Completo |
-| **Semana 2** | Catálogo de Prompts (Método R.E.C.E.T.A.) | `docs/05-prompts.md` | ✅ Completo |
-| **Semana 2** | Frontend Funcional (Tablero Kanban de Tickets) | `frontend/index.html` | ✅ Completo |
-| **Semana 2** | Pruebas con Mock del Modelo (Cero Gasto API) | `tests/test_endpoints.py` (Mocks de clasificación, streaming y análisis) | ✅ Completo |
-| **Semana 2** | Pruebas Unitarias Automatizadas con Mocks | `tests/test_endpoints.py` (28 tests pasando) | ✅ Completo |
-| **Semana 2** | Arquitectura C4 y Registros de Decisión (ADR-001 a ADR-010) | `docs/03-arquitectura.md`, `docs/09-decisiones.md` | ✅ Completo |
-| **Semana 2** | Guía Maestra de Defensa y Banco de Preguntas del Tribunal | `docs/08-guia-defensa.md` | ✅ Completo |
-| **Semana 2** | Evidencias Técnicas de la Semana 2 | `docs/evidencias/semana-2/README.md` | ✅ Completo |
+---
 
+## 🧪 6. Cómo Correr las Pruebas y la Evaluación (Resultados Reales)
 
+El proyecto cuenta con suites de pruebas automatizadas y evaluación cuantitativa formal:
 
+### 6.1. Suite de Pruebas Unitarias con Mocks (Pytest)
+Prueba todos los endpoints, esquemas Pydantic, defensas de ciberseguridad, conmutación por error y contratos sin gastar saldo de API ni requerir conexión a internet:
+```bash
+python -m pytest -v tests/
+```
+**Resultado Real Obtenido:**
+```text
+============================= test session starts =============================
+collected 82 items
+tests/test_construccion_prompts.py ...........                           [ 13%]
+tests/test_endpoints.py ............................................     [ 67%]
+tests/test_herramientas_agente.py ...........................            [100%]
+============================== 82 passed in 10.45s ==============================
+```
+
+### 6.2. Suite de Evaluación Oficial Cuantitativa (`eval/run_eval.py`)
+Ejecuta la batería de 30 solicitudes de referencia, 10 casos de cálculo determinista, 20 casos de cinta transportadora de triaje y 5 escenarios del Agente ReAct:
+```bash
+python eval/run_eval.py
+```
+**Resultados Reales Obtenidos:**
+- **RAG hit@5 en manuales técnicos oficiales:** **92.9%** (26/28 casos) *(Meta: $\ge 85\%$)*.
+- **Abstención Zero-Hallucination (Fuera de alcance):** **100.0%** (2/2) *(Meta: 100%)*.
+- **Casos de Cálculo Determinista (ITIL, SBU, Feriados):** **100.0%** (10/10) *(Meta: 100%)*.
+- **Cinta de Triaje Automatizado:** **0 Errores Silenciosos** *(Meta: 0 estricto)*.
+- **Cumplimiento del Agente ReAct con Guardrails:** **100.0%** (5/5 escenarios) *(Meta: $\ge 90\%$)*.
+- *Reporte de auditoría generado en:* [`eval/resultados_evaluacion.json`](eval/resultados_evaluacion.json).
+
+### 6.3. Pruebas de Humo (Smoke Tests 6/6)
+```bash
+python tests/smoke.py http://localhost:8000
+```
+Verifica: (1) Healthcheck, (2) Clasificación, (3) RAG con citas, (4) Prioridad ITIL, (5) Abstención, (6) Failover transparente.
+
+---
+
+## 📑 7. Decisiones de Arquitectura (ADR) y Matriz de Riesgos
+- **Decisiones de Arquitectura (ADR):** Se han documentado 10 registros formales de decisión de arquitectura en [`docs/09-decisiones/`](docs/09-decisiones/) (ADR-001 Selección de FastAPI y AnyIO, ADR-002 Matriz ITIL Determinista, ADR-003 Failover Gemini a Groq, ADR-004 ChromaDB Vectorial, ADR-008 Human-in-the-Loop, entre otros).
+- **Matriz de Riesgos:** Documentación exhaustiva de riesgos de ciberseguridad, privacidad LOPDP, disponibilidad y planes de mitigación en [`docs/riesgos.md`](docs/riesgos.md).
+
+---
+
+## ⚠️ 8. Limitaciones Conocidas
+1. **Intervención Presencial Obligatoria:** Las averías de hardware físico (disco con ruido metálico, daño en placa madre, cableado estructurado trozado en pared o pantalla azul irrecuperable) no pueden repararse por software; en estos casos, el sistema escala obligatoriamente a Nivel 2 presencial.
+2. **Actualización de Procedimientos Internos:** Si la PYME modifica sus políticas internas de contraseñas o adquiere nuevo software, se debe re-ejecutar `python scripts/ingest.py` para reindexar los nuevos manuales en ChromaDB.
+3. **Límites de Cuota de Proveedores Cloud:** Las versiones gratuitas de APIs externas tienen cuotas por minuto; esta limitación está completamente mitigada mediante el gateway con failover automático a Groq y conmutación offline.
+4. **Ámbito Fuera de Alcance:** El agente no atiende solicitudes de gestión humana, nómina de sueldos ni trámites personales, respondiendo con el protocolo oficial de abstención y orientación.
