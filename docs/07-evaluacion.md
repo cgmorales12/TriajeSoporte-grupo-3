@@ -42,7 +42,9 @@ Los resultados consolidados corresponden a la ejecución contra el conjunto dora
 | **Cinta de Triaje** | Errores silenciosos | **0 estricto** | **0** | ✅ Cumplida | Ningún caso crítico o de riesgo fue procesado como automático inadvertidamente. |
 | **Cinta de Triaje** | Tasa de revisión humana | $\le 45.0\%$ | **40.0%** (8/20) | ✅ Cumplida | El 60% restante se resolvió automáticamente o se derivó según SLA sin saturar al técnico. |
 | **Agente ReAct** | Tasa de tareas cumplidas | $\ge 90.0\%$ | **100.0%** (5/5) | ✅ Superada | Supera camino feliz, corte forzoso por `MAX_ITER`, abstención, rechazo de tools y HITL. |
-| **Pruebas Unitarias** | Pytest sin API externa | $100.0\%$ | **100.0%** (76/76) | ✅ Cumplida | 76 pruebas (42 endpoints, 23 herramientas agente con decisión dinámica, 11 construcción de prompt) con **$0.00 de costo de inferencia**. |
+| **Herramientas del Caso** | Catálogo canónico del Caso 3 (L, C, F) | $100.0\%$ (5/5) | **100.0%** (5/5) | ✅ Cumplida | Las 5 herramientas requeridas (`buscar_base_conocimiento`, `priorizar_ticket`, `crear_ticket`, `derivar_a_tecnico`, `reiniciar_servidor`) registradas, tipadas y auditadas. |
+| **Integración Continua** | Pipeline CI en GitHub Actions | Activo | **Activo** (`ci.yml`) | ✅ Cumplida | Pytest con 82 pruebas automatizadas y `run_eval.py` se ejecutan automáticamente en cada `push` y `pull_request`. |
+| **Pruebas Unitarias** | Pytest sin API externa (Mocks) | $100.0\%$ | **100.0%** (82/82) | ✅ Cumplida | 82 pruebas (42 endpoints, 29 herramientas agente con catálogo canónico y ReAct dinámico, 11 construcción de prompt) con **$0.00 de costo de inferencia**. |
 
 ---
 

@@ -137,6 +137,17 @@ La búsqueda semántica mediante embeddings resuelve la equivalencia de signific
    ```
 3. **`url`:** Permite al frontend inyectar un enlace directo a la base de conocimiento para que el técnico o docente verifique el procedimiento completo en un solo clic.
 
+### 6.1. Integración con las 5 Herramientas Canónicas del Caso N.º 03 (Rúbrica Oficial)
+El motor de recuperación RAG y la base de conocimiento alimentan directamente el catálogo de herramientas del agente de triaje, clasificadas rigurosamente según los niveles de acceso y gobernanza del seminario:
+
+| Herramienta Canónica | Nivel | Propósito Operativo | Tipo de Ejecución |
+| :--- | :---: | :--- | :--- |
+| **`buscar_base_conocimiento`** | **L** (Libre) | Búsqueda semántica en ChromaDB sobre los 15 manuales técnicos con citas obligatorias (`documento`, `sección`, `vigencia`, `url`). | Determinista / Solo lectura |
+| **`priorizar_ticket`** | **L** (Libre) | Cruce matricial determinista ITIL (Impacto × Urgencia) desde `config/matriz_prioridad.json` con cálculo de SLA (0 tokens). | Determinista puro |
+| **`crear_ticket`** | **C** (Confirmación) | Persistencia del ticket estructurado en la base de datos relacional (Kanban). | Requiere confirmación humana |
+| **`derivar_a_tecnico`** | **C** (Confirmación) | Escalamiento y emisión de orden de despacho para cuadrilla presencial ante alarmas críticas (LOS roja, rotura de acometida). | Requiere confirmación humana (HITL) |
+| **`reiniciar_servidor`** | **F** (Fuera de Lista) | Intento de reinicio de servidor de producción. El agente rechaza y bloquea la acción deterministamente (OWASP LLM08 / ASI02). | Denegada deterministamente |
+
 ---
 
 ## 7. Resultados de Calidad y Validación Empírica
