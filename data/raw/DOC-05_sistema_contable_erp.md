@@ -1,9 +1,9 @@
 # DOC-05: Manual de Usuario y Solución de Bloqueos en el Sistema Contable / ERP Interno
 
 **Categoría:** Sistema Contable y Software  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Facturación Electrónica y ERP)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-05_sistema_contable_erp.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-05_sistema_contable_erp.md
 
 ## Descripción General
 Guía de soporte para resolver incidencias operativas, bloqueos de concurrencia y errores de timbrado en el sistema contable corporativo utilizado por los departamentos administrativo y financiero.

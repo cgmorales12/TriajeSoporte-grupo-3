@@ -1,12 +1,12 @@
 # DOC-15: Procedimiento Operativo Estándar ITIL 4 para Triaje, Priorización y Escalamiento
 
 **Categoría:** Gestión de Incidentes ITIL  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Marco de Gestión de Servicios de TI - ITIL v4)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-15_matriz_itil_gestion_incidentes.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-15_matriz_itil_gestion_incidentes.md
 
 ## Descripción General
-Protocolo estándar de la empresa para la clasificación, priorización determinista y reglas de escalamiento de tickets de soporte tecnológico para los 60 colaboradores de InnovaServicios.
+Protocolo estándar de la empresa para la clasificación, priorización determinista y reglas de escalamiento de tickets de soporte tecnológico para los 60 colaboradores de la PYME.
 
 ## Procedimiento Operativo Paso a Paso
 

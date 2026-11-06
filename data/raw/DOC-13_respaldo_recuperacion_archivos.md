@@ -1,9 +1,9 @@
 # DOC-13: Política y Procedimiento de Respaldo y Recuperación de Archivos de Trabajo
 
 **Categoría:** Políticas y Almacenamiento  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Continuidad Operativa y Respaldo de Datos)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-13_respaldo_recuperacion_archivos.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-13_respaldo_recuperacion_archivos.md
 
 ## Descripción General
 Directrices para asegurar que la información generada por los 60 colaboradores cuente con copias de respaldo automáticas y procedimiento para la recuperación de archivos sobrescritos o borrados por error.

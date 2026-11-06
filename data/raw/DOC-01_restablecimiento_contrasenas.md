@@ -1,12 +1,12 @@
 # DOC-01: Procedimiento para Restablecimiento de Contraseñas de Dominio Windows y Correo Corporativo
 
 **Categoría:** Accesos y Contraseñas  
-**Origen:** Departamento de Tecnologías de la Información (TI) — InnovaServicios PYME  
+**Origen:** Departamento de Tecnologías de la Información (TI) — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Norma ISO/IEC 27002)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-01_restablecimiento_contrasenas.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-01_restablecimiento_contrasenas.md
 
 ## Descripción General
-Procedimiento estándar para el desbloqueo de cuentas y restablecimiento de contraseñas de red en Active Directory y cliente de correo corporativo para los 60 colaboradores de la empresa.
+Procedimiento estándar para el desbloqueo de cuentas y restablecimiento de contraseñas de red en Active Directory y cliente de correo corporativo para los colaboradores de la empresa (entorno corporativo PYME).
 
 ## Procedimiento Operativo Paso a Paso
 

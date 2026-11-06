@@ -1,9 +1,9 @@
 # DOC-07: Diagnóstico y Solución de Conexión a Internet y Red Cableada en Oficina
 
 **Categoría:** Red y Conectividad  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Infraestructura de Red LAN Corporativa)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-07_conectividad_red_cableada_oficina.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-07_conectividad_red_cableada_oficina.md
 
 ## Descripción General
 Procedimiento para la resolución de caídas de enlace, lentitud y desconexión en las estaciones de trabajo conectadas mediante cable de red Ethernet a los switches de distribución de la oficina.

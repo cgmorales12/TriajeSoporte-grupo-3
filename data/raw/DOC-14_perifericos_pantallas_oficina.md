@@ -1,9 +1,9 @@
 # DOC-14: Instalación de Pantallas Dobles, Periféricos y Estaciones de Trabajo
 
 **Categoría:** Hardware y Periféricos  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Ergonomía y Productividad en Puestos de Trabajo)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-14_perifericos_pantallas_oficina.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-14_perifericos_pantallas_oficina.md
 
 ## Descripción General
 Guía para la conexión de monitores adicionales, teclados, ratones y estaciones de acoplamiento (Docking Stations) para optimizar la productividad de los colaboradores de oficina.

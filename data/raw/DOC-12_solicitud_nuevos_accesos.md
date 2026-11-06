@@ -1,9 +1,9 @@
 # DOC-12: Procedimiento para Solicitud de Nuevos Accesos y Alta de Colaboradores
 
 **Categoría:** Accesos y Permisos  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Gestión del Ciclo de Vida de Identidades)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-12_solicitud_nuevos_accesos.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-12_solicitud_nuevos_accesos.md
 
 ## Descripción General
 Flujo institucional para la creación de perfiles, asignación de licencias y concesión de permisos de red ante la incorporación de nuevo personal o cambios de área en la PYME.

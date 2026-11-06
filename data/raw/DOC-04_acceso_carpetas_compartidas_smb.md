@@ -1,9 +1,9 @@
 # DOC-04: Mapeo y Diagnóstico de Carpetas Compartidas en Servidor de Archivos (SMB/NAS)
 
 **Categoría:** Carpetas Compartidas  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Almacenamiento Corporativo Centralizado)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-04_acceso_carpetas_compartidas_smb.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-04_acceso_carpetas_compartidas_smb.md
 
 ## Descripción General
 Procedimiento para la conexión, mapeo de unidades de red y solución de problemas de acceso al servidor central de archivos (File Server / NAS) de la PYME.

@@ -26,7 +26,7 @@ PALABRAS_CLAVE_MANUALES = {
     "DOC-05": ["sistema contable", "erp", "facturación", "sql server", "sesión duplicada", "usuario conectado", "comprobante", "sri", "sesión colgada"],
     "DOC-06": ["política de seguridad", "iso 27002", "complejidad de contraseñas", "win l", "bloqueo de pantalla", "phishing", "confidencialidad", "escritorio limpio"],
     "DOC-07": ["red cableada", "cable de red", "ethernet", "rj45", "roseta", "ipconfig", "dhcp", "gateway", "switch", "sin internet en oficina"],
-    "DOC-08": ["wifi corporativo", "red inalámbrica", "ssid", "innova-corp", "wpa2 enterprise", "radius", "wifi invitados", "olvidar red"],
+    "DOC-08": ["wifi corporativo", "red inalámbrica", "ssid", "red corporativa", "wpa2 enterprise", "radius", "wifi invitados", "olvidar red"],
     "DOC-09": ["antivirus", "endpoint", "windows update", "parches", "ransomware", "cuarentena", "malware", "actualizaciones", "seguridad"],
     "DOC-10": ["computadora lenta", "pantalla azul", "bsod", "bloqueo de pc", "administrador de tareas", "reinicio", "disco 100", "hardware", "ruido metálico"],
     "DOC-11": ["outlook", "correo", "buzón lleno", "pst", "filtro antispam", "spam", "adjunto", "email", "autoarchivar"],

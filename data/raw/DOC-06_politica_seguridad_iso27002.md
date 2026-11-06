@@ -1,12 +1,12 @@
 # DOC-06: Política de Seguridad de la Información y Gestión de Credenciales (ISO/IEC 27002)
 
 **Categoría:** Políticas y Seguridad  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Estándar Internacional ISO/IEC 27002:2022)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-06_politica_seguridad_iso27002.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-06_politica_seguridad_iso27002.md
 
 ## Descripción General
-Directrices obligatorias de seguridad de la información para los 60 colaboradores de la empresa, enfocadas en la protección de activos digitales, confidencialidad de credenciales y prevención de accesos no autorizados.
+Directrices obligatorias de seguridad de la información para los colaboradores de la empresa (entorno corporativo PYME), enfocadas en la protección de activos digitales, confidencialidad de credenciales y prevención de accesos no autorizados.
 
 ## Procedimiento Operativo Paso a Paso
 
@@ -27,5 +27,5 @@ Directrices obligatorias de seguridad de la información para los 60 colaborador
 
 ### Paso 4: Protocolo de Alerta Temprana ante Sospecha de Phishing
 1. Si recibe un correo electrónico sospechoso solicitando verificar contraseñas, bancario o con enlaces extraños, no haga clic.
-2. Reenvíe el mensaje como archivo adjunto a seguridad@innovaservicios.com.
+2. Reenvíe el mensaje como archivo adjunto a seguridad-ti@empresa.com.
 3. El técnico de TI evaluará el remitente y bloqueará el dominio malicioso en el firewall perimetral.

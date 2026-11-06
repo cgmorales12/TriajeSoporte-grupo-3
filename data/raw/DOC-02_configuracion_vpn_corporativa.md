@@ -1,9 +1,9 @@
 # DOC-02: Guía de Conexión y Configuración de VPN Corporativa para Teletrabajo
 
 **Categoría:** Red y VPN  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Teletrabajo y Acceso Remoto Seguro)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-02_configuracion_vpn_corporativa.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-02_configuracion_vpn_corporativa.md
 
 ## Descripción General
 Instrucciones oficiales para colaboradores en modalidad de teletrabajo que requieren acceder a los servidores locales, carpetas compartidas y sistema contable de la empresa mediante túnel cifrado SSL-VPN.
@@ -15,8 +15,8 @@ Instrucciones oficiales para colaboradores en modalidad de teletrabajo que requi
 2. Si la aplicación no está instalada, no intente descargar instaladores de sitios web no autorizados; comuníquelo al técnico de TI para despliegue por repositorio central.
 
 ### Paso 2: Parámetros del Servidor y Gateway Remoto
-1. Abra el cliente VPN y seleccione la conexión «VPN-Innova-Remoto».
-2. Verifique que el campo Gateway remoto contenga: pn.innovaservicios.com y puerto SSL 443 (o 10443).
+1. Abra el cliente VPN y seleccione la conexión «VPN-Corporativa-Remoto».
+2. Verifique que el campo Gateway remoto contenga: pn.empresa.com y puerto SSL 443 (o 10443).
 3. Active la casilla de verificación «Habilitar túnel seguro con cifrado AES-256».
 
 ### Paso 3: Autenticación de Usuario y Doble Factor (2FA)

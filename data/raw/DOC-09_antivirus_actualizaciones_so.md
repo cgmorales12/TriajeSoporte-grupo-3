@@ -1,9 +1,9 @@
 # DOC-09: Protocolo de Actualización de Windows y Antivirus Corporativo en Estaciones
 
 **Categoría:** Software y Seguridad  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Mantenimiento de Endpoint Security)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-09_antivirus_actualizaciones_so.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-09_antivirus_actualizaciones_so.md
 
 ## Descripción General
 Procedimiento para la supervisión del estado del antivirus corporativo, ejecución de escaneos preventivos y aplicación de parches críticos del sistema operativo en las 60 estaciones de la empresa.

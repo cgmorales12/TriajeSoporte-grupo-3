@@ -1,9 +1,9 @@
 # DOC-03: Guía de Conexión y Solución de Problemas en Impresoras Multifunción de Red
 
 **Categoría:** Impresoras y Periféricos  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Equipamiento Ofimático Departamental)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-03_impresoras_red_departamentales.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-03_impresoras_red_departamentales.md
 
 ## Descripción General
 Manual técnico para la agregación, configuración de controladores y resolución de incidencias en las impresoras multifunción láser conectadas a la red local de la empresa.

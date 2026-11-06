@@ -1,9 +1,9 @@
 # DOC-11: Configuración de Cliente de Correo Corporativo, Buzón y Filtro Antispam
 
 **Categoría:** Software y Comunicaciones  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Plataforma de Mensajería Corporativa)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-11_configuracion_cliente_correo.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-11_configuracion_cliente_correo.md
 
 ## Descripción General
 Manual para la configuración de cuentas de correo institucional en Microsoft Outlook y solución de problemas de saturación de buzón o mensajes bloqueados por filtros antispam.
@@ -13,7 +13,7 @@ Manual para la configuración de cuentas de correo institucional en Microsoft Ou
 ### Paso 1: Configuración Automática de Cuenta en Outlook
 1. Abra Microsoft Outlook en su estación de trabajo.
 2. Ingrese su dirección de correo institucional corporativo (
-ombre.apellido@innovaservicios.com).
+ombre.apellido@empresa.com).
 3. El asistente detectará la configuración mediante el protocolo Autodiscover; ingrese su contraseña de dominio y marque «Recordar credenciales».
 
 ### Paso 2: Procedimiento ante Alerta de «Buzón de Correo Lleno»

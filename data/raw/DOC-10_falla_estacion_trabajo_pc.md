@@ -1,9 +1,9 @@
 # DOC-10: Diagnóstico Inicial ante Bloqueo, Pantalla Azul o Falla de Rendimiento en PC
 
 **Categoría:** Hardware y Equipos  
-**Origen:** Departamento de TI — InnovaServicios PYME  
+**Origen:** Departamento de TI — Mesa de Ayuda TI — Estándar Operativo PYME  
 **Vigencia:** 2026 (Soporte Físico de Estaciones de Trabajo)  
-**URL:** https://soporte.pyme-innovaservicios.com/manuales/DOC-10_falla_estacion_trabajo_pc.md
+**URL:** https://soporte.pyme-estandar.org/manuales/DOC-10_falla_estacion_trabajo_pc.md
 
 ## Descripción General
 Guía de triaje y primeros auxilios informáticos cuando una computadora de escritorio o portátil de la empresa presenta bloqueos constantes, lentitud crítica o reinicios inesperados.
