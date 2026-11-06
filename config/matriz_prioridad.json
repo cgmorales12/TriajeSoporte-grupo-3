@@ -1,44 +1,45 @@
 {
-  "version": "1.0.0",
-  "estandar": "ITIL 4 - Gestion de Incidentes para Instituciones Educativas (TecnoAula)",
+  "version": "2.0.0",
+  "estandar": "ITIL 4 - Gestion de Incidentes y Triaje para PYME de Servicios (60 Colaboradores)",
+  "caso_oficial": "Caso N.º 03 · Triaje Automatico de Solicitudes de Soporte Tecnologico para una PYME",
   "niveles_impacto": {
-    "Alto": "Afecta a una clase completa, laboratorio activo, aula magna o servicio critico de campus",
-    "Medio": "Afecta a un departamento administrativo, varios docentes o una oficina",
-    "Bajo": "Afecta a un solo usuario sin paralizar una actividad academica en curso"
+    "Alto": "Afecta a un departamento completo, caida de servidor central de archivos, sistema contable ERP o enlace de red general de la oficina",
+    "Medio": "Afecta a varios colaboradores (2 a 5 personas), impresora departamental compartida o lentitud de aplicacion sin bloqueo total",
+    "Bajo": "Afecta a un solo colaborador en su estacion individual sin paralizar procesos criticos de la empresa"
   },
   "niveles_urgencia": {
-    "Alta": "La clase esta en curso, hay una evaluacion activa o un tramite institucional con vencimiento inmediato",
-    "Media": "Afecta la preparacion de clase o actividades del dia, pero existen alternativas provisionales",
-    "Baja": "Consulta, solicitud de mantenimiento preventivo o configuracion planificada a futuro"
+    "Alta": "Proceso con vencimiento inmediato (cierre de balance contable, emision urgente de facturas al SRI o plazo legal)",
+    "Media": "Dificulta el trabajo regular del dia pero el colaborador puede realizar otras tareas laborales mientras se atiende",
+    "Baja": "Consulta informativa sobre manuales, solicitud de periferico adicional o mantenimiento preventivo programado"
   },
   "matriz": {
     "Alto": {
       "Alta": {
         "prioridad": "Alta",
         "sla_minutos": 15,
-        "descripcion_sla": "Atencion inmediata presencial en aula (menos de 15 min)"
+        "descripcion_sla": "Atencion critica e inmediata del tecnico de TI (menos de 15 min)"
       },
       "Media": {
         "prioridad": "Alta",
         "sla_minutos": 60,
-        "descripcion_sla": "Atencion prioritaria en menos de 1 hora"
+        "descripcion_sla": "Atencion prioritaria por el tecnico de TI en menos de 1 hora"
       },
       "Baja": {
         "prioridad": "Media",
         "sla_minutos": 240,
-        "descripcion_sla": "Atencion en menos de 4 horas laborables"
+        "descripcion_sla": "Atencion tecnica en menos de 4 horas laborables"
       }
     },
     "Medio": {
       "Alta": {
         "prioridad": "Alta",
         "sla_minutos": 30,
-        "descripcion_sla": "Atencion en menos de 30 minutos"
+        "descripcion_sla": "Atencion departamental en menos de 30 minutos"
       },
       "Media": {
         "prioridad": "Media",
         "sla_minutos": 240,
-        "descripcion_sla": "Atencion en menos de 4 horas laborables"
+        "descripcion_sla": "Atencion tecnica en menos de 4 horas laborables"
       },
       "Baja": {
         "prioridad": "Baja",
@@ -60,7 +61,7 @@
       "Baja": {
         "prioridad": "Baja",
         "sla_minutos": 1440,
-        "descripcion_sla": "Atencion en 24 horas laborables"
+        "descripcion_sla": "Atencion regular / Autoatencion guiada en 24 horas"
       }
     }
   }

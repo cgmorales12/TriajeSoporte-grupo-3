@@ -30,64 +30,40 @@ COLLECTION_NAME = "manuales_tecnicos"
 
 # URLs canónicas oficiales reales y verificables por documento (Cero dominios inventados)
 URLS_OFICIALES = {
-    "DOC-01": "https://support.huawei.com/carrier/",
-    "DOC-02": "https://support.zte.com.cn/",
-    "DOC-03": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-03_reinicio_electrico_equipos.md",
-    "DOC-04": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-04_cambio_clave_wifi.md",
-    "DOC-05": "https://www.wi-fi.org/discover-wi-fi",
-    "DOC-06": "https://www.speedtest.net/about/knowledge",
-    "DOC-07": "https://datatracker.ietf.org/doc/html/rfc1035",
-    "DOC-08": "https://tiaonline.org/",
-    "DOC-09": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-09_rotura_fibra_optica.md",
-    "DOC-10": "https://www.tp-link.com/support/faq/",
-    "DOC-11": "https://help.mikrotik.com/docs/",
-    "DOC-12": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-12_canales_wifi_saturacion.md",
-    "DOC-13": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-13_intermitencia_pppoe.md",
-    "DOC-14": "https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/DOC-14_facturacion_cortes_mora.md",
+    "DOC-01": "https://learn.microsoft.com/es-es/windows-server/identity/ad-ds/",
+    "DOC-02": "https://docs.fortinet.com/product/forticlient/",
+    "DOC-03": "https://support.hp.com/es-es/document/ish_2026_impresoras_red",
+    "DOC-04": "https://learn.microsoft.com/es-es/windows-server/storage/file-server/",
+    "DOC-05": "https://www.sri.gob.ec/facturacion-electronica",
+    "DOC-06": "https://www.iso.org/standard/75652.html",
+    "DOC-07": "https://standards.ieee.org/ieee/802.3/",
+    "DOC-08": "https://www.wi-fi.org/discover-wi-fi/security",
+    "DOC-09": "https://learn.microsoft.com/es-es/windows/security/threat-protection/",
+    "DOC-10": "https://learn.microsoft.com/es-es/troubleshoot/windows-client/performance/",
+    "DOC-11": "https://support.microsoft.com/es-es/office/configuracion-de-correo-outlook",
+    "DOC-12": "https://learn.microsoft.com/es-es/azure/active-directory/governance/",
+    "DOC-13": "https://support.microsoft.com/es-es/office/recuperar-versiones-anteriores",
+    "DOC-14": "https://support.microsoft.com/es-es/windows/como-usar-varios-monitores-en-windows",
     "DOC-15": "https://www.axelos.com/certifications/itil-service-management",
 }
 
-# Términos clave del dominio técnico para enriquecimiento semántico multilingüe
+# Términos clave del dominio técnico para enriquecimiento semántico en PYME
 PALABRAS_CLAVE_DOMINIO = {
-    "DOC-01": [
-        "huawei", "ont huawei", "echolife", "hg8245", "hg8546", "luz los", "los roja", "led los",
-        "luz roja", "pon verde", "enlace óptico", "sin internet", "luz pon está verde fija",
-        "no puedo navegar en ninguna página", "pon verde fija pero no navega", "led lan", "wlan"
-    ],
-    "DOC-02": ["zte", "ont zte", "f660", "f670", "indicador pon", "los zte", "alarma óptica zte", "fibra zte"],
-    "DOC-03": [
-        "reiniciar", "reinicio eléctrico", "ciclo de energía", "desconectar", "apagar",
-        "no enciende", "transformador", "30 segundos", "tomacorriente", "se fue la luz",
-        "al volver el router no enciende ninguna luz", "completamente apagado", "sin luces"
-    ],
-    "DOC-04": [
-        "clave wifi", "contraseña", "ssid", "cambiar clave", "wpa2", "wpa3", "192.168.1.1", "nombre de red",
-        "bloqueo cuenta", "credenciales", "mi contraseña es", "revísenme la cuenta que no entra", "cuenta no entra"
-    ],
-    "DOC-05": ["5g", "5ghz", "2.4g", "2.4ghz", "cobertura", "alcance", "banda", "muro", "pared", "cuarto", "lejos", "lento en mi cuarto"],
-    "DOC-06": ["velocidad", "lento", "lentitud", "speedtest", "megas", "bajada", "subida", "test ethernet", "ookla", "prueba cableada"],
-    "DOC-07": [
-        "dns", "no se puede acceder", "err_name_not_resolved", "flushdns", "8.8.8.8", "1.1.1.1", "ping",
-        "gob.ec", "edu.ec", "moodle", ".gob.ec o .edu.ec pero sí a google", "páginas institucionales no cargan",
-        "no puedo entrar a ninguna página que termine en .gob.ec o .edu.ec pero sí a google"
-    ],
-    "DOC-08": ["cable", "utp", "rj45", "rj-45", "cat6", "cat5", "100 mbps", "cobre", "patita plástica rota", "conector roto"],
-    "DOC-09": [
-        "rotura fibra", "fibra rota", "corte fibra", "atenuacion", "splitter", "cuadrilla presencial",
-        "fusionadora", "aplastado", "acometida", "los sigue roja", "luz los sigue roja fija",
-        "ya reinicié el router 3 veces", "ya reinicié el router 3 veces como me dijeron y la luz los sigue roja fija",
-        "humo blanco", "plástico quemado", "rack de comunicaciones",
-        "sale humo blanco del rack de comunicaciones y huele a plástico quemado"
-    ],
-    "DOC-10": ["microondas", "interferencia wifi", "espejo", "bluetooth", "ruido electromagnético", "concreto", "cocina", "electrodomésticos"],
-    "DOC-11": ["modo puente", "bridge", "repetidor", "doble nat", "router propio", "dhcp", "segundo router", "access point"],
-    "DOC-12": ["canal wifi", "canales", "saturacion", "wifi analyzer", "canal 1", "canal 6", "canal 11", "solapamiento", "redes vecinas"],
-    "DOC-13": [
-        "microcorte", "intermitencia", "caida cada", "pppoe", "desconexion", "mtu 1492",
-        "desconexión periódica", "sesión de internet se cae exactamente cada 15 minutos", "se vuelve a conectar sola"
-    ],
-    "DOC-14": ["pago", "factura", "facturacion", "mora", "corte por mora", "reactivacion", "banco", "saldo pendiente"],
-    "DOC-15": ["itil", "impacto", "urgencia", "prioridad", "sla", "clasificacion", "tiempo de resolucion"]
+    "DOC-01": ["contraseña", "clave", "password", "desbloqueo", "active directory", "windows", "bloqueada", "olvido de clave", "usuario bloqueado", "cuenta bloqueada"],
+    "DOC-02": ["vpn", "forticlient", "openvpn", "teletrabajo", "acceso remoto", "gateway", "túnel", "2fa", "otp", "token", "conexión remota"],
+    "DOC-03": ["impresora", "imprimir", "papel atascado", "atasco de papel", "tóner", "cola de impresión", "spooler", "ip impresora", "multifunción", "no imprime"],
+    "DOC-04": ["carpeta compartida", "unidad de red", "servidor de archivos", "smb", "nas", "unidad z", "acceso denegado", "permisos", "file server", "recurso compartido"],
+    "DOC-05": ["sistema contable", "erp", "facturación", "sql server", "sesión duplicada", "usuario conectado", "comprobante", "sri", "sesión colgada"],
+    "DOC-06": ["política de seguridad", "iso 27002", "complejidad de contraseñas", "win l", "bloqueo de pantalla", "phishing", "confidencialidad", "escritorio limpio"],
+    "DOC-07": ["red cableada", "cable de red", "ethernet", "rj45", "roseta", "ipconfig", "dhcp", "gateway", "switch", "sin internet en oficina"],
+    "DOC-08": ["wifi corporativo", "red inalámbrica", "ssid", "innova-corp", "wpa2 enterprise", "radius", "wifi invitados", "olvidar red"],
+    "DOC-09": ["antivirus", "endpoint", "windows update", "parches", "ransomware", "cuarentena", "malware", "actualizaciones", "seguridad"],
+    "DOC-10": ["computadora lenta", "pantalla azul", "bsod", "bloqueo de pc", "administrador de tareas", "reinicio", "disco 100", "hardware", "ruido metálico"],
+    "DOC-11": ["outlook", "correo", "buzón lleno", "pst", "filtro antispam", "spam", "adjunto", "email", "autoarchivar"],
+    "DOC-12": ["nuevo usuario", "alta de personal", "solicitud de accesos", "permisos", "nuevo colaborador", "onboarding", "crear cuenta"],
+    "DOC-13": ["respaldo", "backup", "recuperación", "versiones anteriores", "archivo borrado", "onedrive", "shadow copies", "vss", "restaurar archivo"],
+    "DOC-14": ["pantalla doble", "segundo monitor", "extender pantalla", "win p", "hdmi", "displayport", "teclado", "ratón", "monitor adicional"],
+    "DOC-15": ["itil", "matriz itil", "prioridad", "urgencia", "impacto", "escalamiento", "ticket kanban", "nivel 1", "nivel 2", "sla", "derivar a técnico"]
 }
 
 
