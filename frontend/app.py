@@ -1,5 +1,5 @@
 """
-Frontend Streamlit - TecnoAula (Caso 03 · Grupo 3 UNIANDES)
+Frontend Streamlit - ConectaTec (Caso 03 · Grupo 3 UNIANDES)
 Tablero Kanban de Tickets y Formulario de Mesa de Ayuda PYME (60 colaboradores, 1 técnico)
 Ejecutar con: streamlit run frontend/app.py
 """
@@ -171,7 +171,7 @@ with col_der:
             if t.get("confirmado_por"):
                 st.success(f"🛡️ **Aprobado HITL por:** {t['confirmado_por']}")
             if t.get("notificacion_enviada"):
-                st.info("✉️ **Notificación Oficial Remitida al Abonado**")
+                st.info("✉️ **Notificación Oficial Remitida al Colaborador**")
             if t.get("cuadrilla_despachada"):
                 st.warning(f"🧑‍💻 **Derivado a Técnico TI:** `{t.get('orden_despacho_id', 'ODT-TECNICO')}`")
 

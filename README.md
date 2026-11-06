@@ -30,7 +30,7 @@ Una **PYME de servicios con 60 colaboradores** cuenta con **un único técnico d
 Este cuello de botella provoca tiempos de espera prolongados (MTTR inicial de 4 horas), interrupción de labores de los colaboradores y distracción del técnico de sus responsabilidades estratégicas de infraestructura y ciberseguridad.
 
 ### 1.2. La Solución
-**TecnoAula** es una mesa de ayuda inteligente basada en un **Tablero Kanban de Tickets** que automatiza el triaje de incidencias:
+**ConectaTec** es una mesa de ayuda inteligente basada en un **Tablero Kanban de Tickets** que automatiza el triaje de incidencias:
 1. **Autoatención Nivel 1 ($\ge 70\%$ de solicitudes):** Resuelve incidentes guiando al colaborador paso a paso con citas exactas (ID de documento y paso operativo) sobre **15 manuales técnicos oficiales** indexados en **ChromaDB**.
 2. **Priorización Determinista (Código Python):** Clasifica impacto y urgencia con IA, pero el cálculo matemático de la prioridad (`Alta`, `Media`, `Baja`) y SLA de resolución los calcula una función pura en Python leyendo `config/matriz_prioridad.json` bajo el estándar ITIL v4. **El LLM nunca calcula la prioridad ni inventa tiempos contractuales.**
 3. **Escalamiento y Derivación a Nivel 2:** Si la incidencia requiere intervención física en el puesto de trabajo (falla de hardware, pantalla azul BSOD, disco averiado) o permisos administrativos elevados, se genera un ticket escalado con alerta para el técnico de TI bajo compuertas **Human-in-the-Loop (HITL)**.
@@ -53,7 +53,7 @@ El sistema ha sido diseñado desde su base arquitectónica para ser **completame
 ### Diagrama de Componentes
 ```mermaid
 flowchart TD
-    User["Docente / Colaborador PYME (60 usuarios)"] -->|Formulario Web / Solicitud| FE["Frontend (Streamlit / HTML5 Kanban)"]
+    User["Colaborador PYME (60 usuarios)"] -->|Formulario Web / Solicitud| FE["Frontend (Streamlit / HTML5 Kanban)"]
     FE -->|HTTP / JSON| API["FastAPI Backend (AnyIO 40 Threads)"]
     
     subgraph Seguridad ["Perímetro de Seguridad & Privacidad"]

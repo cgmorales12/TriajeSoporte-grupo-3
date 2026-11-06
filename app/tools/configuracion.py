@@ -1,6 +1,6 @@
 """
 Módulo de Gestión Determinista de Parámetros de Negocio Desacoplados
-Proyecto: ConectaTec / TecnoAula — Triaje de Incidentes Técnicos (Caso N.º 03 · Grupo 3 UNIANDES)
+Proyecto: ConectaTec · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)
 Seminario de Titulación: Ingeniería de Software con IA Generativa — UNIANDES 2026
 
 Rúbrica de Evaluación:

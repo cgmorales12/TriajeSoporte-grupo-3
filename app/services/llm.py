@@ -1,6 +1,6 @@
 """
 Cliente de Modelo LLM Encapsulado y Gateway de Resiliencia
-Caso 03: ConectaTec ISP (Grupo 3 UNIANDES)
+Caso 03: ConectaTec · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Grupo 3 UNIANDES)
 
 Principio de Arquitectura:
 «El cliente del modelo está encapsulado: cambiar de proveedor no toca los endpoints.»
@@ -634,7 +634,7 @@ class ClienteLLM:
         contexto_chromadb = "\n\n".join(citas_formateadas) if citas_formateadas else "No se encontraron manuales afines."
 
         prompt_sistema_rag = (
-            "Eres el Asistente Técnico Oficial de ConectaTec / TecnoAula ISP (Grupo 3 UNIANDES).\n"
+            "Eres el Asistente Técnico Oficial de ConectaTec · Soporte Tecnológico para una PYME (Grupo 3 UNIANDES).\n"
             "Tu deber es asistir al usuario basándote ESTRICTAMENTE en la información técnica oficial recuperada de ChromaDB.\n"
             "REGLAS:\n"
             "1. Cita siempre el manual correspondiente (ej. DOC-01) y el paso operativo exacto.\n"
@@ -766,11 +766,11 @@ class ClienteLLM:
         else:
             texto_base = (
                 "Asistente Virtual de Triaje ConectaTec (Protocolo Oficial de Abstención):\n\n"
-                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales del ISP.\n\n"
+                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de la PYME.\n\n"
                 "Orientación al usuario:\n"
-                "1. Si su consulta corresponde a trámites académicos, notas, horarios o costos universitarios, por favor acuda a Secretaría General o al portal institucional.\n"
-                "2. Si experimenta una avería de conectividad o red en el campus, indíquenos los síntomas observados y el estado de los indicadores LED de su ONT (POWER, PON, LOS, LAN) para guiarle con la ficha técnica correspondiente.\n"
-                "3. Si el problema persiste o es un caso no previsto, he registrado su consulta y un operador de Nivel 2 de la mesa de ayuda le atenderá oportunamente."
+                "1. Si su consulta corresponde a trámites administrativos o de Recursos Humanos, por favor acuda a Secretaría General o al departamento correspondiente.\n"
+                "2. Si experimenta una avería de conectividad, correo, carpetas compartidas o sistemas en la oficina, indíquenos los síntomas observados para guiarle con la ficha técnica correspondiente.\n"
+                "3. Si el problema persiste o es un caso no previsto, he registrado su consulta y un operador de la mesa de ayuda le atenderá oportunamente."
             )
 
         palabras = texto_base.split(" ")

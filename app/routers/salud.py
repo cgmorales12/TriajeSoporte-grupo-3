@@ -29,7 +29,7 @@ def health_check():
         "arquitectura": {
             "modelo_primario": "gemini-3.5-flash-lite",
             "modelo_respaldo": "openai/gpt-oss-120b (Groq Cloud)",
-            "rag": "ChromaDB / 15 Manuales ISP",
+            "rag": "ChromaDB / 15 Manuales Técnicos PYME",
             "matriz_itil": "determinista (config/matriz_prioridad.json)"
         }
     }

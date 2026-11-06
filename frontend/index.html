@@ -3277,7 +3277,7 @@
             } catch (err) {
                 mostrarErrorFormulario(
                     'Error de Conexión con el Backend',
-                    `No fue posible establecer comunicación con la API TecnoAula en ${API_URL}.`,
+                    `No fue posible establecer comunicación con la API ConectaTec en ${API_URL}.`,
                     'Asegúrese de que el backend FastAPI esté ejecutándose en http://127.0.0.1:8000 (uvicorn app.main:app --reload).',
                     null,
                     '🔌'
@@ -3808,7 +3808,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 | Estación PC / Periférico | Operativo | Bloqueado / Alerta | Aplicar procedimiento del manual |
 
 ---
-*TecnoAula · Base de Conocimiento Oficial RAG para PYMEs · UNIANDES 2026*
+*ConectaTec · Base de Conocimiento Oficial RAG para PYMEs · UNIANDES 2026*
 `;
             document.getElementById('txtEditorMarkdown').value = plantilla;
             actualizarPreviewMarkdown();
@@ -4661,7 +4661,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     <div id="msgErrorLogin" style="display:none; color:#DC2626; background:#FEE2E2; border:1px solid #FCA5A5; padding:8px 12px; border-radius:6px; font-size:12px; margin-bottom:12px;"></div>
                     <button type="submit" id="btnSubmitLogin" class="btn-submit" style="width:100%;">🔓 Iniciar Sesión</button>
                     <p style="font-size:11.5px; color:#64748B; margin-top:12px; text-align:center;">
-                        🛡️ Mesa de Ayuda TIC TecnoAula para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES).
+                        🛡️ Mesa de Ayuda TIC ConectaTec para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES).
                     </p>
                 </form>
             </div>
@@ -4895,7 +4895,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             <div class="modal-body" style="padding:18px 22px;">
                 <div class="hitl-alert-box" style="border-left-color:#3B82F6;">
                     <b>Revisión Humana Obligatoria antes de Comunicación Externa:</b><br>
-                    Verifique el contenido del mensaje antes de remitirlo formalmente al abonado o docente.
+                    Verifique el contenido del mensaje antes de remitirlo formalmente al colaborador o usuario.
                 </div>
                 <input type="hidden" id="hitlEnvioTicketId">
                 <div class="form-group" style="margin-bottom:10px;">

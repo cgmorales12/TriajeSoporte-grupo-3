@@ -359,7 +359,7 @@ def buscar_solucion(
     if es_fuera_de_alcance or (len(texto_lower) < 4 and not tiene_termino_ti):
         return DiagnosticoRAG(
             solucion_propuesta=(
-                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de TecnoAula / Soporte PYME. "
+                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec / Soporte PYME. "
                 "La consulta no describe ninguna avería técnica ni incidencia en la infraestructura de TI (Active Directory, VPN, impresoras, carpetas SMB, ERP, correo u ofimática). "
                 "No se requiere intervención técnica en el puesto de trabajo. "
                 "Orientación al usuario: Si su solicitud corresponde a trámites administrativos, académicos (como notas, matrículas o certificaciones) o de Recursos Humanos, "
@@ -453,7 +453,7 @@ def buscar_solucion(
         if not docs_a_citar and not requiere_visita_campo:
             return DiagnosticoRAG(
                 solucion_propuesta=(
-                    "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de TecnoAula / Soporte PYME. "
+                    "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec / Soporte PYME. "
                     "La consulta no describe ninguna avería técnica ni incidencia en la infraestructura de TI (Active Directory, VPN, impresoras, carpetas SMB, ERP, correo u ofimática). "
                     "No se requiere intervención técnica en el puesto de trabajo. "
                     "Orientación al usuario: Si su solicitud corresponde a trámites administrativos, académicos (como notas, matrículas o certificaciones) o de Recursos Humanos, "

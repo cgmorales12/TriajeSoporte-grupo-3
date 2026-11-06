@@ -380,7 +380,7 @@ def proponer_envio_notificacion(ticket_id: int):
             [f"• {c['documento_id']} ({c.get('paso_exacto', '')}): {c.get('fragmento_aplicado', '')}" for c in ticket["citas"][:2]]
         )
 
-    asunto = f"[{ticket['ticket_codigo']}] Actualización de Soporte Técnico - TecnoAula / ConectaTec"
+    asunto = f"[{ticket['ticket_codigo']}] Actualización de Soporte Técnico - ConectaTec PYME"
     mensaje = (
         f"Estimado/a {ticket['nombre_cliente']},\n\n"
         f"Su incidencia tecnológica '{ticket['descripcion_problema'][:80]}...' ha sido clasificada con Prioridad {ticket['prioridad']} "
@@ -388,7 +388,7 @@ def proponer_envio_notificacion(ticket_id: int):
         f"Diagnóstico preliminar / Solución:\n{ticket['solucion_propuesta']}"
         f"{citas_texto}\n\n"
         f"Estado del ticket: {ticket['estado'].upper()}\n"
-        f"Mesa de Ayuda Tecnológica · TecnoAula PYME"
+        f"Mesa de Ayuda Tecnológica · ConectaTec PYME"
     )
 
     return PropuestaEnviarNotificacionOut(
