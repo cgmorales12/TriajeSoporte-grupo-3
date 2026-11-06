@@ -27,7 +27,7 @@ En el sector empresarial, las **Pequeñas y Medianas Empresas (PYMEs)** —ya se
 ---
 
 ## 3. Filosofía del Sistema: Diseñado para Cualquier PYME
-**TecnoAula NO está acoplado a una empresa específica**, sino concebido como un **sistema estándar, desacoplado y parametrizable** para cualquier organización:
+**ConectaTec NO está acoplado a una empresa específica**, sino concebido como un **sistema estándar, desacoplado y parametrizable** para cualquier organización:
 - **Base de Conocimiento Universal:** El corpus de 15 manuales técnicos estándar cubre las necesidades tecnológicas transversales de cualquier oficina moderna bajo normas internacionales (ISO/IEC 27002, IEEE 802.3, Wi-Fi Alliance).
 - **Matriz ITIL Desacoplada (`config/matriz_prioridad.json`):** Cualquier PYME puede ajustar sus tiempos SLA contractuales y niveles de impacto/urgencia sin tocar una sola línea de código backend.
 - **Configuración Paramétrica (`config/parametros.yaml`):** Umbrales de confianza, límites de iteraciones y políticas operativas se adaptan por archivo externo.

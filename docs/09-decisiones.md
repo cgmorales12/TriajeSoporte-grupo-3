@@ -61,7 +61,7 @@ Seleccionar **FastAPI** (Python 3.10+) junto a Uvicorn y Pydantic V2 como la inf
 - **Autores:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
 
 #### Contexto
-Las APIs de modelos de lenguaje en la nube sufren problemas de saturación, cuotas de peticiones por minuto (`HTTP 429`) y caídas de servicio (`HTTP 503`). Durante la defensa ante el tribunal o en producción, una falla de este tipo colapsaría el triaje del ISP.
+Las APIs de modelos de lenguaje en la nube sufren problemas de saturación, cuotas de peticiones por minuto (`HTTP 429`) y caídas de servicio (`HTTP 503`). Durante la defensa ante el tribunal o en producción, una falla de este tipo colapsaría el triaje de la PYME.
 
 #### Decisión
 Implementar un **Gateway de Resiliencia con Failover y Transparencia Operativa**:
@@ -155,7 +155,7 @@ Los modelos generativos tienden a inventar procedimientos técnicos inexistentes
 
 #### Decisión
 1. Mantener tres versiones formales de prompts (`system_v1.md`, `system_v2.md`, `system_v3.md`) en `app/prompts/`.
-2. Implementar una **directiva estricta de abstención**: el prompt ordena taxativamente responder con `"requiere_revision_humana": true` y abstenerse de formular diagnósticos si la solicitud no pertenece al ámbito del ISP o carece de información suficiente.
+2. Implementar una **directiva estricta de abstención**: el prompt ordena taxativamente responder con `"requiere_revision_humana": true` y abstenerse de formular diagnósticos si la solicitud no pertenece al ámbito de soporte microinformático de la PYME o carece de información suficiente.
 3. Aislar los datos del usuario mediante delimitadores semánticos XML (`<solicitud>{texto}</solicitud>`).
 
 #### Justificación

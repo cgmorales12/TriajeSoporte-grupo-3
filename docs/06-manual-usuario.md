@@ -4,15 +4,15 @@
 ---
 
 ## 1. Introducción
-**TecnoAula** es una mesa de ayuda tecnológica basada en un **Tablero Kanban de Tickets** diseñada para automatizar la recepción, diagnóstico de primer nivel (RAG) y priorización determinista de incidencias para cualquier Pequeña o Mediana Empresa (PYME).
+**ConectaTec** es una mesa de ayuda tecnológica basada en un **Tablero Kanban de Tickets** diseñada para automatizar la recepción, diagnóstico de primer nivel (RAG) y priorización determinista de incidencias para cualquier Pequeña o Mediana Empresa (PYME).
 
 ---
 
 ## 2. Acceso a la Plataforma Web
 1. Abra su navegador web (Google Chrome, Firefox o Microsoft Edge).
 2. Ingrese a la dirección del sistema:
-   - **Local:** [http://localhost:8501](http://localhost:8501) (Streamlit) o [http://localhost:8000/tablero](http://localhost:8000/tablero)
-   - **Producción Azure:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero)
+   - **Local:** [http://localhost:8000/tablero](http://localhost:8000/tablero) o [http://localhost:8501](http://localhost:8501)
+   - **Producción en la Nube (Render):** [https://triajesoporte-grupo-3.onrender.com/tablero](https://triajesoporte-grupo-3.onrender.com/tablero)
 3. En la parte superior observará el distintivo en tiempo real del motor de IA:
    - `[Nominal] Proveedor: Gemini 1.5 Flash (Nominal)`: Operación estándar de alta velocidad.
    - `[Respaldo] Respaldo Activo: Groq Cloud (Llama 3.3)`: Conmutación automática por contingencia.

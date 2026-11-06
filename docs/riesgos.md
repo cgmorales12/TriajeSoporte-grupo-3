@@ -1,5 +1,5 @@
 # Matriz de Gestión de Riesgos Técnicos, Operativos y Regulatorios
-**Proyecto:** TecnoAula — Triaje Automático de Solicitudes de Soporte Tecnológico para PYME  
+**Proyecto:** ConectaTec — Triaje Automático de Solicitudes de Soporte Tecnológico para PYME  
 **Caso de Estudio:** Caso N.º 03 · Grupo 3 UNIANDES  
 **Equipo:** Christian Morales (Tech Lead), Luis Fernando Ribera (Builder), Amalia Geoconda Iguasnia (QA / Seguridad)  
 **Normativas de Referencia:** ISO/IEC 27002, OWASP Top 10 for LLM Applications 2025, LOPDP (Ecuador)  

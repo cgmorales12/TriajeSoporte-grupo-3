@@ -10,8 +10,8 @@
 ## 1. Contexto y Problema
 En el diseño de sistemas de soporte basados en agentes y modelos LLM, la vulnerabilidad crítica identificada por OWASP en su estándar *Top 10 for LLM Applications (2025)* es **LLM08: Exceso de Agencia (Excessive Agency)**:
 * Si se otorga autonomía irrestricta a un modelo estocástico para ejecutar escrituras permanentes en bases de datos de producción, se comprometen tiempos de resolución contractuales (SLAs ITIL v4) basados en clasificaciones potencialmente defectuosas o alucinadas.
-* Si el sistema despacha automáticamente cuadrillas presenciales de planta externa ante reportes confusos, se generan costos operativos directos por hora técnica ($15.00/h en jornada hábil, $22.50/h en horario extraordinario según `config/tarifas.json`).
-* Si el sistema envía notificaciones institucionales directas a abonados o docentes sin validación previa, se arriesga la reputación de la mesa de ayuda ante respuestas imprecisas.
+* Si el sistema despacha automáticamente soporte presencial o técnicos en sitio ante reportes confusos, se generan costos operativos directos por hora técnica ($15.00/h en jornada hábil, $22.50/h en horario extraordinario según `config/tarifas.json`).
+* Si el sistema envía notificaciones institucionales directas a colaboradores de la empresa sin validación previa, se arriesga la reputación de la mesa de ayuda ante respuestas imprecisas.
 
 **Requerimiento de Rúbrica:**
 > ***«Confirmación humana: Antes de registrar, enviar o derivar, demostrable en la interfaz.»***
@@ -26,7 +26,7 @@ Se establecen compuertas de confirmación humana obligatoria en tres momentos op
 
 ```mermaid
 flowchart TD
-    A["Solicitud del Usuario / Docente"] --> B["Triaje IA + RAG + Matriz ITIL"]
+    A["Solicitud del Colaborador / Usuario"] --> B["Triaje IA + RAG + Matriz ITIL"]
     B --> C{"¿Acción Crítica?"}
     
     C -->|"1. Antes de Registrar"| D["Propuesta de Pre-triaje (/proponer)"]
@@ -40,8 +40,8 @@ flowchart TD
     I -->|"Autorizado por Operador"| J["Despacho al Cliente (/confirmar-envio)"]
     
     G -->|"3. Antes de Derivar"| K["Propuesta de Despacho (/proponer-derivacion)"]
-    K --> L["Modal HITL: Validación de Cuadrilla, OTDR y Costos"]
-    L -->|"Autorizado por Operador"| M["Despacho ODT Física (/confirmar-derivacion)"]
+    K --> L["Modal HITL: Validación de Soporte Presencial y Costos"]
+    L -->|"Autorizado por Operador"| M["Despacho Orden Técnica en Sitio (/confirmar-derivacion)"]
 ```
 
 ### 2.1. Las Tres Compuertas HITL
@@ -53,9 +53,9 @@ flowchart TD
    - Endpoint: `GET /v1/tickets/{id}/proponer-envio`.
    - Genera el borrador formal de la respuesta con saludo, diagnóstico técnico y citas de manuales oficiales.
    - La interfaz permite al técnico afinar el texto y confirmar con `POST /v1/tickets/{id}/confirmar-envio`, registrando `notificacion_enviada=1` y el operador responsable.
-3. **Antes de Derivar (Escalamiento a Cuadrilla):**
+3. **Antes de Derivar (Escalamiento a Soporte Presencial en Sitio):**
    - Endpoint: `GET /v1/tickets/{id}/proponer-derivacion`.
-   - Calcula el costo operativo estimado de mano de obra según `config/tarifas.json` y lista herramientas necesarias (fusionadora por arco voltaico, reflectómetro OTDR).
+   - Calcula el costo operativo estimado de mano de obra según `config/tarifas.json` y lista herramientas necesarias (comprobador de cable UTP, multímetro, kit de destornilladores y repuestos).
    - El operador autoriza con `POST /v1/tickets/{id}/confirmar-derivacion`, transicionando el ticket a `escalado_cuadrilla` con número de orden ODT auditada.
 
 ---
@@ -65,12 +65,12 @@ El sistema hace visible e interactivo este control en:
 1. **Formulario Web (`frontend/index.html`):**
    - Interruptor destacado: `[Seguridad] Confirmación Humana Previa (HITL)`. Al enviar, despliega la ventana modal de pre-triaje donde el operador valida o ajusta la categoría y prioridad antes de impactar el Kanban.
 2. **Tarjetas Kanban:**
-   - Botón directo ` Enviar Notif.` con modal de vista previa y edición de correo.
-   - Botón directo `[Alerta] Derivar Cuadrilla` con justificación de herramientas ópticas y orden ODT.
+   - Botón directo `✉️ Enviar Notif.` con modal de vista previa y edición de correo.
+   - Botón directo `🚨 Derivar a Soporte Presencial` con justificación técnica y orden ODT.
    - Insignias visuales auditadas:
      * `[Seguridad] Aprobado HITL por: {operador}`
-     * ` Notificación Enviada al Usuario`
-     * ` Cuadrilla Despachada: {ODT-FIBRA-XXXX}`
+     * `✉️ Notificación Enviada al Usuario`
+     * `🚨 Soporte Presencial Despachado: {ODT-XXXX}`
 3. **Aplicación Streamlit (`frontend/app.py`):**
    - Controles interactivos en cada contenedor de ticket para disparar la confirmación y refrescar el estado.
 

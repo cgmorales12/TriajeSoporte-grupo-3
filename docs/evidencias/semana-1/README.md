@@ -1,7 +1,7 @@
 # Evidencias de Trabajo y Práctica: Semana 1 - ConectaTec
 
 ## 1. Identificación del Equipo y Proyecto
-* **Proyecto:** ConectaTec - Triaje Inteligente de Solicitudes para ISP
+* **Proyecto:** ConectaTec - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3)
 * **Caso Asignado:** Caso N.º 03 (Grupo 3)
 * **Integrantes:**
   * Christian Guillermo Morales González
@@ -20,13 +20,13 @@
 ---
 
 ## 3. Práctica de Evaluación de Respuestas del Modelo (Clase 1)
-Evaluación de 3 consultas técnicas de soporte realizadas contra `gemini-1.5-flash` para medir precisión técnica y alucinaciones:
+Evaluación de 3 consultas técnicas de soporte microinformático realizadas contra `gemini-1.5-flash` para medir precisión técnica y alucinaciones:
 
 | N.º | Consulta Enviada al LLM | Respuesta Obtenida del Modelo | Evaluación | Justificación Técnica |
 | :---: | :--- | :--- | :---: | :--- |
-| **01** | *"¿Por qué la luz LOS parpadea en rojo en mi ONT Huawei y qué puedo hacer?"* | Explicó que indica una pérdida total de potencia óptica en la fibra y sugirió verificar que el conector amarillo no esté doblado, recomendando llamar a soporte si no cambia. | **Correcta** | Coincide 100% con el manual oficial `DOC-01` de Huawei Carrier para atenuación menor a -27 dBm. |
-| **02** | *"Tengo contratados 100 Mbps pero por Wi-Fi recibo 25 Mbps en la habitación contigua. ¿Mi proveedor me está estafando?"* | Afirmó categóricamente que el proveedor entrega menos ancho de banda del contratado sin consultar la banda de conexión ni obstáculos. | **Incorrecta** | Ignoró la atenuación física de la banda 2.4 GHz, interferencias y obstáculos estructurales (`DOC-05`). El procedimiento oficial exige test cableado directo por Ethernet (`DOC-06`). |
-| **03** | *"¿El modelo HG8245H soporta autenticación GPON Clase B+ y C+ simultáneamente en la misma OLT?"* | Indicó que soporta ambas clases ópticas según la configuración del módulo SFP de la cabecera OLT. | **No verificable** | Depende de la óptica específica del fabricante, la distancia del enlace y la versión de firmware del proveedor local, requiriendo validación en laboratorio con telemetría real. |
+| **01** | *"¿Por qué mi cuenta de Windows en Active Directory aparece bloqueada tras ingresar 3 veces mal la contraseña y qué debo hacer?"* | Explicó que indica una política de bloqueo por umbral de intentos fallidos y sugirió esperar 15 minutos o contactar al administrador para desbloqueo mediante consola. | **Correcta** | Coincide 100% con el procedimiento oficial `DOC-01` de Active Directory para restablecimiento seguro de credenciales. |
+| **02** | *"Estoy en teletrabajo y el cliente VPN FortiClient se detiene en 48% con error de túnel. ¿El servidor de la empresa se cayó?"* | Afirmó categóricamente que el servidor corporativo estaba caído sin consultar el estado del gateway ni la autenticación de doble factor. | **Incorrecta** | Ignoró el fallo típico de negociación TLS/puerto 443 y el vencimiento del token 2FA (`DOC-02`). El procedimiento oficial exige validar conectividad hacia `vpn.empresa.com`. |
+| **03** | *"¿La política de contraseñas de la empresa permite reutilizar las últimas 3 claves modificando solo un número?"* | Indicó que dependía de la configuración de historial de contraseñas configurada en la directiva de grupo del dominio. | **No verificable** | Depende de la directiva de grupo GPO específica del controlador de dominio y la política ISO/IEC 27002 (`DOC-06`), requiriendo verificación en la consola de administración. |
 
 ---
 

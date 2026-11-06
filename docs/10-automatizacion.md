@@ -14,7 +14,7 @@
 
 ## 1. Contexto y Problema
 
-En la mesa de ayuda educativa e ISP, el equipo técnico recibe entre 40 y 120 reportes diarios de incidentes (averías de proyectores en aulas híbridas, fallas de Wi-Fi de campus, cortes de fibra óptica, contraseñas bloqueadas y cuentas de correo institucional).  
+En la mesa de ayuda de soporte tecnológico para la PYME (60 colaboradores), el responsable de TI recibe entre 15 y 30 reportes diarios de incidentes (bloqueos de cuentas en Active Directory, fallas de VPN corporativa FortiClient, atascos de impresoras departamentales, errores de concurrencia en ERP contable, problemas de red LAN/Wi-Fi y fallas físicas de hardware).  
 
 Históricamente, un técnico abría manualmente cada ticket, interpretaba la descripción del usuario, buscaba en manuales PDF el procedimiento correspondiente y calculaba la prioridad ITIL. Este proceso manual introducía:
 1. Demoras operativas de 15 a 45 minutos por solicitud antes de asignar el caso.
@@ -27,7 +27,7 @@ Históricamente, un técnico abría manualmente cada ticket, interpretaba la des
 
 Se adopta una arquitectura de **cinta de procesamiento (flujo fijo híbrido)** en lugar de un agente autónomo libre:
 * **Disparador:** Webhook de formulario web / cola de eventos (`POST /webhook/incidente`).
-* **Entrada típica:** Descripción del incidente en lenguaje natural enviada por docentes o usuarios.
+* **Entrada típica:** Descripción del incidente en lenguaje natural enviada por colaboradores de la empresa.
 * **Acción final:** Registrar el ticket en la base de datos transaccional con su prioridad y SLA calculados, publicándolo en el tablero Kanban y notificando al técnico asignado.
 * **Justificación de Flujo Fijo:**
   * Los pasos de triaje son siempre los mismos e invariables.
@@ -66,6 +66,6 @@ Principio rector: ***«La IA decide lo difuso · El código decide lo exacto · 
 
 1. **Cero Confianza en Entradas:** Todo texto que ingresa por el disparador se trata como no confiable (*untrusted input*).
 2. **Contratos Cerrados:** La IA solo produce campos declarados en esquemas Pydantic V2 (`extra="forbid"`); nunca ejecuta sentencias SQL ni llamadas directas al sistema operativo.
-3. **Control Humano Obligatorio (*Human-in-the-loop*):** Ninguna estación automática despacha camionetas de cuadrilla técnica presencial ni altera matrices de servicio sin la confirmación de una persona.
+3. **Control Humano Obligatorio (*Human-in-the-loop*):** Ninguna estación automática despacha soporte presencial en sitio con costo operativo ni altera matrices de servicio sin la confirmación de una persona.
 4. **Idempotencia:** Toda acción de escritura utiliza claves de idempotencia (`doc.id` o hash SHA-256) para evitar duplicados ante reintentos de red.
 

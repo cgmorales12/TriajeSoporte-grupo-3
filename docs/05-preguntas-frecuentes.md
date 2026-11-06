@@ -1,5 +1,5 @@
 # Levantamiento Real de Información: Preguntas Frecuentes de Soporte Técnico para PYMEs
-**Proyecto:** TecnoAula — Triaje Automático de Solicitudes de Soporte Tecnológico para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES)  
+**Proyecto:** ConectaTec — Triaje Automático de Solicitudes de Soporte Tecnológico para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES)  
 **Objetivo:** Consolidado de 15 incidencias y consultas tecnológicas cotidianas recopiladas en entornos corporativos ofimáticos de Pequeñas y Medianas Empresas (50 a 100 colaboradores).
 
 ---

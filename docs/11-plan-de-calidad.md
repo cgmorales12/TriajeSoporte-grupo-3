@@ -44,7 +44,7 @@ Evaluado sobre el **conjunto dorado de 20 casos** en [`eval/casos_flujo.jsonl`](
 
 * **Umbral de Confianza:** $0.85$ (calibrado en [`config/parametros.yaml`](../config/parametros.yaml)).
 * **Casos Automáticos:** $45.0\%$ (resolución inmediata con reglas deterministas).
-* **Casos a Revisión Asistida:** $40.0\%$ (incidencias críticas P1, fallas físicas de fibra y casos dudosos con trabajo prellenado).
+* **Casos a Revisión Asistida:** $40.0\%$ (incidencias críticas P1, fallas físicas de hardware/cableado y casos dudosos con trabajo prellenado).
 * **Consultas Derivadas a RAG:** $15.0\%$.
 * **Errores Silenciosos Permitidos:** **0 (CERO ESTRICTO, no negociable)**. Resultado obtenido: **0 errores silenciosos**.
 
