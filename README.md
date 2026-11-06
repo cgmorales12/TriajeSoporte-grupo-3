@@ -283,9 +283,23 @@ En el marco del **Seminario de Titulación en Ingeniería de Software con IA Gen
 
 ## 10. Referencias Académicas y Fuentes Oficiales (APA 7.ª ed.)
 
+### 10.1. Fuentes Oficiales de la Base de Conocimiento (Caso N.º 03)
 - **AXELOS.** (2019). *ITIL Foundation: ITIL 4 edition*. The Stationery Office.
 - **Corpus Documental ConectaTec.** (2026). *Procedimientos operativos, políticas de seguridad de la información, manuales de VPN, impresoras y preguntas frecuentes (DOC-01 a DOC-15)*. ConectaTec ISP / Carrier Support.
 - **International Organization for Standardization.** (2022). *Information security, cybersecurity and privacy protection — Information security controls* (ISO/IEC Standard No. 27002:2022). https://www.iso.org/standard/75652.html
-- **Open Web Application Security Project [OWASP].** (2025). *OWASP Top 10 for Large Language Model Applications (Version 2.0)*. OWASP Foundation. https://owasp.org/www-project-top-10-for-large-language-model-applications/
+
+### 10.2. Referencias Académicas Específicas del Caso N.º 03
+- **Robertson, S., & Zaragoza, H.** (2009). The probabilistic relevance framework: BM25 and beyond. *Foundations and Trends in Information Retrieval*, 3(4), 333–389. https://doi.org/10.1561/1500000019
+- **Zheng, L., Chiang, W.-L., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z., Li, D., Xing, E. P., Zhang, H., Gonzalez, J. E., & Stoica, I.** (2023). Judging LLM-as-a-judge with MT-Bench and Chatbot Arena. En *Advances in Neural Information Processing Systems 36*. https://arxiv.org/abs/2306.05685
+
+### 10.3. Bibliografía Base del Seminario (Común a Todos los Casos)
+- **Anthropic.** (2024, 19 de diciembre). *Building effective agents*. https://www.anthropic.com/research/building-effective-agents
+- **Es, S., James, J., Espinosa-Anke, L., & Schockaert, S.** (2024). RAGAS: Automated evaluation of retrieval augmented generation. En *Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations* (pp. 150–158). ACL. https://arxiv.org/abs/2309.15217
+- **Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., Wang, M., & Wang, H.** (2024). Retrieval-augmented generation for large language models: A survey. *arXiv*. https://arxiv.org/abs/2312.10997
+- **Greshake, K., Abdelnabi, S., Mishra, S., Endres, C., Holz, T., & Fritz, M.** (2023). Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection. En *Proceedings of the 16th ACM Workshop on Artificial Intelligence and Security* (pp. 79–90). ACM. https://doi.org/10.1145/3605764.3623985
+- **Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S., & Kiela, D.** (2020). Retrieval-augmented generation for knowledge-intensive NLP tasks. En *Advances in Neural Information Processing Systems 33* (pp. 9459–9474). https://arxiv.org/abs/2005.11401
+- **OWASP Foundation.** (2025). *OWASP Top 10 for Large Language Model Applications 2025 (Version 2.0)*. https://genai.owasp.org/llm-top-10/
+- **Sommerville, I.** (2016). *Software engineering* (10.ª ed.). Pearson.
+- **Yao, S., Zhao, J., Yu, D., Du, N., Shafran, I., Narasimhan, K., & Cao, Y.** (2023). ReAct: Synergizing reasoning and acting in language models. En *International Conference on Learning Representations (ICLR)*. https://arxiv.org/abs/2210.03629
 
 
