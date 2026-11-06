@@ -1,5 +1,5 @@
-# Manual Técnico y de Despliegue · ConectaTec
-**Caso N.º 03 · Grupo 3 UNIANDES | Backend FastAPI, RAG ChromaDB, SQLite y Resiliencia**
+# Manual Técnico y de Despliegue · TecnoAula
+**Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda PYME: FastAPI, RAG ChromaDB, SQLite y Resiliencia**
 
 ---
 

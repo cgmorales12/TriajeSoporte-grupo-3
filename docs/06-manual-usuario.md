@@ -1,23 +1,25 @@
-# Manual de Usuario · ConectaTec
-**Sistema de Triaje Inteligente de Incidentes ISP (Caso N.º 03 · Grupo 3 UNIANDES)**
+# Manual de Usuario · TecnoAula
+**Sistema de Triaje Inteligente y Mesa de Ayuda para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES)**
 
 ---
 
 ## 1. Introducción
-**ConectaTec** es una plataforma web inteligente diseñada para automatizar la recepción, diagnóstico de primer nivel y priorización de averías de internet para abonados y operadores de mesa de ayuda.
+**TecnoAula** es una mesa de ayuda tecnológica basada en un **Tablero Kanban de Tickets** diseñada para automatizar la recepción, diagnóstico de primer nivel (RAG) y priorización determinista de incidencias para cualquier Pequeña o Mediana Empresa (PYME).
 
 ---
 
 ## 2. Acceso a la Plataforma Web
 1. Abra su navegador web (Google Chrome, Firefox o Microsoft Edge).
-2. Ingrese a la dirección local del sistema: `http://localhost:8000/tablero`
-3. En la parte superior observará el distintivo en tiempo real del motor de inteligencia artificial:
-   - `🟢 Proveedor: Gemini 1.5 Flash (Nominal)`: Operación estándar con el modelo de Google.
+2. Ingrese a la dirección del sistema:
+   - **Local:** [http://localhost:8501](http://localhost:8501) (Streamlit) o [http://localhost:8000/tablero](http://localhost:8000/tablero)
+   - **Producción Azure:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero)
+3. En la parte superior observará el distintivo en tiempo real del motor de IA:
+   - `🟢 Proveedor: Gemini 1.5 Flash (Nominal)`: Operación estándar de alta velocidad.
    - `🟠 Respaldo Activo: Groq Cloud (Llama 3.3)`: Conmutación automática por contingencia.
 
 ---
 
-## 3. Ingreso de un Reporte de Avería (Abonado / Operador)
+## 3. Ingreso de una Solicitud de Soporte (Colaborador / Empleado)
 
 En el panel lateral izquierdo encontrará el formulario de ingreso:
 
@@ -25,12 +27,12 @@ En el panel lateral izquierdo encontrará el formulario de ingreso:
 ┌──────────────────────────────────────────────┐
 │       INGRESAR SOLICITUD DE SOPORTE          │
 ├──────────────────────────────────────────────┤
-│ Nombre del Abonado:  [ Carlos Perez        ] │
-│ Correo Electrónico:  [ carlos@empresa.com  ] │
-│ Código de Cliente:   [ CLI-9981            ] │
+│ Nombre del Colaborador: [ Carlos Mendoza   ] │
+│ Correo / Departamento:  [ carlos@empresa.com]│
+│ ID de Equipo / Puesto:  [ PC-FIN-04        ] │
 │ Descripción:                                 │
-│ [ Se puso la luz roja LOS en el router    ] │
-│ [ y se cortó el internet hace 20 minutos.  ] │
+│ [ Olvidé mi contraseña de Windows y mi     ] │
+│ [ cuenta de Active Directory se bloqueó.   ] │
 ├──────────────────────────────────────────────┤
 │ [ ⚡ Clasificar con IA y Crear Ticket ]       │
 └──────────────────────────────────────────────┘
@@ -38,32 +40,23 @@ En el panel lateral izquierdo encontrará el formulario de ingreso:
 
 ### Pasos:
 1. Complete los campos obligatorios: Nombre, Correo y Descripción del problema (mínimo 10 caracteres).
-2. O seleccione uno de los botones rápidos de prueba:
-   - `🔴 Luz LOS Roja Huawei`: Simula corte total de fibra óptica.
-   - `🐢 Lentitud / Fast Ethernet`: Simula degradación por cable a 100 Mbps.
-   - `🔑 Cambio Clave Wi-Fi`: Simula solicitud de configuración de credenciales.
-   - `💳 Corte por Factura`: Simula suspensión comercial por mora.
-3. Haga clic en **«Clasificar con IA y Crear Ticket»**.
+2. O seleccione un escenario rápido de prueba (Desbloqueo de clave, Error en VPN, Atasco de impresora, Sesión ERP).
+3. Haga clic en **«⚡ Clasificar con IA y Crear Ticket»**.
 4. El sistema en menos de 1 segundo:
-   - Sanitiza automáticamente contraseñas si las escribió por error (LOPDP).
-   - Extrae el Impacto y Urgencia con IA.
-   - Calcula matemáticamente la Prioridad ITIL y el tiempo máximo SLA.
-   - Busca en los 15 manuales técnicos la solución y cita el paso exacto (`DOC-XX`).
-   - Ubica la tarjeta en la columna correspondiente del tablero Kanban.
+   - Sanitiza automáticamente contraseñas si las escribió por error (cumplimiento LOPDP).
+   - Extrae la categoría técnica, impacto y urgencia con IA.
+   - Calcula la Prioridad ITIL y el SLA mediante código determinista en Python.
+   - Consulta los 15 manuales técnicos en ChromaDB y muestra la solución guiada con cita exacta.
 
 ---
 
-## 4. Gestión en el Tablero Kanban (Operador y Técnicos)
+## 4. Gestión de Tickets en el Tablero Kanban (Técnico de TI)
+El tablero Kanban organiza las incidencias en **4 columnas operativas**:
+1. **🆕 Nuevos:** Solicitudes recién ingresadas pendientes de atención.
+2. **⚙️ En Atención:** Incidentes en proceso de diagnóstico o resolución.
+3. **🛠️ Escalados (Nivel 2):** Casos que requieren atención presencial del técnico de TI en el puesto del usuario o permisos administrativos de servidor.
+4. **✅ Resueltos (Nivel 1):** Incidentes solucionados mediante autoatención guiada con citas del manual técnico.
 
-El tablero organiza los tickets en 4 columnas de flujo operativo:
-
-1. **🆕 Nuevos:** Incidentes recién ingresados en espera de atención inicial.
-2. **⚙️ En Atención:** Incidentes asignados a un operador de mesa de ayuda en proceso de diagnóstico remoto.
-3. **🚚 Escalado a Cuadrilla:** Averías críticas con daño físico confirmado (luz LOS roja, fibra rota) que requieren visita presencial con fusionadora.
-4. **✅ Resueltos:** Incidentes con solución confirmada y servicio restablecido.
-
-### Mover Tickets entre Columnas:
-En cada tarjeta de ticket encontrará botones de acción directa:
-- Haga clic en **«⚙️ Atender»** para iniciar el soporte remoto.
-- Haga clic en **«🚚 Escalar»** para despachar cuadrilla de campo.
-- Haga clic en **«✅ Resolver»** una vez verificada la navegación del cliente.
+### Acciones Human-in-the-Loop (HITL):
+- **✉️ Notificar:** Envía formalmente la resolución al colaborador previa aprobación del técnico.
+- **🧑‍💻 Derivar a Técnico:** Genera la orden de intervención presencial con firma del responsable de soporte.
