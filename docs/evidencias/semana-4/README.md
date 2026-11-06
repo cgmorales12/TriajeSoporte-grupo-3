@@ -62,3 +62,4 @@ tests/test_endpoints.py ..................................               [100%]
 ---
 
 *Documento certificado por el área de QA y Requerimientos — Grupo 3 UNIANDES.*
+
