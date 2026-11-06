@@ -150,3 +150,38 @@ else:
 ### Pregunta 3: *«¿Cómo probaron que las defensas son efectivas frente a un modelo sin filtros?»*
 > **Respuesta del Estudiante:**  
 > *«Implementamos un interruptor de **Modo Vulnerable** en nuestro Simulador de Resiliencia. Al apagar las defensas, el evaluador puede ver en vivo cómo el LLM cede al prompt adverso, alucinando 'Prioridad Infinita' y el manual inventado 'DOC-99'. Al encender nuevamente el interruptor de 'Defensas IA', el sistema neutraliza el mismo ataque y lo categoriza en Nivel 0 Fuera de Alcance con Prioridad Baja.»*
+
+---
+
+## 6. Aviso de IA, Tratamiento de Datos Personales y Minimización Documentada (LOPDP Ecuador)
+
+En cumplimiento formal del requerimiento de la rúbrica de titulación:
+> *«Aviso de IA y tratamiento de datos: Limitaciones del sistema y minimización de datos personales documentada.»*
+
+La plataforma incorpora salvaguardas éticas, regulatorias y de privacidad fundamentadas en la **Ley Orgánica de Protección de Datos Personales de Ecuador (LOPDP)** y directrices de transparencia en Inteligencia Artificial:
+
+### 6.1. Aviso Explícito de Transparencia sobre Uso de IA
+- **Notificación en Interfaz:** El usuario es informado visualmente mediante la tarjeta informativa del formulario y distintivos de estado sobre el uso de modelos de lenguaje (`Google Gemini` y `Groq Cloud`) para el triaje inicial.
+- **Principio de Asistencia:** Se declara explícitamente que la IA actúa únicamente como un asistente de clasificación y sugerencia de autoatención. La IA **nunca** sustituye el juicio técnico humano en averías físicas de hardware ni compromete tiempos de atención sin supervisión.
+- **Compuerta HITL:** Ningún ticket se persiste en la base de datos ni se asigna un SLA sin la confirmación humana previa (técnico o usuario).
+
+### 6.2. Limitaciones Operativas del Sistema
+El sistema documenta sus límites de operación de forma clara:
+1. **Dominio Restringido:** Opera exclusivamente sobre la colección cerrada de 15 manuales técnicos oficiales en `data/raw/`. Preguntas ajenas (cafetería, trámites de recursos humanos, solicitudes administrativas) son derivadas inmediatamente con abstención activa (0 citas inventadas).
+2. **Sin Intervención Física Autónoma:** Averías de hardware (daño de cables UTP, rotura de acometidas ópticas, fallos de alimentación) son derivadas a soporte presencial Nivel 2.
+3. **Imposibilidad de Modificar SLAs:** Las prioridades y tiempos de respuesta son calculados matemáticamente por código determinista leyendo `config/matriz_prioridad.json` (0 tokens de inferencia).
+
+### 6.3. Principio de Minimización de Datos Personales (LOPDP Art. 10)
+- **Datos Recopilados Estrictamente Necesarios:** El sistema únicamente solicita tres campos para la trazabilidad del incidente:
+  - `nombre_cliente`: Nombre del colaborador (para asignación del ticket).
+  - `email_cliente`: Correo institucional corporativo (para notificaciones de estado).
+  - `codigo_abonado`: Departamento o puesto de trabajo (para enrutamiento geográfico).
+- **No Recopilación de Datos Sensibles:** La aplicación **no solicita ni almacena** números de cédula, datos biométricos, información médica, contraseñas ni datos bancarios.
+
+### 6.4. Sanitización Automática de Credenciales en Tránsito (LOPDP Art. 23)
+- Si un usuario escribe por descuido su clave o contraseña en el campo de descripción (ej: *"Mi clave de red es MiClave2026"*), el backend intercepta el texto mediante expresiones regulares antes de persistirlo o enviarlo al LLM, sustituyéndolo inmediatamente por `[CONFIDENCIAL_REMOVIDO]`.
+- Esta medida evita que credenciales corporativas queden registradas en bases de datos o sean enviadas a proveedores externos de IA.
+
+### 6.5. Trazabilidad y Conservación Controlada (Derechos ARCO)
+- **Eliminación Lógica (*Soft-Delete*):** Las eliminaciones de tickets se registran con firma de usuario y fecha de auditoría sin borrado físico destructivo.
+- **Cero Persistencia de Datos Personales en Caché de IA:** Las llamadas a las APIs de Gemini y Groq se ejecutan bajo configuraciones de cero retención para reentrenamiento (*Zero Data Retention Policy*).
