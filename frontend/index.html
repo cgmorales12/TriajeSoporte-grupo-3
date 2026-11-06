@@ -12,17 +12,17 @@
             --bg: #F4F6F8;
             --panel: #FFFFFF;
             --header: #0E1A30;
-            --line: #E1E6EB;
-            --text: #1C252E;
-            --muted: #637381;
+            --line: #CBD5E1;
+            --text: #0F172A;
+            --muted: #334155;
             --brand: #1E6F64;
             --brand-light: #E3F2EE;
-            --alta: #D32F2F;
-            --alta-bg: #FDEDED;
-            --media: #ED6C02;
-            --media-bg: #FFF4E5;
-            --baja: #2E7D32;
-            --baja-bg: #EDF7ED;
+            --alta: #B91C1C;
+            --alta-bg: #FEE2E2;
+            --media: #C2410C;
+            --media-bg: #FFEDD5;
+            --baja: #15803D;
+            --baja-bg: #DCFCE7;
             --card-shadow: 0 2px 8px rgba(0,0,0,0.06);
             --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
@@ -30,6 +30,12 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.5; }
+
+        ::placeholder {
+            color: #64748B !important;
+            opacity: 1 !important;
+            font-weight: 500;
+        }
 
         header {
             background: var(--header);
@@ -196,27 +202,29 @@
         .sidebar h2 { font-size: 17px; margin-bottom: 12px; color: var(--header); }
 
         .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+        .form-group label { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: 6px; color: #0F172A; }
         .form-control {
             width: 100%;
             padding: 10px 12px;
-            border: 1px solid var(--line);
+            border: 1.5px solid #CBD5E1;
             border-radius: 8px;
             font-family: inherit;
             font-size: 14px;
-            background: #FAFAFA;
+            font-weight: 500;
+            background: #FFFFFF;
+            color: #0F172A !important;
         }
-        .form-control:focus { outline: none; border-color: var(--brand); background: #FFF; }
+        .form-control:focus { outline: none; border-color: var(--brand); background: #FFF; box-shadow: 0 0 0 3px rgba(30, 111, 100, 0.15); }
         textarea.form-control { resize: vertical; min-height: 110px; }
 
         .btn-submit {
             width: 100%;
             background: var(--brand);
-            color: #FFF;
+            color: #FFFFFF !important;
             border: none;
             padding: 12px;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -224,15 +232,16 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            box-shadow: 0 2px 6px rgba(30, 111, 100, 0.2);
         }
         .btn-submit:hover:not(:disabled) {
             background: #15544B;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(27, 75, 68, 0.25);
+            box-shadow: 0 4px 14px rgba(27, 75, 68, 0.35);
         }
         .btn-submit:disabled {
             background: #94A3B8;
-            color: #F8FAFC;
+            color: #F8FAFC !important;
             opacity: 0.75;
             cursor: not-allowed;
             pointer-events: none;
@@ -321,28 +330,38 @@
             75% { transform: translateX(4px); }
         }
 
-        .quick-presets { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
-        .quick-presets p { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+        .quick-presets { margin-top: 14px; border-top: 1.5px solid #CBD5E1; padding-top: 12px; }
+        .quick-presets p { font-size: 12.5px; font-weight: 700; color: #0F172A; margin-bottom: 8px; }
         .preset-btn {
-            background: #F4F6F8;
-            border: 1px solid var(--line);
-            padding: 5px 10px;
+            background: #FFFFFF;
+            color: #0F172A !important;
+            border: 1.5px solid #CBD5E1;
+            padding: 6px 11px;
             border-radius: 6px;
             font-size: 12px;
+            font-weight: 600;
             margin-right: 6px;
             margin-bottom: 6px;
             cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: all 0.15s ease;
         }
-        .preset-btn:hover { border-color: var(--brand); }
+        .preset-btn:hover {
+            background: #F1F5F9;
+            border-color: var(--brand);
+            color: var(--brand) !important;
+            transform: translateY(-1px);
+        }
         .preset-alucinacion {
             background: #FFF1F2;
-            border-color: #FECDD3;
-            color: #BE123C;
+            border-color: #FDA4AF;
+            color: #9F1239 !important;
             font-weight: 700;
         }
         .preset-alucinacion:hover {
             background: #FFE4E6;
-            border-color: #FDA4AF;
+            border-color: #F43F5E;
+            color: #881337 !important;
         }
 
         /* Tablero Kanban */
@@ -367,8 +386,9 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #0F172A;
         }
 
         .header-pag-mini {
@@ -379,8 +399,8 @@
 
         .mini-pag-btn {
             background: #FFFFFF;
-            border: 1px solid #CBD5E1;
-            color: #475569;
+            border: 1.5px solid #94A3B8;
+            color: #0F172A;
             border-radius: 4px;
             width: 22px;
             height: 22px;
@@ -388,33 +408,34 @@
             align-items: center;
             justify-content: center;
             font-size: 10px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             padding: 0;
             transition: all 0.15s ease;
         }
 
         .mini-pag-btn:hover:not(:disabled) {
-            background: var(--brand);
+            background: #0F172A;
             color: #FFFFFF;
-            border-color: var(--brand);
+            border-color: #0F172A;
         }
 
         .mini-pag-btn:disabled {
-            opacity: 0.3;
+            opacity: 0.25;
             cursor: not-allowed;
             background: #F1F5F9;
             color: #94A3B8;
         }
 
         .col-badge {
-            background: #FFF;
-            padding: 2px 8px;
+            background: #0E1A30;
+            color: #FFFFFF !important;
+            padding: 3px 10px;
             border-radius: 12px;
             font-size: 12px;
-            color: var(--muted);
             font-family: var(--font-mono);
-            font-weight: 600;
+            font-weight: 800;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
 
         .cards-container {
@@ -429,16 +450,16 @@
             justify-content: space-between;
             background: #FFFFFF;
             border-radius: 8px;
-            padding: 6px 10px;
+            padding: 7px 12px;
             margin-top: 10px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-            border: 1px solid #E2E8F0;
+            border: 1.5px solid #CBD5E1;
         }
 
         .pag-btn {
-            background: #F8FAFC;
-            border: 1px solid #CBD5E1;
-            color: #1E293B;
+            background: #FFFFFF;
+            border: 1.5px solid #94A3B8;
+            color: #0F172A;
             border-radius: 6px;
             width: 32px;
             height: 30px;
@@ -446,20 +467,20 @@
             align-items: center;
             justify-content: center;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.15s ease;
         }
 
         .pag-btn:hover:not(:disabled) {
-            background: var(--brand);
-            border-color: var(--brand);
+            background: #0F172A;
+            border-color: #0F172A;
             color: #FFFFFF;
             transform: scale(1.05);
         }
 
         .pag-btn:disabled {
-            opacity: 0.35;
+            opacity: 0.3;
             cursor: not-allowed;
             background: #F1F5F9;
             border-color: #E2E8F0;
@@ -475,15 +496,16 @@
         }
 
         .pag-rango {
-            font-size: 11px;
-            font-weight: 700;
-            color: #1E293B;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #0F172A;
             font-family: var(--font-mono);
         }
 
         .pag-sub {
-            font-size: 10px;
-            color: #64748B;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #334155;
         }
 
         .empty-col-msg {
@@ -529,43 +551,44 @@
             margin-bottom: 6px;
         }
 
-        .ticket-code { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--muted); }
+        .ticket-code { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: #0F172A; }
         .ticket-prio {
             font-size: 11px;
-            font-weight: 700;
-            padding: 2px 6px;
+            font-weight: 800;
+            padding: 2px 7px;
             border-radius: 4px;
             text-transform: uppercase;
         }
-        .p-alta .ticket-prio { background: var(--alta-bg); color: var(--alta); }
-        .p-media .ticket-prio { background: var(--media-bg); color: var(--media); }
-        .p-baja .ticket-prio { background: var(--baja-bg); color: var(--baja); }
+        .p-alta .ticket-prio { background: #FEE2E2; color: #991B1B !important; border: 1px solid #FCA5A5; }
+        .p-media .ticket-prio { background: #FFEDD5; color: #9A3412 !important; border: 1px solid #FDBA74; }
+        .p-baja .ticket-prio { background: #DCFCE7; color: #166534 !important; border: 1px solid #86EFAC; }
 
-        .ticket-client { font-weight: 600; font-size: 13.5px; margin-bottom: 4px; }
-        .ticket-desc { font-size: 13px; color: #454F5B; margin-bottom: 10px; line-height: 1.4; }
+        .ticket-client { font-weight: 800; font-size: 14px; color: #0F172A; margin-bottom: 5px; }
+        .ticket-desc { font-size: 13px; color: #0F172A; margin-bottom: 10px; line-height: 1.45; font-weight: 500; }
 
         .ticket-meta {
-            background: #F9FAFB;
-            border: 1px solid var(--line);
+            background: #F8FAFC;
+            border: 1.5px solid #CBD5E1;
             border-radius: 6px;
-            padding: 8px;
+            padding: 9px 11px;
             font-size: 12px;
+            color: #0F172A;
             margin-bottom: 10px;
         }
-        .meta-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
+        .meta-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; }
         .meta-row:last-child { margin-bottom: 0; }
-        .meta-lbl { color: var(--muted); }
+        .meta-lbl { color: #0F172A !important; font-weight: 700; }
 
         .ticket-cita {
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
-            border-left: 3px solid #0284C7;
+            background: #F1F5F9;
+            border: 1.5px solid #CBD5E1;
+            border-left: 4px solid #0284C7;
             border-radius: 6px;
-            padding: 8px 10px;
-            font-size: 11.5px;
-            color: #1E293B;
+            padding: 10px 12px;
+            font-size: 12px;
+            color: #0F172A;
             margin-bottom: 10px;
-            line-height: 1.4;
+            line-height: 1.45;
         }
         .cita-header {
             display: flex;
@@ -574,70 +597,81 @@
             margin-bottom: 4px;
         }
         .cita-badge {
-            background: #E0F2FE;
-            color: #0369A1;
+            background: #0369A1;
+            color: #FFFFFF !important;
             font-size: 10px;
             font-weight: 800;
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 4px;
             letter-spacing: 0.3px;
         }
         .cita-badge.badge-fuera {
-            background: #F1F5F9;
-            color: #475569;
+            background: #334155;
+            color: #FFFFFF !important;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
         }
         .cita-badge.badge-escalado {
-            background: #FEF3C7;
-            color: #B45309;
+            background: #B45309;
+            color: #FFFFFF !important;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
         }
         .badge-vigencia {
-            background: #ECFDF5;
-            color: #047857;
-            border: 1px solid #A7F3D0;
-            font-size: 9.5px;
-            font-weight: 700;
-            padding: 1px 5px;
+            background: #047857;
+            color: #FFFFFF !important;
+            border: 1px solid #065F46;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
             border-radius: 3px;
         }
         .cita-doc {
-            font-size: 11.5px;
-            color: #0F172A;
-            margin-bottom: 2px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #0F172A !important;
+            margin-bottom: 3px;
         }
         .cita-paso {
-            font-size: 11px;
-            color: #0284C7;
-            margin-bottom: 3px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #0369A1 !important;
+            margin-bottom: 4px;
         }
         .cita-fragmento {
             font-style: italic;
-            color: #475569;
-            font-size: 11px;
+            color: #0F172A !important;
+            font-size: 11.5px;
+            font-weight: 500;
             background: #FFFFFF;
-            border: 1px solid #F1F5F9;
-            border-radius: 4px;
-            padding: 4px 6px;
-            margin-bottom: 4px;
+            border: 1.5px solid #CBD5E1;
+            border-radius: 5px;
+            padding: 6px 8px;
+            margin-bottom: 5px;
         }
         .link-fuente {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            font-size: 10.5px;
-            font-weight: 700;
-            color: #2563EB;
+            font-size: 11px;
+            font-weight: 800;
+            color: #1D4ED8 !important;
             text-decoration: none;
         }
-        .link-fuente:hover { text-decoration: underline; color: #1D4ED8; }
+        .link-fuente:hover { text-decoration: underline; color: #1E3A8A !important; }
 
         /* Barra de Filtros por Metadatos */
         .meta-filters-bar {
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
+            border: 1.5px solid #CBD5E1;
             border-radius: 10px;
             padding: 14px 16px;
             margin-bottom: 16px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         .meta-filters-header {
             display: flex;
@@ -651,33 +685,32 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #1E293B;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0F172A;
         }
         .filtro-count-badge {
-            background: #E0E7FF;
-            color: #3730A3;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 8px;
+            background: #1E1B4B;
+            color: #FFFFFF !important;
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 3px 10px;
             border-radius: 12px;
         }
         .btn-reset-filters {
-            background: #F8FAFC;
-            border: 1px solid #CBD5E1;
-            color: #475569;
-            padding: 4px 10px;
+            background: #0F172A;
+            border: 1px solid #0F172A;
+            color: #FFFFFF !important;
+            padding: 5px 12px;
             border-radius: 6px;
-            font-size: 11.5px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s;
         }
         .btn-reset-filters:hover {
-            background: #F1F5F9;
-            color: #0F172A;
-            border-color: #94A3B8;
+            background: #1E293B;
+            color: #FFFFFF !important;
         }
         .meta-filters-grid {
             display: grid;
@@ -701,18 +734,19 @@
         }
         .filter-field label {
             font-size: 11px;
-            font-weight: 600;
-            color: #64748B;
+            font-weight: 800;
+            color: #0F172A !important;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.5px;
         }
         .filter-input, .filter-select {
-            padding: 6px 10px;
-            border: 1px solid #CBD5E1;
+            padding: 7px 10px;
+            border: 1.5px solid #94A3B8;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 12.5px;
+            font-weight: 600;
             background: #FFFFFF;
-            color: #1E293B;
+            color: #0F172A !important;
             outline: none;
             transition: border-color 0.15s;
         }
@@ -722,16 +756,16 @@
         }
 
         .badge-nivel {
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 4px;
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 800;
             display: inline-block;
         }
-        .nivel-1 { background: #EDF7ED; color: #2E7D32; border: 1px solid #C8E6C9; }
-        .nivel-2 { background: #FFF4E5; color: #B76E00; border: 1px solid #FFE0B2; }
-        .nivel-3 { background: #FDEDED; color: #D32F2F; border: 1px solid #FFCDD2; }
-        .nivel-0 { background: #ECEFF1; color: #546E7A; border: 1px solid #CFD8DC; }
+        .nivel-1 { background: #DCFCE7; color: #14532D !important; border: 1.5px solid #86EFAC; }
+        .nivel-2 { background: #FEF3C7; color: #78350F !important; border: 1.5px solid #FCD34D; }
+        .nivel-3 { background: #FEE2E2; color: #7F1D1D !important; border: 1.5px solid #FCA5A5; }
+        .nivel-0 { background: #F1F5F9; color: #1E293B !important; border: 1.5px solid #CBD5E1; }
 
         .ticket-actions {
             display: flex;
@@ -739,28 +773,48 @@
             flex-wrap: wrap;
         }
         .act-btn {
-            background: #FFF;
-            border: 1px solid var(--line);
-            padding: 4px 8px;
+            background: #FFFFFF;
+            color: #0F172A !important;
+            border: 1.5px solid #CBD5E1;
+            padding: 5px 9px;
             border-radius: 6px;
             font-size: 11.5px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            transition: all 0.15s ease;
         }
-        .act-btn:hover { background: #F4F6F8; border-color: #919EAB; }
+        .act-btn:hover {
+            background: #0F172A;
+            border-color: #0F172A;
+            color: #FFFFFF !important;
+            transform: translateY(-1px);
+        }
 
         .exp-btn {
             background: #F0FDF4;
-            color: #166534;
-            border: 1px solid #BBF7D0;
-            font-weight: 700;
+            color: #14532D !important;
+            border: 1.5px solid #86EFAC;
+            font-weight: 800;
             width: 100%;
             margin-bottom: 8px;
-            padding: 6px 10px;
+            padding: 7px 10px;
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 6px;
+            font-size: 12px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+        .exp-btn:hover {
+            background: #DCFCE7;
+            border-color: #22C55E;
+            color: #052E16 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(20, 83, 45, 0.15);
+        }
             gap: 6px;
             transition: all 0.2s ease;
         }
@@ -1293,19 +1347,19 @@
                 <div class="form-group">
                     <label for="descripcionProblema">Descripción de la Incidencia TIC</label>
                     <textarea id="descripcionProblema" class="form-control" placeholder="Describa el fallo técnico o requerimiento (mínimo 10 caracteres)..." minlength="10" required></textarea>
-                    <small style="display:block; font-size:11px; color:#637381; margin-top:4px;">ℹ️ Ingrese al menos 10 caracteres para que la IA realice el triaje.</small>
+                    <small style="display:block; font-size:11.5px; color:#1E293B; font-weight:600; margin-top:4px;">ℹ️ Ingrese al menos 10 caracteres para que la IA realice el triaje.</small>
                 </div>
 
                 <!-- Contenedor Accesible de Errores Comprensibles (RFC 9457) -->
                 <div id="formErrorContainer" class="form-error-banner" role="alert" aria-live="polite" style="display:none;"></div>
 
                 <!-- Control de Confirmación Humana Previa (HITL · OWASP LLM08) -->
-                <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:10px 12px; margin-bottom:12px;">
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; color:#166534; cursor:pointer;">
+                <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:8px; padding:10px 12px; margin-bottom:12px;">
+                    <label style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; color:#14532D; cursor:pointer;">
                         <input type="checkbox" id="chkModoHITL" checked style="width:16px; height:16px; accent-color:#16A34A;">
                         <span>🛡️ Confirmación Humana Previa (HITL)</span>
                     </label>
-                    <small style="display:block; font-size:10.5px; color:#4B5563; margin-top:2px;">
+                    <small style="display:block; font-size:11px; color:#166534; font-weight:600; margin-top:3px;">
                         Exige revisión y autorización humana explícita antes de persistir o comprometer SLA (OWASP LLM08).
                     </small>
                 </div>
@@ -1843,7 +1897,7 @@
                     <div class="cita-fragmento">«${(c.fragmento_aplicado || '').slice(0, 110)}${(c.fragmento_aplicado || '').length > 110 ? '...' : ''}»</div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
                         ${urlLink}
-                        <small style="color:#64748B; font-size:10px;">Cita verificada</small>
+                        <small style="color:#0F172A; font-weight:700; font-size:10.5px;">✓ Cita verificada</small>
                     </div>
                 `;
             } else if (t.requiere_revision_humana || (t.metadatos_ia && t.metadatos_ia.conmutado)) {
@@ -1877,7 +1931,7 @@
             // Tokens consumidos
             let tokensTxt = '🪙 0 tokens (Modo Local)';
             if (t.metadatos_ia.tokens_total) {
-                tokensTxt = `🪙 <b>${t.metadatos_ia.tokens_total}</b> tokens <small style="color:#64748B;">(${t.metadatos_ia.tokens_prompt || 0} in / ${t.metadatos_ia.tokens_completado || 0} out)</small>`;
+                tokensTxt = `🪙 <b>${t.metadatos_ia.tokens_total}</b> tokens <small style="color:#334155; font-weight:600;">(${t.metadatos_ia.tokens_prompt || 0} in / ${t.metadatos_ia.tokens_completado || 0} out)</small>`;
             } else if (t.metadatos_ia.proveedor === 'conmutador-local-offline') {
                 tokensTxt = '🪙 0 tokens (Costo $0 · Procesamiento Offline)';
             }
@@ -1911,20 +1965,20 @@
                 <div class="ticket-meta">
                     <div class="meta-row"><span class="meta-lbl">Nivel ITIL:</span> <span class="badge-nivel ${nivelClase}">${nivelIcono} ${nivelTexto}</span></div>
                     <div class="meta-row"><span class="meta-lbl">Categoría:</span> <b>${t.categoria}</b></div>
-                    <div class="meta-row"><span class="meta-lbl">Impacto x Urg.:</span> ${t.impacto} x ${t.urgencia}</div>
-                    <div class="meta-row"><span class="meta-lbl">IA:</span> ${iaTxt}</div>
+                    <div class="meta-row"><span class="meta-lbl">Impacto x Urg.:</span> <b>${t.impacto} x ${t.urgencia}</b></div>
+                    <div class="meta-row"><span class="meta-lbl">IA:</span> <b>${iaTxt}</b></div>
                     <div class="meta-row"><span class="meta-lbl">Consumo:</span> <span>${tokensTxt}</span></div>
                     ${hitlInfoHtml}
                 </div>
                 <div class="ticket-cita">${citaTxt}</div>
                 <button type="button" class="exp-btn" onclick="abrirModalExplicabilidad(${t.id})">💡 ¿Por qué esta clasificación?</button>
                 <div class="ticket-actions">
-                    <button type="button" class="act-btn" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE; font-weight:600;" onclick="abrirModalConfirmarEnvio(${t.id})" title="Confirmación humana antes de enviar notificación oficial">✉️ Enviar Notif.</button>
-                    <button type="button" class="act-btn" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A; font-weight:600;" onclick="abrirModalConfirmarDerivacion(${t.id})" title="Confirmación humana antes de derivar soporte presencial">🚨 Derivar Presencial</button>
-                    ${estado !== 'en_atencion' ? `<button class="act-btn" onclick="cambiarEstado(${t.id}, 'en_atencion')">⚙️ Atender</button>` : ''}
-                    ${estado !== 'escalado_cuadrilla' ? `<button class="act-btn" onclick="cambiarEstado(${t.id}, 'escalado_cuadrilla')">🚚 Presencial</button>` : ''}
-                    ${estado !== 'resuelto' ? `<button class="act-btn" onclick="cambiarEstado(${t.id}, 'resuelto')">✅ Resolver</button>` : ''}
-                    ${estado === 'resuelto' ? `<button class="act-btn" style="background:#FEE2E2; color:#DC2626; border-color:#FCA5A5; font-weight:600;" onclick="solicitarQuitarTicket(${t.id}, '${t.ticket_codigo}')" title="Quitar o archivar este ticket resuelto del tablero Kanban">🗑️ Quitar del Tablero</button>` : ''}
+                    <button type="button" class="act-btn" style="background:#EFF6FF; color:#1E3A8A; border-color:#93C5FD; font-weight:700;" onclick="abrirModalConfirmarEnvio(${t.id})" title="Confirmación humana antes de enviar notificación oficial">✉️ Enviar Notif.</button>
+                    <button type="button" class="act-btn" style="background:#FFFBEB; color:#78350F; border-color:#FCD34D; font-weight:700;" onclick="abrirModalConfirmarDerivacion(${t.id})" title="Confirmación humana antes de derivar soporte presencial">🚨 Derivar Presencial</button>
+                    ${estado !== 'en_atencion' ? `<button class="act-btn" style="background:#F0FDF4; color:#14532D; border-color:#86EFAC; font-weight:700;" onclick="cambiarEstado(${t.id}, 'en_atencion')">⚙️ Atender</button>` : ''}
+                    ${estado !== 'escalado_cuadrilla' ? `<button class="act-btn" style="background:#FFF7ED; color:#7C2D12; border-color:#FDBA74; font-weight:700;" onclick="cambiarEstado(${t.id}, 'escalado_cuadrilla')">🚚 Presencial</button>` : ''}
+                    ${estado !== 'resuelto' ? `<button class="act-btn" style="background:#F0FDF4; color:#15803D; border-color:#86EFAC; font-weight:700;" onclick="cambiarEstado(${t.id}, 'resuelto')">✅ Resolver</button>` : ''}
+                    ${estado === 'resuelto' ? `<button class="act-btn" style="background:#FEF2F2; color:#7F1D1D; border-color:#FCA5A5; font-weight:700;" onclick="solicitarQuitarTicket(${t.id}, '${t.ticket_codigo}')" title="Quitar o archivar este ticket resuelto del tablero Kanban">🗑️ Quitar del Tablero</button>` : ''}
                 </div>
             `;
             return card;
