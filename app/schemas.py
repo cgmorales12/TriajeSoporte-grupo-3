@@ -6,7 +6,6 @@ Contratos estrictos de entrada y salida con extra='forbid'
 from typing import List, Optional
 from enum import Enum
 from pydantic import BaseModel, ConfigDict, Field
-from datetime import datetime
 
 
 # ============================================================================

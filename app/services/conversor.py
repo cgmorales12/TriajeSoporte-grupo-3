@@ -8,7 +8,7 @@ import os
 import re
 import io
 import glob
-from typing import Tuple, Dict, Any, Optional
+from typing import Tuple, Dict, Any
 
 DIRECTORIO_RAW = os.path.join(os.path.dirname(__file__), "..", "..", "data", "raw")
 
@@ -92,7 +92,7 @@ def estructurar_a_markdown_rag(texto_crudo: str, nombre_original: str) -> Tuple[
     ### Paso 1: ...
     Retorna: (doc_id, titulo, contenido_markdown)
     """
-    lineas = [l.strip() for l in texto_crudo.splitlines() if l.strip()]
+    lineas = [item_linea.strip() for item_linea in texto_crudo.splitlines() if item_linea.strip()]
     
     # 1. Detectar o asignar Document ID
     match_doc = re.search(r"\b(DOC-\d+)\b", texto_crudo, re.IGNORECASE) or re.search(r"\b(DOC-\d+)\b", nombre_original, re.IGNORECASE)
@@ -100,8 +100,8 @@ def estructurar_a_markdown_rag(texto_crudo: str, nombre_original: str) -> Tuple[
     
     # 2. Detectar Título
     titulo_candidato = ""
-    for l in lineas[:5]:
-        limpia = re.sub(r"^#+\s*", "", l)
+    for item_linea in lineas[:5]:
+        limpia = re.sub(r"^#+\s*", "", item_linea)
         limpia = re.sub(r"^DOC-\d+[:\s-]*", "", limpia, flags=re.IGNORECASE).strip()
         if len(limpia) > 5 and not limpia.lower().startswith("categoría") and not limpia.lower().startswith("versión"):
             titulo_candidato = limpia
@@ -131,10 +131,10 @@ def estructurar_a_markdown_rag(texto_crudo: str, nombre_original: str) -> Tuple[
     en_procedimiento = False
     paso_actual = 0
     
-    for l in lineas:
+    for item_linea in lineas:
         # Detectar inicio de un paso
-        match_paso = re.match(r"^(?:###\s*)?(?:paso|step)\s*(\d+)[:\s.-]*(.*)$", l, re.IGNORECASE)
-        match_num = re.match(r"^(\d+)\.\s+(.*)$", l)
+        match_paso = re.match(r"^(?:###\s*)?(?:paso|step)\s*(\d+)[:\s.-]*(.*)$", item_linea, re.IGNORECASE)
+        match_num = re.match(r"^(\d+)\.\s+(.*)$", item_linea)
         
         if match_paso:
             en_procedimiento = True
@@ -142,7 +142,7 @@ def estructurar_a_markdown_rag(texto_crudo: str, nombre_original: str) -> Tuple[
             num_detectado = match_paso.group(1)
             encabezado_paso = match_paso.group(2).strip() or f"Instrucción Operativa {num_detectado}"
             bloques_pasos.append(f"### Paso {paso_actual}: {encabezado_paso}")
-        elif match_num and len(match_num.group(2)) > 10 and not l.startswith("|"):
+        elif match_num and len(match_num.group(2)) > 10 and not item_linea.startswith("|"):
             en_procedimiento = True
             paso_actual += 1
             encabezado_paso = match_num.group(2).strip()
@@ -154,13 +154,13 @@ def estructurar_a_markdown_rag(texto_crudo: str, nombre_original: str) -> Tuple[
                 bloques_pasos.append(encabezado_paso)
         else:
             if en_procedimiento:
-                bloques_pasos.append(l)
-            elif "descripci" in l.lower():
+                bloques_pasos.append(item_linea)
+            elif "descripci" in item_linea.lower():
                 pass
-            elif not descripcion_general and len(l) > 20 and not l.startswith("#"):
-                descripcion_general.append(l)
+            elif not descripcion_general and len(item_linea) > 20 and not item_linea.startswith("#"):
+                descripcion_general.append(item_linea)
             else:
-                resto_contenido.append(l)
+                resto_contenido.append(item_linea)
     
     # Ensamblar Markdown limpio
     desc_texto = " ".join(descripcion_general) if descripcion_general else f"Procedimiento técnico oficial para {titulo_candidato.lower()} en infraestructura de clientes ConectaTec ISP."

@@ -9,6 +9,7 @@ import os
 import re
 import glob
 import base64
+import logging
 from datetime import datetime
 from typing import List
 from fastapi import APIRouter, HTTPException, Depends, status
@@ -23,6 +24,8 @@ from app.schemas import (
 )
 from app.services.auth import obtener_usuario_autenticado
 from app.services.conversor import convertir_documento
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/v1/admin", tags=["Gestión Base de Conocimiento (TIC)"])
 
@@ -72,8 +75,8 @@ def _parsear_metadatos_manual(ruta_completa: str) -> dict:
                     categoria = linea.split(":", 1)[1].strip("*_ ")
                 elif ("vigencia" in linea.lower() or "versión" in linea.lower()) and ":" in linea:
                     vigencia = linea.split(":", 1)[1].strip("*_ ")
-    except Exception:
-        pass
+    except Exception as err:
+        logger.debug("Error leyendo cabecera del manual: %s", err)
         
     return {
         "archivo": nombre_archivo,

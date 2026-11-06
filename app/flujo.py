@@ -7,7 +7,7 @@ Principio Rector: «La IA decide lo difuso · El código decide lo exacto · Una
 import os
 import hashlib
 from typing import Literal, Optional, Dict, Any
-from pydantic import BaseModel, Field, ConfigDict, model_validator
+from pydantic import BaseModel, Field, ConfigDict
 from app.tools.priorizar import calcular_prioridad_itil
 
 # Cargar parámetros configurables desde config/parametros.yaml
@@ -22,8 +22,9 @@ def _cargar_parametros() -> Dict[str, Any]:
                 data = yaml.safe_load(f)
                 if data and isinstance(data, dict):
                     return data
-        except Exception:
-            pass
+        except Exception as err:
+            import logging
+            logging.getLogger(__name__).debug("Configuracion por defecto activada: %s", err)
     return {
         "umbral_confianza": umbral_defecto,
         "max_iteraciones_agente": max_iter_defecto,

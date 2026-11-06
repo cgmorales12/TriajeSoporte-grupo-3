@@ -82,8 +82,8 @@ def cargar_prompt_sistema(version: str = "v3") -> str:
                 contenido = f.read().strip()
                 if contenido:
                     return contenido
-        except Exception:
-            pass
+        except Exception as err:
+            logger_llm.debug("No se pudo leer version de prompt %s: %s", version, err)
     return SYSTEM_PROMPT
 
 
