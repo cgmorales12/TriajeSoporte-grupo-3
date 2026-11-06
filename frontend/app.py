@@ -12,14 +12,14 @@ from datetime import datetime
 API_BASE_URL = "http://localhost:8000"
 
 st.set_page_config(
-    page_title="TecnoAula — Mesa de Ayuda PYME (Caso 03 · Grupo 3)",
+    page_title="TecnoAula — Mesa de Ayuda Universal para PYMEs (Caso 03 · Grupo 3)",
     page_icon="🏢",
     layout="wide"
 )
 
 # Cabecera Institucional
-st.title("🏢 TecnoAula — Triaje Automático de Soporte Tecnológico para PYME")
-st.caption("Caso N.º 03 · Grupo 3 UNIANDES (Mesa de ayuda para 60 colaboradores y 1 técnico de TI) | Christian Morales · Fernando Ribera · Geoconda Iguasnia")
+st.title("🏢 TecnoAula — Triaje Automático de Soporte Tecnológico para PYMEs")
+st.caption("Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda ITIL v4 Modular y Configurable para Cualquier Pequeña y Mediana Empresa | Christian Morales · Fernando Ribera · Geoconda Iguasnia")
 
 # Verificación de salud y estado del proveedor LLM
 try:

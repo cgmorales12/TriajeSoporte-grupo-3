@@ -97,6 +97,17 @@ Para maximizar el impacto ante el jurado, la sustentación debe seguir un esquem
 
 ---
 
+### Pregunta Oficial 4 (Fase 5): *«¿Cómo demuestran que TecnoAula no está diseñado para una empresa específica, sino como una solución general para cualquier PYME?»*
+* **Respuesta del Equipo:**  
+  *«Demostramos la generalidad y adaptabilidad de TecnoAula a través de tres pilares arquitectónicos auditables:  
+  1. **Universalidad de Necesidades Ofimáticas:** Los 15 manuales técnicos estándar abordan la infraestructura tecnológica que comparte cualquier PYME moderna (Active Directory / Windows / Google / M365, clientes VPN corporativos, impresoras departamentales en red, carpetas compartidas SMB/NAS, ERPs contables y redes Wi-Fi). No depende del giro de negocio, sirviendo tanto para empresas de servicios como para consultoras, distribuidoras o firmas profesionales.  
+  2. **Base de Conocimiento Desacoplada y Extensible (Corpus RAG en Markdown):** El conocimiento no está quemado en el código fuente. Cualquier PYME puede agregar o modificar manuales en `data/raw/` y re-ejecutar `python scripts/ingest.py` para re-indexar ChromaDB automáticamente en 5 segundos.  
+  3. **Matriz de Priorización ITIL Parametrizable:** Las reglas de negocio, niveles de severidad y tiempos máximos de SLA están desacoplados en `config/matriz_prioridad.json`. Cualquier empresa puede configurar sus propios SLAs sin alterar una sola línea de código backend.  
+  4. **Esquemas Pydantic V2 Genéricos:** Los contratos DTO procesan categorías estándar de TI de la industria, garantizando total portabilidad.»*
+* **Archivos de respaldo:** [`data/raw/README.md`](data/raw/README.md), [`config/matriz_prioridad.json`](config/matriz_prioridad.json) y [`docs/04-fuentes.md`](docs/04-fuentes.md).
+
+---
+
 ## 🛡️ 3. Banco de Preguntas Adicionales del Tribunal y Respuestas de Alto Nivel
 
 ### Pregunta 1: *«¿Por qué no le pidieron al LLM que calcule directamente la prioridad y el tiempo SLA de resolución?»*

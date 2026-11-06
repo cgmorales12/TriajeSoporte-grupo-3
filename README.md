@@ -29,11 +29,18 @@ Una **PYME de servicios con 60 colaboradores** cuenta con **un único técnico d
 
 Este cuello de botella provoca tiempos de espera prolongados (MTTR inicial de 4 horas), interrupción de labores de los colaboradores y distracción del técnico de sus responsabilidades estratégicas de infraestructura y ciberseguridad.
 
-### La Solución
+### 1.2. La Solución
 **TecnoAula** es una mesa de ayuda inteligente basada en un **Tablero Kanban de Tickets** que automatiza el triaje de incidencias:
 1. **Autoatención Nivel 1 ($\ge 70\%$ de solicitudes):** Resuelve incidentes guiando al colaborador paso a paso con citas exactas (ID de documento y paso operativo) sobre **15 manuales técnicos oficiales** indexados en **ChromaDB**.
 2. **Priorización Determinista (Código Python):** Clasifica impacto y urgencia con IA, pero el cálculo matemático de la prioridad (`Alta`, `Media`, `Baja`) y SLA de resolución los calcula una función pura en Python leyendo `config/matriz_prioridad.json` bajo el estándar ITIL v4. **El LLM nunca calcula la prioridad ni inventa tiempos contractuales.**
 3. **Escalamiento y Derivación a Nivel 2:** Si la incidencia requiere intervención física en el puesto de trabajo (falla de hardware, pantalla azul BSOD, disco averiado) o permisos administrativos elevados, se genera un ticket escalado con alerta para el técnico de TI bajo compuertas **Human-in-the-Loop (HITL)**.
+
+### 1.3. ¿Por qué es un Sistema Universal para Cualquier PYME?
+El sistema ha sido diseñado desde su base arquitectónica para ser **completamente genérico, desacoplado y adaptable a cualquier Pequeña o Mediana Empresa**, independientemente de su giro de negocio:
+- **Universalidad Tecnológica de Oficina:** Toda PYME moderna (servicios, comercialización, firmas contables, consultoras o logística) comparte la misma infraestructura base: autenticación de usuarios (Active Directory / Windows / M365), VPNs para teletrabajo, impresoras compartidas, servidores de archivos (SMB/NAS), ERPs y conectividad LAN/Wi-Fi.
+- **Corpus RAG Modular y Extensible:** Los 15 manuales en `data/raw/` son plantillas independientes en Markdown. Cualquier empresa puede añadir o editar procedimientos y re-indexarlos en ChromaDB ejecutando `python scripts/ingest.py` en 5 segundos sin tocar el código backend.
+- **Matriz de Prioridades y SLAs Desacoplada (`config/matriz_prioridad.json`):** Cada empresa define sus propios tiempos de respuesta contractuales (15 min, 1 hora, 4 horas, 24 horas) editando un archivo JSON estándar.
+- **Cero Dependencia de Marcas o Nombres Propios:** Los contratos y esquemas Pydantic procesan roles, servicios y categorías universales (`Accesos y Contraseñas`, `Redes y Conectividad`, `Hardware y Periféricos`, `Software Corporativo`), garantizando portabilidad inmediata a cualquier organización.
 
 ---
 
