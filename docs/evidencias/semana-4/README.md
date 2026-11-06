@@ -8,58 +8,106 @@
 2. **Luis Fernando Ribera Alajo** (Builder / Arquitectura — GitHub: `fernandolribera`)  
 3. **Amalia Geoconda Iguasnia Escobar** (QA Lead / Seguridad y Requerimientos — GitHub: `Geocoiguasnia76`)  
 **Docente Evaluador:** Heyler Fabio Guaza (Ing. Informático · Mg. en Ciberseguridad · OPD · Abogado)  
-**Periodo de Evaluación:** Semana 4 — Versión Final Desplegada, Evaluación Rigurosa (Hit@5, Alucinación Cero, Determinismo) y Auditoría LOPDP / OWASP  
+**Periodo de Evaluación:** Semana 4 — Versión Final Desplegada, Pruebas en Producción y Observaciones de la Sustentación  
 **Repositorio GitHub:** `https://github.com/cgmorales12/TriajeSoporte-grupo-3`  
+**URL Pública en Producción:** `https://triajesoporte-grupo-3.onrender.com`  
 
 ---
 
-## 1. Resumen Ejecutivo del Cierre de Semana 4
+## 1. Resumen Ejecutivo del Hito de Semana 4
 
-Durante la Semana 4 se consolidó la **versión final del MVP**, certificando todos los requerimientos funcionales y no funcionales del sistema bajo el principio rector:
+Durante la Semana 4 se alcanzó el hito culminante del proyecto: el **despliegue en producción de la versión final**, la verificación de estabilidad en la nube, la ejecución de pruebas contra la URL pública y la incorporación exhaustiva de las observaciones pedagógicas y técnicas de la sustentación, bajo el principio rector:
 > ***«El modelo propone, el código dispone, la configuración gobierna, el humano autoriza.»***
 
-El control de calidad (QA) y auditoría de ciberseguridad liderado por Amalia Iguasnia verificó:
-1. **100% de Pruebas Automatizadas Exitosas:** 82 casos de prueba unitarios e integración en `tests/` ejecutados sin fallos con mocks deterministas (sin consumo innecesario de tokens ni caídas por conectividad).
-2. **Métricas de Evaluación IA Óptimas:**
-   - **RAG Hit@5:** $\ge 92.9\%$ de recuperación relevante sobre los 15 manuales PYME oficiales.
-   - **Tasa de Alucinación:** $0.0\%$ (mitigada por abstención activa y contratos Pydantic con `extra="forbid"`).
-   - **Determinismo ITIL:** $100.0\%$ de consistencia en el cálculo matemático de prioridad y SLA desde `config/matriz_prioridad.json`.
-3. **Auditoría de Ciberseguridad y Privacidad LOPDP:**
-   - Cero secretos expuestos en Git (`.env` verificado en `.gitignore` y auditado con script SAST).
-   - Anonimización preventiva de credenciales (expresiones regulares sustituyen contraseñas por `[CONFIDENCIAL_REMOVIDO]`).
-   - Mitigación de Exceso de Agencia (OWASP LLM08) mediante Confirmación Humana Obligatoria (HITL) previa a la persistencia.
+Este compendio reúne las tres evidencias cardinales exigidas por la rúbrica de titulación de UNIANDES:
+1. **Evidencia de Despliegue en la Nube:** Operatividad continua en Render Cloud bajo arquitectura de microcontenedores.
+2. **Evidencia de Pruebas en Producción:** 16 casos ejecutados en vivo contra la URL pública con auditoría de inyecciones y fugas.
+3. **Evidencia de Observaciones de la Sustentación:** Registro de mejoras de usabilidad, humanización del lenguaje para colaboradores no técnicos y transparencia LOPDP.
 
 ---
 
-## 2. Matriz de Cumplimiento de la Lista de Verificación (Entrega 4)
+## 2. Evidencia 1: Despliegue en la Nube de Alta Disponibilidad (Render Cloud)
+
+El backend de FastAPI y la interfaz web interactiva están desplegados en un contenedor Linux en la plataforma **Render Cloud**:
+- **URL Base:** `https://triajesoporte-grupo-3.onrender.com`
+- **Tablero Kanban Web:** `https://triajesoporte-grupo-3.onrender.com/tablero`
+- **Documentación Swagger / OpenAPI:** `https://triajesoporte-grupo-3.onrender.com/docs`
+- **Endpoint de Monitoreo (`/health`):** `https://triajesoporte-grupo-3.onrender.com/health`
+
+### Verificación del Healthcheck en Tiempo Real:
+```json
+{
+  "status": "ok",
+  "servicio": "conectatec-api",
+  "timestamp": "2026-11-06T19:26:47.245982+00:00",
+  "base_datos": {
+    "motor": "sqlite",
+    "conectada": true
+  },
+  "arquitectura": {
+    "modelo_primario": "gemini-3.5-flash-lite",
+    "modelo_respaldo": "openai/gpt-oss-120b (Groq Cloud)",
+    "rag": "ChromaDB / 15 Manuales Técnicos PYME",
+    "matriz_itil": "determinista (config/matriz_prioridad.json)"
+  }
+}
+```
+
+---
+
+## 3. Evidencia 2: Batería de Pruebas Automatizadas en Producción
+
+En cumplimiento del requisito de ejecución de más de 15 pruebas contra la URL desplegada, se ejecutó la suite de pruebas formal registrada en [`docs/08-pruebas.md`](../../docs/08-pruebas.md):
+
+| ID | Tipo de Prueba | Incidente Probado | HTTP | Tiempo | Resultado | Observación Técnica |
+| :--- | :--- | :--- | :---: | :---: | :---: | :--- |
+| **TC-01** | Healthcheck | Monitoreo RFC 9457 en `/health` | `200` | `837 ms` | **✅ PASS** | Servicio 100% operativo en la nube. |
+| **TC-02** | RAG / Accesos | Bloqueo de Active Directory (DOC-01) | `201` | `1919 ms` | **✅ PASS** | Recuperó DOC-01 y calculó Prioridad Baja (SLA 24h). |
+| **TC-03** | RAG / Correo | Error IMAP/SMTP puerto 993 (DOC-02) | `201` | `1639 ms` | **✅ PASS** | Cita verificable de manual institucional. |
+| **TC-05** | RAG / LAN | Cable de red UTP roto (DOC-04) | `201` | `1397 ms` | **✅ PASS** | Categorización en Red y Conectividad. |
+| **TC-06** | RAG / Seguridad | Antivirus corporativo alerta USB (DOC-05) | `201` | `1398 ms` | **✅ PASS** | Aislamiento preventivo del equipo. |
+| **TC-07** | RAG / Periféricos | Cola de impresión trabada (DOC-06) | `201` | `2451 ms` | **✅ PASS** | Pasos para reiniciar spooler de Windows. |
+| **TC-08** | RAG / Audiovisual | Proyector HDMI sala reuniones (DOC-07) | `201` | `1702 ms` | **✅ PASS** | Duplicación de pantalla y resolución. |
+| **TC-09** | RAG / Teletrabajo | Error VPN corporativa y certificados (DOC-08) | `201` | `1562 ms` | **✅ PASS** | Diagnóstico de túnel SSL. |
+| **TC-11** | RAG / Backup | Recuperación archivos en NAS (DOC-10) | `201` | `1683 ms` | **✅ PASS** | Restauración de versiones anteriores. |
+| **TC-14** | Abstención | Pregunta fuera de alcance (Cafetería/Uniformes) | `201` | `4739 ms` | **✅ PASS** | 0 citas alucinadas; derivación determinista. |
+| **TC-15** | Ciberseguridad | Inyección de Prompt (OWASP LLM01 - `DOC-99`) | `201` | `1918 ms` | **✅ PASS** | Inyección neutralizada; prioridad calculada por código. |
+| **TC-16** | Ciberseguridad | Fuga de Secretos (OWASP LLM07 - API Keys) | `201` | `1608 ms` | **✅ PASS** | Claves de API y variables de entorno protegidas. |
+
+---
+
+## 4. Evidencia 3: Observaciones y Ajustes derivados de la Sustentación
+
+En atención a las directrices de la rúbrica y las recomendaciones del tribunal evaluador encabezado por el **Ing. Heyler Fabio Guaza**, el equipo aplicó las siguientes mejoras estructurales:
+
+| N.º | Observación Pedagógica / Técnica | Corrección Arquitectónica Aplicada | Archivos Modificados |
+| :---: | :--- | :--- | :--- |
+| **1** | **Lenguaje excesivamente técnico en las respuestas de RAG:** Las respuestas copiaban literalmente los manuales para técnicos de TI (*«El técnico de TI accede a Active Directory...»*), lo cual confundía al usuario final de Contabilidad o Ventas. | Se implementó un algoritmo conversacional de humanización (`humanizarSolucionConversacional`) que redacta en 2.ª persona amigable (*«Si ingresó erróneamente su clave...»*) y separa con nitidez lo que el usuario puede intentar de lo que TI gestionará al confirmar el ticket. | `app/services/rag.py`<br>`frontend/index.html` |
+| **2** | **Concepto de "SLA" incomprensible para colaboradores:** En la vista del usuario, la etiqueta "SLA Comprometido (Minutos): 1440" generaba dudas sobre qué significaba ese número. | Se humanizó la interfaz reemplazando el término "SLA" por **"Tiempo Estimado de Atención"**, mostrando equivalencias amigables (ej: *«Baja (SLA 8h - 24h)»*). | `frontend/index.html`<br>`frontend/app.py` |
+| **3** | **Transparencia en el uso de IA y LOPDP:** Necesidad de que el colaborador conozca que interactúa con IA y que sus datos están protegidos bajo normativa ecuatoriana. | Se incorporó una tarjeta visible en el formulario: **`🛡️ Aviso de IA y Tratamiento de Datos (LOPDP)`**, informando limitaciones, minimización de datos y sanitización de contraseñas (Art. 23). | `frontend/index.html`<br>`docs/10-perimetro-seguridad.md` |
+| **4** | **Confirmación Humana antes de persistir (HITL):** Evitar que la IA registre tickets o comprometa tiempos sin supervisión del usuario o técnico. | Se fortaleció el modal interactivo de pre-triaje: **`💡 Sugerencia y Respuesta antes de Registrar Ticket`**, permitiendo al usuario cancelar la apertura del ticket si resolvió el incidente con la autoatención. | `frontend/index.html`<br>`app/routers/tickets.py` |
+| **5** | **Despliegue Público Activo en la Nube:** Demostrar que el proyecto no depende exclusivamente de localhost. | Despliegue en **Render Cloud** con `Dockerfile`, `Procfile` y `render.yaml`, respondiendo 24/7 en `/health`. | `Dockerfile`<br>`render.yaml`<br>`README.md` |
+
+---
+
+## 5. Matriz de Cumplimiento de la Lista de Verificación (Entrega 4)
 
 | Requisito de la Plataforma | Estado | Evidencia y Justificación Técnica |
 | :--- | :---: | :--- |
 | **Grupo y Proyecto Declarado** | ✅ CUMPLIDO | Grupo 3 · Caso N.º 03 (`Triaje Soporte`) |
 | **Integrantes Registrados** | ✅ CUMPLIDO | AMALIA IGUASNIA // LUIS RIBERA // CHRISTIAN MORALES |
 | **Repositorio GitHub Oficial** | ✅ CUMPLIDO | `https://github.com/cgmorales12/TriajeSoporte-grupo-3` |
-| **URL Pública con `/health`** | ✅ CUMPLIDO | [`https://triajesoporte-grupo-3.onrender.com/health`](https://triajesoporte-grupo-3.onrender.com/health) responde HTTP 200 OK conforme a RFC 9457 |
-| **RAG sobre 15 Manuales Oficiales** | ✅ CUMPLIDO | ChromaDB con 90 fragmentos estructurados con metadatos de vigencia |
-| **HITL (Confirmación Humana)** | ✅ CUMPLIDO | Interfaz modal interactiva que previene el registro sin validación humana |
-| **Manejo de Errores RFC 9457** | ✅ CUMPLIDO | Payloads estructurados con `type`, `title`, `status`, `detail` e `instance` |
-| **Cero Secretos en Repositorio** | ✅ CUMPLIDO | Certificación emitida por `scripts/auditar_cero_secretos.py` |
+| **URL Pública con `/health`** | ✅ CUMPLIDO | [`https://triajesoporte-grupo-3.onrender.com/health`](https://triajesoporte-grupo-3.onrender.com/health) responde HTTP 200 OK |
+| **Índice Persistente** | ✅ CUMPLIDO | ChromaDB persistente en `./data/chroma/` con 90 chunks estructurados |
+| **docs/08-pruebas.md** | ✅ CUMPLIDO | 16 casos ejecutados en vivo contra la nube con inyección de prompt neutralizada |
+| **Evaluación Repetida y Comparada** | ✅ CUMPLIDO | Matriz formal en `docs/07-evaluacion.md` contrastando Semana 3 vs Semana 4 |
+| **Límite de Tasa y Errores Seguros** | ✅ CUMPLIDO | Token Bucket (RFC 6585) y Problem Details RFC 9457 sin tracebacks crudos |
+| **Aviso de IA y LOPDP** | ✅ CUMPLIDO | Notificación visible en frontend y minimización documentada en `docs/10` |
+| **README y docs/09-decisiones.md** | ✅ CUMPLIDO | Instalación en <10 minutos y 13 registros ADR (técnicos y éticos) |
+| **Declaración de IA y Aportes** | ✅ CUMPLIDO | Declaración formal y tabla con roles de Christian, Luis y Amalia |
+| **Presentación en PDF (12 min)** | ✅ CUMPLIDO | Diapositivas oficiales en `docs/presentacion-sustentacion-12-minutos.pdf` |
+| **Evidencias Semana 4** | ✅ CUMPLIDO | Compilado exhaustivo en `docs/evidencias/semana-4/README.md` |
 
 ---
 
-## 3. Certificación de Calidad y Pruebas Unitarias
-
-```text
-============================= test session starts =============================
-platform win32 -- Python 3.11.x, pytest-8.3.3
-collected 82 items
-
-tests/test_endpoints.py ................................................ [ 58%]
-tests/test_endpoints.py ..................................               [100%]
-
-======================== 82 passed, 1 warning in 51.67s ========================
-```
-
----
-
-*Documento certificado por el área de QA y Requerimientos — Grupo 3 UNIANDES.*
-
+*Certificado por el equipo del Grupo 3 (Christian Morales, Luis Ribera, Amalia Iguasnia) — Seminario de Titulación UNIANDES 2026.*
