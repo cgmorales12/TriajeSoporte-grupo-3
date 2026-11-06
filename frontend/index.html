@@ -1084,6 +1084,25 @@
             color: #0F172A !important;
         }
 
+        .hitl-cita-card {
+            background: #F8FAFC;
+            border: 1px solid #CBD5E1;
+            border-left: 3.5px solid #1E3A8A;
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+        }
+        .hitl-cita-card .hitl-cita-title {
+            font-weight: 700;
+            color: #0F172A;
+            font-size: 12.5px;
+        }
+        .hitl-cita-card .hitl-cita-sec {
+            font-size: 12px;
+            color: #334155;
+            margin-top: 2px;
+        }
+
         /* Pie de Página Institucional */
         .app-footer {
             background: var(--header);
@@ -2091,6 +2110,15 @@
             background: #0E1626;
             border-color: #1E293B;
             color: #CBD5E1;
+        }
+        body.dark-theme .hitl-cita-card {
+            background: #131B2E !important;
+            border-color: #334155 !important;
+            border-left-color: #38BDF8 !important;
+        }
+        body.dark-theme .hitl-cita-card .hitl-cita-title,
+        body.dark-theme .hitl-cita-card .hitl-cita-sec {
+            color: #F8FAFC !important;
         }
         body.dark-theme .tabla-manuales th {
             background: #0E1626;
@@ -3929,7 +3957,12 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             document.getElementById('hitlRegCategoria').value = propuesta.categoria_propuesta;
             document.getElementById('hitlRegPrioridad').value = propuesta.prioridad_itil;
             document.getElementById('hitlRegSla').value = propuesta.sla_minutos;
-            document.getElementById('hitlRegSolucion').value = propuesta.solucion_propuesta;
+            // Limpieza preventiva de la solución para garantizar pasos operativos limpios y claros
+            let solTexto = (propuesta.solucion_propuesta || '').trim();
+            solTexto = solTexto.split('\n')
+                .filter(l => !l.toLowerCase().startsWith('términos clave:') && !l.toLowerCase().startsWith('terminos clave:'))
+                .join('\n').trim();
+            document.getElementById('hitlRegSolucion').value = solTexto;
 
             const esNoTecnica = (propuesta.categoria_propuesta === 'Solicitud No Técnica / Fuera de Alcance') ||
                                 (propuesta.prioridad_itil === 'Baja' && propuesta.sla_minutos >= 1440 && (!propuesta.citas || propuesta.citas.length === 0));
@@ -3950,9 +3983,24 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
             const citasCont = document.getElementById('hitlRegCitasContainer');
             if (propuesta.citas && propuesta.citas.length > 0) {
-                citasCont.innerHTML = '<b style="color:#0F172A; font-size:12px; display:block; margin-bottom:4px;">📖 Citas RAG asociadas al procedimiento:</b>' + propuesta.citas.map(c => `<div style="margin-bottom:4px; color:#1E293B;"><b style="color:#1E3A8A;">• ${c.documento_id}:</b> <span style="font-weight:600; color:#0F172A;">${c.paso_exacto}</span> — <span style="color:#334155;">«${(c.fragmento_aplicado || '').slice(0, 95)}...»</span></div>`).join('');
+                citasCont.innerHTML = `
+                    <div style="font-size:12px; font-weight:700; color:#1E3A8A; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                        <span>📖 Fuente Oficial Verificada en Manuales (RAG):</span>
+                    </div>
+                    ${propuesta.citas.map(c => `
+                        <div class="hitl-cita-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
+                                <span class="hitl-cita-title">📄 ${c.documento_id}: ${c.titulo_documento || 'Manual Técnico Oficial'}</span>
+                                <span style="font-size:10.5px; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #BFDBFE;">🛡️ ${c.vigencia || 'Vigencia 2026'}</span>
+                            </div>
+                            <div class="hitl-cita-sec">
+                                <strong>Sección Oficial:</strong> ${c.paso_exacto}
+                            </div>
+                        </div>
+                    `).join('')}
+                `;
             } else {
-                citasCont.innerHTML = '<span style="color:#475569; font-style:italic;">Sin citas RAG asociadas (caso fuera de alcance o solicitud no técnica).</span>';
+                citasCont.innerHTML = '<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; color:#475569; font-size:11.5px; font-style:italic;">ℹ️ Sin citas documentales requeridas (solicitud fuera de alcance o administrativa).</div>';
             }
 
             document.getElementById('modalConfirmarRegistro').classList.add('activo');
@@ -4501,11 +4549,13 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 </div>
 
                 <div class="form-group" style="margin-bottom:12px;">
-                    <label style="font-size:12px; font-weight:700; color:#0F172A;">Solución / Procedimiento RAG Propuesto</label>
-                    <textarea id="hitlRegSolucion" class="form-control" rows="3" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:500; line-height:1.45;" readonly></textarea>
+                    <label style="font-size:12px; font-weight:700; color:#0F172A; display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                        <span>📋 Solución Técnica Propuesta (Pasos Operativos a Seguir)</span>
+                    </label>
+                    <textarea id="hitlRegSolucion" class="form-control" rows="4" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:500; line-height:1.45; font-family:var(--font-sans);" readonly></textarea>
                 </div>
 
-                <div id="hitlRegCitasContainer" style="margin-bottom:14px; font-size:12px; color:#0F172A; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px; padding:10px 12px; line-height:1.45;"></div>
+                <div id="hitlRegCitasContainer" style="margin-bottom:14px;"></div>
 
                 <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:12px; margin-bottom:16px;">
                     <div class="form-group">

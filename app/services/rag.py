@@ -64,6 +64,37 @@ def _resolver_url_manual(doc_id: str, url_meta: Optional[str] = None) -> str:
     return f"https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/{doc_id.lower()}.md"
 
 
+def _limpiar_fragmento_rag(doc_texto: str, doc_id: str = "") -> str:
+    """
+    Limpia el texto recuperado de ChromaDB o manuales raw para extraer
+    únicamente el procedimiento técnico operativo y accionable,
+    eliminando metadatos de indexación (como 'Términos clave: ...') y
+    encabezados redundantes ya capturados en los metadatos de la cita.
+    """
+    if not doc_texto:
+        return ""
+    lineas = [l.strip() for l in doc_texto.splitlines()]
+    lineas_filtradas = []
+    for l in lineas:
+        if not l:
+            if lineas_filtradas and lineas_filtradas[-1] != "":
+                lineas_filtradas.append("")
+            continue
+        l_lower = l.lower()
+        if l_lower.startswith("términos clave:") or l_lower.startswith("terminos clave:"):
+            continue
+        # Si la línea repite exactamente el título del manual o la sección con punto medio o guión
+        if doc_id and doc_id.lower() in l_lower and ("·" in l or "—" in l) and ("procedimiento" in l_lower or "manual" in l_lower):
+            continue
+        # Descartar líneas markdown puras de encabezado de nivel 1 o metadatos YAML
+        if l.startswith("# ") or l.startswith("**Categoría:**") or l.startswith("**Origen:**") or l.startswith("**Vigencia:**") or l.startswith("**URL:**"):
+            continue
+        lineas_filtradas.append(l)
+
+    texto_limpio = "\n".join(lineas_filtradas).strip()
+    return texto_limpio if texto_limpio else doc_texto.strip()
+
+
 # Términos que disparan intervención física presencial del técnico de TI en el puesto de trabajo
 TERMINOS_DESPACHO_PRESENCIAL = [
     "humo", "olor a quemado", "chispa", "disco dañado", "ruido metálico",
@@ -248,16 +279,14 @@ def buscar_solucion(
                         url_canon = _resolver_url_manual(doc_id, meta.get("url"))
                         vigencia = meta.get("vigencia") or "v3.2 - Octubre 2026"
                         
-                        # Limpiar fragmento
-                        frag = doc_texto.strip()
-                        if "—" in frag:
-                            frag = frag.split("—", 1)[-1].strip()
+                        # Limpiar fragmento de forma estricta (remover metadatos de indexación y duplicados)
+                        frag_limpio = _limpiar_fragmento_rag(doc_texto, doc_id)
 
                         citas.append(CitaRAG(
                             documento_id=doc_id,
                             titulo_documento=titulo_doc,
                             paso_exacto=paso,
-                            fragmento_aplicado=frag[:300],
+                            fragmento_aplicado=frag_limpio[:600],
                             vigencia=vigencia,
                             url=url_canon
                         ))
@@ -331,7 +360,7 @@ def buscar_solucion(
             "Se ha generado un ticket con Prioridad Alta para atención presencial inmediata por parte del técnico de TI en el puesto del colaborador."
         )
     elif citas:
-        solucion = f"Procedimiento recomendado según {citas[0].documento_id} ({citas[0].paso_exacto}): {citas[0].fragmento_aplicado}"
+        solucion = citas[0].fragmento_aplicado
     else:
         solucion = "Proceda a verificar los cables y reiniciar el equipo (DOC-10). Si el inconveniente persiste, el ticket será derivado al técnico de TI."
 
