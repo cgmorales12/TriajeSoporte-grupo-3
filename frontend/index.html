@@ -3183,7 +3183,10 @@
 
                     if (esModoHITL && dataResp.requiere_confirmacion_humana) {
                         abrirModalConfirmarRegistro(dataResp);
-                        mostrarToast('🛡️ Propuesta generada: requiere confirmación humana antes de registrar', 'info');
+                        const msgToast = (window._vistaActual === 'tic')
+                            ? '🛡️ Propuesta generada: requiere confirmación humana antes de registrar (HITL)'
+                            : '💡 Revise la solución sugerida por la IA antes de registrar su ticket';
+                        mostrarToast(msgToast, 'info');
                     } else {
                         actualizarHeaderBadge(dataResp.metadatos_ia);
                         mostrarToast(`⚡ Ticket ${dataResp.ticket_codigo} clasificado con ${dataResp.metadatos_ia.proveedor}`, 'exito');
@@ -4016,6 +4019,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             document.getElementById('hitlRegCategoria').value = propuesta.categoria_propuesta;
             document.getElementById('hitlRegPrioridad').value = propuesta.prioridad_itil;
             document.getElementById('hitlRegSla').value = propuesta.sla_minutos;
+
             // Limpieza preventiva de la solución para garantizar pasos operativos limpios y claros
             let solTexto = (propuesta.solucion_propuesta || '').trim();
             solTexto = solTexto.split('\n')
@@ -4023,12 +4027,82 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 .join('\n').trim();
             document.getElementById('hitlRegSolucion').value = solTexto;
 
+            const esTIC = (window._vistaActual === 'tic');
+
+            // 1. Título adaptativo de la modal
+            const tituloModal = document.getElementById('hitlModalTitulo');
+            if (tituloModal) {
+                tituloModal.innerHTML = esTIC 
+                    ? '🛡️ Confirmación Humana antes de Registrar Ticket (HITL · OWASP LLM08)' 
+                    : '💡 Sugerencia y Respuesta antes de Registrar Ticket (HITL)';
+            }
+
+            // 2. Banner informativo adaptativo
+            const alertaNormal = document.getElementById('hitlAlertBoxNormal');
+            if (alertaNormal) {
+                if (esTIC) {
+                    alertaNormal.innerHTML = `
+                        <b style="color:#0F172A;">Principio de Exceso de Agencia Controlado (OWASP LLM08):</b><br>
+                        <span style="color:#1E293B;">El modelo de IA propone la clasificación y solución, pero <b>no se registra en la base de datos ni se compromete el SLA</b> sin la autorización explícita de un técnico u operador humano.</span>
+                    `;
+                } else {
+                    alertaNormal.innerHTML = `
+                        <b style="color:#1E3A8A; font-size:13px;">💡 Solución Inmediata Sugerida por la IA:</b><br>
+                        <span style="color:#1E293B; font-size:12px; line-height:1.45;">
+                            La Inteligencia Artificial analizó su consulta y localizó la solución en los manuales de la empresa. 
+                            <b>Revise los pasos propuestos:</b> si resuelven su inconveniente, puede aplicarlos de inmediato. Si el inconveniente continúa o requiere soporte presencial, confirme el envío para que un técnico le asista.
+                        </span>
+                    `;
+                }
+            }
+
+            // 3. Alerta No Técnica / Fuera de Alcance
+            const alertaNoTecnica = document.getElementById('hitlAlertaNoTecnica');
+            if (alertaNoTecnica) {
+                if (esTIC) {
+                    alertaNoTecnica.innerHTML = `
+                        <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:4px; font-size:13px;">
+                            <span>🚫 Solicitud No Técnica / Fuera de Alcance</span>
+                        </div>
+                        <span>Esta consulta no describe una avería ni requerimiento tecnológico corporativo. Por directiva estricta de abstención institucional, <b>NO se autoriza la apertura de un Ticket Técnico (TT)</b> ni se asigna personal de soporte microinformático.</span>
+                    `;
+                } else {
+                    alertaNoTecnica.innerHTML = `
+                        <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:4px; font-size:13px;">
+                            <span>ℹ️ Consulta No Técnica / Fuera de Soporte de Sistemas</span>
+                        </div>
+                        <span>Esta consulta no describe una avería en computadoras, redes o programas corporativos. Por favor canalice este requerimiento con la administración general o el área de Recursos Humanos.</span>
+                    `;
+                }
+            }
+
+            // 4. Etiquetas adaptadas al perfil (Usuario vs TIC)
+            const lblCat = document.getElementById('hitlLblCategoria');
+            if (lblCat) lblCat.textContent = esTIC ? 'Categoría Asignada por IA' : 'Categoría Identificada';
+
+            const lblPrio = document.getElementById('hitlLblPrioridad');
+            if (lblPrio) lblPrio.textContent = esTIC ? 'Prioridad ITIL Determinista' : 'Prioridad y Tiempo Estimado de Atención';
+
+            const lblSol = document.getElementById('hitlLblSolucion');
+            if (lblSol) lblSol.innerHTML = esTIC 
+                ? '<span>📋 Solución Técnica Propuesta (Pasos Operativos a Seguir)</span>'
+                : '<span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención):</span>';
+
+            const lblOp = document.getElementById('hitlLblOperador');
+            if (lblOp) lblOp.textContent = esTIC ? 'Técnico / Operador que Autoriza el Alta' : 'Responsable Asignado para Atención';
+
+            // 5. Botones adaptados
+            const btnDescartar = document.getElementById('btnDescartarModalRegistro');
+            if (btnDescartar) {
+                btnDescartar.textContent = esTIC ? '❌ Descartar Consulta' : '❌ Cancelar (Ya no requiero ticket)';
+            }
+            const btnRegistrar = document.getElementById('btnEjecutarConfirmarRegistro');
+            if (btnRegistrar) {
+                btnRegistrar.textContent = esTIC ? '✅ Confirmar y Registrar Ticket' : '✅ Enviar Solicitud a Soporte Técnico';
+            }
+
             const esNoTecnica = (propuesta.categoria_propuesta === 'Solicitud No Técnica / Fuera de Alcance') ||
                                 (propuesta.prioridad_itil === 'Baja' && propuesta.sla_minutos >= 1440 && (!propuesta.citas || propuesta.citas.length === 0));
-
-            const alertaNoTecnica = document.getElementById('hitlAlertaNoTecnica');
-            const alertaNormal = document.getElementById('hitlAlertBoxNormal');
-            const btnRegistrar = document.getElementById('btnEjecutarConfirmarRegistro');
 
             if (esNoTecnica) {
                 if (alertaNoTecnica) alertaNoTecnica.style.display = 'block';
@@ -4040,23 +4114,31 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 if (btnRegistrar) btnRegistrar.style.display = 'inline-flex';
             }
 
+            // 6. Citas RAG con eliminación de duplicados en título
             const citasCont = document.getElementById('hitlRegCitasContainer');
             if (propuesta.citas && propuesta.citas.length > 0) {
+                const tituloSeccion = esTIC ? '📖 Fuente Oficial Verificada en Manuales (RAG):' : '📖 Manual de Referencia Institucional (RAG):';
                 citasCont.innerHTML = `
                     <div style="font-size:12px; font-weight:700; color:#1E3A8A; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                        <span>📖 Fuente Oficial Verificada en Manuales (RAG):</span>
+                        <span>${tituloSeccion}</span>
                     </div>
-                    ${propuesta.citas.map(c => `
+                    ${propuesta.citas.map(c => {
+                        const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
+                        let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial')
+                            .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
+                            .replace(/^DOC-\d+:?\s*/i, '')
+                            .trim();
+                        return `
                         <div class="hitl-cita-card">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
-                                <span class="hitl-cita-title">📄 ${c.documento_id}: ${c.titulo_documento || 'Manual Técnico Oficial'}</span>
+                                <span class="hitl-cita-title">📄 ${docId}: ${titLimpio}</span>
                                 <span style="font-size:10.5px; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #BFDBFE;">🛡️ ${c.vigencia || 'Vigencia 2026'}</span>
                             </div>
                             <div class="hitl-cita-sec">
                                 <strong>Sección Oficial:</strong> ${c.paso_exacto}
                             </div>
                         </div>
-                    `).join('')}
+                    `;}).join('')}
                 `;
             } else {
                 citasCont.innerHTML = '<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; color:#475569; font-size:11.5px; font-style:italic;">ℹ️ Sin citas documentales requeridas (solicitud fuera de alcance o administrativa).</div>';
@@ -4552,7 +4634,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
     <div id="modalConfirmarRegistro" class="modal-backdrop" onclick="cerrarModalSiClickAfuera(event)">
         <div class="modal-card" style="max-width:680px;">
             <div class="modal-header" style="background:#0F172A; border-bottom:2px solid #1E3A8A;">
-                <h3 style="color:#F8FAFC;">🛡️ Confirmación Humana antes de Registrar Ticket (HITL)</h3>
+                <h3 id="hitlModalTitulo" style="color:#F8FAFC;">💡 Sugerencia y Respuesta antes de Registrar Ticket (HITL)</h3>
                 <button type="button" class="modal-close" onclick="cerrarModalConfirmarRegistro()" title="Cerrar ventana">✕</button>
             </div>
             <div class="modal-body" style="padding:18px 22px;">
@@ -4585,7 +4667,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:14px;">
                     <div class="form-group">
-                        <label style="font-size:12px; font-weight:700; color:#0F172A;">Categoría Asignada por IA</label>
+                        <label id="hitlLblCategoria" style="font-size:12px; font-weight:700; color:#0F172A;">Categoría Identificada</label>
                         <select id="hitlRegCategoria" class="form-control" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600; cursor:not-allowed;" disabled>
                             <option value="Accesos y Contraseñas">Accesos y Contraseñas</option>
                             <option value="Red y Conectividad">Red y Conectividad</option>
@@ -4598,7 +4680,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                         </select>
                     </div>
                     <div class="form-group">
-                        <label style="font-size:12px; font-weight:700; color:#0F172A;">Prioridad ITIL Determinista</label>
+                        <label id="hitlLblPrioridad" style="font-size:12px; font-weight:700; color:#0F172A;">Prioridad y Tiempo Estimado de Atención</label>
                         <select id="hitlRegPrioridad" class="form-control" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600; cursor:not-allowed;" disabled>
                             <option value="Alta">Alta (Crítico · SLA 15m - 1h)</option>
                             <option value="Media">Media (Atención regular · SLA 2h - 4h)</option>
@@ -4608,8 +4690,8 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 </div>
 
                 <div class="form-group" style="margin-bottom:12px;">
-                    <label style="font-size:12px; font-weight:700; color:#0F172A; display:flex; align-items:center; gap:6px; margin-bottom:4px;">
-                        <span>📋 Solución Técnica Propuesta (Pasos Operativos a Seguir)</span>
+                    <label id="hitlLblSolucion" style="font-size:12px; font-weight:700; color:#0F172A; display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                        <span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención)</span>
                     </label>
                     <textarea id="hitlRegSolucion" class="form-control" rows="4" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:500; line-height:1.45; font-family:var(--font-sans);" readonly></textarea>
                 </div>
@@ -4618,7 +4700,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
                 <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:12px; margin-bottom:16px;">
                     <div class="form-group">
-                        <label style="font-size:12px; font-weight:700; color:#0F172A;">Técnico / Operador que Autoriza el Alta</label>
+                        <label id="hitlLblOperador" style="font-size:12px; font-weight:700; color:#0F172A;">Responsable Asignado para Atención</label>
                         <input type="text" id="hitlRegOperador" class="form-control" value="Christian Morales (Tech Lead)" readonly style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600;">
                     </div>
                     <div class="form-group">
@@ -4628,8 +4710,8 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:10px;">
-                    <button type="button" class="btn-reset-filters" style="padding:9px 16px; font-size:12.5px; font-weight:600; color:#1E293B !important; background:#FFFFFF; border:1px solid #CBD5E1;" onclick="cerrarModalConfirmarRegistro()">❌ Descartar Consulta</button>
-                    <button type="button" id="btnEjecutarConfirmarRegistro" class="btn-submit" style="background:#1E3A8A; color:#FFFFFF !important; border:1px solid #1E3A8A; padding:9px 18px; width:auto; font-size:12.5px;" onclick="ejecutarConfirmarRegistro()">✅ Confirmar y Registrar Ticket</button>
+                    <button type="button" id="btnDescartarModalRegistro" class="btn-reset-filters" style="padding:9px 16px; font-size:12.5px; font-weight:600; color:#1E293B !important; background:#FFFFFF; border:1px solid #CBD5E1;" onclick="cerrarModalConfirmarRegistro()">❌ Cancelar (Ya no requiero ticket)</button>
+                    <button type="button" id="btnEjecutarConfirmarRegistro" class="btn-submit" style="background:#1E3A8A; color:#FFFFFF !important; border:1px solid #1E3A8A; padding:9px 18px; width:auto; font-size:12.5px;" onclick="ejecutarConfirmarRegistro()">✅ Enviar Solicitud a Soporte Técnico</button>
                 </div>
             </div>
         </div>
