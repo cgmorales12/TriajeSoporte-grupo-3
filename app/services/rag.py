@@ -61,7 +61,7 @@ def _resolver_url_manual(doc_id: str, url_meta: Optional[str] = None) -> str:
         return URLS_REALES_MANUALES[doc_id]
     if url_meta and "conectatec.edu.ec" not in url_meta and "conectatec.local" not in url_meta:
         return url_meta
-    return f"https://github.com/cgmorales12/conectatec-grupo-3/blob/main/data/raw/{doc_id.lower()}.md"
+    return f"https://github.com/cgmorales12/TriajeSoporte-grupo-3/blob/main/data/raw/{doc_id.lower()}.md"
 
 
 def _limpiar_fragmento_rag(doc_texto: str, doc_id: str = "") -> str:

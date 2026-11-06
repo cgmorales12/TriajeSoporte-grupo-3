@@ -2,7 +2,7 @@
 > **Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda Inteligente con RAG y Agente de Gestión de Incidentes**  
 > **Seminario de Titulación:** Ingeniería de Software con IA Generativa — Universidad Regional Autónoma de Los Andes (UNIANDES)  
 > **Docente Evaluador:** Ing. Heyler Fabio Guaza (Mg. en Ciberseguridad · OPD · Abogado)  
-> **Repositorio Oficial en GitHub:** [https://github.com/cgmorales12/conectatec-grupo-3#readme](https://github.com/cgmorales12/conectatec-grupo-3#readme)  
+> **Repositorio Oficial en GitHub:** [https://github.com/cgmorales12/TriajeSoporte-grupo-3](https://github.com/cgmorales12/TriajeSoporte-grupo-3)  
 > **Despliegue en Producción (Azure Container Apps):** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io)  
 
 ---
@@ -97,8 +97,8 @@ flowchart TD
 
 ### 3.2. Clonar el Repositorio
 ```bash
-git clone https://github.com/cgmorales12/conectatec-grupo-3.git
-cd conectatec-grupo-3
+git clone https://github.com/cgmorales12/TriajeSoporte-grupo-3.git
+cd TriajeSoporte-grupo-3
 ```
 
 ### 3.3. Crear y Activar Entorno Virtual
