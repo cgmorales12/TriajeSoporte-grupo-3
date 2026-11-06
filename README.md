@@ -3,7 +3,9 @@
 > **Seminario de Titulación:** Ingeniería de Software con IA Generativa — Universidad Regional Autónoma de Los Andes (UNIANDES)  
 > **Docente Evaluador:** Ing. Heyler Fabio Guaza (Mg. en Ciberseguridad · OPD · Abogado)  
 > **Repositorio Oficial en GitHub:** [https://github.com/cgmorales12/TriajeSoporte-grupo-3](https://github.com/cgmorales12/TriajeSoporte-grupo-3)  
-> **Healthcheck Operativo:** `GET /health` (Devuelve HTTP 200 OK y arquitectura del sistema)  
+> **Despliegue en la Nube (Render Cloud):** [https://triajesoporte-grupo-3.onrender.com](https://triajesoporte-grupo-3.onrender.com)  
+> **Endpoint de Salud / Healthcheck:** [https://triajesoporte-grupo-3.onrender.com/health](https://triajesoporte-grupo-3.onrender.com/health)  
+> **Tablero Web en Vivo:** [https://triajesoporte-grupo-3.onrender.com/tablero](https://triajesoporte-grupo-3.onrender.com/tablero)  
 
 ---
 
@@ -151,14 +153,12 @@ streamlit run frontend/app.py
 
 ## ☁️ 4. Cómo se Despliega y URL Pública
 
-### 4.1. Despliegue en la Nube (Render / Azure / Docker Multi-stage)
-El sistema está completamente preparado para despliegue Cloud-Native continuo bajo alta disponibilidad:
-- **Manifiestos Incluidos en el Repositorio:** `render.yaml`, `Procfile` y `Dockerfile` multi-stage optimizado en la raíz del proyecto.
-- **Despliegue Automático en Render.com (Plan Gratuito):**
-  1. Conectar la cuenta de GitHub al repositorio [`cgmorales12/TriajeSoporte-grupo-3`](https://github.com/cgmorales12/TriajeSoporte-grupo-3).
-  2. Render detecta automáticamente `render.yaml` o el `Procfile` y asigna el comando de inicio `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
-  3. Configurar las variables de entorno en el panel (`GEMINI_API_KEY` y `GROQ_API_KEY`).
-  4. La URL pública del servicio queda activa 24/7 (ej: `https://triajesoporte-grupo-3.onrender.com`).
+### 4.1. Despliegue en la Nube Operativo (Render Cloud)
+El sistema se encuentra desplegado y activo en la nube bajo el plan gratuito de Render:
+- **URL Pública del Servicio:** [https://triajesoporte-grupo-3.onrender.com](https://triajesoporte-grupo-3.onrender.com)
+- **Endpoint de Salud / Healthcheck:** [https://triajesoporte-grupo-3.onrender.com/health](https://triajesoporte-grupo-3.onrender.com/health)
+- **Tablero Web Kanban:** [https://triajesoporte-grupo-3.onrender.com/tablero](https://triajesoporte-grupo-3.onrender.com/tablero)
+- **Documentación Swagger / OpenAPI:** [https://triajesoporte-grupo-3.onrender.com/docs](https://triajesoporte-grupo-3.onrender.com/docs)
 
 ### 4.2. Endpoint de Salud / Healthcheck (`/health`)
 El backend implementa el endpoint canónico de monitoreo operativo según RFC 9457:

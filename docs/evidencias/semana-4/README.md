@@ -38,7 +38,7 @@ El control de calidad (QA) y auditoría de ciberseguridad liderado por Amalia Ig
 | **Grupo y Proyecto Declarado** | ✅ CUMPLIDO | Grupo 3 · Caso N.º 03 (`Triaje Soporte`) |
 | **Integrantes Registrados** | ✅ CUMPLIDO | AMALIA IGUASNIA // LUIS RIBERA // CHRISTIAN MORALES |
 | **Repositorio GitHub Oficial** | ✅ CUMPLIDO | `https://github.com/cgmorales12/TriajeSoporte-grupo-3` |
-| **URL Pública con `/health`** | ✅ CUMPLIDO | Endpoint `/health` responde `{"status": "ok", ...}` conforme al RFC 9457 |
+| **URL Pública con `/health`** | ✅ CUMPLIDO | [`https://triajesoporte-grupo-3.onrender.com/health`](https://triajesoporte-grupo-3.onrender.com/health) responde HTTP 200 OK conforme a RFC 9457 |
 | **RAG sobre 15 Manuales Oficiales** | ✅ CUMPLIDO | ChromaDB con 90 fragmentos estructurados con metadatos de vigencia |
 | **HITL (Confirmación Humana)** | ✅ CUMPLIDO | Interfaz modal interactiva que previene el registro sin validación humana |
 | **Manejo de Errores RFC 9457** | ✅ CUMPLIDO | Payloads estructurados con `type`, `title`, `status`, `detail` e `instance` |
