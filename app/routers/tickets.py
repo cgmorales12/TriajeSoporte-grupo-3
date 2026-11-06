@@ -533,8 +533,8 @@ def confirmar_derivacion_cuadrilla_endpoint(ticket_id: int, payload: ConfirmarDe
     )
 
 
-@router.post("/v1/tickets/restablecer-ejemplos", summary="Restablece los 20 tickets de demostración oficiales (5 por estado)")
-@router.post("/tickets/restablecer-ejemplos", summary="Alias para restablecer 20 tickets")
+@router.post("/restablecer-ejemplos", summary="Restablece los 20 tickets de demostración oficiales (5 por estado)")
+@router.get("/restablecer-ejemplos", summary="Permite restablecer también vía GET desde el navegador")
 def restablecer_ejemplos():
     """Restablece exactamente 20 tickets didácticos (5 por columna del Kanban)."""
     from app.database import sembrar_tickets_demo, _obtener_conexion
