@@ -95,6 +95,149 @@ def _limpiar_fragmento_rag(doc_texto: str, doc_id: str = "") -> str:
     return texto_limpio if texto_limpio else doc_texto.strip()
 
 
+def redactar_solucion_conversacional_para_usuario(
+    fragmento_manual: str,
+    doc_id: str,
+    requiere_visita_campo: bool = False
+) -> str:
+    """
+    Convierte el procedimiento técnico interno de los manuales (escrito en 3ra persona para el técnico de TI)
+    en una guía de autoatención clara, empática y conversacional dirigida al usuario final (en 2da persona),
+    diferenciando lo que el usuario puede verificar de lo que soporte técnico resolverá tras registrar el ticket.
+    """
+    doc_norm = (doc_id or "").upper().replace("_", "-")
+
+    if requiere_visita_campo or "DOC-10" in doc_norm:
+        return (
+            "Se ha detectado un posible fallo físico en los componentes de su estación de trabajo.\n"
+            "1. Por precaución y seguridad, apague el equipo y desconéctelo del tomacorriente.\n"
+            "2. No intente encenderlo nuevamente ni manipular cables internos.\n"
+            "3. Al confirmar este ticket, un técnico de soporte presencial acudirá a su puesto de trabajo con piezas de recambio."
+        )
+
+    if "DOC-01" in doc_norm:
+        return (
+            "Si ingresó erróneamente su clave más de 5 veces consecutivas, su cuenta se bloqueó automáticamente durante 30 minutos por directiva de seguridad.\n"
+            "1. Si recuerda su contraseña actual, puede esperar el tiempo de seguridad o confirmar este ticket para que soporte la desbloquee de inmediato.\n"
+            "2. Al enviar esta solicitud, nuestro equipo técnico accederá al sistema para reactivar su usuario.\n"
+            "3. Si no recuerda su contraseña, el técnico le facilitará una clave provisional segura para que cree una nueva."
+        )
+
+    if "DOC-02" in doc_norm:
+        return (
+            "Si el cliente FortiClient VPN no logra conectar o se detiene con error de negociación:\n"
+            "1. Cierre el programa FortiClient por completo desde la barra de tareas y vuelva a abrirlo.\n"
+            "2. Verifique que su computadora cuente con conexión a internet navegando en cualquier página web.\n"
+            "3. Al enviar este ticket, el equipo de soporte técnico revisará su acceso remoto y renovará el certificado digital si es necesario."
+        )
+
+    if "DOC-03" in doc_norm:
+        return (
+            "Si la impresora multifunción de red no responde o tiene documentos colgados:\n"
+            "1. Por favor evite seguir enviando impresiones para no saturar la cola de la máquina.\n"
+            "2. Compruebe que la bandeja tenga papel suficiente y no presente luces rojas de error o atasco.\n"
+            "3. Al enviar este ticket, soporte técnico reiniciará el servicio de impresión de la red para liberar sus documentos."
+        )
+
+    if "DOC-04" in doc_norm:
+        return (
+            "Si no puede abrir la carpeta compartida o la unidad de red aparece con una cruz roja:\n"
+            "1. Guarde y cierre cualquier documento abierto y reinicie la sesión de su computadora.\n"
+            "2. Compruebe que el cable de red o Wi-Fi corporativo esté funcionando normalmente.\n"
+            "3. Al enviar este ticket, soporte técnico verificará sus permisos de acceso en el servidor de archivos."
+        )
+
+    if "DOC-05" in doc_norm:
+        return (
+            "Si el sistema contable ERP muestra que su sesión quedó colgada o bloqueada por desconexión previa:\n"
+            "1. Cierre la ventana del programa ERP en su equipo de trabajo.\n"
+            "2. Espere 2 a 3 minutos mientras el servidor intenta liberar la conexión anterior.\n"
+            "3. Al enviar este ticket, el administrador del sistema cerrará la sesión huérfana en el servidor para que pueda facturar nuevamente."
+        )
+
+    if "DOC-06" in doc_norm:
+        return (
+            "Por políticas institucionales de ciberseguridad, ciertos accesos a puertos USB o sitios externos están regulados:\n"
+            "1. No intente forzar la conexión de dispositivos o memorias no autorizadas.\n"
+            "2. Al registrar su ticket, detalle su necesidad de trabajo para que el oficial de seguridad evalúe autorizar un acceso temporal."
+        )
+
+    if "DOC-07" in doc_norm:
+        return (
+            "Si su computadora indica que no tiene conexión a internet por cable:\n"
+            "1. Verifique que el cable de red detrás de su equipo esté firmemente conectado (debe encenderse una pequeña luz en el puerto).\n"
+            "2. Desconecte y vuelva a enchufar el conector con firmeza hasta escuchar un 'clic'.\n"
+            "3. Al enviar este ticket, soporte técnico comprobará el punto de red de su puesto o el conmutador de la oficina."
+        )
+
+    if "DOC-08" in doc_norm:
+        return (
+            "Si su laptop se desconecta intermitentemente del Wi-Fi de la empresa:\n"
+            "1. En la lista de redes Wi-Fi, haga clic derecho en la red corporativa y elija 'Olvidar red'.\n"
+            "2. Vuelva a conectarse ingresando su usuario y clave institucional.\n"
+            "3. Si la desconexión continúa, envíe este ticket para renovar el certificado de red en su equipo."
+        )
+
+    if "DOC-09" in doc_norm:
+        return (
+            "Si el antivirus corporativo emitió una advertencia o bloqueó una descarga sospechosa:\n"
+            "1. Por seguridad de su información y de la empresa, no intente abrir el archivo bloqueado.\n"
+            "2. Desconecte su equipo de la red momentáneamente (desconecte el cable o desactive el Wi-Fi).\n"
+            "3. Envíe este reporte para que el técnico de seguridad analice la amenaza y limpie su estación de trabajo."
+        )
+
+    if "DOC-11" in doc_norm:
+        return (
+            "Si su correo Outlook indica que el almacenamiento o buzón está al límite de capacidad:\n"
+            "1. Ingrese a la carpeta 'Elementos eliminados' y haga clic en 'Vaciar carpeta'.\n"
+            "2. Elimine correos de publicidad o mensajes antiguos con archivos adjuntos pesados.\n"
+            "3. Al enviar este ticket, un técnico le asistirá de forma remota a archivar mensajes antiguos en su disco local sin perderlos."
+        )
+
+    if "DOC-12" in doc_norm:
+        return (
+            "Para solicitar un nuevo acceso a sistemas, carpetas compartidas o cuentas institucionales:\n"
+            "1. Asegúrese de contar con la autorización de su jefatura de departamento.\n"
+            "2. Envíe este ticket indicando qué programa, carpeta o sistema requiere utilizar.\n"
+            "3. El área de soporte técnico configurará su perfil con los permisos correspondientes."
+        )
+
+    if "DOC-13" in doc_norm:
+        return (
+            "Si eliminó o perdió accidentalmente un archivo importante de su trabajo:\n"
+            "1. Evite guardar nuevos documentos en esa misma carpeta para no sobreescribir información.\n"
+            "2. Al enviar este ticket, indique el nombre aproximado del archivo y la fecha en que lo utilizó por última vez.\n"
+            "3. El equipo de soporte técnico buscará en las copias de seguridad (backup) para restaurar su documento."
+        )
+
+    if "DOC-14" in doc_norm:
+        return (
+            "Si su monitor, teclado o mouse presentan fallos o no responden adecuadamente:\n"
+            "1. Desconecte y vuelva a conectar con firmeza el cable USB o de video a la computadora.\n"
+            "2. Pruebe conectar el periférico en otro puerto disponible del equipo.\n"
+            "3. Al enviar este ticket, soporte técnico le facilitará un reemplazo funcional."
+        )
+
+    if "DOC-15" in doc_norm:
+        return (
+            "Incidente de servicio reportado en la infraestructura de la empresa:\n"
+            "1. Se ha clasificado su solicitud con prioridad según el impacto en las actividades de su área.\n"
+            "2. Al enviar este ticket, el personal técnico especializado atenderá su requerimiento en el tiempo estimado."
+        )
+
+    # Heurística de conversión para cualquier otro texto libre o procedimiento manual
+    texto_adaptado = fragmento_manual or ""
+    texto_adaptado = re.sub(r"(?i)\bsi el colaborador\b", "Si ingresó", texto_adaptado)
+    texto_adaptado = re.sub(r"(?i)\bel técnico de ti accede a\b", "Al enviar este ticket, el equipo técnico accederá a", texto_adaptado)
+    texto_adaptado = re.sub(r"(?i)\bel técnico accede a\b", "Soporte técnico accederá a", texto_adaptado)
+    texto_adaptado = re.sub(r"(?i)\blocaliza la cuenta del usuario y marca la opción «desbloquear la cuenta»\.?", "Reactivará su cuenta de usuario en el sistema.", texto_adaptado)
+    texto_adaptado = re.sub(r"(?i)\bsi el usuario recuerda su clave, puede intentar el inicio de sesión inmediatamente tras el desbloqueo\.?", "Si recuerda su clave, podrá iniciar sesión inmediatamente tras el desbloqueo; si la olvidó, se le facilitará una clave temporal.", texto_adaptado)
+    texto_adaptado = re.sub(r"(?i)\bel usuario debe\b", "Le recomendamos", texto_adaptado)
+    texto_adaptado = re.sub(r"(?i)\bel usuario puede\b", "Usted puede", texto_adaptado)
+
+    return texto_adaptado.strip()
+
+
 # Términos que disparan intervención física presencial del técnico de TI en el puesto de trabajo
 TERMINOS_DESPACHO_PRESENCIAL = [
     "humo", "olor a quemado", "chispa", "disco dañado", "ruido metálico",
@@ -353,16 +496,23 @@ def buscar_solucion(
                     url=url_canon
                 ))
 
-    # 5. Formular Solución Propuesta Determinista
+    # 5. Formular Solución Propuesta Determinista Conversacional
     if requiere_visita_campo:
-        solucion = (
-            "Se detectó un fallo crítico de hardware en la estación de trabajo (DOC-10). "
-            "Se ha generado un ticket con Prioridad Alta para atención presencial inmediata por parte del técnico de TI en el puesto del colaborador."
+        solucion = redactar_solucion_conversacional_para_usuario(
+            "", doc_id="DOC-10", requiere_visita_campo=True
         )
     elif citas:
-        solucion = citas[0].fragmento_aplicado
+        doc_principal = citas[0].documento_id
+        solucion = redactar_solucion_conversacional_para_usuario(
+            citas[0].fragmento_aplicado,
+            doc_id=doc_principal,
+            requiere_visita_campo=requiere_visita_campo
+        )
     else:
-        solucion = "Proceda a verificar los cables y reiniciar el equipo (DOC-10). Si el inconveniente persiste, el ticket será derivado al técnico de TI."
+        solucion = (
+            "Compruebe las conexiones físicas de su equipo y reinícielo. "
+            "Al confirmar este ticket, el equipo de soporte técnico le asistirá para resolver el inconveniente."
+        )
 
     return DiagnosticoRAG(
         solucion_propuesta=solucion,

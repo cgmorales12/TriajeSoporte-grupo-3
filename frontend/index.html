@@ -4015,6 +4015,115 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
         window._propuestaHITLActiva = null;
 
+        function humanizarSolucionConversacional(solTexto, propuesta) {
+            if (!solTexto) return '';
+            let txt = solTexto.trim();
+
+            const docId = (propuesta && propuesta.citas && propuesta.citas.length > 0)
+                ? (propuesta.citas[0].documento_id || '')
+                : '';
+            const docNorm = docId.toUpperCase();
+
+            // Si es DOC-01 o trata de bloqueo de cuenta / contraseña:
+            if (docNorm.includes('DOC-01') || txt.toLowerCase().includes('active directory') || txt.toLowerCase().includes('desbloquear la cuenta') || txt.toLowerCase().includes('ingresó erróneamente su clave')) {
+                return "Si ingresó erróneamente su clave más de 5 veces consecutivas, su cuenta se bloqueó automáticamente durante 30 minutos por directiva de seguridad.\n" +
+                       "1. Si recuerda su contraseña actual, puede esperar el tiempo de seguridad o confirmar este ticket para que soporte la desbloquee de inmediato.\n" +
+                       "2. Al enviar esta solicitud, nuestro equipo técnico accederá al sistema para reactivar su usuario.\n" +
+                       "3. Si no recuerda su contraseña, el técnico le facilitará una clave provisional segura para que cree una nueva.";
+            }
+
+            if (docNorm.includes('DOC-02') || txt.toLowerCase().includes('forticlient') || txt.toLowerCase().includes('vpn')) {
+                return "Si la conexión VPN FortiClient no conecta o muestra error de negociación TLS:\n" +
+                       "1. Cierre el programa FortiClient completamente desde la barra de tareas y vuelva a abrirlo.\n" +
+                       "2. Verifique que su computadora cuente con conexión a internet navegando en cualquier página web.\n" +
+                       "3. Al enviar este ticket, soporte técnico revisará su acceso remoto y actualizará el certificado de seguridad de la empresa si es necesario.";
+            }
+
+            if (docNorm.includes('DOC-03') || txt.toLowerCase().includes('impresora') || txt.toLowerCase().includes('spooler')) {
+                return "Si la impresora compartida no responde o tiene documentos colgados:\n" +
+                       "1. Por favor evite seguir enviando impresiones para no saturar la cola de la máquina.\n" +
+                       "2. Compruebe que la bandeja tenga papel suficiente y no muestre luces rojas de error o atasco.\n" +
+                       "3. Al enviar este ticket, soporte técnico reiniciará el servicio de impresión de la red para liberar sus documentos.";
+            }
+
+            if (docNorm.includes('DOC-04') || txt.toLowerCase().includes('carpeta compartida') || txt.toLowerCase().includes('smb') || txt.toLowerCase().includes('nas')) {
+                return "Si no puede abrir la carpeta compartida o la unidad de red aparece con una cruz roja:\n" +
+                       "1. Guarde y cierre cualquier documento abierto y reinicie la sesión de su computadora.\n" +
+                       "2. Compruebe que el cable de red o Wi-Fi corporativo esté funcionando normalmente.\n" +
+                       "3. Al enviar este ticket, soporte técnico verificará sus permisos de acceso en el servidor de archivos.";
+            }
+
+            if (docNorm.includes('DOC-05') || txt.toLowerCase().includes('sistema contable') || txt.toLowerCase().includes('erp')) {
+                return "Si el sistema contable ERP muestra que su sesión quedó colgada o bloqueada por desconexión previa:\n" +
+                       "1. Cierre la ventana del programa ERP en su equipo de trabajo.\n" +
+                       "2. Espere 2 a 3 minutos mientras el servidor intenta liberar la conexión anterior.\n" +
+                       "3. Al enviar este ticket, el administrador del sistema cerrará la sesión huérfana en el servidor para que pueda facturar nuevamente.";
+            }
+
+            if (docNorm.includes('DOC-07') || txt.toLowerCase().includes('ethernet') || txt.toLowerCase().includes('cable de red') || txt.toLowerCase().includes('dns_probe')) {
+                return "Si su computadora indica que no tiene conexión a internet por cable:\n" +
+                       "1. Verifique que el cable de red detrás de su equipo esté firmemente conectado (debe encenderse una pequeña luz en el conector).\n" +
+                       "2. Desconecte y vuelva a enchufar el conector con firmeza hasta escuchar un 'clic'.\n" +
+                       "3. Al enviar este ticket, soporte técnico comprobará el punto de red de su puesto o el conmutador de la oficina.";
+            }
+
+            if (docNorm.includes('DOC-08') || txt.toLowerCase().includes('wifi') || txt.toLowerCase().includes('wi-fi')) {
+                return "Si su laptop se desconecta intermitentemente del Wi-Fi de la empresa:\n" +
+                       "1. En la lista de redes Wi-Fi, haga clic derecho en la red corporativa y elija 'Olvidar red'.\n" +
+                       "2. Vuelva a conectarse ingresando su usuario y clave institucional.\n" +
+                       "3. Si la desconexión continúa, envíe este ticket para renovar el certificado de red en su equipo.";
+            }
+
+            if (docNorm.includes('DOC-09') || txt.toLowerCase().includes('antivirus') || txt.toLowerCase().includes('defender')) {
+                return "Si el antivirus corporativo emitió una advertencia o bloqueó una descarga sospechosa:\n" +
+                       "1. Por seguridad de su información y de la empresa, no intente abrir el archivo bloqueado.\n" +
+                       "2. Desconecte su equipo de la red momentáneamente (desconecte el cable o desactive el Wi-Fi).\n" +
+                       "3. Envíe este reporte para que el técnico de seguridad analice la amenaza y limpie su estación de trabajo.";
+            }
+
+            if (docNorm.includes('DOC-10') || txt.toLowerCase().includes('pantalla azul') || txt.toLowerCase().includes('bsod') || txt.toLowerCase().includes('fuente de poder')) {
+                return "Se ha detectado un posible fallo físico en los componentes de su estación de trabajo.\n" +
+                       "1. Por precaución y seguridad, apague el equipo y desconéctelo del tomacorriente.\n" +
+                       "2. No intente encenderlo nuevamente ni manipular cables internos.\n" +
+                       "3. Al confirmar este ticket, un técnico de soporte presencial acudirá a su puesto de trabajo con piezas de recambio.";
+            }
+
+            if (docNorm.includes('DOC-11') || txt.toLowerCase().includes('buzón') || txt.toLowerCase().includes('buzon') || txt.toLowerCase().includes('outlook')) {
+                return "Si su correo Outlook indica que el almacenamiento o buzón está al límite de capacidad:\n" +
+                       "1. Ingrese a la carpeta 'Elementos eliminados' y haga clic en 'Vaciar carpeta'.\n" +
+                       "2. Elimine correos de publicidad o mensajes antiguos con archivos adjuntos pesados.\n" +
+                       "3. Al enviar este ticket, un técnico le asistirá de forma remota a archivar mensajes antiguos en su disco local sin perderlos.";
+            }
+
+            if (docNorm.includes('DOC-13') || txt.toLowerCase().includes('recuperación') || txt.toLowerCase().includes('recuperacion') || txt.toLowerCase().includes('borrada')) {
+                return "Si eliminó o perdió accidentalmente un archivo importante de su trabajo:\n" +
+                       "1. Evite guardar nuevos documentos en esa misma carpeta para no sobreescribir información.\n" +
+                       "2. Al enviar este ticket, indique el nombre aproximado del archivo y la fecha en que lo utilizó por última vez.\n" +
+                       "3. El equipo de soporte técnico buscará en las copias de seguridad (backup) para restaurar su documento.";
+            }
+
+            if (docNorm.includes('DOC-14') || txt.toLowerCase().includes('monitor') || txt.toLowerCase().includes('pantalla') || txt.toLowerCase().includes('teclado')) {
+                return "Si su monitor, teclado o mouse presentan fallos o no responden adecuadamente:\n" +
+                       "1. Desconecte y vuelva a conectar con firmeza el cable USB o de video a la computadora.\n" +
+                       "2. Pruebe conectar el periférico en otro puerto disponible del equipo.\n" +
+                       "3. Al enviar este ticket, soporte técnico le facilitará un reemplazo funcional.";
+            }
+
+            // Sustituciones automáticas para cualquier otro caso genérico:
+            txt = txt.replace(/Si el colaborador ingresó/gi, 'Si ingresó')
+                     .replace(/El técnico de TI accede a la consola de usuarios de Active Directory\.?/gi, 'Al registrar este ticket, el equipo técnico accederá al sistema para reactivar su usuario.')
+                     .replace(/El técnico de TI accede a/gi, 'Al enviar este ticket, el equipo técnico accederá a')
+                     .replace(/El técnico accede a/gi, 'Soporte técnico accederá a')
+                     .replace(/Localiza la cuenta del usuario y marca la opción «Desbloquear la cuenta»\.?/gi, 'Reactivará su cuenta de usuario en el sistema institucional.')
+                     .replace(/Si el usuario recuerda su clave, puede intentar el inicio de sesión inmediatamente tras el desbloqueo\.?/gi, 'Si recuerda su clave, podrá iniciar sesión inmediatamente una vez desbloqueado; de lo contrario, se le asignará una clave temporal.')
+                     .replace(/El usuario debe/gi, 'Le recomendamos')
+                     .replace(/El usuario puede/gi, 'Usted puede')
+                     .replace(/el colaborador/gi, 'usted')
+                     .replace(/al colaborador/gi, 'a usted');
+
+            return txt;
+        }
+
         function abrirModalConfirmarRegistro(propuesta) {
             window._propuestaHITLActiva = propuesta;
             document.getElementById('hitlRegCodigo').textContent = propuesta.ticket_codigo_propuesto;
@@ -4044,11 +4153,17 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 }
             }
 
-            // Limpieza preventiva de la solución para garantizar pasos operativos limpios y claros
+            // Limpieza y adaptación preventiva de la solución al perfil de usuario vs TIC
             let solTexto = (propuesta.solucion_propuesta || '').trim();
             solTexto = solTexto.split('\n')
                 .filter(l => !l.toLowerCase().startsWith('términos clave:') && !l.toLowerCase().startsWith('terminos clave:'))
                 .join('\n').trim();
+
+            if (!esTIC) {
+                solTexto = humanizarSolucionConversacional(solTexto, propuesta);
+            } else if (propuesta.citas && propuesta.citas.length > 0 && propuesta.citas[0].fragmento_aplicado) {
+                solTexto = propuesta.citas[0].fragmento_aplicado;
+            }
             document.getElementById('hitlRegSolucion').value = solTexto;
 
             // 1. Título adaptativo de la modal
@@ -4108,7 +4223,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             const lblSol = document.getElementById('hitlLblSolucion');
             if (lblSol) lblSol.innerHTML = esTIC 
                 ? '<span>📋 Solución Técnica Propuesta (Pasos Operativos a Seguir)</span>'
-                : '<span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención):</span>';
+                : '<span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención y Soporte):</span>';
 
             const lblOp = document.getElementById('hitlLblOperador');
             if (lblOp) lblOp.textContent = esTIC ? 'Técnico / Operador que Autoriza el Alta' : 'Responsable Asignado para Atención';
@@ -4743,7 +4858,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
                 <div class="form-group" style="margin-bottom:12px;">
                     <label id="hitlLblSolucion" style="font-size:12px; font-weight:700; color:#0F172A; display:flex; align-items:center; gap:6px; margin-bottom:4px;">
-                        <span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención)</span>
+                        <span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención y Soporte)</span>
                     </label>
                     <textarea id="hitlRegSolucion" class="form-control" rows="4" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:500; line-height:1.45; font-family:var(--font-sans);" readonly></textarea>
                 </div>

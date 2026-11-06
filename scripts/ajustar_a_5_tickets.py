@@ -35,8 +35,8 @@ TICKETS_PYME = [
         "urgencia": "Alta",
         "prioridad": "Media",
         "sla": 120,
-        "desc_sla": "Atención técnica en menos de 2 horas (SLA Matriz ITIL)",
-        "solucion": "1. Verifique su identidad con el técnico de soporte.\n2. El técnico reactivará su usuario en el sistema.\n3. Inicie sesión con la clave temporal y cree una contraseña personal nueva de al menos 12 caracteres.",
+        "desc_sla": "Atención técnica estimada en menos de 2 horas",
+        "solucion": "1. Si recuerda su contraseña, espere el tiempo de seguridad o envíe este ticket para desbloquearla de inmediato.\n2. Nuestro equipo técnico reactivará su usuario en el sistema.\n3. Si olvidó su clave, se le facilitará una contraseña provisional segura para que cree una nueva.",
         "citas": [{
             "documento_id": "DOC-01_restablecimiento_contrasenas.md",
             "titulo_documento": "Procedimiento para Restablecimiento de Contraseñas de Dominio Windows y Correo Corporativo",
