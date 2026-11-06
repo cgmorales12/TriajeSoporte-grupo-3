@@ -228,7 +228,7 @@ async def manejador_error_validacion_422(request: Request, exc: RequestValidatio
         "body -> descripcion_problema": "Descripción del problema",
         "body -> nombre_cliente": "Nombre del abonado",
         "body -> email_cliente": "Correo electrónico",
-        "body -> codigo_abonado": "Código de abonado"
+        "body -> codigo_abonado": "Departamento / Puesto"
     }
     campo = nombres_campos.get(campo_raw, campo_raw)
     

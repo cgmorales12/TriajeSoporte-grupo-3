@@ -1696,19 +1696,23 @@
     <header>
         <div class="header-title">
             <h1>🏢 Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME</h1>
-            <p>Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda y Triaje Inteligente de Soporte Microinformático TIC (60 Colaboradores) · TecnoAula</p>
+            <p id="subHeaderTexto">Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda y Triaje Inteligente de Soporte Microinformático TIC (60 Colaboradores) · TecnoAula</p>
         </div>
         <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
             <div id="iaStatusBadge" class="ia-status-badge">
                 <span class="dot-green"></span>
                 <span id="iaStatusText">🟢 Proveedor: Google Gemini (gemini-3.5-flash-lite)</span>
             </div>
-            <!-- Acceso Directo de Gestión TIC (Sin Barrera de Login para Evaluación y Defensa) -->
-            <div id="ticNavContainer" style="display:flex; align-items:center; gap:8px;">
-                <button type="button" class="btn-tic-action" onclick="abrirGestorManualesTIC('catalogo')" title="Consultar y Administrar los 15 manuales técnicos RAG">
+            <!-- Acceso Directo de Gestión TIC (Solo visible en Vista TIC) -->
+            <div id="ticNavContainer" style="display:none; align-items:center; gap:8px;">
+                <button type="button" id="btnNavManualesRAG" class="btn-tic-action" onclick="abrirGestorManualesTIC('catalogo')" title="Consultar y Administrar los 15 manuales técnicos RAG">
                     📚 15 Manuales RAG
                 </button>
             </div>
+            <!-- Botón para alternar entre Vista Usuario y Vista Personal TIC -->
+            <button type="button" id="btnToggleVista" class="btn-tic-action" style="background:#0D9488; font-weight:700;" onclick="alternarVista()" title="Alternar entre Vista Usuario y Vista Personal TIC">
+                👨‍💻 Vista Personal TIC
+            </button>
             <!-- Selector de Modo Oscuro / Modo Claro (Fondo Negro vs Blanco con Alto Contraste) -->
             <button type="button" id="btnToggleTheme" class="btn-theme-toggle" onclick="alternarTemaVisual()" title="Cambiar a Modo Oscuro (Fondo Negro)">
                 🌙 Modo Oscuro
@@ -1716,8 +1720,8 @@
         </div>
     </header>
 
-    <!-- Barra de Control: Simulación de Caída de la IA y Ataque en Vivo -->
-    <div class="chaos-bar">
+    <!-- Barra de Control: Simulación de Caída de la IA y Ataque en Vivo (Visible solo en Vista TIC) -->
+    <div id="chaosBarContainer" class="chaos-bar" style="display:none;">
         <div class="chaos-info">
             <strong>Simulador de Caída de la IA y Ataque</strong>
         </div>
@@ -1767,8 +1771,8 @@
                 <!-- Contenedor Accesible de Errores Comprensibles (RFC 9457) -->
                 <div id="formErrorContainer" class="form-error-banner" role="alert" aria-live="polite" style="display:none;"></div>
 
-                <!-- Control de Confirmación Humana Previa (HITL · OWASP LLM08) -->
-                <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:8px; padding:10px 12px; margin-bottom:12px;">
+                <!-- Control de Confirmación Humana Previa (HITL · OWASP LLM08 - Visible solo en Vista TIC) -->
+                <div id="boxFormHitl" style="display:none; background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:8px; padding:10px 12px; margin-bottom:12px;">
                     <label style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; color:#14532D; cursor:pointer;">
                         <input type="checkbox" id="chkModoHITL" checked style="width:16px; height:16px; accent-color:#16A34A;">
                         <span>🛡️ Confirmación Humana Previa (HITL)</span>
@@ -1785,14 +1789,14 @@
             </form>
 
             <div class="quick-presets">
-                <p>Probar Casos de Soporte TIC para PYME:</p>
+                <p id="tituloPresets">Ejemplos:</p>
                 <button type="button" class="preset-btn" onclick="cargarPreset('ad_pass')">🔑 Clave AD Bloqueada (DOC-01)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('vpn')">🌐 Fallo VPN FortiClient (DOC-02)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('impresora')">🖨️ Atasco Impresora Red (DOC-03)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('erp')">📊 Sesión Colgada ERP (DOC-05)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('pc_falla')">🖥️ Pantalla Azul / Hardware (DOC-10)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('menu_almuerzo')">🍽️ Menú Almuerzo (Abstención)</button>
-                <button type="button" class="preset-btn preset-alucinacion" onclick="cargarPreset('alucinacion')" title="Carga un caso adverso de inyección y desactiva Gemini automáticamente">🌀 Inyección Prompt & Failover</button>
+                <button type="button" id="btnPresetInyeccion" class="preset-btn preset-alucinacion" onclick="cargarPreset('alucinacion')" title="Carga un caso adverso de inyección y desactiva Gemini automáticamente" style="display:none;">🌀 Inyección Prompt & Failover</button>
             </div>
         </aside>
 
@@ -2362,9 +2366,29 @@
                 hitlInfoHtml += `<div class="meta-row"><span class="meta-lbl">Despacho Físico:</span> <span class="badge-cuadrilla-despachada">👷 ${t.orden_despacho_id || 'ODT-SOPORTE-TIC'}</span></div>`;
             }
 
-            const esTIC = Boolean(window._sesionTIC && window._sesionTIC.token);
-            const botonEliminarHtml = esTIC ? 
+            const esModoTIC = (window._vistaActual === 'tic');
+            const esTIC = Boolean(window._sesionTIC && window._sesionTIC.token) || esModoTIC;
+            const botonEliminarHtml = esModoTIC ? 
                 `<button type="button" class="btn-eliminar-ticket" onclick="confirmarEliminarTicket(${t.id}, '${t.ticket_codigo}')" title="Eliminar ticket (Acción auditada bajo LOPDP)">🗑️</button>` : '';
+
+            const botonExplicabilidadHtml = esModoTIC ?
+                `<button type="button" class="exp-btn" onclick="abrirModalExplicabilidad(${t.id})">💡 ¿Por qué esta clasificación?</button>` : '';
+
+            const accionesHtml = esModoTIC ? `
+                <div class="ticket-actions">
+                    <button type="button" class="act-btn" style="background:#EFF6FF; color:#1E3A8A; border-color:#93C5FD; font-weight:700;" onclick="abrirModalConfirmarEnvio(${t.id})" title="Confirmación humana antes de enviar notificación oficial">✉️ Enviar Notif.</button>
+                    <button type="button" class="act-btn" style="background:#FFFBEB; color:#78350F; border-color:#FCD34D; font-weight:700;" onclick="abrirModalConfirmarDerivacion(${t.id})" title="Confirmación humana antes de derivar soporte presencial">🚨 Derivar Presencial</button>
+                    ${estado !== 'en_atencion' ? `<button class="act-btn" style="background:#F0FDF4; color:#14532D; border-color:#86EFAC; font-weight:700;" onclick="cambiarEstado(${t.id}, 'en_atencion')">⚙️ Atender</button>` : ''}
+                    ${estado !== 'escalado_cuadrilla' ? `<button class="act-btn" style="background:#FFF7ED; color:#7C2D12; border-color:#FDBA74; font-weight:700;" onclick="cambiarEstado(${t.id}, 'escalado_cuadrilla')">🚚 Presencial</button>` : ''}
+                    ${estado !== 'resuelto' ? `<button class="act-btn" style="background:#F0FDF4; color:#15803D; border-color:#86EFAC; font-weight:700;" onclick="cambiarEstado(${t.id}, 'resuelto')">✅ Resolver</button>` : ''}
+                    ${estado === 'resuelto' ? `<button class="act-btn" style="background:#FEF2F2; color:#7F1D1D; border-color:#FCA5A5; font-weight:700;" onclick="solicitarQuitarTicket(${t.id}, '${t.ticket_codigo}')" title="Quitar o archivar este ticket resuelto del tablero Kanban">🗑️ Quitar del Tablero</button>` : ''}
+                </div>
+            ` : `
+                <div style="margin-top:8px; padding-top:6px; border-top:1px dashed #CBD5E1; font-size:11.5px; color:#475569; display:flex; justify-content:space-between; align-items:center; font-weight:600;">
+                    <span>📌 Seguimiento de ticket:</span>
+                    <span style="color:#0284C7; font-weight:700;">${nivelTexto}</span>
+                </div>
+            `;
 
             card.innerHTML = `
                 <div class="ticket-header">
@@ -2385,15 +2409,8 @@
                     ${hitlInfoHtml}
                 </div>
                 <div class="ticket-cita">${citaTxt}</div>
-                <button type="button" class="exp-btn" onclick="abrirModalExplicabilidad(${t.id})">💡 ¿Por qué esta clasificación?</button>
-                <div class="ticket-actions">
-                    <button type="button" class="act-btn" style="background:#EFF6FF; color:#1E3A8A; border-color:#93C5FD; font-weight:700;" onclick="abrirModalConfirmarEnvio(${t.id})" title="Confirmación humana antes de enviar notificación oficial">✉️ Enviar Notif.</button>
-                    <button type="button" class="act-btn" style="background:#FFFBEB; color:#78350F; border-color:#FCD34D; font-weight:700;" onclick="abrirModalConfirmarDerivacion(${t.id})" title="Confirmación humana antes de derivar soporte presencial">🚨 Derivar Presencial</button>
-                    ${estado !== 'en_atencion' ? `<button class="act-btn" style="background:#F0FDF4; color:#14532D; border-color:#86EFAC; font-weight:700;" onclick="cambiarEstado(${t.id}, 'en_atencion')">⚙️ Atender</button>` : ''}
-                    ${estado !== 'escalado_cuadrilla' ? `<button class="act-btn" style="background:#FFF7ED; color:#7C2D12; border-color:#FDBA74; font-weight:700;" onclick="cambiarEstado(${t.id}, 'escalado_cuadrilla')">🚚 Presencial</button>` : ''}
-                    ${estado !== 'resuelto' ? `<button class="act-btn" style="background:#F0FDF4; color:#15803D; border-color:#86EFAC; font-weight:700;" onclick="cambiarEstado(${t.id}, 'resuelto')">✅ Resolver</button>` : ''}
-                    ${estado === 'resuelto' ? `<button class="act-btn" style="background:#FEF2F2; color:#7F1D1D; border-color:#FCA5A5; font-weight:700;" onclick="solicitarQuitarTicket(${t.id}, '${t.ticket_codigo}')" title="Quitar o archivar este ticket resuelto del tablero Kanban">🗑️ Quitar del Tablero</button>` : ''}
-                </div>
+                ${botonExplicabilidadHtml}
+                ${accionesHtml}
             `;
             return card;
         }
@@ -3439,11 +3456,28 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             document.getElementById('hitlRegSla').value = propuesta.sla_minutos;
             document.getElementById('hitlRegSolucion').value = propuesta.solucion_propuesta;
 
+            const esNoTecnica = (propuesta.categoria_propuesta === 'Solicitud No Técnica / Fuera de Alcance') ||
+                                (propuesta.prioridad_itil === 'Baja' && propuesta.sla_minutos >= 1440 && (!propuesta.citas || propuesta.citas.length === 0));
+
+            const alertaNoTecnica = document.getElementById('hitlAlertaNoTecnica');
+            const alertaNormal = document.getElementById('hitlAlertBoxNormal');
+            const btnRegistrar = document.getElementById('btnEjecutarConfirmarRegistro');
+
+            if (esNoTecnica) {
+                if (alertaNoTecnica) alertaNoTecnica.style.display = 'block';
+                if (alertaNormal) alertaNormal.style.display = 'none';
+                if (btnRegistrar) btnRegistrar.style.display = 'none';
+            } else {
+                if (alertaNoTecnica) alertaNoTecnica.style.display = 'none';
+                if (alertaNormal) alertaNormal.style.display = 'block';
+                if (btnRegistrar) btnRegistrar.style.display = 'inline-flex';
+            }
+
             const citasCont = document.getElementById('hitlRegCitasContainer');
             if (propuesta.citas && propuesta.citas.length > 0) {
                 citasCont.innerHTML = '<b>📖 Citas RAG asociadas al procedimiento:</b><br>' + propuesta.citas.map(c => `• <b>${c.documento_id}:</b> ${c.paso_exacto} — «${(c.fragmento_aplicado || '').slice(0, 95)}...»`).join('<br>');
             } else {
-                citasCont.innerHTML = '<i>Sin citas RAG asociadas (caso fuera de alcance o consulta administrativa).</i>';
+                citasCont.innerHTML = '<i>Sin citas RAG asociadas (caso fuera de alcance o solicitud no técnica).</i>';
             }
 
             document.getElementById('modalConfirmarRegistro').classList.add('activo');
@@ -3674,7 +3708,82 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             }
         }
 
-        // Inicializar estado de tema visual, simulación, sesión TIC y tickets
+        window._vistaActual = 'usuario';
+
+        function alternarVista(destino) {
+            if (destino) {
+                window._vistaActual = destino;
+            } else {
+                window._vistaActual = (window._vistaActual === 'usuario') ? 'tic' : 'usuario';
+            }
+            aplicarVistaActual();
+            try { localStorage.setItem('conectatec_vista_activa', window._vistaActual); } catch (e) {}
+            mostrarToast(window._vistaActual === 'tic' ? '👨‍💻 Vista Personal TIC Activada' : '👤 Vista Usuario Activada', 'info');
+        }
+
+        function aplicarVistaActual() {
+            const esTIC = (window._vistaActual === 'tic');
+            
+            // 1. Botón alternar vista en cabecera
+            const btnToggleVista = document.getElementById('btnToggleVista');
+            if (btnToggleVista) {
+                if (esTIC) {
+                    btnToggleVista.innerHTML = '👤 Vista Usuario';
+                    btnToggleVista.title = 'Cambiar a Portal de Autoatención del Usuario';
+                    btnToggleVista.style.background = '#2563EB';
+                } else {
+                    btnToggleVista.innerHTML = '👨‍💻 Vista TIC';
+                    btnToggleVista.title = 'Cambiar a Consola de Gestión Técnica TIC';
+                    btnToggleVista.style.background = '#0D9488';
+                }
+            }
+
+            // 2. Acceso a 15 Manuales RAG en cabecera
+            const btnNavManuales = document.getElementById('ticNavContainer');
+            if (btnNavManuales) {
+                btnNavManuales.style.display = esTIC ? 'flex' : 'none';
+            }
+
+            // 3. Barra Chaos / Simulador de Caída y Ataque
+            const chaosBar = document.getElementById('chaosBarContainer');
+            if (chaosBar) {
+                chaosBar.style.display = esTIC ? 'flex' : 'none';
+            }
+
+            // 4. Checkbox HITL en formulario
+            const boxFormHitl = document.getElementById('boxFormHitl');
+            if (boxFormHitl) {
+                boxFormHitl.style.display = esTIC ? 'block' : 'none';
+            }
+
+            // 5. Botón de Inyección Prompt en Ejemplos
+            const btnInyeccion = document.getElementById('btnPresetInyeccion');
+            if (btnInyeccion) {
+                btnInyeccion.style.display = esTIC ? 'inline-block' : 'none';
+            }
+
+            // 6. Subtítulo en cabecera
+            const subHeader = document.getElementById('subHeaderTexto');
+            if (subHeader) {
+                if (esTIC) {
+                    subHeader.textContent = 'Caso N.º 03 · Grupo 3 UNIANDES | Consola de Gestión Técnica y Gobernanza TIC · Tablero Kanban';
+                } else {
+                    subHeader.textContent = 'Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda y Triaje Inteligente de Soporte Microinformático TIC (60 Colaboradores)';
+                }
+            }
+
+            // 7. Re-renderizar tablero si hay tickets cargados
+            if (typeof renderizarTablero === 'function' && window._ticketsCargados) {
+                renderizarTablero(window._ticketsCargados);
+            }
+        }
+
+        // Inicializar estado de vista, tema visual, simulación, sesión TIC y tickets
+        try {
+            const vistaGuardada = localStorage.getItem('conectatec_vista_activa');
+            if (vistaGuardada) window._vistaActual = vistaGuardada;
+        } catch (e) {}
+        aplicarVistaActual();
         cargarTemaGuardado();
         actualizarEstadoSimulacion();
         cargarSesionGuardada();
@@ -3859,9 +3968,17 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 <button type="button" class="modal-close" onclick="cerrarModalConfirmarRegistro()" title="Cerrar ventana">✕</button>
             </div>
             <div class="modal-body" style="padding:18px 22px;">
-                <div class="hitl-alert-box">
+                <div id="hitlAlertBoxNormal" class="hitl-alert-box">
                     <b>Principio de Exceso de Agencia Controlado (OWASP LLM08):</b><br>
                     El modelo de IA propone la clasificación y solución, pero <b>no se registra en la base de datos ni se compromete el SLA</b> sin la autorización explícita de un técnico u operador humano.
+                </div>
+
+                <!-- Alerta destacada para Solicitudes No Técnicas / Fuera de Alcance -->
+                <div id="hitlAlertaNoTecnica" style="display:none; background:#FFF1F2; border:1.5px solid #FDA4AF; border-left:4px solid #E11D48; border-radius:8px; padding:12px 14px; margin-bottom:14px; font-size:12.5px; color:#9F1239; line-height:1.45;">
+                    <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:4px; font-size:13px;">
+                        <span>🚫 Solicitud No Técnica / Fuera de Alcance</span>
+                    </div>
+                    <span>Esta consulta no describe una avería ni requerimiento tecnológico corporativo. Por directiva estricta de abstención institucional, <b>NO se autoriza la apertura de un Ticket Técnico (TT)</b> ni se asigna personal de soporte microinformático.</span>
                 </div>
                 
                 <div style="background:#F1F5F9; border-radius:8px; padding:12px 14px; margin-bottom:14px;">
@@ -3880,8 +3997,8 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:14px;">
                     <div class="form-group">
-                        <label style="font-size:11.5px; font-weight:700;">Categoría Detectada (Editable)</label>
-                        <select id="hitlRegCategoria" class="form-control" style="font-size:12px;">
+                        <label style="font-size:11.5px; font-weight:700;">Categoría Asignada por IA</label>
+                        <select id="hitlRegCategoria" class="form-control" style="font-size:12px; background:#F8FAFC; cursor:not-allowed;" disabled>
                             <option value="Accesos y Contraseñas">Accesos y Contraseñas</option>
                             <option value="Red y Conectividad">Red y Conectividad</option>
                             <option value="Impresoras y Periféricos">Impresoras y Periféricos</option>
@@ -3893,8 +4010,8 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                         </select>
                     </div>
                     <div class="form-group">
-                        <label style="font-size:11.5px; font-weight:700;">Prioridad ITIL (Editable)</label>
-                        <select id="hitlRegPrioridad" class="form-control" style="font-size:12px;" onchange="actualizarSlaSegunPrioridadHitl()">
+                        <label style="font-size:11.5px; font-weight:700;">Prioridad ITIL Determinista</label>
+                        <select id="hitlRegPrioridad" class="form-control" style="font-size:12px; background:#F8FAFC; cursor:not-allowed;" disabled>
                             <option value="Alta">Alta (Crítico · SLA 15m - 1h)</option>
                             <option value="Media">Media (Atención regular · SLA 2h - 4h)</option>
                             <option value="Baja">Baja (Consulta / Autoatención · SLA 8h - 24h)</option>
@@ -3904,7 +4021,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
                 <div class="form-group" style="margin-bottom:12px;">
                     <label style="font-size:11.5px; font-weight:700;">Solución / Procedimiento RAG Propuesto</label>
-                    <textarea id="hitlRegSolucion" class="form-control" rows="3" style="font-size:12px;"></textarea>
+                    <textarea id="hitlRegSolucion" class="form-control" rows="3" style="font-size:12px; background:#F8FAFC;" readonly></textarea>
                 </div>
 
                 <div id="hitlRegCitasContainer" style="margin-bottom:14px; font-size:11.5px; color:#475569;"></div>
@@ -3912,16 +4029,16 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:12px; margin-bottom:16px;">
                     <div class="form-group">
                         <label style="font-size:11.5px; font-weight:700;">Técnico / Operador que Autoriza el Alta</label>
-                        <input type="text" id="hitlRegOperador" class="form-control" value="Christian Morales (Tech Lead)" required style="font-size:12px;">
+                        <input type="text" id="hitlRegOperador" class="form-control" value="Christian Morales (Tech Lead)" readonly style="font-size:12px; background:#F8FAFC;">
                     </div>
                     <div class="form-group">
                         <label style="font-size:11.5px; font-weight:700;">SLA Comprometido (Minutos)</label>
-                        <input type="number" id="hitlRegSla" class="form-control" style="font-size:12px;">
+                        <input type="number" id="hitlRegSla" class="form-control" readonly style="font-size:12px; background:#F8FAFC;">
                     </div>
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:10px;">
-                    <button type="button" class="btn-reset-filters" style="padding:8px 14px; font-size:12px;" onclick="cerrarModalConfirmarRegistro()">❌ Descartar Propuesta</button>
+                    <button type="button" class="btn-reset-filters" style="padding:8px 14px; font-size:12px;" onclick="cerrarModalConfirmarRegistro()">❌ Descartar Consulta</button>
                     <button type="button" id="btnEjecutarConfirmarRegistro" class="btn-submit" style="background:#10B981; border:none; padding:8px 18px;" onclick="ejecutarConfirmarRegistro()">✅ Confirmar y Registrar en Kanban</button>
                 </div>
             </div>

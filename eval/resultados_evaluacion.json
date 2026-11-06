@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-11-05 21:49:14",
-  "duracion_segundos": 34.48,
+  "timestamp": "2026-11-05 23:29:49",
+  "duracion_segundos": 27.73,
   "aprobado_global": true,
   "metricas": {
     "rag_hit_5": 0.9285714285714286,
@@ -66,8 +66,8 @@
           "obtenido": [
             "DOC-02",
             "DOC-02",
-            "DOC-12",
             "DOC-02",
+            "DOC-12",
             "DOC-02"
           ],
           "exito": true
@@ -93,8 +93,8 @@
             "DOC-03",
             "DOC-01",
             "DOC-10",
-            "DOC-01",
-            "DOC-11"
+            "DOC-11",
+            "DOC-10"
           ],
           "exito": true
         },
@@ -144,8 +144,8 @@
           "obtenido": [
             "DOC-10",
             "DOC-08",
-            "DOC-07",
             "DOC-08",
+            "DOC-07",
             "DOC-07"
           ],
           "exito": false
@@ -182,8 +182,8 @@
           "esperado": "DOC-05",
           "obtenido": [
             "DOC-05",
-            "DOC-05",
             "DOC-06",
+            "DOC-05",
             "DOC-06",
             "DOC-11"
           ],
