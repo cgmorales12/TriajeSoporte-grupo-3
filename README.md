@@ -269,7 +269,7 @@ Verifica: (1) Healthcheck, (2) Clasificación, (3) RAG con citas, (4) Prioridad 
 En el marco del **Seminario de Titulación en Ingeniería de Software con IA Generativa (UNIANDES 2026)**, el Grupo 3 declara que:
 1. **Modelos en Producción:** La plataforma integra modelos generativos de lenguaje (**Google Gemini 1.5 Flash / 3.5 Flash Lite** como motor primario y **Llama 3.3 70B en Groq Cloud** como respaldo de contingencia) exclusivamente para la extracción de síntomas, clasificación inicial y redacción amigable de autoatención.
 2. **Gobernanza del Código:** Se aplicó estrictamente el principio rector: ***«El modelo propone, el código dispone, la configuración gobierna, el humano autoriza»***. Ningún modelo LLM tiene permitido calcular SLAs, fijar tarifas, inventar manuales ni modificar la base de datos sin autorización humana (HITL).
-3. **Desarrollo y Autoría del Software:** Todo el código fuente, la arquitectura modular en FastAPI, la lógica determinista, las pruebas unitarias y la documentación técnica fueron diseñados, implementados, auditados y validados por los tres integrantes del equipo.
+3. **Uso de IA en el Desarrollo y Autoría Humana:** En concordancia con los objetivos académicos del seminario, se emplearon herramientas de IA generativa de forma ética y transparente como soporte para diseño de pruebas automatizadas y optimización sintáctica. Todo el código fuente, la lógica determinista, los esquemas Pydantic V2 y la documentación técnica fueron programados, auditados, verificados y defendidos por los tres integrantes del equipo.
 
 ### 9.2. Tabla de Aportes y Responsabilidades por Integrante
 

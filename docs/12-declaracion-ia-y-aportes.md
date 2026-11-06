@@ -19,9 +19,9 @@ Los suscritos estudiantes del Grupo 3 declaramos de manera expresa, transparente
      > ***«El modelo propone, el código dispone, la configuración gobierna, el humano autoriza.»***
    - El LLM tiene terminantemente prohibido calcular prioridades ITIL, estimar minutos de SLA, fijar presupuestos o despachar técnicos sin confirmación humana previa (HITL - OWASP LLM08).
 
-2. **Proceso de Desarrollo y Buenas Prácticas de Ingeniería:**
-   - La arquitectura modular en FastAPI, la integración determinista con ChromaDB, el modelo relacional SQLite, la matriz ITIL y las suites completas de pruebas unitarias fueron concebidas, estructuradas, programadas y verificadas directamente por los integrantes del equipo.
-   - **Autoría y Responsabilidad Técnica:** Todo el código fuente, la lógica determinista y la documentación técnica fueron diseñados e implementados por los autores, garantizando el pleno dominio conceptual y la sustentabilidad técnica del proyecto.
+2. **Uso de IA en el Proceso de Desarrollo (Asistencia Tecnológica y Transparencia):**
+   - En concordancia con las directrices del *Seminario de Titulación en Ingeniería de Software con IA Generativa*, se emplearon herramientas de IA generativa de manera ética y transparente como soporte para la estructuración de escenarios de prueba, optimización sintáctica y diseño conceptual.
+   - **Autoría, Control y Responsabilidad Humana:** Todo el código fuente, la lógica determinista de la matriz ITIL v4, los esquemas Pydantic V2 cerrados, la integración con ChromaDB, el repositorio SQLite y la suite de pruebas unitarias fueron conceptualizados, programados, auditados, comprendidos y validados directamente por los integrantes del equipo.
 
 3. **Protección de Datos y Confidencialidad:**
    - No se utilizaron datos reales de clientes ni colaboradores.
