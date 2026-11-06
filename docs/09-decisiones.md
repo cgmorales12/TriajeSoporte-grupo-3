@@ -24,6 +24,9 @@
 | [ADR-008](#adr-008-manejo-resiliente-de-errores-de-proveedor-http-429-timeout-y-respuesta-vacía) | Manejo Resiliente de Errores de Proveedor (HTTP 429, Timeout y Respuesta Vacía) | Aceptado | Octubre 2026 | Tolerancia a Fallos / Exponential Backoff |
 | [ADR-009](#adr-009-observabilidad-telemetría-y-contabilidad-de-tokens-por-solicitud) | Observabilidad, Telemetría y Contabilidad de Tokens por Solicitud | Aceptado | Octubre 2026 | Monitoreo Operativo / FinOps de IA |
 | [ADR-010](#adr-010-estrategia-de-pruebas-unitarias-automatizadas-con-mocks-cero-consumo-de-api) | Estrategia de Pruebas Unitarias Automatizadas con Mocks (Cero Consumo de API) | Aceptado | Octubre 2026 | Aseguramiento de Calidad (QA) / CI/CD Determinista |
+| [ADR-011](#adr-011-parámetros-de-negocio-desacoplados-en-config) | Parámetros de Negocio Desacoplados en config/ (Tarifas, Umbrales y SBU) | Aceptado | Noviembre 2026 | Mantenibilidad / Resiliencia Legal |
+| [ADR-012](#adr-012-confirmación-humana-obligatoria-hitl) | Confirmación Humana Obligatoria (HITL) y Mitigación de Exceso de Agencia | Aceptado | Noviembre 2026 | Control de Agencia / OWASP LLM08 |
+| [ADR-013](#adr-013-gobernanza-ética-transparencia-y-protección-de-datos-lopdp) | Gobernanza Ética, Transparencia de IA y Protección de Datos Personales (LOPDP) | Aceptado | Noviembre 2026 | Ética en IA / Privacidad LOPDP Ecuador |
 
 ---
 
@@ -254,3 +257,58 @@ Implementar un arnés de pruebas unitarias automatizadas con `pytest` y `monkeyp
 
 #### Consecuencias
 - Verificabilidad inmediata para cualquier evaluador o jurado de grado que clone el repositorio.
+
+---
+
+### ADR-011: Parámetros de Negocio Desacoplados en config/
+- **Estado:** Aceptado  
+- **Fecha:** Noviembre 2026  
+- **Autores:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
+
+#### Contexto
+En el soporte para PYMEs se requiere calcular tiempos SLA, turnos hábiles y feriados en Ecuador. Quemar estos valores como constantes en código o prompts forzaría redespliegues ante reformas legales (como la actualización del Salario Básico a $482) e invalidaría el *Context Caching* de Gemini.
+
+#### Decisión
+Adoptar el principio: *«El modelo propone, el código dispone, la configuración gobierna»*. Desacoplar todos los parámetros numéricos y calendarios en `config/` (`matriz_prioridad.json`, `tarifas.json`, `calendario.json`, `parametros.yaml`).
+
+#### Justificación
+1. **Mantenibilidad:** Modificar feriados o tarifas sin tocar una sola línea de código Python.
+2. **Determinismo:** Cálculo matemático exacto con cero variabilidad y cero costo de tokens.
+
+---
+
+### ADR-012: Confirmación Humana Obligatoria (HITL)
+- **Estado:** Aceptado  
+- **Fecha:** Noviembre 2026  
+- **Autores:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
+
+#### Contexto
+El riesgo OWASP LLM08 (Exceso de Agencia) surge cuando se permite a un modelo estocástico registrar tickets, comprometer SLAs o despachar técnicos sin supervisión humana.
+
+#### Decisión
+Implementar el patrón *Human-in-the-Loop* (HITL) mediante un modal interactivo en el Frontend que detiene el flujo antes de la persistencia, permitiendo al usuario revisar la autoatención o ajustar la categoría y prioridad antes de confirmar el registro.
+
+#### Justificación
+1. **Control de Agencia:** Ninguna acción irreversible se ejecuta sin consentimiento explícito.
+2. **Ahorro Operativo:** Permite al usuario auto-atenderse y cancelar el ticket si resolvió el incidente con los pasos sugeridos.
+
+---
+
+### ADR-013: Gobernanza Ética, Transparencia y Protección de Datos (LOPDP)
+- **Estado:** Aceptado  
+- **Fecha:** Noviembre 2026  
+- **Autores:** Christian Morales, Luis Fernando Ribera, Amalia Geoconda Iguasnia  
+
+#### Contexto
+El tratamiento de datos en el soporte microinformático debe alinearse con la Ley Orgánica de Protección de Datos Personales (LOPDP Ecuador) y directrices éticas de Inteligencia Artificial.
+
+#### Decisión
+1. Incorporar aviso explícito y visible en el Frontend sobre el uso y las limitaciones de la IA.
+2. Aplicar el principio de minimización de datos (Art. 10 LOPDP), restringiendo los campos a nombre, correo y departamento corporativo.
+3. Sanitizar automáticamente contraseñas y credenciales mediante expresiones regulares (Art. 23 LOPDP).
+4. Proveer eliminación lógica auditada (*soft-delete*) conforme a derechos ARCO.
+
+#### Justificación
+- Máxima solidez jurídica, ética y regulatoria frente al tribunal de titulación.
+- Confianza y protección integral de los derechos de los colaboradores.
+

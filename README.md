@@ -91,7 +91,9 @@ flowchart TD
 
 ---
 
-## 🚀 3. Cómo Ejecutarlo en Local Paso a Paso
+## 🚀 3. Guía de Inicio Rápido (Instalación y Ejecución en Menos de 10 Minutos)
+
+Cualquier nuevo integrante, docente evaluador o revisor técnico puede clonar, instalar y poner en marcha la plataforma completa en **menos de 10 minutos** siguiendo estos sencillos pasos:
 
 ### 3.1. Requisitos Previos
 - Python 3.10 o superior (validado en Python 3.11, 3.12 y 3.14).
@@ -135,19 +137,20 @@ python scripts/ingest.py
 ```
 *(Extrae, limpia, fragmenta y persiste 90 chunks estructurados con metadatos de vigencia, documento y URL oficial en `data/chroma`).*
 
-### 3.7. Iniciar el Backend (FastAPI)
+### 3.7. Iniciar la Plataforma (FastAPI y Tablero Web)
 ```bash
 uvicorn app.main:app --reload --port 8000
 ```
+- **Tablero Kanban Web Interactivo:** [http://localhost:8000/tablero](http://localhost:8000/tablero) *(¡Listo para usar sin consolas adicionales!)*
 - **Documentación Swagger / OpenAPI:** [http://localhost:8000/docs](http://localhost:8000/docs)
-- **Endpoint de Salud Operativo:** [http://localhost:8000/v1/salud](http://localhost:8000/v1/salud) o [http://localhost:8000/health](http://localhost:8000/health)
+- **Endpoint de Salud Operativo:** [http://localhost:8000/health](http://localhost:8000/health)
 
-### 3.8. Iniciar el Frontend (Streamlit)
-En otra terminal con el entorno virtual activo:
+### 3.8. Frontend Opcional en Streamlit
+Si desea ejecutar la vista alternativa en Streamlit:
 ```bash
 streamlit run frontend/app.py
 ```
-- **Tablero Kanban Interactivo:** [http://localhost:8501](http://localhost:8501)
+- **Tablero Streamlit:** [http://localhost:8501](http://localhost:8501)
 
 ---
 
