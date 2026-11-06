@@ -32,3 +32,4 @@ try:
         print("Fuentes RAG consultadas:", [f["documento"] + " - " + f["seccion"] for f in res.get("fuentes", [])])
 except Exception as e:
     print("Error:", e)
+
