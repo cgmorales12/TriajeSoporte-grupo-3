@@ -49,12 +49,15 @@ def _cargar_config_agente() -> Dict[str, Any]:
             "clasificar",
             "clasificar_solicitud",
             "priorizar",
+            "priorizar_ticket",
             "calcular_prioridad_itil",
             "buscar_solucion",
+            "buscar_base_conocimiento",
             "buscar_procedimiento_rag",
             "crear_ticket",
             "registrar_ticket_kanban",
             "escalar",
+            "derivar_a_tecnico",
             "escalar_cuadrilla_presencial",
             "consultar_estado_nodo",
             "consultar_tarifas_repuestos",
@@ -62,6 +65,7 @@ def _cargar_config_agente() -> Dict[str, Any]:
         ],
         "herramientas_requieren_confirmacion": [
             "escalar",
+            "derivar_a_tecnico",
             "escalar_cuadrilla_presencial",
             "crear_ticket",
             "registrar_ticket_kanban"
@@ -349,11 +353,50 @@ class ResultadoConsultarCalendarioSoporte(BaseModel):
     origen: str
 
 
+# Tool 9: reiniciar_servidor(servidor_id, motivo) - Herramienta Nivel F (Acción Prohibida / Fuera de Lista)
+class ParamsReiniciarServidor(BaseModel):
+    """Contrato estricto de entrada para la herramienta del caso reiniciar_servidor."""
+    model_config = ConfigDict(extra="forbid")
+
+    servidor_id: str = Field(
+        ...,
+        min_length=2,
+        max_length=60,
+        description="Identificador o hostname del servidor que se solicita reiniciar"
+    )
+    motivo: str = Field(
+        ...,
+        min_length=5,
+        max_length=300,
+        description="Motivo técnico alegado para el reinicio"
+    )
+    confirmacion_humana: Optional[bool] = Field(
+        False,
+        description="Flag de confirmación (el agente deniega siempre por ser acción de Nivel F)"
+    )
+
+
+class ResultadoReiniciarServidor(BaseModel):
+    """Contrato de salida para reiniciar_servidor: acción crítica prohibida para el agente."""
+    model_config = ConfigDict(extra="forbid")
+
+    ejecutado: bool
+    bloqueado_por_seguridad: bool
+    nivel_riesgo: str
+    mensaje: str
+
+
 # Aliases de Contratos
 ParamsPriorizar = ParamsCalcularPrioridadITIL
 ResultadoPriorizar = ResultadoCalcularPrioridadITIL
 ParamsCrearTicket = ParamsRegistrarTicketKanban
 ResultadoCrearTicket = ResultadoRegistrarTicketKanban
+ParamsBuscarBaseConocimiento = ParamsBuscarSolucion
+ResultadoBuscarBaseConocimiento = ResultadoBuscarProcedimientoRAG
+ParamsPriorizarTicket = ParamsCalcularPrioridadITIL
+ResultadoPriorizarTicket = ResultadoCalcularPrioridadITIL
+ParamsDerivarATecnico = ParamsEscalar
+ResultadoDerivarATecnico = ResultadoEscalar
 
 
 # ============================================================================
@@ -604,11 +647,105 @@ def tool_consultar_calendario_soporte(params: ParamsConsultarCalendarioSoporte) 
     )
 
 
+def tool_reiniciar_servidor(params: ParamsReiniciarServidor) -> ResultadoReiniciarServidor:
+    """
+    Herramienta oficial del Caso 3 (Nivel 'F' - Fuera de la lista / Prohibida):
+    'Reinicia un servidor de producción: Acción irreversible con impacto en todos'.
+    El agente tiene PROHIBIDO ejecutar reinicios de infraestructura de forma autónoma.
+    Principio rector: Mitigación de Exceso de Agencia (OWASP LLM08 / ASI02).
+    """
+    logger.warning(
+        "INTENTO DE ACCIÓN PROHIBIDA (Nivel F): Solicitud de reinicio para '%s' bloqueada deterministamente.",
+        params.servidor_id
+    )
+    return ResultadoReiniciarServidor(
+        ejecutado=False,
+        bloqueado_por_seguridad=True,
+        nivel_riesgo="F (Acción irreversible con impacto global - Fuera del alcance del agente)",
+        mensaje=(
+            f"ACCIÓN DENEGADA POR SEGURIDAD (Nivel F - OWASP LLM08): El reinicio del servidor '{params.servidor_id}' "
+            f"es una acción crítica irreversible que no está permitida al agente autónomo de triaje. "
+            "Requiere intervención manual presencial de un Administrador de Infraestructura / SysAdmin con credenciales físicas."
+        )
+    )
+
+
+# ----------------------------------------------------------------------------
+# 5 Herramientas Canónicas del Caso N.º 03 (Triaje de Soporte Tecnológico)
+# Nombres estandarizados de la rúbrica oficial (Semana 3 · Casos):
+# 1. buscar_base_conocimiento (Nivel L - Solo lee)
+# 2. priorizar_ticket         (Nivel L - Cálculo determinista)
+# 3. crear_ticket             (Nivel C - Cambia el sistema / Requiere HITL)
+# 4. derivar_a_tecnico        (Nivel C - Llega a otra persona / Requiere HITL)
+# 5. reiniciar_servidor       (Nivel F - Acción irreversible fuera de lista)
+# ----------------------------------------------------------------------------
+
+def buscar_base_conocimiento(params: ParamsBuscarSolucion) -> ResultadoBuscarProcedimientoRAG:
+    """Herramienta 1 del Caso (Nivel L - Solo lee): Busca soluciones conocidas en el RAG."""
+    return tool_buscar_solucion(params)
+
+
+def priorizar_ticket(params: ParamsCalcularPrioridadITIL) -> ResultadoCalcularPrioridadITIL:
+    """Herramienta 2 del Caso (Nivel L - Cálculo determinista): Calcula prioridad con la matriz impacto × urgencia."""
+    return tool_calcular_prioridad_itil(params)
+
+
+def crear_ticket(params: ParamsRegistrarTicketKanban) -> ResultadoRegistrarTicketKanban:
+    """Herramienta 3 del Caso (Nivel C - Cambia el sistema): Crea el ticket en la mesa de ayuda."""
+    return tool_registrar_ticket_kanban(params)
+
+
+def derivar_a_tecnico(params: ParamsEscalar) -> ResultadoEscalar:
+    """Herramienta 4 del Caso (Nivel C - Llega a otra persona): Asigna el ticket a un técnico / cuadrilla."""
+    return tool_escalar(params)
+
+
+def reiniciar_servidor(params: ParamsReiniciarServidor) -> ResultadoReiniciarServidor:
+    """Herramienta 5 del Caso (Nivel F - Fuera de lista): Denegada deterministamente por seguridad."""
+    return tool_reiniciar_servidor(params)
+
+
 # ============================================================================
 # 4. Catálogo y Registro Cerrado de Herramientas (Whitelist)
 # ============================================================================
 
 CATALOGO_HERRAMIENTAS = {
+    # 5 Herramientas Canónicas del Caso N.º 03 (Triaje de Soporte Tecnológico)
+    "buscar_base_conocimiento": {
+        "esquema": ParamsBuscarSolucion,
+        "funcion": buscar_base_conocimiento,
+        "nivel": 1,
+        "nivel_caso": "L",
+        "descripcion": "Busca soluciones conocidas en el RAG (Nivel L · Solo lee)"
+    },
+    "priorizar_ticket": {
+        "esquema": ParamsCalcularPrioridadITIL,
+        "funcion": priorizar_ticket,
+        "nivel": 1,
+        "nivel_caso": "L",
+        "descripcion": "Calcula prioridad con la matriz impacto × urgencia (Nivel L · Cálculo determinista)"
+    },
+    "crear_ticket": {
+        "esquema": ParamsRegistrarTicketKanban,
+        "funcion": crear_ticket,
+        "nivel": 2,
+        "nivel_caso": "C",
+        "descripcion": "Crea el ticket en la mesa de ayuda (Nivel C · Requiere confirmación humana)"
+    },
+    "derivar_a_tecnico": {
+        "esquema": ParamsEscalar,
+        "funcion": derivar_a_tecnico,
+        "nivel": 2,
+        "nivel_caso": "C",
+        "descripcion": "Asigna el ticket a un técnico / cuadrilla (Nivel C · Requiere confirmación humana)"
+    },
+    "reiniciar_servidor": {
+        "esquema": ParamsReiniciarServidor,
+        "funcion": reiniciar_servidor,
+        "nivel": 3,
+        "nivel_caso": "F",
+        "descripcion": "Reinicia servidor de producción (Nivel F · Acción irreversible fuera de lista)"
+    },
     # Herramientas canónicas requeridas por la rúbrica oficial (Semana 3 · 70%)
     "clasificar": {
         "esquema": ParamsClasificar,
@@ -800,8 +937,8 @@ class AgenteTriajeTecnico:
                 getattr(params_validados, "confirmado", False)
             )
             if not confirmado:
-                # Si es la herramienta escalar o escalar_cuadrilla_presencial sin confirmación
-                if nombre_tool in ["escalar", "escalar_cuadrilla_presencial"]:
+                # Si es la herramienta escalar, escalar_cuadrilla_presencial o derivar_a_tecnico sin confirmación
+                if nombre_tool in ["escalar", "escalar_cuadrilla_presencial", "derivar_a_tecnico"]:
                     msg_hitl = (
                         f"BLOQUEO HUMAN-IN-THE-LOOP (HITL): La herramienta '{nombre_tool}' requiere "
                         f"confirmación humana explícita antes de despachar o derivar (config/parametros.yaml)."
@@ -1280,3 +1417,11 @@ class AgenteTriajeTecnico:
 
 # Instancia Singleton del Agente
 agente_soporte = AgenteTriajeTecnico()
+HERRAMIENTAS_CATALOGO = CATALOGO_HERRAMIENTAS
+HERRAMIENTAS_DEL_CASO = [
+    "buscar_base_conocimiento",
+    "priorizar_ticket",
+    "crear_ticket",
+    "derivar_a_tecnico",
+    "reiniciar_servidor"
+]

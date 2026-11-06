@@ -16,12 +16,15 @@ herramientas_permitidas:
   - clasificar
   - clasificar_solicitud
   - priorizar
+  - priorizar_ticket
   - calcular_prioridad_itil
   - buscar_solucion
+  - buscar_base_conocimiento
   - buscar_procedimiento_rag
   - crear_ticket
   - registrar_ticket_kanban
   - escalar
+  - derivar_a_tecnico
   - escalar_cuadrilla_presencial
   - consultar_estado_nodo
   - consultar_tarifas_repuestos
@@ -29,6 +32,7 @@ herramientas_permitidas:
 
 herramientas_requieren_confirmacion:
   - escalar
+  - derivar_a_tecnico
   - escalar_cuadrilla_presencial
   - crear_ticket
   - registrar_ticket_kanban
