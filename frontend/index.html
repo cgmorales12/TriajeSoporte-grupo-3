@@ -818,17 +818,23 @@
         .link-fuente {
             display: inline-flex;
             align-items: center;
-            gap: 2px;
+            gap: 3px;
             font-size: 9.5px;
             font-weight: 700;
             color: #1E3A8A !important;
-            text-decoration: none;
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            padding: 1.5px 6px;
+            border-radius: 4px;
+            text-decoration: none !important;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100px;
+            max-width: 110px;
+            cursor: default;
+            user-select: none;
         }
-        .link-fuente:hover { text-decoration: underline; color: #1E40AF !important; }
+        .link-fuente:hover { text-decoration: none !important; }
 
         /* Barra de Filtros por Metadatos */
         .meta-filters-bar {
@@ -1263,6 +1269,7 @@
 
         .xai-item-label { font-size: 11px; color: #64748B; font-weight: 600; margin-bottom: 2px; }
         .xai-item-val { font-size: 13px; font-weight: 700; color: #0F172A; }
+        .xai-archivo-fuente { color: #1E3A8A; font-weight: 700; }
 
         .xai-quote {
             background: #FFF;
@@ -2030,10 +2037,12 @@
             color: #CBD5E1 !important;
         }
         body.dark-theme .link-fuente {
-            color: #60A5FA !important;
+            color: #93C5FD !important;
+            background: #172554 !important;
+            border-color: #1E40AF !important;
         }
         body.dark-theme .link-fuente:hover {
-            color: #93C5FD !important;
+            text-decoration: none !important;
         }
 
         /* Botón de Explicabilidad y Botones de Acción de Tarjetas en Modo Oscuro */
@@ -2102,6 +2111,9 @@
         }
         body.dark-theme .xai-item-val {
             color: #F8FAFC;
+        }
+        body.dark-theme .xai-archivo-fuente {
+            color: #38BDF8 !important;
         }
         body.dark-theme .xai-quote {
             background: #131B2E;
@@ -2792,10 +2804,11 @@
                 
                 // Evitar prefijo duplicado en título (ej. "DOC-03: DOC-03:")
                 const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
+                const docCodigo = docId.split('_')[0].toUpperCase();
                 let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial').replace(new RegExp(`^${docId}:?\\s*`, 'i'), '').replace(/^DOC-\d+:?\s*/i, '').trim();
                 
                 const pasoLimpio = (c.paso_exacto || 'Procedimiento estándar').replace(/^Sección:\s*/i, '');
-                const urlLink = c.url ? `<a href="${c.url}" target="_blank" class="link-fuente" title="${c.documento_id}">🔗 ${docId}</a>` : `<span class="link-fuente" title="${c.documento_id}">📄 ${docId}</span>`;
+                const urlLink = `<span class="link-fuente" title="Manual Técnico Oficial: ${docId}">📄 ${docCodigo}</span>`;
 
                 citaTxt = `
                     <div class="cita-header">
@@ -3262,7 +3275,7 @@
             let infoRAG = '';
             if (t.citas && t.citas.length > 0) {
                 const c = t.citas[0];
-                const urlHtml = c.url ? `<a href="${c.url}" target="_blank" style="color:#2563EB; font-weight:600; text-decoration:underline;">${c.url}</a>` : `<span style="color:#64748B;">https://soporte.pyme-estandar.org/manuales/${c.documento_id.toLowerCase()}</span>`;
+                const urlHtml = `<span class="xai-archivo-fuente" style="font-family:var(--font-mono); font-size:11.5px;">📄 data/raw/${(c.documento_id || 'DOC-01').toLowerCase().replace(/\.md$/, '')}.md (Repositorio Interno)</span>`;
                 infoRAG = `
                     <div class="xai-grid">
                         <div class="xai-item">
@@ -3278,7 +3291,7 @@
                             <div class="xai-item-val" style="color:#047857; font-weight:700;">${c.vigencia || 'v3.2 - Octubre 2026 (Oficial)'}</div>
                         </div>
                         <div class="xai-item">
-                            <div class="xai-item-label">URL Canónica de Fuente RAG:</div>
+                            <div class="xai-item-label">Archivo Fuente en Repositorio RAG:</div>
                             <div class="xai-item-val">${urlHtml}</div>
                         </div>
                     </div>
