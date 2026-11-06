@@ -28,3 +28,4 @@
    - La función `buscar_solucion()` en `app/services/rag.py` incorpora un motor de búsqueda determinista de respaldo sobre `data/raw/`, asegurando la citación de los manuales oficiales aún con el índice vectorial degradado.
 3. **Auditoría y Trazabilidad:**
    - Cada solicitud genera un `req_id` opaco, registrando latencia, tokens y conmutación en `GET /v1/metricas/solicitudes` sin registrar nunca datos personales de los colaboradores.
+

@@ -1,58 +1,67 @@
-# Propuesta del Proyecto: ConectaTec
+# Propuesta del Proyecto: TecnoAula — Triaje Automático de Solicitudes de Soporte para PYMEs
 
 ## 1. Identificación del Proyecto
-* **Producto:** ConectaTec - Triaje Inteligente de Solicitudes para Proveedores Locales de Internet (ISP)
-* **Caso Asignado:** Caso N.º 03 (Grupo 3) - Automatización de proceso con agente
+* **Producto:** **TecnoAula** — Sistema Genérico y Configurable de Triaje Automático y Resolución de Incidentes de Soporte Tecnológico para PYMEs
+* **Caso Asignado Oficial:** **Caso N.º 03 (Grupo 3)** — *Triaje automático de solicitudes de soporte tecnológico para una PYME (Clasificación y resolución de tickets con RAG sobre manuales internos – Agente de gestión de incidentes)*
 * **Institución:** Universidad Regional Autónoma de Los Andes (UNIANDES)
-* **Carrera:** Software - Seminario de Titulación Complexivo (Octubre 2026)
-* **Integrantes:**
-  * Christian Guillermo Morales González
-  * Luis Fernando Ribera Alajo
-  * Amalia Geoconda Iguasnia Escobar
+* **Carrera:** Software — Seminario de Titulación Complexivo en IA Generativa (2026)
+* **Integrantes del Grupo 3:**
+  * **Christian Guillermo Morales González** (Tech Lead / Coordinador — `cgmorales12`)
+  * **Luis Fernando Ribera Alajo** (Builder / Arquitectura — `fernandolribera`)
+  * **Amalia Geoconda Iguasnia Escobar** (QA / Seguridad y Requerimientos — `Geocoiguasnia76`)
 
 ---
 
-## 2. Problema Real
-Los clientes de proveedores locales de Internet (ISP) enfrentan demoras e incertidumbre ante cortes de servicio, caídas de enlace o fallas de configuración. Por otro lado, el personal técnico colapsa atendiendo reclamos repetitivos de primer nivel (luces del router, dudas de cobertura Wi-Fi, pruebas de velocidad), lo que retrasa la atención de incidentes críticos y genera costos innecesarios por despacho de cuadrillas técnicas para problemas que el usuario podría solucionar por sí mismo.
+## 2. Definición del Problema Real (Ámbito PYME General)
+En el sector empresarial, las **Pequeñas y Medianas Empresas (PYMEs)** —ya sean de servicios profesionales, comercio, logística, consultoría o manufactura ligera— comparten una problemática operativa común:
+1. Cuentan con un equipo de soporte tecnológico sumamente reducido (típicamente **un único técnico o responsable de TI**) para atender a una plantilla de entre **50 y 100 colaboradores**.
+2. Más del **70% de las solicitudes diarias son repetitivas** y corresponden a ofimática y servicios básicos:
+   - Restablecimiento y desbloqueo de contraseñas de red (Active Directory / Windows / Correo).
+   - Configuración de clientes VPN corporativos para teletrabajo.
+   - Atascos de papel, colas de impresión y configuración de impresoras de red departamentales.
+   - Acceso denegado y mapeo de unidades en carpetas compartidas (SMB / NAS).
+   - Bloqueos de sesión concurrente en el sistema contable / ERP institucional.
+   - Conexión al Wi-Fi corporativo seguro y red cableada de oficina.
+3. Este volumen desborda al técnico, quien pierde entre **15 y 20 horas semanales** en tareas mecánicas, disparando el tiempo medio de resolución (**MTTR** inicial de 4 horas) y retrasando la atención de incidentes críticos de infraestructura o ciberseguridad.
 
 ---
 
-## 3. Usuarios del Sistema
-1. **Cliente de Internet (Residencial / Corporativo):** Ingresa el reporte de falla mediante formulario web y recibe diagnósticos paso a paso con base en manuales oficiales.
-2. **Operador de Mesa de Ayuda:** Monitorea las solicitudes entrantes, revisa clasificaciones automáticas y supervisa la cola de atención.
-3. **Técnico de Cuadrilla de Campo:** Gestiona los incidentes escalados a través de un tablero Kanban priorizado por impacto y urgencia.
+## 3. Filosofía del Sistema: Diseñado para Cualquier PYME
+**TecnoAula NO está acoplado a una empresa específica**, sino concebido como un **sistema estándar, desacoplado y parametrizable** para cualquier organización:
+- **Base de Conocimiento Universal:** El corpus de 15 manuales técnicos estándar cubre las necesidades tecnológicas transversales de cualquier oficina moderna bajo normas internacionales (ISO/IEC 27002, IEEE 802.3, Wi-Fi Alliance).
+- **Matriz ITIL Desacoplada (`config/matriz_prioridad.json`):** Cualquier PYME puede ajustar sus tiempos SLA contractuales y niveles de impacto/urgencia sin tocar una sola línea de código backend.
+- **Configuración Paramétrica (`config/parametros.yaml`):** Umbrales de confianza, límites de iteraciones y políticas operativas se adaptan por archivo externo.
+- **Corpus Extensible:** La empresa simplemente añade o modifica sus manuales en formato Markdown en `data/raw/` y re-ejecuta `python scripts/ingest.py`.
 
 ---
 
-## 4. Alcance del Sistema
-
-### 4.1 Alcance Positivo (Lo que el sistema hace)
-* **Clasificación Automática:** Extrae mediante el modelo generativo y salida estructurada (JSON) la categoría (Fibra/Físico, Wi-Fi, Lógico/Configuración, Comercial), el impacto y la urgencia del incidente.
-* **Cálculo Determinista de Prioridad:** Aplica una matriz de priorización tipo ITIL (configuración externa en JSON) para definir prioridades (Crítica, Alta, Media, Baja) mediante código Python determinista, sin delegar cálculos numéricos al modelo.
-* **Diagnóstico Guiado y RAG:** Provee al cliente pasos de solución basados estrictamente en un corpus de 15 guías técnicas oficiales del ISP (luces ONT, router, pruebas cableadas, DNS), citando el procedimiento exacto.
-* **Tablero de Tickets y Escalamiento:** Presenta un tablero de incidentes con estados (`Nuevo`, `En atención`, `Resuelto`, `Escalado`) y escala a cuadrilla técnica cuando se detecta daño físico (ej. luz LOS roja) o cuando los pasos guiados no resuelven la falla.
-
-### 4.2 Alcance Negativo (Lo que el sistema NUNCA hará)
-* **No diagnosticará fallas de enlace troncal sin validación:** No declarará cortes masivos de red sin confirmación de monitoreo.
-* **No solicitará ni almacenará contraseñas:** El sistema nunca pedirá, registrará ni repetirá contraseñas de red Wi-Fi o credenciales de acceso al router (regla de seguridad y cumplimiento LOPDP).
-* **No ejecutará acciones comerciales automáticas:** No suspenderá servicios ni emitirá cobros o notas de crédito sin autorización y confirmación humana.
-* **No emitirá diagnósticos fuera de los manuales:** Ante problemas no documentados, el sistema se abstendrá explícitamente y derivará al operador.
+## 4. Usuarios del Sistema
+1. **Colaborador / Empleado de la PYME:** Reporta incidencias mediante un formulario web intuitivo y recibe instrucciones paso a paso con citas exactas para resolver su problema de forma autónoma (Nivel 1).
+2. **Técnico de TI / Administrador de Soporte:** Monitorea y gestiona las solicitudes a través de un **Tablero Kanban de Tickets con 4 estados** (`Nuevo`, `En Atención`, `Escalado a Técnico N2`, `Resuelto N1`).
+3. **Supervisor / Gerencia:** Audita métricas de servicio (MTTR, % de autoatención $\ge 70\%$, tokens consumidos y ROI generado).
 
 ---
 
-## 5. Análisis de Riesgos y Mitigación
-* **Riesgo 1: Alucinación en diagnósticos técnicos.**
-  * *Mitigación:* Implementación de RAG con citas obligatorias al manual de origen y directiva estricta de abstención en el system prompt.
-* **Riesgo 2: Fuga o almacenamiento de contraseñas de usuarios.**
-  * *Mitigación:* Filtro y sanitización mediante expresiones regulares en la entrada de datos antes de enviar al modelo o registrar en base de datos.
-* **Riesgo 3: Saturación o falla de la API del modelo (Error 429).**
-  * *Mitigación:* Cliente `LLMClient` con reintentos mediante espera exponencial y conmutación automática al proveedor de respaldo (Groq).
+## 5. Alcance del Sistema
+
+### 5.1 Alcance Positivo (Capacidades del Sistema)
+* **Clasificación Estructurada (IA):** Extracción precisa de categoría técnica, impacto y urgencia mediante JSON estricto validado con Pydantic V2 (`extra="forbid"`).
+* **Priorización Determinista (Código Python Puro):** Cálculo matemático de la prioridad (`Alta`, `Media`, `Baja`) y SLA en minutos leyendo `config/matriz_prioridad.json`. *«El modelo propone, el código dispone»*.
+* **Resolución de Nivel 1 con RAG:** Búsqueda semántica en ChromaDB sobre los 15 manuales técnicos citando documento y paso exacto.
+* **Escalamiento Controlado a Nivel 2:** Derivación presencial obligatoria ante fallas de hardware (ruido metálico de disco, pantalla azul BSOD, daño de cableado) o requerimiento de credenciales administrativas.
+* **Compuertas Human-in-the-Loop (HITL · OWASP LLM08):** Todo despacho físico o notificación formal exige confirmación explícita de un operador humano.
+* **Resiliencia y Failover:** Conmutación automática ante errores HTTP 429/503 desde Gemini 1.5 Flash hacia Groq Cloud (Llama 3.3 70B) y motor heurístico local offline.
+
+### 5.2 Alcance Negativo (Límites Inviolables)
+* **Cero Contraseñas Almacenadas (Art. 23 LOPDP):** El sistema detecta por Regex y anonimiza con `[CONFIDENCIAL_REMOVIDO]` cualquier credencial escrita por error.
+* **Cero Alucinaciones Fuera de Alcance:** Ante consultas no técnicas o ajenas a la infraestructura TI, el sistema aplica la regla de silencio y orienta al colaborador.
+* **El LLM jamás calcula prioridades:** Ni inventa tiempos de SLA ni modifica la base de datos de tickets de forma autónoma.
 
 ---
 
-## 6. Justificación del Modelo Generativo Elegido
-Se selecciona **Google Gemini 1.5 Flash** (mediante Google AI Studio) como modelo principal por las siguientes razones técnicas:
-1. **Capacidad de salida estructurada nativa:** Garantiza respuestas en formato JSON estricto mediante esquemas definidos con Pydantic.
-2. **Baja latencia y eficiencia:** Ideal para clasificación en tiempo real de incidentes con tiempos de respuesta menores a 3 segundos.
-3. **Capa gratuita sostenible:** Permite operar y validar el MVP sin requerir tarjeta de crédito ni incurrir en costos durante el seminario.
-4. **Respaldo con Groq (Llama 3.3):** Asegura alta disponibilidad y tolerancia a fallos ante posibles cuotas agotadas.
+## 6. Métricas de Retorno de Inversión (ROI) para la PYME
+1. **Autoatención Nivel 1 $\ge 70\%$:** Más de 7 de cada 10 solicitudes resueltas sin intervención humana.
+2. **Ahorro de ~15 horas semanales** para el técnico de TI (más de 60 horas al mes liberadas).
+3. **Reducción del MTTR de 4 horas a menos de 2 minutos** para incidencias de primer nivel.
+4. **Costo evitado de contratación** de un segundo técnico ($800 a $1.000 USD mensuales).
+5. **Costo de inferencia menor a $0.002 USD por ticket**, con gasto mensual de IA inferior a $1.50 USD.

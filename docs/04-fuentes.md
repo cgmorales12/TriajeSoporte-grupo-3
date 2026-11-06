@@ -1,57 +1,60 @@
-# Inventario de Fuentes Técnicas: ConectaTec
+# Inventario de Fuentes Técnicas Estándar: TecnoAula (Corpus RAG)
 
 ## 1. Identificación y Alcance del Corpus
-* **Proyecto:** ConectaTec - Triaje Inteligente de Incidentes ISP
-* **Caso de Estudio:** Caso N.º 03 (Grupo 3)
-* **Objetivo del Corpus:** Proveer la base de conocimiento técnica oficial para alimentar el sistema RAG (Semana 3), garantizando que las respuestas de diagnóstico de primer nivel provengan exclusivamente de manuales de soporte validados y vigentes, con citas explícitas a los procedimientos operativos.
+* **Proyecto:** TecnoAula — Triaje Automático de Solicitudes de Soporte Tecnológico para PYMEs
+* **Caso de Estudio Oficial:** Caso N.º 03 (Grupo 3 UNIANDES)
+* **Objetivo del Corpus:** Proveer una base de conocimiento técnica oficial, estandarizada y aplicable a **cualquier Pequeña o Mediana Empresa (PYME)** para alimentar el sistema RAG en ChromaDB. Garantiza diagnósticos de Nivel 1 rigurosos con citas verificables (código de documento y paso operativo exacto).
 
 ---
 
-## 2. Criterios de Selección y Curaduría de Fuentes
-1. **Oficialidad:** Solo se admiten manuales de fabricantes de equipos de red homologados (Huawei, ZTE, TP-Link, MikroTik) y directrices de proveedores de servicios de Internet (ISP) vigentes.
-2. **Formato:** Documentos estructurados en Markdown (`.md`) y texto plano (`.txt`) almacenados localmente en `data/raw/` para su posterior ingesta y vectorización en ChromaDB.
-3. **Estrategia de Fragmentación (Chunking):** La fragmentación se realiza por **sección operativa o procedimiento completo** (manteniendo encabezados `##` y pasos numerados, entre 300 y 600 tokens con solapamiento de 50 tokens), evitando el corte arbitrario por número fijo de caracteres que rompa la coherencia de un paso técnico.
+## 2. Criterios de Selección y Curaduría de Fuentes para PYMEs
+1. **Universalidad y Estándares de la Industria:** Los manuales abarcan las tecnologías de ofimática y red universales en entornos corporativos (Microsoft Active Directory, VPN SSL/IPsec, SMB 3.0, IEEE 802.3 Ethernet, Wi-Fi Alliance WPA3-Enterprise, ISO/IEC 27002, ITIL v4).
+2. **Formato Estructurado:** 15 documentos en Markdown local (`data/raw/DOC-*.md`) normalizados con metadatos obligatorios: `documento`, `sección`, `vigencia` y `url`.
+3. **Estrategia de Fragmentación (Chunking):** Fragmentación semántica guiada por pasos operativos (`### Paso N: Título`). Total: **90 fragmentos estructurados** indexados en la colección persistente `manuales_tecnicos` de ChromaDB.
+4. **Independencia de Negocio:** No se asume una empresa en particular; cualquier PYME puede adaptar o incorporar sus propios manuales en `data/raw/` y re-ejecutar `python scripts/ingest.py`.
 
 ---
 
-## 3. Matriz de Fuentes Oficiales (Corpus de Conocimiento)
+## 3. Matriz de los 15 Manuales Técnicos Estándar para Cualquier PYME
 
-| ID | Documento / Guía Técnica | Origen Oficial / Fabricante | URL de Referencia | Vigencia | Formato | Estrategia de Fragmentación Prevista |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **DOC-01** | Guía de interpretación de luces LED en ONT Huawei EchoLife (PON, LOS, LAN, Power) | Soporte Oficial Huawei Carrier | https://support.huawei.com/carrier/ | 2026 | `.md` | Por estado de luz LED (LOS roja, PON verde intermitente, etc.) |
-| **DOC-02** | Manual de diagnóstico de indicadores lumínicos en ONT ZTE F660/F670 | Repositorio Técnico ZTE Global | https://support.zte.com.cn/ | 2026 | `.md` | Por patrón de luces y código de error visual |
-| **DOC-03** | Protocolo de verificación y reinicio eléctrico de routers y ONT | Manual de Procedimientos ISP | https://conectatec.local/docs/reinicio-equipos | 2026 | `.md` | Procedimiento de ciclo de energía (pasos 1 a 5) |
-| **DOC-04** | Guía de autogestión de credenciales Wi-Fi (SSID y clave WPA2/WPA3) | Mesa de Ayuda ISP ConectaTec | https://conectatec.local/docs/cambio-clave-wifi | 2026 | `.md` | Por fabricante de router y acceso a 192.168.1.1 |
-| **DOC-05** | Optimización de cobertura inalámbrica: bandas 2.4 GHz vs. 5 GHz | Whitepaper Técnico Wi-Fi Alliance | https://www.wi-fi.org/discover-wi-fi | 2026 | `.md` | Por tema (interferencia de canal, distancia, banda de frecuencia) |
-| **DOC-06** | Procedimiento oficial para prueba de velocidad de navegación (Test Ethernet) | Especificación Técnica Ookla ISP | https://www.speedtest.net/about/knowledge | 2026 | `.md` | Pasos de preparación del test (desconectar dispositivos, cable directo) |
-| **DOC-07** | Diagnóstico y depuración de resolución de nombres DNS | Guía Técnica IETF / RFC 1035 | https://datatracker.ietf.org/doc/html/rfc1035 | 2026 | `.md` | Por comando operativo (`nslookup`, `ipconfig /flushdns`, cambio a 8.8.8.8) |
-| **DOC-08** | Verificación de cableado de red de cobre (UTP Categoría 5e / 6) | Manual de Cableado Estructurado TIA-568 | https://tiaonline.org/ | 2026 | `.md` | Detección de daño en conector RJ-45 y degradación a 100 Mbps |
-| **DOC-09** | Criterios de escalamiento por atenuación y rotura de acometida de fibra óptica | Manual de Campo Cuadrilla ISP | https://conectatec.local/docs/rotura-fibra | 2026 | `.md` | Procedimiento de escalamiento inmediato y validación de luz LOS |
-| **DOC-10** | Detección de interferencias por electrodomésticos y atenuación estructural | Guía de Soporte Inalámbrico TP-Link | https://www.tp-link.com/support/faq/ | 2026 | `.md` | Por factor de interferencia (microondas, paredes de hormigón, espejos) |
-| **DOC-11** | Protocolo de configuración de router neutro o repetidor Wi-Fi en modo puente | Soporte Técnico MikroTik RouterOS | https://help.mikrotik.com/docs/ | 2026 | `.md` | Por modo de operación (Access Point vs. Extender / Bridge) |
-| **DOC-12** | Guía de detección de saturación de canal Wi-Fi y selección manual de canales | Repositorio de Ingeniería ISP | https://conectatec.local/docs/canales-wifi | 2026 | `.md` | Por espectro de frecuencia (canales 1, 6, 11 en 2.4 GHz y canales DFS en 5 GHz) |
-| **DOC-13** | Procedimiento ante microcortes o caídas intermitentes de sesión PPPoE | Manual de Conectividad ISP | https://conectatec.local/docs/intermitencia-pppoe | 2026 | `.md` | Por diagnóstico de negociación de enlace y registro de logs de sesión |
-| **DOC-14** | Guía de consulta de estado comercial, corte por mora y canales de pago | Políticas de Servicio al Cliente ISP | https://conectatec.local/docs/facturacion-cortes | 2026 | `.md` | Por estado administrativo de cuenta y reactivación automática de servicio |
-| **DOC-15** | Matriz ITIL de clasificación de incidentes, impacto y urgencia | Guía de Gestión de Servicios ITIL v4 | https://www.axelos.com/certifications/itil-service-management | 2026 | `.md` | Tabla matricial completa de cruce Impacto vs. Urgencia |
+| ID | Documento / Guía Técnica | Ámbito Operativo PYME | URL Oficial / Estándar de Referencia | Vigencia | Fragmentos |
+| :---: | :--- | :--- | :--- | :---: | :---: |
+| **DOC-01** | Restablecimiento de Contraseñas de Dominio Windows y Correo | Cuentas y Accesos | [Microsoft Active Directory DS](https://learn.microsoft.com/es-es/windows-server/identity/ad-ds/) | 2026 | 6 |
+| **DOC-02** | Configuración de VPN Corporativa para Teletrabajo (FortiClient) | Acceso Remoto Seguro | [Fortinet FortiClient Docs](https://docs.fortinet.com/product/forticlient/) | 2026 | 6 |
+| **DOC-03** | Solución de Problemas en Impresoras Departamentales de Red | Hardware de Oficina | [HP Network Printing Solutions](https://support.hp.com/es-es/document/ish_2026_impresoras_red) | 2026 | 6 |
+| **DOC-04** | Procedimiento de Acceso y Mapeo de Carpetas Compartidas (SMB/NAS) | Servidor de Archivos | [Windows File Server SMB](https://learn.microsoft.com/es-es/windows-server/storage/file-server/) | 2026 | 6 |
+| **DOC-05** | Manual de Usuario y Solución de Bloqueos en ERP / Sistema Contable | Software Contable | [Facturación Electrónica SRI](https://www.sri.gob.ec/facturacion-electronica) | 2026 | 6 |
+| **DOC-06** | Política de Uso Aceptable de Activos y Ciberseguridad (ISO 27002) | Seguridad de Información | [Norma ISO/IEC 27002](https://www.iso.org/standard/75652.html) | 2026 | 6 |
+| **DOC-07** | Diagnóstico y Solución de Conexión a Internet y Red Cableada | Redes LAN Ethernet | [IEEE 802.3 Ethernet](https://standards.ieee.org/ieee/802.3/) | 2026 | 6 |
+| **DOC-08** | Conexión Segura al Wi-Fi Corporativo y Red de Invitados | Redes Inalámbricas | [Wi-Fi Alliance Security](https://www.wi-fi.org/discover-wi-fi/security) | 2026 | 6 |
+| **DOC-09** | Gestión de Antivirus Endpoint y Actualizaciones de Seguridad del SO | Ciberseguridad Endpoint | [Microsoft Threat Protection](https://learn.microsoft.com/es-es/windows/security/threat-protection/) | 2026 | 6 |
+| **DOC-10** | Diagnóstico de Fallas en la Estación de Trabajo (PC / Laptop) | Soporte a Equipos | [Windows Client Troubleshooting](https://learn.microsoft.com/es-es/troubleshoot/windows-client/performance/) | 2026 | 6 |
+| **DOC-11** | Guía de Configuración y Solución en Cliente de Correo Outlook | Correo y Productividad | [Microsoft Outlook Support](https://support.microsoft.com/es-es/office/configuracion-de-correo-outlook) | 2026 | 6 |
+| **DOC-12** | Procedimiento para Solicitud de Nuevos Accesos y Alta de Personal | Onboarding / Identidad | [Azure AD Governance](https://learn.microsoft.com/es-es/azure/active-directory/governance/) | 2026 | 6 |
+| **DOC-13** | Procedimiento de Respaldo y Recuperación de Archivos (VSS) | Continuidad de Negocio | [Microsoft File Recovery](https://support.microsoft.com/es-es/office/recuperar-versiones-anteriores) | 2026 | 6 |
+| **DOC-14** | Configuración de Periféricos, Pantallas Múltiples y Docking Station | Puesto de Trabajo | [Windows Multi-Display Guide](https://support.microsoft.com/es-es/windows/como-usar-varios-monitores-en-windows) | 2026 | 6 |
+| **DOC-15** | Matriz de Priorización ITIL y Protocolo de Escalamiento a Nivel 2 | Gestión de Incidentes | [AXELOS ITIL v4 Standard](https://www.axelos.com/certifications/itil-service-management) | 2026 | 6 |
 
 ---
 
-## 4. Estructura de Almacenamiento en el Repositorio
-Los textos de los documentos listados se depositan en el directorio `data/raw/` del proyecto, siguiendo la nomenclatura:
+## 4. Almacenamiento en el Repositorio
+Todos los manuales residen en `data/raw/` como archivos Markdown estructurados:
 ```text
 data/raw/
-├── DOC-01-huawei-ont-luces.md
-├── DOC-02-zte-ont-indicadores.md
-├── DOC-03-reinicio-electrico.md
-├── DOC-04-cambio-clave-wifi.md
-├── DOC-05-cobertura-24-5ghz.md
-├── DOC-06-test-velocidad-cableado.md
-├── DOC-07-resolucion-dns.md
-├── DOC-08-cableado-utp-rj45.md
-├── DOC-09-rotura-fibra-escalamiento.md
-├── DOC-10-interferencias-wifi.md
-├── DOC-11-modo-puente-repetidores.md
-├── DOC-12-canales-inalambricos.md
-├── DOC-13-intermitencia-pppoe.md
-├── DOC-14-corte-comercial-facturacion.md
-└── DOC-15-matriz-itil-prioridades.md
+├── DOC-01_restablecimiento_contrasenas.md
+├── DOC-02_configuracion_vpn_corporativa.md
+├── DOC-03_impresoras_red_departamentales.md
+├── DOC-04_acceso_carpetas_compartidas_smb.md
+├── DOC-05_sistema_contable_erp.md
+├── DOC-06_politica_seguridad_iso27002.md
+├── DOC-07_conectividad_red_cableada_oficina.md
+├── DOC-08_wifi_corporativo_credenciales.md
+├── DOC-09_antivirus_actualizaciones_so.md
+├── DOC-10_falla_estacion_trabajo_pc.md
+├── DOC-11_configuracion_cliente_correo.md
+├── DOC-12_solicitud_nuevos_accesos.md
+├── DOC-13_respaldo_recuperacion_archivos.md
+├── DOC-14_perifericos_pantallas_oficina.md
+└── DOC-15_matriz_itil_gestion_incidentes.md
+```
+*(Total: 15 manuales, 90 fragmentos vectorizados y persistidos en ChromaDB en `data/chroma/`).*
