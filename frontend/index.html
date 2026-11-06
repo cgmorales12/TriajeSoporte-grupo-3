@@ -336,15 +336,25 @@
             background: #FFFFFF;
             color: #0F172A !important;
             border: 1.5px solid #CBD5E1;
-            padding: 6px 11px;
+            padding: 7px 11px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 600;
-            margin-right: 6px;
             margin-bottom: 6px;
             cursor: pointer;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             transition: all 0.15s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 6px;
+            box-sizing: border-box;
+            height: 34px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
         }
         .preset-btn:hover {
             background: #F1F5F9;
@@ -368,15 +378,15 @@
         .kanban-board {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            align-items: start;
+            gap: 14px;
+            align-items: stretch;
         }
 
         .kanban-col {
             background: #EBEEF2;
             border-radius: 12px;
             padding: 14px;
-            min-height: 480px;
+            min-height: 520px;
             display: flex;
             flex-direction: column;
         }
@@ -386,9 +396,10 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            font-size: 14.5px;
+            font-size: 13.5px;
             font-weight: 800;
             color: #0F172A;
+            height: 28px;
         }
 
         .header-pag-mini {
@@ -430,9 +441,9 @@
         .col-badge {
             background: #0E1A30;
             color: #FFFFFF !important;
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 12px;
-            font-size: 12px;
+            font-size: 11.5px;
             font-family: var(--font-mono);
             font-weight: 800;
             box-shadow: 0 1px 3px rgba(0,0,0,0.15);
@@ -441,6 +452,9 @@
         .cards-container {
             flex: 1 1 auto;
             min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         /* Barra de Paginación de Columna */
@@ -516,15 +530,18 @@
             font-style: italic;
         }
 
-        /* Tarjeta de Ticket */
+        /* Tarjeta de Ticket Estandarizada y Homogénea */
         .ticket-card {
             background: var(--panel);
             border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 12px;
+            padding: 12px 14px;
             box-shadow: var(--card-shadow);
             border-left: 4px solid #9E9E9E;
             transition: transform 0.15s;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            min-height: 462px;
         }
         .ticket-card:hover { transform: translateY(-2px); }
 
@@ -547,120 +564,214 @@
         .ticket-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
+            height: 24px;
             margin-bottom: 6px;
         }
 
-        .ticket-code { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: #0F172A; }
+        .ticket-code { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: #0F172A; }
         .ticket-prio {
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 800;
-            padding: 2px 7px;
+            padding: 2px 6px;
             border-radius: 4px;
             text-transform: uppercase;
+            white-space: nowrap;
         }
         .p-alta .ticket-prio { background: #FEE2E2; color: #991B1B !important; border: 1px solid #FCA5A5; }
         .p-media .ticket-prio { background: #FFEDD5; color: #9A3412 !important; border: 1px solid #FDBA74; }
         .p-baja .ticket-prio { background: #DCFCE7; color: #166534 !important; border: 1px solid #86EFAC; }
 
-        .ticket-client { font-weight: 800; font-size: 14px; color: #0F172A; margin-bottom: 5px; }
-        .ticket-desc { font-size: 13px; color: #0F172A; margin-bottom: 10px; line-height: 1.45; font-weight: 500; }
+        .ticket-client {
+            font-weight: 800;
+            font-size: 13.5px;
+            color: #0F172A;
+            margin-bottom: 6px;
+            height: 20px;
+            line-height: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ticket-desc {
+            font-size: 12.5px;
+            color: #0F172A;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            font-weight: 500;
+            height: 52px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-sizing: border-box;
+        }
 
         .ticket-meta {
             background: #F8FAFC;
             border: 1.5px solid #CBD5E1;
             border-radius: 6px;
-            padding: 9px 11px;
-            font-size: 12px;
+            padding: 8px 10px;
+            font-size: 11.5px;
             color: #0F172A;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-height: 146px;
+            box-sizing: border-box;
         }
-        .meta-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; }
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 19px;
+            white-space: nowrap;
+        }
         .meta-row:last-child { margin-bottom: 0; }
-        .meta-lbl { color: #0F172A !important; font-weight: 700; }
+        .meta-lbl {
+            color: #0F172A !important;
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+        .meta-val {
+            font-size: 11px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 175px;
+            text-align: right;
+            display: inline-block;
+        }
 
         .ticket-cita {
             background: #F1F5F9;
             border: 1.5px solid #CBD5E1;
             border-left: 4px solid #0284C7;
             border-radius: 6px;
-            padding: 10px 12px;
-            font-size: 12px;
+            padding: 8px 10px;
+            font-size: 11.5px;
             color: #0F172A;
-            margin-bottom: 10px;
-            line-height: 1.45;
+            margin-bottom: 8px;
+            line-height: 1.35;
+            height: 142px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .cita-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px;
+            height: 20px;
+            margin-bottom: 3px;
         }
         .cita-badge {
             background: #0369A1;
             color: #FFFFFF !important;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
-            padding: 2px 7px;
+            padding: 2px 6px;
             border-radius: 4px;
             letter-spacing: 0.3px;
+            white-space: nowrap;
         }
         .cita-badge.badge-fuera {
             background: #334155;
             color: #FFFFFF !important;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
-            padding: 2px 7px;
+            padding: 2px 6px;
             border-radius: 4px;
+            white-space: nowrap;
         }
         .cita-badge.badge-escalado {
             background: #B45309;
             color: #FFFFFF !important;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
-            padding: 2px 7px;
+            padding: 2px 6px;
             border-radius: 4px;
+            white-space: nowrap;
         }
         .badge-vigencia {
             background: #047857;
             color: #FFFFFF !important;
             border: 1px solid #065F46;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
             padding: 2px 6px;
             border-radius: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 95px;
+            display: inline-block;
+            vertical-align: middle;
         }
         .cita-doc {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             color: #0F172A !important;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 17px;
+            line-height: 17px;
         }
         .cita-paso {
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
             color: #0369A1 !important;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 16px;
+            line-height: 16px;
         }
         .cita-fragmento {
             font-style: italic;
             color: #0F172A !important;
-            font-size: 11.5px;
+            font-size: 10.5px;
             font-weight: 500;
             background: #FFFFFF;
-            border: 1.5px solid #CBD5E1;
-            border-radius: 5px;
-            padding: 6px 8px;
-            margin-bottom: 5px;
+            border: 1px solid #CBD5E1;
+            border-radius: 4px;
+            padding: 4px 6px;
+            height: 38px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-sizing: border-box;
+        }
+        .cita-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 18px;
+            margin-top: 2px;
+            gap: 6px;
         }
         .link-fuente {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            font-size: 11px;
+            gap: 3px;
+            font-size: 10.5px;
             font-weight: 800;
             color: #1D4ED8 !important;
             text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
         }
         .link-fuente:hover { text-decoration: underline; color: #1E3A8A !important; }
 
@@ -756,33 +867,53 @@
         }
 
         .badge-nivel {
-            padding: 2px 7px;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
             display: inline-block;
+            white-space: nowrap;
         }
         .nivel-1 { background: #DCFCE7; color: #14532D !important; border: 1.5px solid #86EFAC; }
         .nivel-2 { background: #FEF3C7; color: #78350F !important; border: 1.5px solid #FCD34D; }
         .nivel-3 { background: #FEE2E2; color: #7F1D1D !important; border: 1.5px solid #FCA5A5; }
         .nivel-0 { background: #F1F5F9; color: #1E293B !important; border: 1.5px solid #CBD5E1; }
 
-        .ticket-actions {
+        .ticket-seguimiento-user {
+            margin-top: auto;
+            padding-top: 8px;
+            border-top: 1px dashed #CBD5E1;
             display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            height: 30px;
+            box-sizing: border-box;
+        }
+
+        .ticket-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            margin-top: auto;
+            padding-top: 4px;
         }
         .act-btn {
             background: #FFFFFF;
             color: #0F172A !important;
             border: 1.5px solid #CBD5E1;
-            padding: 5px 9px;
-            border-radius: 6px;
-            font-size: 11.5px;
+            padding: 4px 6px;
+            border-radius: 5px;
+            font-size: 10.5px;
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
             transition: all 0.15s ease;
+            height: 28px;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
         }
         .act-btn:hover {
             background: #0F172A;
@@ -1519,6 +1650,15 @@
         body.dark-theme .meta-lbl {
             color: #E2E8F0 !important;
         }
+        body.dark-theme .meta-val {
+            color: #F8FAFC !important;
+        }
+        body.dark-theme .ticket-seguimiento-user {
+            border-top-color: #202E4B;
+        }
+        body.dark-theme .ticket-seguimiento-user span:first-child {
+            color: #94A3B8 !important;
+        }
         body.dark-theme .ticket-card small {
             color: #94A3B8 !important;
         }
@@ -1795,7 +1935,7 @@
                 <button type="button" class="preset-btn" onclick="cargarPreset('impresora')">🖨️ Atasco Impresora Red (DOC-03)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('erp')">📊 Sesión Colgada ERP (DOC-05)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('pc_falla')">🖥️ Pantalla Azul / Hardware (DOC-10)</button>
-                <button type="button" class="preset-btn" onclick="cargarPreset('menu_almuerzo')">🍽️ Menú Almuerzo (Abstención)</button>
+                <button type="button" id="btnPresetAbstencion" class="preset-btn" onclick="cargarPreset('menu_almuerzo')" style="display:none;">🍽️ Menú Almuerzo (Abstención)</button>
                 <button type="button" id="btnPresetInyeccion" class="preset-btn preset-alucinacion" onclick="cargarPreset('alucinacion')" title="Carga un caso adverso de inyección y desactiva Gemini automáticamente" style="display:none;">🌀 Inyección Prompt & Failover</button>
             </div>
         </aside>
@@ -2272,20 +2412,20 @@
             card.className = `ticket-card ${prioClass}`;
 
             // Determinación explícita del Nivel de Soporte ITIL
-            let nivelTexto = 'Nivel 1 · Autoatención Guiada';
+            let nivelTexto = 'Nivel 1 · Autoatención';
             let nivelClase = 'nivel-1';
             let nivelIcono = 'ℹ️';
 
             if (t.categoria.includes('Fuera de Alcance') || t.categoria.includes('No Técnica')) {
-                nivelTexto = 'Nivel 0 · Fuera de Alcance';
+                nivelTexto = 'Nivel 0 · Fuera Alcance';
                 nivelClase = 'nivel-0';
                 nivelIcono = '⚪';
             } else if (estado === 'escalado_cuadrilla' || t.prioridad === 'Alta' || t.categoria.includes('Hardware') || t.categoria.includes('Red')) {
-                nivelTexto = 'Nivel 3 · Soporte Presencial';
+                nivelTexto = 'Nivel 3 · Presencial';
                 nivelClase = 'nivel-3';
                 nivelIcono = '🚚';
             } else if (t.prioridad === 'Media' || t.categoria.includes('Software') || t.categoria.includes('Impresoras') || t.categoria.includes('Carpetas')) {
-                nivelTexto = 'Nivel 2 · Soporte Remoto / TI';
+                nivelTexto = 'Nivel 2 · Remoto / TI';
                 nivelClase = 'nivel-2';
                 nivelIcono = '💻';
             }
@@ -2296,78 +2436,108 @@
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge badge-fuera">⚪ FUERA DE ALCANCE</span>
-                        <span class="badge-vigencia">Regla Silencio</span>
+                        <span class="badge-vigencia" title="Regla Silencio">Regla Silencio</span>
                     </div>
-                    <div class="cita-doc">⚠️ Sin procedimiento técnico en los 15 manuales oficiales.</div>
+                    <div class="cita-doc" title="Sin procedimiento técnico en los 15 manuales oficiales">⚠️ Sin procedimiento técnico en manuales</div>
+                    <div class="cita-paso">📍 <b>Regla:</b> Abstención institucional</div>
                     <div class="cita-fragmento">«Solicitud no técnica: se aplica protocolo de abstención institucional sin alucinación.»</div>
+                    <div class="cita-footer">
+                        <span class="link-fuente" style="color:#64748B !important;">🛡️ Política ConectaTec</span>
+                        <small style="color:#64748B; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">✓ Validado</small>
+                    </div>
                 `;
             } else if (t.citas && t.citas.length > 0) {
                 const c = t.citas[0];
-                const vigTxt = c.vigencia ? `<span class="badge-vigencia">${c.vigencia}</span>` : '<span class="badge-vigencia">2026-V1</span>';
-                const urlLink = c.url ? `<a href="${c.url}" target="_blank" class="link-fuente" title="Consultar manual técnico oficial">🔗 Fuente: ${c.documento_id}</a>` : `<span class="link-fuente">📄 ${c.documento_id}</span>`;
+                // Vigencia corta y limpia (evita textos largos de categorías)
+                let vigTxt = '2026-V1';
+                if (c.vigencia) {
+                    const matchVig = c.vigencia.match(/(?:202\d|v\d+(?:\.\d+)?)/i);
+                    vigTxt = matchVig ? (matchVig[0].startsWith('v') ? `${matchVig[0]} (2026)` : `${matchVig[0]}-V1`) : '2026-V1';
+                }
+                
+                // Evitar prefijo duplicado en título (ej. "DOC-03: DOC-03:")
+                const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
+                let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial').replace(new RegExp(`^${docId}:?\\s*`, 'i'), '').replace(/^DOC-\d+:?\s*/i, '').trim();
+                
+                const pasoLimpio = (c.paso_exacto || 'Procedimiento estándar').replace(/^Sección:\s*/i, '');
+                const urlLink = c.url ? `<a href="${c.url}" target="_blank" class="link-fuente" title="${c.documento_id}">🔗 ${docId}</a>` : `<span class="link-fuente" title="${c.documento_id}">📄 ${docId}</span>`;
+
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge">📖 CITA RAG OBLIGATORIA</span>
-                        ${vigTxt}
+                        <span class="badge-vigencia" title="Vigencia técnica">${vigTxt}</span>
                     </div>
-                    <div class="cita-doc"><b>${c.documento_id}:</b> ${c.titulo_documento || 'Manual Técnico Oficial'}</div>
-                    <div class="cita-paso">📍 <b>Sección:</b> ${c.paso_exacto}</div>
-                    <div class="cita-fragmento">«${(c.fragmento_aplicado || '').slice(0, 110)}${(c.fragmento_aplicado || '').length > 110 ? '...' : ''}»</div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
+                    <div class="cita-doc" title="${docId}: ${titLimpio}"><b>${docId}:</b> ${titLimpio}</div>
+                    <div class="cita-paso" title="${pasoLimpio}">📍 <b>Paso:</b> ${pasoLimpio}</div>
+                    <div class="cita-fragmento">«${(c.fragmento_aplicado || '').slice(0, 105)}${(c.fragmento_aplicado || '').length > 105 ? '...' : ''}»</div>
+                    <div class="cita-footer">
                         ${urlLink}
-                        <small style="color:#0F172A; font-weight:700; font-size:10.5px;">✓ Cita verificada</small>
+                        <small style="color:#0F172A; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">✓ Cita verificada</small>
                     </div>
                 `;
             } else if (t.requiere_revision_humana || (t.metadatos_ia && t.metadatos_ia.conmutado)) {
                 citaTxt = `
                     <div class="cita-header">
-                        <span class="cita-badge badge-escalado">⚠️ DERIVACIÓN OBLIGATORIA</span>
+                        <span class="cita-badge badge-escalado">⚠️ DERIVACIÓN</span>
                         <span class="badge-vigencia">Nivel 2</span>
                     </div>
-                    <div class="cita-doc">RAG con umbral de abstención activado o contingencia.</div>
-                    <div class="cita-fragmento">«Caso escalado a personal técnico humano para diagnóstico físico.»</div>
+                    <div class="cita-doc" title="RAG con umbral de abstención activado o contingencia">RAG con umbral de contingencia</div>
+                    <div class="cita-paso">📍 <b>Derivación:</b> Diagnóstico presencial</div>
+                    <div class="cita-fragmento">«Caso escalado a personal técnico humano para diagnóstico físico directo.»</div>
+                    <div class="cita-footer">
+                        <span class="link-fuente" style="color:#B45309 !important;">🚚 ODT Soporte</span>
+                        <small style="color:#B45309; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">En curso</small>
+                    </div>
                 `;
             } else {
                 citaTxt = `
                     <div class="cita-header">
                         <span class="cita-badge">📖 GUÍA OFICIAL</span>
+                        <span class="badge-vigencia">2026-V1</span>
                     </div>
-                    <div class="cita-doc">Mesa de Ayuda TIC para PYMEs</div>
+                    <div class="cita-doc" title="Mesa de Ayuda TIC para PYMEs">Mesa de Ayuda TIC PYME</div>
+                    <div class="cita-paso">📍 <b>Procedimiento:</b> Triaje N1</div>
+                    <div class="cita-fragmento">«Procedimiento estándar de autoatención asistida según manuales operativos.»</div>
+                    <div class="cita-footer">
+                        <span class="link-fuente">📄 Guía ConectaTec</span>
+                        <small style="color:#0F172A; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">✓ Verificado</small>
+                    </div>
                 `;
             }
 
             // IA y badge de failover / resiliencia
-            let iaTxt = `${t.metadatos_ia.proveedor} (${t.metadatos_ia.modelo.slice(0, 15)}...)`;
-            if (t.metadatos_ia.conmutado) {
+            let iaNombre = (t.metadatos_ia && t.metadatos_ia.proveedor) ? t.metadatos_ia.proveedor : 'gemini';
+            let iaTxt = `${iaNombre}`;
+            if (t.metadatos_ia && t.metadatos_ia.conmutado) {
                 if (t.metadatos_ia.proveedor === 'groq') {
-                    iaTxt += ` <span class="badge-failover badge-groq">🟠 Respaldo Groq</span>`;
+                    iaTxt += ` <span class="badge-failover badge-groq">Groq Respaldo</span>`;
                 } else {
-                    iaTxt += ` <span class="badge-failover badge-local">🔵 Motor Local Offline</span>`;
+                    iaTxt += ` <span class="badge-failover badge-local">Local Offline</span>`;
                 }
+            } else {
+                iaTxt += ` <span style="font-size:10px; color:#15803D; font-weight:700;">🟢 Principal</span>`;
             }
 
             // Tokens consumidos
-            let tokensTxt = '🪙 0 tokens (Modo Local)';
-            if (t.metadatos_ia.tokens_total) {
-                tokensTxt = `🪙 <b>${t.metadatos_ia.tokens_total}</b> tokens <small style="color:#334155; font-weight:600;">(${t.metadatos_ia.tokens_prompt || 0} in / ${t.metadatos_ia.tokens_completado || 0} out)</small>`;
-            } else if (t.metadatos_ia.proveedor === 'conmutador-local-offline') {
-                tokensTxt = '🪙 0 tokens (Costo $0 · Procesamiento Offline)';
+            let tokensTxt = '🪙 0 tokens (Offline)';
+            if (t.metadatos_ia && t.metadatos_ia.tokens_total) {
+                tokensTxt = `🪙 <b>${t.metadatos_ia.tokens_total}</b> tks <small style="color:#64748B; font-weight:600;">(${t.metadatos_ia.tokens_prompt || 0}/${t.metadatos_ia.tokens_completado || 0})</small>`;
+            } else if (t.metadatos_ia && t.metadatos_ia.proveedor === 'conmutador-local-offline') {
+                tokensTxt = '🪙 0 tokens ($0 · Local)';
             }
 
-            // Metadatos Human-in-the-Loop (HITL)
-            let hitlInfoHtml = '';
+            // Fila uniforme de HITL / Trazabilidad (exactamente 6 filas en toda tarjeta)
+            let trazabilidadHtml = '';
             if (t.confirmado_por) {
-                hitlInfoHtml += `<div class="meta-row"><span class="meta-lbl">Aprobado HITL:</span> <span class="badge-hitl-ok">🛡️ ${t.confirmado_por}</span></div>`;
-            }
-            if (t.notificacion_enviada) {
-                hitlInfoHtml += `<div class="meta-row"><span class="meta-lbl">Notificación:</span> <span class="badge-notif-enviada">✉️ Enviada al Usuario</span></div>`;
-            }
-            if (t.cuadrilla_despachada) {
-                hitlInfoHtml += `<div class="meta-row"><span class="meta-lbl">Despacho Físico:</span> <span class="badge-cuadrilla-despachada">👷 ${t.orden_despacho_id || 'ODT-SOPORTE-TIC'}</span></div>`;
+                const notifBadge = t.notificacion_enviada ? ' · ✉️' : '';
+                trazabilidadHtml = `<span class="badge-hitl-ok" title="Confirmado por ${t.confirmado_por}">🛡️ ${t.confirmado_por}${notifBadge}</span>`;
+            } else if (t.cuadrilla_despachada) {
+                trazabilidadHtml = `<span class="badge-cuadrilla-despachada" title="Despacho presencial">👷 ${t.orden_despacho_id || 'ODT-SOPORTE'}</span>`;
+            } else {
+                trazabilidadHtml = `<span style="color:#64748B; font-size:10.5px; font-weight:600;">🤖 Auto-Validado</span>`;
             }
 
             const esModoTIC = (window._vistaActual === 'tic');
-            const esTIC = Boolean(window._sesionTIC && window._sesionTIC.token) || esModoTIC;
             const botonEliminarHtml = esModoTIC ? 
                 `<button type="button" class="btn-eliminar-ticket" onclick="confirmarEliminarTicket(${t.id}, '${t.ticket_codigo}')" title="Eliminar ticket (Acción auditada bajo LOPDP)">🗑️</button>` : '';
 
@@ -2376,17 +2546,17 @@
 
             const accionesHtml = esModoTIC ? `
                 <div class="ticket-actions">
-                    <button type="button" class="act-btn" style="background:#EFF6FF; color:#1E3A8A; border-color:#93C5FD; font-weight:700;" onclick="abrirModalConfirmarEnvio(${t.id})" title="Confirmación humana antes de enviar notificación oficial">✉️ Enviar Notif.</button>
-                    <button type="button" class="act-btn" style="background:#FFFBEB; color:#78350F; border-color:#FCD34D; font-weight:700;" onclick="abrirModalConfirmarDerivacion(${t.id})" title="Confirmación humana antes de derivar soporte presencial">🚨 Derivar Presencial</button>
-                    ${estado !== 'en_atencion' ? `<button class="act-btn" style="background:#F0FDF4; color:#14532D; border-color:#86EFAC; font-weight:700;" onclick="cambiarEstado(${t.id}, 'en_atencion')">⚙️ Atender</button>` : ''}
-                    ${estado !== 'escalado_cuadrilla' ? `<button class="act-btn" style="background:#FFF7ED; color:#7C2D12; border-color:#FDBA74; font-weight:700;" onclick="cambiarEstado(${t.id}, 'escalado_cuadrilla')">🚚 Presencial</button>` : ''}
-                    ${estado !== 'resuelto' ? `<button class="act-btn" style="background:#F0FDF4; color:#15803D; border-color:#86EFAC; font-weight:700;" onclick="cambiarEstado(${t.id}, 'resuelto')">✅ Resolver</button>` : ''}
-                    ${estado === 'resuelto' ? `<button class="act-btn" style="background:#FEF2F2; color:#7F1D1D; border-color:#FCA5A5; font-weight:700;" onclick="solicitarQuitarTicket(${t.id}, '${t.ticket_codigo}')" title="Quitar o archivar este ticket resuelto del tablero Kanban">🗑️ Quitar del Tablero</button>` : ''}
+                    <button type="button" class="act-btn" style="background:#EFF6FF; color:#1E3A8A; border-color:#93C5FD;" onclick="abrirModalConfirmarEnvio(${t.id})" title="Enviar notificación oficial">✉️ Enviar Notif.</button>
+                    <button type="button" class="act-btn" style="background:#FFFBEB; color:#78350F; border-color:#FCD34D;" onclick="abrirModalConfirmarDerivacion(${t.id})" title="Derivar soporte presencial">🚨 Presencial</button>
+                    ${estado !== 'en_atencion' ? `<button class="act-btn" style="background:#F0FDF4; color:#14532D; border-color:#86EFAC;" onclick="cambiarEstado(${t.id}, 'en_atencion')">⚙️ Atender</button>` : ''}
+                    ${estado !== 'escalado_cuadrilla' ? `<button class="act-btn" style="background:#FFF7ED; color:#7C2D12; border-color:#FDBA74;" onclick="cambiarEstado(${t.id}, 'escalado_cuadrilla')">🚚 Cuadrilla</button>` : ''}
+                    ${estado !== 'resuelto' ? `<button class="act-btn" style="background:#F0FDF4; color:#15803D; border-color:#86EFAC;" onclick="cambiarEstado(${t.id}, 'resuelto')">✅ Resolver</button>` : ''}
+                    ${estado === 'resuelto' ? `<button class="act-btn" style="background:#FEF2F2; color:#7F1D1D; border-color:#FCA5A5;" onclick="solicitarQuitarTicket(${t.id}, '${t.ticket_codigo}')" title="Quitar ticket resuelto">🗑️ Quitar</button>` : ''}
                 </div>
             ` : `
-                <div style="margin-top:8px; padding-top:6px; border-top:1px dashed #CBD5E1; font-size:11.5px; color:#475569; display:flex; justify-content:space-between; align-items:center; font-weight:600;">
-                    <span>📌 Seguimiento de ticket:</span>
-                    <span style="color:#0284C7; font-weight:700;">${nivelTexto}</span>
+                <div class="ticket-seguimiento-user">
+                    <span style="font-weight:700; font-size:11px; color:#475569; white-space:nowrap;">📌 Seguimiento:</span>
+                    <span class="badge-nivel ${nivelClase}" style="white-space:nowrap; font-size:10px;">${nivelIcono} ${nivelTexto}</span>
                 </div>
             `;
 
@@ -2398,15 +2568,15 @@
                     </div>
                     <span class="ticket-prio">${t.prioridad} · SLA ${t.sla_minutos}m</span>
                 </div>
-                <div class="ticket-client">${t.nombre_cliente}</div>
-                <div class="ticket-desc">${t.descripcion_problema}</div>
+                <div class="ticket-client" title="${t.nombre_cliente}">${t.nombre_cliente}</div>
+                <div class="ticket-desc" title="${t.descripcion_problema}">${t.descripcion_problema}</div>
                 <div class="ticket-meta">
                     <div class="meta-row"><span class="meta-lbl">Nivel ITIL:</span> <span class="badge-nivel ${nivelClase}">${nivelIcono} ${nivelTexto}</span></div>
-                    <div class="meta-row"><span class="meta-lbl">Categoría:</span> <b>${t.categoria}</b></div>
-                    <div class="meta-row"><span class="meta-lbl">Impacto x Urg.:</span> <b>${t.impacto} x ${t.urgencia}</b></div>
-                    <div class="meta-row"><span class="meta-lbl">IA:</span> <b>${iaTxt}</b></div>
-                    <div class="meta-row"><span class="meta-lbl">Consumo:</span> <span>${tokensTxt}</span></div>
-                    ${hitlInfoHtml}
+                    <div class="meta-row"><span class="meta-lbl">Categoría:</span> <span class="meta-val" title="${t.categoria}"><b>${t.categoria}</b></span></div>
+                    <div class="meta-row"><span class="meta-lbl">Impacto x Urg.:</span> <span class="meta-val"><b>${t.impacto} x ${t.urgencia}</b></span></div>
+                    <div class="meta-row"><span class="meta-lbl">IA:</span> <span class="meta-val">${iaTxt}</span></div>
+                    <div class="meta-row"><span class="meta-lbl">Consumo:</span> <span class="meta-val">${tokensTxt}</span></div>
+                    <div class="meta-row"><span class="meta-lbl">Trazabilidad:</span> <span class="meta-val">${trazabilidadHtml}</span></div>
                 </div>
                 <div class="ticket-cita">${citaTxt}</div>
                 ${botonExplicabilidadHtml}
@@ -3756,10 +3926,14 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 boxFormHitl.style.display = esTIC ? 'block' : 'none';
             }
 
-            // 5. Botón de Inyección Prompt en Ejemplos
+            // 5. Botones adicionales de prueba en Ejemplos (visibles solo en Vista TIC)
             const btnInyeccion = document.getElementById('btnPresetInyeccion');
             if (btnInyeccion) {
-                btnInyeccion.style.display = esTIC ? 'inline-block' : 'none';
+                btnInyeccion.style.display = esTIC ? 'flex' : 'none';
+            }
+            const btnAbstencion = document.getElementById('btnPresetAbstencion');
+            if (btnAbstencion) {
+                btnAbstencion.style.display = esTIC ? 'flex' : 'none';
             }
 
             // 6. Subtítulo en cabecera
