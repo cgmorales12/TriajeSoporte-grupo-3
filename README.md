@@ -3,7 +3,7 @@
 > **Seminario de Titulación:** Ingeniería de Software con IA Generativa — Universidad Regional Autónoma de Los Andes (UNIANDES)  
 > **Docente Evaluador:** Ing. Heyler Fabio Guaza (Mg. en Ciberseguridad · OPD · Abogado)  
 > **Repositorio Oficial en GitHub:** [https://github.com/cgmorales12/TriajeSoporte-grupo-3](https://github.com/cgmorales12/TriajeSoporte-grupo-3)  
-> **Despliegue en Producción (Azure Container Apps):** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io)  
+> **Healthcheck Operativo:** `GET /health` (Devuelve HTTP 200 OK y arquitectura del sistema)  
 
 ---
 
@@ -151,11 +151,47 @@ streamlit run frontend/app.py
 
 ## ☁️ 4. Cómo se Despliega y URL Pública
 
-### Despliegue en la Nube
-El sistema está contenedorizado mediante Dockerfile multi-stage optimizado y desplegado en **Azure Container Apps** (Azure for Students) bajo alta disponibilidad:
-- **URL Pública del Servicio:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io)
-- **Endpoint de Salud / Healthcheck:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/health](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/health)
-- **Tablero Web en Vivo:** [https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero](https://g3-triaje.calmcliff-829b47e2.eastus.azurecontainerapps.io/tablero)
+### 4.1. Despliegue en la Nube (Render / Azure / Docker Multi-stage)
+El sistema está completamente preparado para despliegue Cloud-Native continuo bajo alta disponibilidad:
+- **Manifiestos Incluidos en el Repositorio:** `render.yaml`, `Procfile` y `Dockerfile` multi-stage optimizado en la raíz del proyecto.
+- **Despliegue Automático en Render.com (Plan Gratuito):**
+  1. Conectar la cuenta de GitHub al repositorio [`cgmorales12/TriajeSoporte-grupo-3`](https://github.com/cgmorales12/TriajeSoporte-grupo-3).
+  2. Render detecta automáticamente `render.yaml` o el `Procfile` y asigna el comando de inicio `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
+  3. Configurar las variables de entorno en el panel (`GEMINI_API_KEY` y `GROQ_API_KEY`).
+  4. La URL pública del servicio queda activa 24/7 (ej: `https://triajesoporte-grupo-3.onrender.com`).
+
+### 4.2. Endpoint de Salud / Healthcheck (`/health`)
+El backend implementa el endpoint canónico de monitoreo operativo según RFC 9457:
+- **Ruta:** `GET /health` (y alias en `/v1/salud`)
+- **Respuesta Estructurada (HTTP 200 OK):**
+```json
+{
+  "status": "ok",
+  "servicio": "conectatec-api",
+  "timestamp": "2026-11-06T18:01:17.907662+00:00",
+  "base_datos": {
+    "motor": "sqlite",
+    "conectada": true
+  },
+  "arquitectura": {
+    "modelo_primario": "gemini-3.5-flash-lite",
+    "modelo_respaldo": "openai/gpt-oss-120b (Groq Cloud)",
+    "rag": "ChromaDB / 15 Manuales Técnicos PYME",
+    "matriz_itil": "determinista (config/matriz_prioridad.json)"
+  }
+}
+```
+
+### 4.3. Exposición Pública Inmediata para Sustentación en Vivo (Ngrok / Cloudflare Tunnel)
+Para pruebas inmediatas o durante la sustentación en vivo frente al tribunal evaluador:
+```bash
+# 1. En la primera terminal, levantar el backend local:
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# 2. En una segunda terminal, generar la URL pública segura instantánea:
+ngrok http 8000
+```
+La URL generada (ej: `https://xxxx.ngrok-free.app/health`) responde en vivo desde cualquier navegador o dispositivo con acceso a Internet.
 
 ---
 
