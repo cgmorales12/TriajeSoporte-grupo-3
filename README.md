@@ -260,3 +260,22 @@ Verifica: (1) Healthcheck, (2) Clasificación, (3) RAG con citas, (4) Prioridad 
 2. **Actualización de Procedimientos Internos:** Si la PYME modifica sus políticas internas de contraseñas o adquiere nuevo software, se debe re-ejecutar `python scripts/ingest.py` para reindexar los nuevos manuales en ChromaDB.
 3. **Límites de Cuota de Proveedores Cloud:** Las versiones gratuitas de APIs externas tienen cuotas por minuto; esta limitación está completamente mitigada mediante el gateway con failover automático a Groq y conmutación offline.
 4. **Ámbito Fuera de Alcance:** El agente no atiende solicitudes de gestión humana, nómina de sueldos ni trámites personales, respondiendo con el protocolo oficial de abstención y orientación.
+
+---
+
+## 🤝 9. Declaración de Uso de IA y Tabla de Aportes por Integrante
+
+### 9.1. Declaración Formal sobre el Uso de Inteligencia Artificial
+En el marco del **Seminario de Titulación en Ingeniería de Software con IA Generativa (UNIANDES 2026)**, el Grupo 3 declara que:
+1. **Modelos en Producción:** La plataforma integra modelos generativos de lenguaje (**Google Gemini 1.5 Flash / 3.5 Flash Lite** como motor primario y **Llama 3.3 70B en Groq Cloud** como respaldo de contingencia) exclusivamente para la extracción de síntomas, clasificación inicial y redacción amigable de autoatención.
+2. **Gobernanza del Código:** Se aplicó estrictamente el principio rector: ***«El modelo propone, el código dispone, la configuración gobierna, el humano autoriza»***. Ningún modelo LLM tiene permitido calcular SLAs, fijar tarifas, inventar manuales ni modificar la base de datos sin autorización humana (HITL).
+3. **Herramientas de Asistencia en el Desarrollo:** Se utilizaron asistentes de Inteligencia Artificial (Claude, Gemini, Antigravity) como herramientas de apoyo para diseño conceptual, estructuración de pruebas y optimización de código. Todo el código fuente, la lógica determinista, las pruebas unitarias y la documentación fueron rigurosamente analizados, auditados, verificados y defendidos por los tres integrantes del equipo.
+
+### 9.2. Tabla de Aportes y Responsabilidades por Integrante
+
+| Integrante | Rol Oficial | Usuario GitHub | Aportes Técnicos Principales en el Proyecto |
+| :--- | :--- | :---: | :--- |
+| **Christian Guillermo Morales González** | Tech Lead / Coordinador | [`cgmorales12`](https://github.com/cgmorales12) | • Arquitectura de endpoints REST en FastAPI con AnyIO.<br>• Gateway resiliente con failover transparente (Gemini ➔ Groq ➔ Local).<br>• Despliegue en la nube (Render Cloud / Docker) y healthcheck `/health`.<br>• Coordinación del repositorio, README y observabilidad de tokens. |
+| **Luis Fernando Ribera Alajo** | Builder / Arquitectura | [`fernandolribera`](https://github.com/fernandolribera) | • Matriz ITIL determinista (`config/matriz_prioridad.json` y `app/tools/priorizar.py`).<br>• Base de datos SQLite parametrizada y repositorio de persistencia.<br>• Motor RAG en ChromaDB persistente y chunking de los 15 manuales PYME.<br>• Desacoplamiento de tarifas, SBU $482 y calendarios (`config/`). |
+| **Amalia Geoconda Iguasnia Escobar** | QA Lead / Seguridad | [`Geocoiguasnia76`](https://github.com/Geocoiguasnia76) | • Validación estricta con esquemas Pydantic V2 (`extra="forbid"`).<br>• Perímetro de ciberseguridad OWASP LLM 2025 y cumplimiento LOPDP Art. 23.<br>• Suite de pruebas unitarias automatizadas con Mocks (82 pruebas sin costo).<br>• Batería de 16 pruebas en producción contra Render (`docs/08-pruebas.md`).<br>• Auditoría de cero secretos en Git y certificación de calidad. |
+
