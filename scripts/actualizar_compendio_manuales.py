@@ -58,3 +58,4 @@ with open(compendio_path, "w", encoding="utf-8") as f:
 
 print(f"✅ Compendio generado con éxito en: {compendio_path}")
 print(f"✅ {len(manuales_data)} manuales individuales sincronizados en: {OUT_MANUALES}")
+
