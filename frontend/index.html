@@ -2882,7 +2882,9 @@
                 let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial').replace(new RegExp(`^${docId}:?\\s*`, 'i'), '').replace(/^DOC-\d+:?\s*/i, '').trim();
                 
                 const pasoLimpio = (c.paso_exacto || 'Procedimiento estándar').replace(/^Sección:\s*/i, '');
-                const urlLink = `<span class="link-fuente" title="Manual Técnico Oficial: ${docId}">📄 ${docCodigo}</span>`;
+                const urlLink = (c.url)
+                    ? `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="link-fuente" title="Abrir enlace oficial en manual: ${c.url}" style="color:#2563EB !important; text-decoration:underline; font-weight:700;">🌐 ${docCodigo} ↗</a>`
+                    : `<span class="link-fuente" title="Manual Técnico Oficial: ${docId}">📄 ${docCodigo}</span>`;
 
                 // Fragmento completo y limpio para el tooltip y la visualización
                 let fragLimpio = (c.fragmento_aplicado || t.solucion_propuesta || '').trim();
@@ -4449,14 +4451,26 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             if (lblSla) {
                 lblSla.textContent = esTIC ? 'SLA Comprometido (Minutos)' : '⏱️ Tiempo Estimado de Respuesta';
             }
+            let slaTxt = `${slaMins} min`;
             if (slaInput) {
                 if (esTIC) {
                     slaInput.value = `${slaMins} min`;
+                    slaTxt = `${slaMins} min`;
                 } else {
-                    if (slaMins >= 1440) slaInput.value = '24 horas (1 día laborable)';
-                    else if (slaMins >= 60) slaInput.value = `${Math.floor(slaMins / 60)} ${slaMins >= 120 ? 'horas' : 'hora'}`;
-                    else slaInput.value = `${slaMins} minutos`;
+                    if (slaMins >= 1440) slaTxt = '24 horas (1 día laborable)';
+                    else if (slaMins >= 60) slaTxt = `${Math.floor(slaMins / 60)} ${slaMins >= 120 ? 'horas' : 'hora'}`;
+                    else slaTxt = `${slaMins} minutos`;
+                    slaInput.value = slaTxt;
                 }
+            }
+
+            // Banner explicativo determinista ITIL (0 tokens)
+            const bannerItil = document.getElementById('hitlNotaItilBanner');
+            if (bannerItil) {
+                const pItil = propuesta.prioridad_itil || 'Media';
+                bannerItil.innerHTML = `
+                    <span>🧮 <b>Prioridad ITIL:</b> <strong style="color:#1E3A8A; background:#DBEAFE; padding:1px 7px; border-radius:4px;">${pItil}</strong> (SLA de Resolución: <strong>${slaTxt}</strong>) · <i>Calculada matemáticamente en Python leyendo <code>config/matriz_prioridad.json</code> a costo <b>0 tokens</b></i>.</span>
+                `;
             }
 
             // Limpieza y adaptación preventiva de la solución al perfil de usuario vs TIC
@@ -4557,46 +4571,39 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 if (btnRegistrar) btnRegistrar.style.display = 'inline-flex';
             }
 
-            // 6. Citas RAG con lenguaje adaptado
+            // 6. Citas RAG Oficiales con enlace verificable y paso exacto
             const citasCont = document.getElementById('hitlRegCitasContainer');
             if (propuesta.citas && propuesta.citas.length > 0) {
-                if (esTIC) {
-                    citasCont.innerHTML = `
-                        <div style="font-size:12px; font-weight:700; color:#1E3A8A; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                            <span>📖 Fuente Oficial Verificada en Manuales (RAG):</span>
-                        </div>
-                        ${propuesta.citas.map(c => {
-                            const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
-                            let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial')
-                                .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
-                                .replace(/^DOC-\d+:?\s*/i, '')
-                                .trim();
-                            return `
-                            <div class="hitl-cita-card">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
-                                    <span class="hitl-cita-title">📄 ${docId}: ${titLimpio}</span>
-                                    <span style="font-size:10.5px; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #BFDBFE;">🛡️ ${c.vigencia || 'Vigencia 2026'}</span>
-                                </div>
-                                <div class="hitl-cita-sec">
-                                    <strong>Sección Oficial:</strong> ${c.paso_exacto}
-                                </div>
+                citasCont.innerHTML = `
+                    <div style="font-size:12px; font-weight:700; color:#1E3A8A; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                        <span>📖 Cita RAG Oficial Verificada en Manuales Técnicos:</span>
+                    </div>
+                    ${propuesta.citas.map(c => {
+                        const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
+                        let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial')
+                            .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
+                            .replace(/^DOC-\d+:?\s*/i, '')
+                            .trim();
+                        const urlBtn = c.url 
+                            ? `<div style="margin-top:6px; padding-top:6px; border-top:1px dashed #CBD5E1;">
+                                 <a href="${c.url}" target="_blank" rel="noopener noreferrer" style="color:#2563EB; font-weight:700; text-decoration:underline; font-size:11.5px; display:inline-flex; align-items:center; gap:4px;">
+                                     🌐 <b>Enlace Oficial:</b> ${c.url.includes('forticlient') ? 'Portal Oficial FortiClient VPN / Documentación' : (c.url.includes('microsoft') ? 'Documentación Oficial Microsoft Active Directory' : c.url)} ↗
+                                 </a>
+                               </div>` 
+                            : '';
+                        return `
+                        <div class="hitl-cita-card" style="background:#F0FDF4; border:1.5px solid #86EFAC; border-left:4px solid #16A34A; border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
+                                <span class="hitl-cita-title" style="font-weight:800; color:#14532D; font-size:12.5px;">📄 ${docId}: ${titLimpio}</span>
+                                <span style="font-size:10px; background:#DCFCE7; color:#166534; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #86EFAC;">🛡️ ${c.vigencia || 'Vigencia 2026'}</span>
                             </div>
-                        `;}).join('')}
-                    `;
-                } else {
-                    // En Vista Usuario: diseño sutil y elegante de una sola línea
-                    const c = propuesta.citas[0];
-                    const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
-                    let titLimpio = (c.titulo_documento || 'Manual de Soporte de la Empresa')
-                        .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
-                        .replace(/^DOC-\d+:?\s*/i, '')
-                        .trim();
-                    citasCont.innerHTML = `
-                        <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:7px 11px; font-size:11.5px; color:#166534; display:flex; align-items:center; gap:6px;">
-                            <span>📗 <b>Guía Oficial de Consulta:</b> ${titLimpio}</span>
+                            <div class="hitl-cita-sec" style="font-size:11.5px; color:#1F2937; margin-top:2px;">
+                                📍 <strong>Sección Oficial:</strong> <b>${c.paso_exacto || 'Procedimiento estándar'}</b>
+                            </div>
+                            ${urlBtn}
                         </div>
-                    `;
-                }
+                    `;}).join('')}
+                `;
             } else {
                 citasCont.innerHTML = esTIC
                     ? '<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; color:#475569; font-size:11.5px; font-style:italic;">ℹ️ Sin citas documentales requeridas (solicitud fuera de alcance o administrativa).</div>'
@@ -5404,6 +5411,9 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                         </select>
                     </div>
                 </div>
+
+                <!-- Banner Explicativo de Prioridad ITIL Determinista (0 Tokens) -->
+                <div id="hitlNotaItilBanner" style="background:#EFF6FF; border:1px solid #BFDBFE; border-left:4px solid #2563EB; border-radius:6px; padding:8px 12px; margin-bottom:12px; font-size:12px; color:#1E40AF; line-height:1.45;"></div>
 
                 <div class="form-group" style="margin-bottom:12px;">
                     <label id="hitlLblSolucion" style="font-size:12px; font-weight:700; color:#0F172A; display:flex; align-items:center; gap:6px; margin-bottom:4px;">
