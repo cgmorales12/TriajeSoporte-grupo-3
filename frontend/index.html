@@ -4486,23 +4486,51 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             }
             document.getElementById('hitlRegSolucion').value = solTexto;
 
+            // Detección de Falla Física / Hardware (Compuerta Human-in-the-Loop obligatoria)
+            const esHardware = (propuesta.categoria_propuesta === 'Hardware y Equipos') || 
+                               /pantalla azul|bsod|fuente de poder|hardware|apag|disco|quemad/i.test(propuesta.descripcion_problema || '');
+
             // 1. Título adaptativo de la modal
             const tituloModal = document.getElementById('hitlModalTitulo');
             if (tituloModal) {
-                tituloModal.innerHTML = esTIC 
-                    ? '🛡️ Confirmación Humana antes de Registrar Ticket (HITL · OWASP LLM08)' 
-                    : '💡 Sugerencia y Respuesta antes de Registrar Ticket (HITL)';
+                if (esHardware) {
+                    tituloModal.innerHTML = '🛡️ Confirmación Humana Obligatoria: Daño Físico de Hardware (HITL · OWASP LLM08)';
+                } else {
+                    tituloModal.innerHTML = esTIC 
+                        ? '🛡️ Confirmación Humana antes de Registrar Ticket (HITL · OWASP LLM08)' 
+                        : '💡 Sugerencia y Respuesta antes de Registrar Ticket (HITL)';
+                }
             }
 
             // 2. Banner informativo adaptativo
             const alertaNormal = document.getElementById('hitlAlertBoxNormal');
             if (alertaNormal) {
-                if (esTIC) {
+                if (esHardware) {
+                    alertaNormal.style.background = '#FFFBEB';
+                    alertaNormal.style.border = '1.5px solid #FCD34D';
+                    alertaNormal.style.borderLeft = '4.5px solid #D97706';
+                    alertaNormal.innerHTML = `
+                        <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:4px; font-size:13px; color:#B45309;">
+                            <span>🛡️ Acción con Confirmación Humana (Human-in-the-Loop · OWASP LLM08):</span>
+                        </div>
+                        <span style="color:#92400E; font-size:12px; line-height:1.45;">
+                            El sistema analizó los síntomas y detectó que se trata de un <b>daño físico en hardware</b> que no puede resolverse por autoatención de software. 
+                            Inmediatamente <b>bloquea la autoatención y activa la compuerta HITL</b>: no registra el ticket ni despacha presencialmente de forma automática. 
+                            Muestra esta sugerencia técnica y <b>exige que un técnico humano confirme y autorice la intervención en sitio</b>.
+                        </span>
+                    `;
+                } else if (esTIC) {
+                    alertaNormal.style.background = '#EFF6FF';
+                    alertaNormal.style.border = '1px solid #BFDBFE';
+                    alertaNormal.style.borderLeft = '4px solid #2563EB';
                     alertaNormal.innerHTML = `
                         <b style="color:#0F172A;">Principio de Exceso de Agencia Controlado (OWASP LLM08):</b><br>
                         <span style="color:#1E293B;">El modelo de IA propone la clasificación y solución, pero <b>no se registra en la base de datos ni se compromete el SLA</b> sin la autorización explícita de un técnico u operador humano.</span>
                     `;
                 } else {
+                    alertaNormal.style.background = '#EFF6FF';
+                    alertaNormal.style.border = '1px solid #BFDBFE';
+                    alertaNormal.style.borderLeft = '4px solid #2563EB';
                     alertaNormal.innerHTML = `
                         <b style="color:#1E3A8A; font-size:13px;">💡 Solución Inmediata Sugerida por la IA:</b><br>
                         <span style="color:#1E293B; font-size:12px; line-height:1.45;">
@@ -4541,9 +4569,9 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             if (lblPrio) lblPrio.textContent = esTIC ? 'Prioridad ITIL Determinista' : 'Prioridad y Tiempo Estimado de Atención';
 
             const lblSol = document.getElementById('hitlLblSolucion');
-            if (lblSol) lblSol.innerHTML = esTIC 
-                ? '<span>📋 Solución Técnica Propuesta (Pasos Operativos a Seguir)</span>'
-                : '<span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención y Soporte):</span>';
+            if (lblSol) lblSol.innerHTML = esHardware 
+                ? '<span>⚠️ Protocolo de Seguridad ante Falla Física (No manipular hardware internamente):</span>'
+                : (esTIC ? '<span>📋 Solución Técnica Propuesta (Pasos Operativos a Seguir)</span>' : '<span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención y Soporte):</span>');
 
             const lblOp = document.getElementById('hitlLblOperador');
             if (lblOp) lblOp.textContent = esTIC ? 'Técnico / Operador que Autoriza el Alta' : 'Responsable Asignado para Atención';
@@ -4555,7 +4583,15 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             }
             const btnRegistrar = document.getElementById('btnEjecutarConfirmarRegistro');
             if (btnRegistrar) {
-                btnRegistrar.textContent = esTIC ? 'Confirmar y Registrar Ticket' : 'Enviar Solicitud a Soporte Técnico';
+                if (esHardware) {
+                    btnRegistrar.textContent = 'Autorizar Orden Presencial (Compuerta HITL)';
+                    btnRegistrar.style.background = '#D97706';
+                    btnRegistrar.style.borderColor = '#B45309';
+                } else {
+                    btnRegistrar.textContent = esTIC ? 'Confirmar y Registrar Ticket' : 'Enviar Solicitud a Soporte Técnico';
+                    btnRegistrar.style.background = '#1E3A8A';
+                    btnRegistrar.style.borderColor = '#1E3A8A';
+                }
             }
 
             const esNoTecnica = (propuesta.categoria_propuesta === 'Solicitud No Técnica / Fuera de Alcance') ||
