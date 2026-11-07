@@ -2319,7 +2319,7 @@
                 <button type="button" class="preset-btn" onclick="cargarPreset('impresora')">🖨️ Atasco Impresora Red (DOC-03)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('erp')">📊 Sesión Colgada ERP (DOC-05)</button>
                 <button type="button" class="preset-btn" onclick="cargarPreset('pc_falla')">🖥️ Pantalla Azul / Hardware (DOC-10)</button>
-                <button type="button" id="btnPresetAbstencion" class="preset-btn" onclick="cargarPreset('menu_almuerzo')" style="display:none;">🍽️ Menú Almuerzo (Abstención)</button>
+                <button type="button" id="btnPresetAbstencion" class="preset-btn" onclick="cargarPreset('menu_almuerzo')">🍱 Menú Almuerzo (Abstención)</button>
                 <button type="button" id="btnPresetInyeccion" class="preset-btn preset-alucinacion" onclick="cargarPreset('alucinacion')" title="Carga un caso adverso de inyección y desactiva Gemini automáticamente" style="display:none;">🌀 Inyección Prompt & Failover</button>
             </div>
 
@@ -4960,14 +4960,14 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 boxFormHitl.style.display = esTIC ? 'block' : 'none';
             }
 
-            // 5. Botones adicionales de prueba en Ejemplos (visibles solo en Vista TIC)
+            // 5. Botones adicionales de prueba en Ejemplos (Inyección solo en Vista TIC, Abstención siempre visible)
             const btnInyeccion = document.getElementById('btnPresetInyeccion');
             if (btnInyeccion) {
                 btnInyeccion.style.display = esTIC ? 'flex' : 'none';
             }
             const btnAbstencion = document.getElementById('btnPresetAbstencion');
             if (btnAbstencion) {
-                btnAbstencion.style.display = esTIC ? 'flex' : 'none';
+                btnAbstencion.style.display = 'flex';
             }
 
             // 6. Subtítulo en cabecera
