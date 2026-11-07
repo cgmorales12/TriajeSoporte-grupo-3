@@ -1,7 +1,7 @@
-# Ingeniería de Requisitos: ConectaTec (Mesa de Ayuda PYME)
+# Ingeniería de Requisitos: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 
 ## 1. Introducción
-El presente documento describe los requisitos funcionales y no funcionales de **ConectaTec** (Caso N.º 03 · Grupo 3 UNIANDES), sistema de triaje automático de incidentes de soporte tecnológico para Pequeñas y Medianas Empresas (PYMEs).
+El presente documento describe los requisitos funcionales y no funcionales de la plataforma de **Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME** (Caso N.º 03 · Grupo 3 UNIANDES).
 Las historias de usuario siguen el estándar **INVEST** y sus criterios de aceptación están redactados bajo la sintaxis **Gherkin (Dado... Cuando... Entonces...)**.
 
 ---

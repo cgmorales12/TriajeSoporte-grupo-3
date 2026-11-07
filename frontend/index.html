@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <style>
         :root {
-            /* Paleta Corporativa ConectaTec: Sobria, Ejecutiva y Agradable a la Vista */
+            /* Paleta Corporativa: Sobria, Ejecutiva y Agradable a la Vista */
             --bg: #F8FAFC;
             --panel: #FFFFFF;
             --header: #0F172A;
@@ -2932,7 +2932,7 @@
                     <div class="cita-label-solucion">💡 <b>Respuesta y Soluciones:</b></div>
                     <div class="cita-fragmento" title="${escaparTextoHtml(descGuia)}">«${descGuia}»</div>
                     <div class="cita-footer">
-                        <span class="link-fuente">📄 Guía ConectaTec</span>
+                        <span class="link-fuente">📄 Guía Oficial</span>
                         <small style="color:#0F172A; font-weight:700; font-size:10px; white-space:nowrap; flex-shrink:0;">✓ Verificado</small>
                     </div>
                 `;
@@ -3318,7 +3318,7 @@
             } catch (err) {
                 mostrarErrorFormulario(
                     'Error de Conexión con el Backend',
-                    `No fue posible establecer comunicación con la API ConectaTec en ${API_URL}.`,
+                    `No fue posible establecer comunicación con el backend FastAPI en ${API_URL}.`,
                     'Asegúrese de que el backend FastAPI esté ejecutándose en http://127.0.0.1:8000 (uvicorn app.main:app --reload).',
                     null,
                     '🔌'
@@ -3875,7 +3875,7 @@
                 });
             }
 
-            // 2. Gráfico de Barras Agrupadas Estilo Excel: Comparativa Antes vs ConectaTec IA
+            // 2. Gráfico de Barras Agrupadas Estilo Excel: Comparativa Antes vs Triaje IA
             const canvasBarras = document.getElementById('chartBarrasROI');
             if (canvasBarras) {
                 if (_chartBarrasF5) {
@@ -3904,7 +3904,7 @@
                                 categoryPercentage: 0.6
                             },
                             {
-                                label: 'ConectaTec (IA + RAG)',
+                                label: 'Triaje IA + RAG',
                                 data: [mttrIA, costoIA, horasIA],
                                 backgroundColor: '#0284C7',
                                 hoverBackgroundColor: '#0369A1',
@@ -4114,7 +4114,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 | Estación PC / Periférico | Operativo | Bloqueado / Alerta | Aplicar procedimiento del manual |
 
 ---
-*ConectaTec · Base de Conocimiento Oficial RAG para PYMEs · UNIANDES 2026*
+*Triaje Automático de Soporte para PYME · Base de Conocimiento Oficial RAG · UNIANDES 2026*
 `;
             document.getElementById('txtEditorMarkdown').value = plantilla;
             actualizarPreviewMarkdown();
@@ -4967,7 +4967,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     <div id="msgErrorLogin" style="display:none; color:#DC2626; background:#FEE2E2; border:1px solid #FCA5A5; padding:8px 12px; border-radius:6px; font-size:12px; margin-bottom:12px;"></div>
                     <button type="submit" id="btnSubmitLogin" class="btn-submit" style="width:100%;">🔓 Iniciar Sesión</button>
                     <p style="font-size:11.5px; color:#64748B; margin-top:12px; text-align:center;">
-                        🛡️ Mesa de Ayuda TIC ConectaTec para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES).
+                        🛡️ Mesa de Ayuda TIC para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES).
                     </p>
                 </form>
             </div>
@@ -5180,7 +5180,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                                 <div style="font-size:12px; font-weight:700; color:#1E293B; display:flex; align-items:center; gap:6px;">
                                     <span style="display:inline-block; width:8px; height:8px; background:#0284C7; border-radius:50%;"></span>
-                                    Gráfico N.º 2 · Comparativa de ROI: Antes vs ConectaTec IA
+                                    Gráfico N.º 2 · Comparativa de ROI: Antes vs Triaje IA
                                 </div>
                                 <span style="font-size:10px; background:#E0F2FE; color:#0369A1; font-weight:700; padding:2px 6px; border-radius:4px;">Barras Comparativas</span>
                             </div>
@@ -5229,7 +5229,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                                 <div style="font-size:12px; font-weight:700; color:#1E293B; display:flex; align-items:center; gap:6px;">
                                     <span style="display:inline-block; width:8px; height:8px; background:#0284C7; border-radius:50%;"></span>
-                                    Gráfico N.º 2 · Comparativa de ROI: Antes vs ConectaTec IA
+                                    Gráfico N.º 2 · Comparativa de ROI: Antes vs Triaje IA
                                 </div>
                                 <span style="font-size:10px; background:#E0F2FE; color:#0369A1; font-weight:700; padding:2px 6px; border-radius:4px;">Barras Comparativas</span>
                             </div>
@@ -5302,7 +5302,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                                 <tr style="background:#F1F5F9; color:#1E293B; border-bottom:2px solid #CBD5E1;">
                                     <th style="padding:8px 10px;">Métrica de Mesa de Ayuda</th>
                                     <th style="padding:8px 10px;">Atención Tradicional (Manual)</th>
-                                    <th style="padding:8px 10px;">ConectaTec (IA + RAG)</th>
+                                    <th style="padding:8px 10px;">Triaje IA (Con RAG)</th>
                                     <th style="padding:8px 10px;">Impacto Cuantificable</th>
                                 </tr>
                             </thead>

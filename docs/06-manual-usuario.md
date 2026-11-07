@@ -4,7 +4,7 @@
 ---
 
 ## 1. Introducción
-**ConectaTec** es una mesa de ayuda tecnológica basada en un **Tablero Kanban de Tickets** diseñada para automatizar la recepción, diagnóstico de primer nivel (RAG) y priorización determinista de incidencias para cualquier Pequeña o Mediana Empresa (PYME).
+La plataforma de **Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME** es una mesa de ayuda tecnológica basada en un **Tablero Kanban de Tickets** diseñada para automatizar la recepción, diagnóstico de primer nivel (RAG) y priorización determinista de incidencias para cualquier Pequeña o Mediana Empresa (PYME).
 
 ---
 

@@ -91,7 +91,7 @@ Para maximizar el impacto ante el jurado calificador, la sustentación sigue un 
 
 ### Pregunta Oficial 3 (Fase 5): *«¿Cuáles son las métricas de Retorno de Inversión (ROI) para la PYME de 60 colaboradores?»*
 * **Respuesta del Equipo:**  
-  *«Para una PYME con 60 colaboradores y un único técnico de TI desbordado, ConectaTec entrega métricas de ROI medibles y contundentes:  
+  *«Para una PYME con 60 colaboradores y un único técnico de TI desbordado, nuestro sistema de Triaje Automático de Solicitudes de Soporte Tecnológico entrega métricas de ROI medibles y contundentes:  
   1. **Reducción Drástica del MTTR (Tiempo Medio de Resolución):** Las incidencias comunes pasan de un tiempo de espera promedio de **45 minutos** a una resolución en **3.8 minutos** guiada por el paso a paso de los manuales RAG (-91.5% de tiempo de espera).  
   2. **Resolución en Primer Contacto (FCR):** Se eleva al **73.3% - 80.8%**, resolviendo incidentes al instante sin crear cuellos de botella.  
   3. **Ahorro de Tiempo del Técnico:** Al resolver el 73.3% de las solicitudes repetitivas por autoatención N1, se liberan **4.5 horas diarias** del técnico (más de **90 horas al mes**), permitiéndole enfocarse en proyectos estratégicos y ciberseguridad.  
@@ -101,9 +101,9 @@ Para maximizar el impacto ante el jurado calificador, la sustentación sigue un 
 
 ---
 
-### Pregunta Oficial 4 (Fase 5): *«¿Cómo demuestran que ConectaTec no está diseñado para una empresa específica, sino como una solución general para cualquier PYME?»*
+### Pregunta Oficial 4 (Fase 5): *«¿Cómo demuestran que el sistema de Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME no está diseñado para una empresa específica, sino como una solución general para cualquier PYME?»*
 * **Respuesta del Equipo:**  
-  *«Demostramos la generalidad y adaptabilidad de ConectaTec a través de cuatro pilares arquitectónicos auditables:  
+  *«Demostramos la generalidad y adaptabilidad de nuestra plataforma de Triaje Automático de Solicitudes de Soporte Tecnológico a través de cuatro pilares arquitectónicos auditables:  
   1. **Universalidad de Necesidades Microinformáticas:** Los 15 manuales técnicos estándar abordan la infraestructura tecnológica que comparte cualquier PYME moderna (Active Directory / Windows / M365, clientes VPN corporativos, impresoras departamentales en red, carpetas compartidas SMB/NAS, ERPs contables y redes Wi-Fi).  
   2. **Base de Conocimiento Desacoplada y Extensible (Corpus RAG en Markdown):** El conocimiento no está quemado en el código fuente. En el propio tablero web, el botón **`📚 15 Manuales RAG`** permite al personal técnico agregar, editar o convertir documentos Word/PDF a Markdown e indexarlos en ChromaDB al instante.  
   3. **Matriz de Priorización ITIL Parametrizable:** Las reglas de negocio, niveles de severidad y tiempos máximos de SLA están desacoplados en `config/matriz_prioridad.json`. Cualquier empresa puede configurar sus propios SLAs sin alterar una sola línea de código backend.  
