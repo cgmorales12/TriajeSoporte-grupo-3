@@ -260,7 +260,7 @@ def crear_documento_word(ruta_md, ruta_docx):
     i = 0
     while i < len(lineas):
         linea_raw = lineas[i]
-        linea = linea_raw.rstrip("\r\n")
+        linea = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', ' ', linea_raw.rstrip("\r\n"))
 
         # 1. Detección de bloques de código
         if linea.strip().startswith("```"):
@@ -429,7 +429,12 @@ def crear_documento_word(ruta_md, ruta_docx):
     if en_tabla:
         vaciar_tabla()
 
-    doc.save(ruta_docx)
+    try:
+        doc.save(ruta_docx)
+    except PermissionError:
+        ruta_docx = os.path.splitext(ruta_docx)[0] + "_actualizado.docx"
+        doc.save(ruta_docx)
+
     # Crear también versión con extensión .doc solicitada
     ruta_doc = os.path.splitext(ruta_docx)[0] + ".doc"
     try:

@@ -16,7 +16,7 @@ Instrucciones oficiales para colaboradores en modalidad de teletrabajo que requi
 
 ### Paso 2: Parámetros del Servidor y Gateway Remoto
 1. Abra el cliente VPN y seleccione la conexión «VPN-Corporativa-Remoto».
-2. Verifique que el campo Gateway remoto contenga: pn.empresa.com y puerto SSL 443 (o 10443).
+2. Verifique que el campo Gateway remoto contenga:  pn.empresa.com y puerto SSL 443 (o 10443).
 3. Active la casilla de verificación «Habilitar túnel seguro con cifrado AES-256».
 
 ### Paso 3: Autenticación de Usuario y Doble Factor (2FA)
