@@ -3760,6 +3760,11 @@
                 elAhorroAnual.textContent = `$${Number(valor).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})} USD`;
             }
 
+            const elP95 = document.getElementById('f5_latenciaP95');
+            if (elP95) {
+                elP95.textContent = `${roi.latencia_p95_segundos || 2.2} s`;
+            }
+
             const tasaAuto = ind.tasa_autoatencion_nivel_1_pct || 73.3;
             const tasaEscala = ind.tasa_escalamiento_presencial_pct || 26.7;
             
@@ -5109,27 +5114,32 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             </div>
 
             <div class="modal-body" style="padding:18px 22px; max-height:80vh; overflow-y:auto; display:flex; flex-direction:column; gap:16px;">
-                <!-- 4 Tarjetas KPI Superiores -->
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px;">
+                <!-- 5 Tarjetas KPI Superiores (Fase 5 + Latencia p95 SRE) -->
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:10px;">
                     <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:10px; padding:12px 14px;">
                         <div style="font-size:11px; font-weight:700; color:#166534; text-transform:uppercase;">1. Autoatención Nivel 1</div>
-                        <div id="f5_tasaAutoatencion" style="font-size:26px; font-weight:800; color:#15803D; margin:4px 0;">73.3%</div>
-                        <div style="font-size:11px; color:#166534;">Meta UNIANDES: ≥ 70% <b style="background:#DCFCE7; padding:2px 6px; border-radius:4px; margin-left:4px;">CUMPLE</b></div>
+                        <div id="f5_tasaAutoatencion" style="font-size:24px; font-weight:800; color:#15803D; margin:4px 0;">73.3%</div>
+                        <div style="font-size:10.5px; color:#166534;">Meta UNIANDES: ≥ 70% <b style="background:#DCFCE7; padding:2px 5px; border-radius:4px; margin-left:2px;">CUMPLE</b></div>
                     </div>
                     <div style="background:#F0F9FF; border:1px solid #BAE6FD; border-radius:10px; padding:12px 14px;">
                         <div style="font-size:11px; font-weight:700; color:#0369A1; text-transform:uppercase;">2. Reducción de MTTR</div>
-                        <div id="f5_mttr" style="font-size:26px; font-weight:800; color:#0284C7; margin:4px 0;">3.8 min</div>
-                        <div style="font-size:11px; color:#0369A1;">Antes: 45 min manual <b style="background:#E0F2FE; padding:2px 6px; border-radius:4px; margin-left:4px;">-91.5%</b></div>
+                        <div id="f5_mttr" style="font-size:24px; font-weight:800; color:#0284C7; margin:4px 0;">3.8 min</div>
+                        <div style="font-size:10.5px; color:#0369A1;">Antes: 45 min <b style="background:#E0F2FE; padding:2px 5px; border-radius:4px; margin-left:2px;">-91.5%</b></div>
                     </div>
                     <div style="background:#FEF3C7; border:1px solid #FDE68A; border-radius:10px; padding:12px 14px;">
                         <div style="font-size:11px; font-weight:700; color:#92400E; text-transform:uppercase;">3. Tiempo Libre Técnico</div>
-                        <div id="f5_ahorroHoras" style="font-size:26px; font-weight:800; color:#D97706; margin:4px 0;">4.5 hrs/día</div>
-                        <div style="font-size:11px; color:#92400E;">56% de jornada liberada <b style="background:#FEF3C7; padding:2px 6px; border-radius:4px; margin-left:4px;">PROYECTOS TI</b></div>
+                        <div id="f5_ahorroHoras" style="font-size:24px; font-weight:800; color:#D97706; margin:4px 0;">4.5 hrs/día</div>
+                        <div style="font-size:10.5px; color:#92400E;">56% jornada <b style="background:#FEF3C7; padding:2px 5px; border-radius:4px; margin-left:2px;">LIBERADA</b></div>
                     </div>
                     <div style="background:#F5F3FF; border:1px solid #DDD6FE; border-radius:10px; padding:12px 14px;">
                         <div style="font-size:11px; font-weight:700; color:#6D28D9; text-transform:uppercase;">4. Ahorro Anual PYME</div>
-                        <div id="f5_ahorroAnual" style="font-size:26px; font-weight:800; color:#7C3AED; margin:4px 0;">$16,987 USD</div>
-                        <div style="font-size:11px; color:#6D28D9;">Ticket baja de $18 a $3.40 <b style="background:#EDE9FE; padding:2px 6px; border-radius:4px; margin-left:4px;">ROI ALTO</b></div>
+                        <div id="f5_ahorroAnual" style="font-size:24px; font-weight:800; color:#7C3AED; margin:4px 0;">$16,987 USD</div>
+                        <div style="font-size:10.5px; color:#6D28D9;">Ticket $18 a $3.40 <b style="background:#EDE9FE; padding:2px 5px; border-radius:4px; margin-left:2px;">ROI ALTO</b></div>
+                    </div>
+                    <div style="background:#FDF2F8; border:1px solid #FBCFE8; border-radius:10px; padding:12px 14px;">
+                        <div style="font-size:11px; font-weight:700; color:#9D174D; text-transform:uppercase;">5. Latencia p95 (SRE)</div>
+                        <div id="f5_latenciaP95" style="font-size:24px; font-weight:800; color:#BE185D; margin:4px 0;">2.2 s</div>
+                        <div style="font-size:10.5px; color:#9D174D;">El promedio engaña <b style="background:#FCE7F3; padding:2px 5px; border-radius:4px; margin-left:2px;">95% &lt; 3.0s</b></div>
                     </div>
                 </div>
 
