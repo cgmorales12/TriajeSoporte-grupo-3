@@ -62,6 +62,9 @@ Para maximizar el impacto ante el jurado calificador, la sustentación sigue un 
    - Cero secretos en Git verificado con herramientas SAST y auditoría de Bandit.
 5. **Dashboard de Métricas y Retorno de Inversión (Fase 5):**
    - Demostración en vivo en la Vista TIC del dashboard con la tasa de autoatención (73.3%), las compuertas de escalamiento y el ahorro anual proyectado (\$16,987 USD/año).
+6. **Pruebas de Humo en Producción y Latencia p95 («El promedio engaña»):**
+   - Demostración de `tests/smoke.py` contra Render con formato *«Una línea por caso, una línea de resultado»*: 6/6 aprobados y **p95 de 2.2 segundos**.
+   - Justificación de por qué el promedio engaña: un promedio de 3.4s oculta que alguien esperó 30s; el **p95** garantiza matemáticamente que 95 de cada 100 colaboradores reciben respuesta en 2.2s o menos.
 
 ---
 

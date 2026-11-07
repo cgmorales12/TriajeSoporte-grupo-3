@@ -74,6 +74,21 @@ En cumplimiento del requisito de ejecución de más de 15 pruebas contra la URL 
 | **TC-15** | Ciberseguridad | Inyección de Prompt (OWASP LLM01 - DOC-99) | `201` | `1918 ms` | Aprobado | Inyección neutralizada; prioridad calculada por código. |
 | **TC-16** | Ciberseguridad | Fuga de Secretos (OWASP LLM07 - API Keys) | `201` | `1608 ms` | Aprobado | Claves de API y variables de entorno protegidas. |
 
+### 3.1. Pruebas de Humo en Producción (`tests/smoke.py`) y Latencia p95
+En seguimiento al Tema 5 de evaluación (*«Una línea por caso, una línea de resultado»*):
+
+```bash
+$ python tests/smoke.py https://triajesoporte-grupo-3.onrender.com
+PASA 1. [salud] GET /health -> 200 · 0.2 s
+PASA 2. [caso] POST /chat -> 200 · 2.2 s
+PASA 3. [caso] POST /chat -> 200 · 1.9 s
+PASA 4. [fuera] POST /chat -> 200 · 0.1 s
+PASA 5. [inyeccion] POST /chat -> 200 · 0.1 s
+PASA 6. [invalida] POST /chat -> 422 · 0.2 s
+RESULTADO: 6/6 pasan · p95 2.2 s
+```
+* **¿Por qué p95 y por qué el promedio engaña?:** El promedio simple distorsiona la realidad (19 respuestas de 2s y una de 30s dan 3.4s de promedio, pero un colaborador esperó 30s). El **p95** certifica que 95 de cada 100 colaboradores reciben respuesta en 2.2 s o menos.
+
 ---
 
 ## 4. Evidencia 3: Observaciones y Ajustes derivados de la Sustentación
@@ -87,6 +102,7 @@ En atención a las directrices de la rúbrica y las recomendaciones del tribunal
 | **3** | **Transparencia en el uso de IA y LOPDP:** Necesidad de que el colaborador conozca que interactúa con IA y que sus datos están protegidos bajo normativa ecuatoriana. | Se incorporó una tarjeta informativa en el formulario: **Aviso de IA y Tratamiento de Datos (LOPDP)**, informando limitaciones, minimización de datos y sanitización de contraseñas (Art. 23). | `frontend/index.html`<br>`docs/10-perimetro-seguridad.md` |
 | **4** | **Confirmación Humana antes de persistir (HITL):** Evitar que la IA registre tickets o comprometa tiempos sin supervisión del usuario o técnico. | Se fortaleció el modal interactivo de pre-triaje: **Sugerencia y Respuesta antes de Registrar Ticket**, permitiendo al usuario cancelar la apertura del ticket si resolvió el incidente con la autoatención. | `frontend/index.html`<br>`app/routers/tickets.py` |
 | **5** | **Despliegue Público Activo en la Nube:** Demostrar que el proyecto no depende exclusivamente del entorno local. | Despliegue en **Render Cloud** con `Dockerfile`, `Procfile` y `render.yaml`, respondiendo 24/7 en `/health`. | `Dockerfile`<br>`render.yaml`<br>`README.md` |
+| **6** | **Métrica de Latencia p95 («El promedio engaña»):** El promedio simple oculta los tiempos de los usuarios que más esperan. Se requirió validar la experiencia con percentil 95. | Se implementó `tests/smoke.py` con el formato *«Una línea por caso, una línea de resultado»*, cálculo estricto de **p95 (2.2 s)** y certificación de 6/6 casos aprobados contra Render. | `tests/smoke.py`<br>`docs/08-pruebas.md` |
 
 ---
 

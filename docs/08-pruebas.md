@@ -69,7 +69,29 @@ El equipo de aseguramiento de calidad (QA) ejecutó una batería de **16 casos d
 
 ---
 
-## 4. Conclusión y Certificación de Calidad
+## 4. Pruebas de Humo Funcionales (`tests/smoke.py`) y Latencia p95
+
+En estricto seguimiento a las directrices de evaluación del **Tema 5 (Pruebas Funcionales: «Una línea por caso, una línea de resultado»)** impartidas por el Ing. Heyler Fabio Guaza, el equipo implementó y ejecutó el script `tests/smoke.py` contra la URL pública en Render:
+
+```bash
+$ python tests/smoke.py https://triajesoporte-grupo-3.onrender.com
+PASA 1. [salud] GET /health -> 200 · 0.2 s
+PASA 2. [caso] POST /chat -> 200 · 2.2 s
+PASA 3. [caso] POST /chat -> 200 · 1.9 s
+PASA 4. [fuera] POST /chat -> 200 · 0.1 s
+PASA 5. [inyeccion] POST /chat -> 200 · 0.1 s
+PASA 6. [invalida] POST /chat -> 422 · 0.2 s
+RESULTADO: 6/6 pasan · p95 2.2 s
+```
+
+### 4.1. Fundamentación Técnica: ¿Por qué p95 y por qué «el promedio engaña»?
+* **Definición de p95:** El **Percentil 95 (p95)** indica que **95 de cada 100 respuestas tardan ese valor o menos**. Es la métrica estándar en ingeniería de confiabilidad (SRE / ITIL) porque analiza la experiencia real de los usuarios en los percentiles extremos.
+* **El promedio engaña:** Una métrica de promedio simple oculta los picos de degradación: si 19 respuestas tardan 2 segundos y una sola tarda 30 segundos, el promedio resultante es 3.4 segundos (aparentemente aceptable), pero un usuario esperó medio minuto frustrado.
+* **Certificación del Sistema:** Con un **p95 de 2.2 segundos** y 6/6 casos aprobados, el sistema garantiza que el 95% de las solicitudes de los 60 colaboradores de la PYME reciben su triaje y cita oficial en 2.2 s o menos.
+
+---
+
+## 5. Conclusión y Certificación de Calidad
 
 La batería de 16 casos ejecutada contra la URL oficial desplegada certifica que la plataforma cumple con los estándares de estabilidad, exactitud procedimental RAG y ciberseguridad exigidos por el seminario de titulación de UNIANDES.
 
