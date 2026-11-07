@@ -163,13 +163,13 @@ def estructurar_a_markdown_rag(texto_crudo: str, nombre_original: str) -> Tuple[
                 resto_contenido.append(item_linea)
     
     # Ensamblar Markdown limpio
-    desc_texto = " ".join(descripcion_general) if descripcion_general else f"Procedimiento técnico oficial para {titulo_candidato.lower()} en infraestructura de clientes ConectaTec ISP."
+    desc_texto = " ".join(descripcion_general) if descripcion_general else f"Procedimiento técnico oficial para {titulo_candidato.lower()} en infraestructura de clientes Soporte Tecnológico PYME."
     
     md_final = [
         f"# {doc_id}: {titulo_candidato}",
         "",
         f"**Categoría:** {categoria}  ",
-        "**Fabricante / Origen:** Operaciones ConectaTec ISP / Carrier Support  ",
+        "**Fabricante / Origen:** Operaciones Soporte Tecnológico PYME / Helpdesk  ",
         "**Versión / Vigencia:** v1.0 - Actualizado 2026  ",
         "",
         "## Descripción General",
@@ -196,7 +196,7 @@ def estructurar_a_markdown_rag(texto_crudo: str, nombre_original: str) -> Tuple[
     
     md_final.append("")
     md_final.append("---")
-    md_final.append("*ConectaTec ISP · Base de Conocimiento Oficial RAG · UNIANDES 2026*")
+    md_final.append("*Soporte Tecnológico PYME · Base de Conocimiento Oficial RAG · UNIANDES 2026*")
     md_final.append("")
     
     contenido_markdown = "\n".join(md_final)

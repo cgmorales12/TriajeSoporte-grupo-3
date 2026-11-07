@@ -1,4 +1,4 @@
-# Gitleaks Ignore List - ConectaTec (Caso 03 Grupo 3 UNIANDES)
+# Gitleaks Ignore List - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso 03 Grupo 3 UNIANDES)
 # Falsos positivos verificados en documentos didácticos y laboratorios de semanas 1 y 2
 6f696ac79c7c52cdd497638b88ff152b071b3faf:docs/guia_proyecto.html:generic-api-key:668
 6f696ac79c7c52cdd497638b88ff152b071b3faf:docs/laboratorio_clase_4.html:gcp-api-key:236

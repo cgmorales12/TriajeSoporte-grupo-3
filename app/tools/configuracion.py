@@ -1,6 +1,6 @@
 """
 Módulo de Gestión Determinista de Parámetros de Negocio Desacoplados
-Proyecto: ConectaTec · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)
+Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)
 Seminario de Titulación: Ingeniería de Software con IA Generativa — UNIANDES 2026
 
 Rúbrica de Evaluación:
@@ -21,7 +21,7 @@ from datetime import datetime, time
 
 import yaml
 
-logger = logging.getLogger("conectatec.configuracion")
+logger = logging.getLogger("triaje_soporte.configuracion")
 
 # Rutas canónicas a los archivos de configuración
 DIR_CONFIG = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "config"))
@@ -269,7 +269,7 @@ def es_feriado_nacional(fecha_iso: str) -> Tuple[bool, Optional[str]]:
 def es_horario_laborable_habil(momento: Optional[datetime] = None) -> Dict[str, Any]:
     """
     Evalúa determinísticamente si un momento dado (o el momento actual) cae dentro
-    de la jornada laboral ordinaria de soporte de ConectaTec según config/calendario.json.
+    de la jornada laboral ordinaria de soporte de la PYME según config/calendario.json.
     """
     if momento is None:
         momento = datetime.now()

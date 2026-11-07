@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script Principal de Evaluación Automatizada del Sistema (run_eval.py)
-Proyecto: ConectaTec / TecnoAula — Triaje de Incidentes Técnicos (Caso N.º 03 · Grupo 3 UNIANDES)
+Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME — Triaje de Incidentes Técnicos (Caso N.º 03 · Grupo 3 UNIANDES)
 Seminario de Titulación: Ingeniería de Software con IA Generativa — UNIANDES 2026
 
 Rúbrica Oficial:
@@ -301,7 +301,7 @@ def ejecutar_evaluacion_completa() -> int:
     fecha_iso = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     print("\n" + "=" * 76)
-    print("CONECTATEC / TECNOAULA — SUITE DE EVALUACIÓN OFICIAL (run_eval.py)")
+    print("TRIAJE AUTOMÁTICO PARA PYME — SUITE DE EVALUACIÓN OFICIAL (run_eval.py)")
     print(f"Fecha de Ejecución: {fecha_iso} | Caso N.º 03 · Grupo 3 UNIANDES")
     print("=" * 76)
 

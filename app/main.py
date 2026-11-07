@@ -1,5 +1,5 @@
 """
-Punto de Entrada Principal de la API - ConectaTec
+Punto de Entrada Principal de la API - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 Caso 03: Triaje Inteligente de Incidentes para ISP (Grupo 3 UNIANDES)
 Cumple: RFC 9457 Problem Details, Token Bucket Rate Limiting, CORS seguro y AnyIO.
 """
@@ -29,7 +29,7 @@ from app.database import inicializar_bd
 # Logger Estructurado y Registro de Observabilidad (Tokens y Latencia)
 # ============================================================================
 
-logger_solicitudes = logging.getLogger("conectatec.solicitudes")
+logger_solicitudes = logging.getLogger("triaje_soporte.solicitudes")
 if not logger_solicitudes.handlers:
     _sh = logging.StreamHandler()
     _sh.setFormatter(logging.Formatter("[%(asctime)s] [%(levelname)s] %(message)s"))

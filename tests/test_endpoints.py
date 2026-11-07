@@ -1,5 +1,5 @@
 """
-Suite de Pruebas Unitarias Automatizadas con Mocks - ConectaTec
+Suite de Pruebas Unitarias Automatizadas con Mocks - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 Cumple: Pruebas deterministas que pasan 100% sin internet ni consumo de API Keys.
 Rubro: «Pruebas con un mock del modelo: pytest prueba el endpoint sin gastar API.»
 """
@@ -33,7 +33,7 @@ def test_endpoint_salud():
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "ok"
-    assert data["servicio"] == "conectatec-api"
+    assert data["servicio"] == "triaje-soporte-pyme-api"
     assert "arquitectura" in data
 
 def test_priorizacion_itil_determinista():
@@ -334,7 +334,7 @@ def test_endpoint_chat_streaming_conversacional():
     assert "text/plain" in response.headers.get("content-type", "")
     contenido_stream = response.text
     assert len(contenido_stream) > 20
-    assert "LOS" in contenido_stream or "fibra" in contenido_stream or "ConectaTec" in contenido_stream
+    assert "LOS" in contenido_stream or "fibra" in contenido_stream or "Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME" in contenido_stream
 
 
 def test_endpoint_analizar_esquema_pydantic():
@@ -465,7 +465,7 @@ def test_frontend_interfaz_propia_y_elementos_reactivos():
     html = resp_tablero.text
 
     # 2. Verificar identidad propia del producto (TecnoAula / PYME)
-    assert any(marca in html for marca in ["ConectaTec", "TecnoAula", "PYME", "Triaje Automático"])
+    assert any(marca in html for marca in ["Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME", "TecnoAula", "PYME", "Triaje Automático"])
     assert "Triaje Inteligente" in html or "Triaje Automático" in html
 
     # 3. Verificar que existen los elementos para deshabilitar botón y mostrar estado de espera
@@ -761,7 +761,7 @@ def test_mock_modelo_chat_streaming_sin_gastar_api(monkeypatch):
         "Bienvenido ",
         "al soporte ",
         "técnico institucional ",
-        "de ConectaTec. ",
+        "de Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME. ",
         "Consulte el manual DOC-01."
     ]
 
@@ -1336,7 +1336,7 @@ def test_hitl_propuesta_y_confirmacion_antes_de_enviar_notificacion():
     p_env = res_p_env.json()
     assert p_env["requiere_confirmacion_humana"] is True
     assert p_env["destinatario_email"] == "fernando.ribera@uniandes.edu.ec"
-    assert "ConectaTec" in p_env["asunto_propuesto"]
+    assert "Soporte Tecnológico PYME" in p_env["asunto_propuesto"]
     assert len(p_env["mensaje_propuesto"]) > 20
 
     # 3. Confirmar envío (Fase 2 HITL)

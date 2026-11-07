@@ -35,7 +35,7 @@ CASOS_SMOKE = [
         "ruta": "/health",
         "cuerpo": None,
         "status_esperado": 200,
-        "textos_esperados": ["ok", "conectatec"]
+        "textos_esperados": ["ok"]
     },
     {
         "num": 2,

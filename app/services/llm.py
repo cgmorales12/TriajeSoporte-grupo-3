@@ -1,6 +1,6 @@
 """
 Cliente de Modelo LLM Encapsulado y Gateway de Resiliencia
-Caso 03: ConectaTec · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Grupo 3 UNIANDES)
+Caso 03: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Grupo 3 UNIANDES)
 
 Principio de Arquitectura:
 «El cliente del modelo está encapsulado: cambiar de proveedor no toca los endpoints.»
@@ -31,7 +31,7 @@ from app.schemas import (
 )
 
 # Configurar logger estructurado de inferencia LLM
-logger_llm = logging.getLogger("conectatec.llm")
+logger_llm = logging.getLogger("triaje_soporte.llm")
 if not logger_llm.handlers:
     _handler = logging.StreamHandler()
     _handler.setFormatter(logging.Formatter("[%(asctime)s] [%(levelname)s] %(message)s"))
@@ -634,7 +634,7 @@ class ClienteLLM:
         contexto_chromadb = "\n\n".join(citas_formateadas) if citas_formateadas else "No se encontraron manuales afines."
 
         prompt_sistema_rag = (
-            "Eres el Asistente Técnico Oficial de ConectaTec · Soporte Tecnológico para una PYME (Grupo 3 UNIANDES).\n"
+            "Eres el Asistente Técnico Oficial de Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Grupo 3 UNIANDES).\n"
             "Tu deber es asistir al usuario basándote ESTRICTAMENTE en la información técnica oficial recuperada de ChromaDB.\n"
             "REGLAS:\n"
             "1. Cita siempre el manual correspondiente (ej. DOC-01) y el paso operativo exacto.\n"
@@ -739,7 +739,7 @@ class ClienteLLM:
         msg_low = mensaje.lower()
         if any(k in msg_low for k in ["los", "roja", "luz roja", "fibra", "corte"]):
             texto_base = (
-                "Diagnóstico de Soporte Técnico ConectaTec (Nivel 1):\n\n"
+                "Diagnóstico de Soporte Técnico PYME (Nivel 1):\n\n"
                 "Se ha detectado una alarma crítica de pérdida de señal óptica (LED LOS en rojo). "
                 "Esto indica una desconexión física de la acometida exterior o una atenuación severa (-28 dBm o superior).\n\n"
                 "Procedimiento recomendado:\n"
@@ -749,11 +749,11 @@ class ClienteLLM:
             )
         elif any(k in msg_low for k in ["lento", "lentitud", "velocidad", "ping", "latencia"]):
             texto_base = (
-                "Diagnóstico de Velocidad y Tráfico ConectaTec:\n\n"
+                "Diagnóstico de Rendimiento y Conectividad de Red:\n\n"
                 "Para aislar saturación local o congestión en el enlace:\n"
                 "1. Conecte su computadora con cable de red Cat 5e/6 directo al puerto Gigabit GE1 de la ONT (DOC-06).\n"
                 "2. Suspenda descargas activas, streaming de alta definición y desconecte redes VPN de teletrabajo.\n"
-                "3. Realice una medición hacia el nodo local de ConectaTec para comprobar el ancho de banda contratado."
+                "3. Realice una medición hacia el gateway de la red corporativa para comprobar el ancho de banda contratado."
             )
         elif any(k in msg_low for k in ["wifi", "wi-fi", "clave", "contraseña", "ssid", "cobertura"]):
             texto_base = (
@@ -765,7 +765,7 @@ class ClienteLLM:
             )
         else:
             texto_base = (
-                "Asistente Virtual de Triaje ConectaTec (Protocolo Oficial de Abstención):\n\n"
+                "Asistente Virtual de Triaje para PYME (Protocolo Oficial de Abstención):\n\n"
                 "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de la PYME.\n\n"
                 "Orientación al usuario:\n"
                 "1. Si su consulta corresponde a trámites administrativos o de Recursos Humanos, por favor acuda a Secretaría General o al departamento correspondiente.\n"

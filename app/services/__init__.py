@@ -1,5 +1,5 @@
 """
-Módulo de servicios de inteligencia artificial y RAG - ConectaTec
+Módulo de servicios de inteligencia artificial y RAG - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 """
 from app.services.llm import (
     clasificar_solicitud,

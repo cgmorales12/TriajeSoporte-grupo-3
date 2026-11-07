@@ -1,5 +1,5 @@
 # config/parametros.yaml · Parámetros de negocio desacoplados del código
-# Proyecto: ConectaTec / TecnoAula — Triaje Inteligente (Caso N.º 03 · Grupo 3 UNIANDES)
+# Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME — Triaje Inteligente (Caso N.º 03 · Grupo 3 UNIANDES)
 # Valores versionados en Git. Las API Keys y secretos sensibles van exclusivamente en .env
 # Principio de Arquitectura: «El modelo propone, el código dispone, la configuración gobierna».
 # Tarifas, umbrales, salario básico o calendarios: NUNCA en el código ni en el prompt.

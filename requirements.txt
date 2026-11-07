@@ -1,4 +1,4 @@
-# Dependencias del proyecto ConectaTec (Caso 03 · Grupo 3 UNIANDES)
+# Dependencias del proyecto Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso 03 · Grupo 3 UNIANDES)
 fastapi>=0.110.0
 uvicorn>=0.28.0
 pydantic>=2.6.0

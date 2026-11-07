@@ -3630,8 +3630,8 @@
                 if (res.ok) {
                     const data = await res.json();
                     window._sesionTIC = data;
-                    localStorage.setItem('conectatec_tic_sesion', JSON.stringify(data));
-                    sessionStorage.setItem('conectatec_tic_sesion', JSON.stringify(data));
+                    localStorage.setItem('pyme_tic_sesion', JSON.stringify(data));
+                    sessionStorage.setItem('pyme_tic_sesion', JSON.stringify(data));
                     cerrarModalLoginTIC();
                     actualizarEstadoSesionTIC();
                     mostrarToast(`Sesión iniciada: Bienvenido, ${data.nombre_completo}`);
@@ -3656,8 +3656,8 @@
 
         function cerrarSesionTIC() {
             window._sesionTIC = null;
-            localStorage.removeItem('conectatec_tic_sesion');
-            sessionStorage.removeItem('conectatec_tic_sesion');
+            localStorage.removeItem('pyme_tic_sesion');
+            sessionStorage.removeItem('pyme_tic_sesion');
             actualizarEstadoSesionTIC();
             mostrarToast('🔒 Sesión cerrada correctamente.');
         }
@@ -4814,21 +4814,21 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     btn.innerHTML = '☀️ Modo Claro';
                     btn.setAttribute('title', 'Cambiar a Modo Claro (Fondo Blanco)');
                 }
-                try { localStorage.setItem('conectatec_tema_visual', 'dark'); } catch (e) {}
+                try { localStorage.setItem('pyme_tema_visual', 'dark'); } catch (e) {}
                 mostrarToast('🌙 Modo Oscuro activado (Fondo negro y alto contraste)', 'exito');
             } else {
                 if (btn) {
                     btn.innerHTML = '🌙 Modo Oscuro';
                     btn.setAttribute('title', 'Cambiar a Modo Oscuro (Fondo Negro)');
                 }
-                try { localStorage.setItem('conectatec_tema_visual', 'light'); } catch (e) {}
+                try { localStorage.setItem('pyme_tema_visual', 'light'); } catch (e) {}
                 mostrarToast('☀️ Modo Claro activado (Fondo blanco estándar)', 'exito');
             }
         }
 
         function cargarTemaGuardado() {
             let tema = null;
-            try { tema = localStorage.getItem('conectatec_tema_visual'); } catch (e) {}
+            try { tema = localStorage.getItem('pyme_tema_visual'); } catch (e) {}
             const btn = document.getElementById('btnToggleTheme');
             if (tema === 'dark') {
                 document.body.classList.add('dark-theme');
@@ -4854,7 +4854,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 window._vistaActual = (window._vistaActual === 'usuario') ? 'tic' : 'usuario';
             }
             aplicarVistaActual();
-            try { localStorage.setItem('conectatec_vista_activa', window._vistaActual); } catch (e) {}
+            try { localStorage.setItem('pyme_vista_activa', window._vistaActual); } catch (e) {}
             mostrarToast(window._vistaActual === 'tic' ? '👨‍💻 Vista Personal TIC Activada' : '👤 Vista Usuario Activada', 'info');
         }
 
@@ -4923,7 +4923,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
         // Inicializar estado de vista, tema visual, simulación, sesión TIC y tickets
         try {
-            const vistaGuardada = localStorage.getItem('conectatec_vista_activa');
+            const vistaGuardada = localStorage.getItem('pyme_vista_activa');
             if (vistaGuardada) window._vistaActual = vistaGuardada;
         } catch (e) {}
         aplicarVistaActual();

@@ -1,5 +1,5 @@
 """
-Módulo de enrutadores modulares de FastAPI - ConectaTec
+Módulo de enrutadores modulares de FastAPI - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 """
 from app.routers.tickets import router as tickets_router
 from app.routers.salud import router as salud_router

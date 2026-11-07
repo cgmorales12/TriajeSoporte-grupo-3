@@ -48,7 +48,7 @@ CORTE CIEGO POR TAMAÑO FIJO (INADECUADO - PRODUCE FRAGMENTO HUÉRFANO)
 ```
 
 ### 2.2. La Decisión de Diseño: «Una Ficha / Paso Operativo = Un Fragmento»
-Para ConectaTec (Caso N.º 03), se implementó una estrategia de **fragmentación estructural guiada por jerarquía Markdown**:
+Para Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03), se implementó una estrategia de **fragmentación estructural guiada por jerarquía Markdown**:
 * Cada manual en `data/raw/` (`DOC-01` a `DOC-15`) posee una estructura procedural normalizada con títulos de nivel 1 (`#`), secciones de nivel 2 (`##`) y pasos de diagnóstico de nivel 3 (`### Paso X: ...`).
 * El script [`scripts/ingest.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/scripts/ingest.py) utiliza una expresión regular de corte:
   ```python
@@ -66,7 +66,7 @@ Para ConectaTec (Caso N.º 03), se implementó una estrategia de **fragmentació
 
 El tamaño de cada fragmento fue calibrado empíricamente en [`scripts/ingest.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/scripts/ingest.py) atendiendo a tres factores determinantes:
 
-| Factor de Calibración | Especificación en ConectaTec | Justificación de Ingeniería de Software |
+| Factor de Calibración | Especificación en Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME | Justificación de Ingeniería de Software |
 | :--- | :--- | :--- |
 | **Rango de Caracteres** | 450 a 1.800 caracteres | Suficiente para describir completamente un síntoma, causa raíz y procedimiento de resolución sin truncamiento. |
 | **Equivalencia en Tokens** | ~120 a 450 tokens | Permite ingresar 5 fragmentos en el prompt generativo sin saturar la ventana ni diluir la atención del modelo. |
@@ -86,7 +86,7 @@ Fragmentos masivos generan el fenómeno de **dilución vectorial**: el vector de
 ### 4.1. Decisión Arquitectónica: Cero Solapamiento Ciego (0% Sliding Window Overlap)
 En fragmentadores mecánicos de texto continuo (como novelas o transcripciones de voz), se suele aplicar una ventana deslizante con solapamiento (*overlap*) del 10% al 20% para no cortar frases a la mitad.
 
-En **ConectaTec**, se optó deterministamente por **0% de solapamiento deslizante** por las siguientes razones:
+En **Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME**, se optó deterministamente por **0% de solapamiento deslizante** por las siguientes razones:
 
 1. **Procedimientos Técnicos Autocontenidos:** Al cortar por encabezados jerárquicos (`### Paso 1`, `### Paso 2`), la frontera de cada chunk coincide exactamente con el límite natural del procedimiento operativo. No hay oraciones partidas.
 2. **Prevención de Canibalismo en el Ranking Top-k:** Si dos fragmentos tienen un solapamiento del 30%, cuando el colaborador pregunta por un problema de acceso VPN o cola de impresión, los dos fragmentos solapados obtienen distancias coseno casi idénticas (ej. `0.42` y `0.44`). Esto provoca que las 2 primeras posiciones del `Top-k=5` sean ocupadas por el **mismo contenido duplicado**, impidiendo que ingrese un segundo fragmento alternativo relevante (por ejemplo, el procedimiento de escalamiento a soporte presencial).
@@ -107,7 +107,7 @@ En el Seminario de Titulación UNIANDES, cada familia de problemas demanda una e
 | :--- | :--- | :--- | :--- |
 | **Normativa Legal y Laboral** (Casos 1, 2, 6, 7, 8, 11) | Leyes, Códigos Orgánicos, Decretos | **Por Artículo Completo** (`/(?=Art\.\s*\d+)/`) | El artículo es la unidad jurídica inviolable. Cortar por tamaño deja el número de artículo en un chunk y la sanción en otro. |
 | **Manuales Extensos de Salud y Agronomía** (Casos 5, 9) | Guías clínicas OPS, Manuales INIAP | **Por Sección Temática con Solapamiento** (500–800 palabras) | Documentos de prosa continua extensa donde los capítulos abarcan decenas de páginas. Requieren 10% de overlap para no quebrar protocolos médicos. |
-| **Mesa de Ayuda Tecnológica PYME** (**Caso 3: ConectaTec**) | Manuales de soporte técnico, guías de configuración de hardware | **Una Ficha / Paso = Un Fragmento** (`/(?=#{2,3}\s+)/`) | **Cada paso operativo es una directiva ejecutable.** La cita requerida es el manual y el paso (`DOC-01: Paso 2`). No se solapan pasos distintos. |
+| **Mesa de Ayuda Tecnológica PYME** (**Caso 3: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME**) | Manuales de soporte técnico, guías de configuración de hardware | **Una Ficha / Paso = Un Fragmento** (`/(?=#{2,3}\s+)/`) | **Cada paso operativo es una directiva ejecutable.** La cita requerida es el manual y el paso (`DOC-01: Paso 2`). No se solapan pasos distintos. |
 | **Atractivos Turísticos Cantonales** (Caso 4) | Fichas de atractivos cantonales del MINTUR | **Un Atractivo = Un Fragmento** (`/(?=FICHA:)/`) | Un corte por tamaño separa el nombre de la cascada del horario y costo de entrada, provocando respuestas absurdas sobre lugares anónimos. |
 | **Seguridad de Software y Código** (Caso 10) | Estándares OWASP Top 10, reglas CWE | **Por Regla / Control Específico** (`/(?=A\d{2}:2021)/`) | Búsqueda basada en identificadores alfanuméricos literales exactos (ej. `CWE-89`, `B608`). |
 

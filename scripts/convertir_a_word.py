@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script de Conversión de Manuales Markdown a Microsoft Word (.docx)
-Proyecto: ConectaTec · Triaje Inteligente de Incidentes ISP (Caso N.º 03 · Grupo 3 UNIANDES)
+Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME · Triaje Inteligente de Incidentes ISP (Caso N.º 03 · Grupo 3 UNIANDES)
 Seminario de Titulación: Ingeniería de Software con IA Generativa - 2026
 
 Convierte todos los archivos .md de la carpeta material_estudio/ a documentos Word (.docx)
@@ -134,7 +134,7 @@ def crear_documento_word(ruta_md, ruta_docx):
         encabezado = seccion.header
         p_enc = encabezado.paragraphs[0]
         p_enc.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        r_enc = p_enc.add_run("ConectaTec · Grupo 3 UNIANDES | Material de Estudio y Preparación para Tribunal")
+        r_enc = p_enc.add_run("Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME · Grupo 3 UNIANDES | Material de Estudio y Preparación para Tribunal")
         r_enc.font.name = "Calibri"
         r_enc.font.size = Pt(8.5)
         r_enc.font.color.rgb = COLOR_MUTED
@@ -443,7 +443,7 @@ def crear_documento_word(ruta_md, ruta_docx):
 def main():
     print("=" * 70)
     print("🚀 CONVERTIDOR DE MANUALES MARKDOWN A MICROSOFT WORD (.DOCX)")
-    print("   Proyecto: ConectaTec · Triaje Inteligente ISP (Grupo 3 UNIANDES)")
+    print("   Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME · Triaje Inteligente ISP (Grupo 3 UNIANDES)")
     print(f"   Carpeta Origen: {CARPETA_MATERIAL}")
     print("=" * 70)
 

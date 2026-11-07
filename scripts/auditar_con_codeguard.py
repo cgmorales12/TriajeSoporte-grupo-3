@@ -65,7 +65,7 @@ def main():
     print("=" * 80)
     print("🛡️  AUDITORÍA DE SEGURIDAD CON CODEGUARD (REVISOR INTELIGENTE)")
     print(f"    API Remota: {API_BASE}")
-    print("    Proyecto Auditado: ConectaTec · Grupo 3 UNIANDES")
+    print("    Proyecto Auditado: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME · Grupo 3 UNIANDES")
     print("=" * 80)
     
     resultados_estaticos = []

@@ -1,6 +1,6 @@
 """
 Suite de Pruebas Unitarias Deterministas con Pytest: Construcción y Ensamblado de Prompts
-Proyecto: TecnoAula / ConectaTec — Triaje Inteligente de Incidentes ISP (Caso N.º 03 · Grupo 3 UNIANDES)
+Proyecto: Triaje Automático de Soporte para una PYME — Triaje Inteligente de Incidentes ISP (Caso N.º 03 · Grupo 3 UNIANDES)
 Seminario de Titulación: Ingeniería de Software con IA Generativa — 2026
 Autor: Amalia Geoconda Iguasnia Escobar (QA Lead / Seguridad y Requerimientos — GitHub: Geocoiguasnia76)
 
@@ -45,7 +45,7 @@ def test_cargar_prompt_sistema_fallback_por_defecto():
     """Valida que ante un nombre de versión inexistente retorne el prompt por defecto de forma segura."""
     prompt_fallback = cargar_prompt_sistema("version_inexistente_99")
     assert prompt_fallback is not None
-    assert any(k in prompt_fallback for k in ["ConectaTec", "PYME", "Mesa de Ayuda", "Caso 03"])
+    assert any(k in prompt_fallback for k in ["Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME", "PYME", "Mesa de Ayuda", "Caso 03"])
 
 
 # ============================================================================
@@ -75,7 +75,7 @@ def test_cumplimiento_pilares_receta_en_system_v3():
     )
 
     # 3. Contexto (C)
-    assert any(k in prompt_v3 for k in ["ConectaTec", "PYME", "Mesa de Ayuda"]) and any(c in prompt_v3 for c in ["Caso 03", "Caso N.º 03", "Caso Nº 03"]), (
+    assert any(k in prompt_v3 for k in ["Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME", "PYME", "Mesa de Ayuda"]) and any(c in prompt_v3 for c in ["Caso 03", "Caso N.º 03", "Caso Nº 03"]), (
         "system_v3.md carece del Contexto institucional del caso."
     )
 
@@ -136,8 +136,8 @@ def test_construir_prompt_triaje_aislamiento_inyeccion_prompt():
     info = construir_prompt_triaje(texto_usuario=inyeccion_adversa, version_prompt="v3")
     prompt_completo = info["prompt_completo"]
 
-    # El System Prompt inicial de ConectaTec debe mantenerse intacto al inicio
-    assert prompt_completo.startswith("# System Prompt ConectaTec") or "analista senior" in prompt_completo[:300]
+    # El System Prompt inicial de Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME debe mantenerse intacto al inicio
+    assert prompt_completo.startswith("# System Prompt Triaje Soporte PYME") or "analista senior" in prompt_completo[:300]
     # La inyección debe estar en el cuerpo de texto_seguro/datos
     assert "pirata espacial" in info["texto_seguro"]
     assert "DOC-99" in info["prompt_sistema"]  # El sistema prohíbe el DOC-99

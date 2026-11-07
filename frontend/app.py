@@ -1,5 +1,5 @@
 """
-Frontend Streamlit - ConectaTec (Caso 03 · Grupo 3 UNIANDES)
+Frontend Streamlit - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso 03 · Grupo 3 UNIANDES)
 Tablero Kanban de Tickets y Formulario de Mesa de Ayuda PYME (60 colaboradores, 1 técnico)
 Ejecutar con: streamlit run frontend/app.py
 """

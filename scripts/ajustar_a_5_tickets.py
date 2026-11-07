@@ -18,7 +18,7 @@ from datetime import datetime
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "conectatec.db")
+DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "triaje_soporte.db")
 
 TICKETS_PYME = [
     # =========================================================================

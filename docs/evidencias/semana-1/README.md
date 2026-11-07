@@ -1,7 +1,7 @@
-# Evidencias de Trabajo y Práctica: Semana 1 - ConectaTec
+# Evidencias de Trabajo y Práctica: Semana 1 - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 
 ## 1. Identificación del Equipo y Proyecto
-* **Proyecto:** ConectaTec - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3)
+* **Proyecto:** Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3)
 * **Caso Asignado:** Caso N.º 03 (Grupo 3)
 * **Integrantes:**
   * Christian Guillermo Morales González

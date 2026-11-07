@@ -48,7 +48,7 @@ class NumberedCanvas(canvas.Canvas):
         
         # Texto inferior
         self.setFont("Helvetica", 8)
-        self.drawString(36, 7, "Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME | ConectaTec")
+        self.drawString(36, 7, "Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME | Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME")
         self.drawRightString(756, 7, f"Diapositiva {self._pageNumber} de {page_count}")
         self.restoreState()
 

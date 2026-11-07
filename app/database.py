@@ -17,15 +17,15 @@ try:
 except ImportError:
     pass
 
-logger = logging.getLogger("conectatec.database")
+logger = logging.getLogger("triaje_soporte.database")
 
 DB_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
-DEFAULT_DB_PATH = os.path.join(DB_DIR, "conectatec.db")
-DB_PATH = os.environ.get("CONECTATEC_DB_PATH", DEFAULT_DB_PATH)
+DEFAULT_DB_PATH = os.path.join(DB_DIR, "triaje_soporte.db")
+DB_PATH = os.environ.get("TRIAJE_SOPORTE_DB_PATH", DEFAULT_DB_PATH)
 
 def obtener_ruta_db() -> str:
     """Retorna la ruta activa a la base de datos (permite sobreescritura en tests)."""
-    return os.environ.get("CONECTATEC_DB_PATH", DEFAULT_DB_PATH)
+    return os.environ.get("TRIAJE_SOPORTE_DB_PATH", DEFAULT_DB_PATH)
 
 def _obtener_conexion():
     """Retorna una conexión activa a la base de datos SQLite."""
@@ -123,7 +123,7 @@ def inicializar_bd():
         cursor.execute("ALTER TABLE tickets ADD COLUMN orden_despacho_id TEXT")
     
     # Sembrar usuario administrador TIC inicial si no existe (Cero Secretos en Git)
-    usuario_existente = cursor.execute("SELECT id FROM usuarios_tic WHERE usuario = ?", ("admin.tic@conectatec.local",)).fetchone()
+    usuario_existente = cursor.execute("SELECT id FROM usuarios_tic WHERE usuario = ?", ("admin.tic@soporte.pyme.local",)).fetchone()
     if not usuario_existente:
         import hashlib
         import secrets
@@ -145,13 +145,13 @@ def inicializar_bd():
         cursor.execute("""
             INSERT INTO usuarios_tic (usuario, nombre_completo, rol, hash_password, salt, activo, fecha_creacion)
             VALUES (?, ?, ?, ?, ?, 1, ?)
-        """, ("admin.tic@conectatec.local", "Administrador TIC - ConectaTec", "administrador_tic", hash_pass, salt, ahora_iso))
+        """, ("admin.tic@soporte.pyme.local", "Administrador TIC - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME", "administrador_tic", hash_pass, salt, ahora_iso))
         
         # También alias corto para pruebas ágiles
         cursor.execute("""
             INSERT OR IGNORE INTO usuarios_tic (usuario, nombre_completo, rol, hash_password, salt, activo, fecha_creacion)
             VALUES (?, ?, ?, ?, ?, 1, ?)
-        """, ("admin", "Administrador TIC - ConectaTec", "administrador_tic", hash_pass, salt, ahora_iso))
+        """, ("admin", "Administrador TIC - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME", "administrador_tic", hash_pass, salt, ahora_iso))
 
     # Sembrar automáticamente los 20 tickets de demostración (5 por cada estado) si la tabla está vacía
     conteo_tickets = cursor.execute("SELECT COUNT(*) FROM tickets WHERE (eliminado IS NULL OR eliminado = 0)").fetchone()[0]

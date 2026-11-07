@@ -62,7 +62,7 @@ flowchart TD
 
         RAG_SRV[" Servicio RAG de Búsqueda<br/><b>app/services/rag.py</b><br/>Recuperación de fragmentos técnicos verificables<br/>con citas exactas (DOC-01 a DOC-15)."]
 
-        SQLITE[(" Base de Datos Relacional<br/><b>SQLite (data/conectatec.db)</b><br/>Persistencia parametrizada de tickets, estados,<br/>marcas de tiempo y citas asociadas.")]
+        SQLITE[(" Base de Datos Relacional<br/><b>SQLite (data/triaje_soporte.db)</b><br/>Persistencia parametrizada de tickets, estados,<br/>marcas de tiempo y citas asociadas.")]
 
         TELEMETRIA[(" Almacén de Observabilidad<br/><b>Memoria / logs de auditoría</b><br/>Telemetría de tokens consumidos (in/out/total)<br/>y latencia de respuesta por solicitud.")]
     end

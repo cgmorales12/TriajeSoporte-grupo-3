@@ -18,7 +18,7 @@
 
   <!-- Encabezado -->
   <rect x="0" y="0" width="960" height="760" fill="#f8fafc"/>
-  <text x="480" y="42" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">TecnoAula · ConectaTec: Flujo Interno de Arquitectura y Triaje</text>
+  <text x="480" y="42" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME</text>
   <text x="480" y="66" text-anchor="middle" font-size="13" fill="#64748b">Perímetro RAG Grounded, Triaje Estructurado con Pydantic y Protocolo de Silencio (Zero-Hallucination)</text>
 
   <!-- 1. Nodo Entrada: Mensaje del Usuario -->

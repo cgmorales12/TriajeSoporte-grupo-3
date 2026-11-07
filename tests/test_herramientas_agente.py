@@ -1,6 +1,6 @@
 """
 Suite de Pruebas Unitarias Deterministas con Pytest: Herramientas del Agente ReAct
-Proyecto: TecnoAula / ConectaTec — Triaje Inteligente de Incidentes ISP (Caso N.º 03 · Grupo 3 UNIANDES)
+Proyecto: Triaje Automático de Soporte para una PYME — Triaje Inteligente de Incidentes ISP (Caso N.º 03 · Grupo 3 UNIANDES)
 Seminario de Titulación: Ingeniería de Software con IA Generativa — 2026
 Autor: Amalia Geoconda Iguasnia Escobar (QA Lead / Seguridad y Requerimientos — GitHub: Geocoiguasnia76)
 

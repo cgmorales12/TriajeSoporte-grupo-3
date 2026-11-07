@@ -1,5 +1,5 @@
 """
-Esquemas Pydantic V2 para ConectaTec (Caso 03 · Grupo 3)
+Esquemas Pydantic V2 para Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso 03 · Grupo 3)
 Contratos estrictos de entrada y salida con extra='forbid'
 """
 

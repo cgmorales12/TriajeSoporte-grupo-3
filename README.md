@@ -170,7 +170,7 @@ El backend implementa el endpoint canónico de monitoreo operativo según RFC 94
 ```json
 {
   "status": "ok",
-  "servicio": "conectatec-api",
+  "servicio": "triaje-soporte-pyme-api",
   "timestamp": "2026-11-06T18:01:17.907662+00:00",
   "base_datos": {
     "motor": "sqlite",
@@ -285,7 +285,7 @@ En el marco del **Seminario de Titulación en Ingeniería de Software con IA Gen
 
 ### 10.1. Fuentes Oficiales de la Base de Conocimiento (Caso N.º 03)
 - **AXELOS.** (2019). *ITIL Foundation: ITIL 4 edition*. The Stationery Office.
-- **Corpus Documental ConectaTec.** (2026). *Procedimientos operativos, políticas de seguridad de la información, manuales de VPN, impresoras y preguntas frecuentes (DOC-01 a DOC-15)*. ConectaTec ISP / Carrier Support.
+- **Corpus Documental Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME.** (2026). *Procedimientos operativos, políticas de seguridad de la información, manuales de VPN, impresoras y preguntas frecuentes (DOC-01 a DOC-15)*. Soporte Tecnológico PYME / Helpdesk.
 - **International Organization for Standardization.** (2022). *Information security, cybersecurity and privacy protection — Information security controls* (ISO/IEC Standard No. 27002:2022). https://www.iso.org/standard/75652.html
 
 ### 10.2. Referencias Académicas Específicas del Caso N.º 03

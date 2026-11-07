@@ -1,7 +1,7 @@
 from __future__ import annotations
 """
 Agente de Alcance Controlado con Herramientas Deterministas (Patrón ReAct)
-Proyecto: ConectaTec / TecnoAula — Triaje de Incidentes Técnicos (Caso N.º 03 · Grupo 3 UNIANDES)
+Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME — Triaje de Incidentes Técnicos (Caso N.º 03 · Grupo 3 UNIANDES)
 Seminario de Titulación: Ingeniería de Software con IA Generativa — 2026
 
 Cumple con la rúbrica oficial de la Semana 3:
@@ -33,7 +33,7 @@ from app.tools.configuracion import (
     obtener_salario_basico
 )
 
-logger = logging.getLogger("conectatec.agente")
+logger = logging.getLogger("triaje_soporte.agente")
 
 
 # ============================================================================
@@ -449,7 +449,7 @@ def tool_buscar_solucion(params: ParamsBuscarSolucion) -> ResultadoBuscarProcedi
             paso_exacto=c.paso_exacto,
             fragmento_aplicado=c.fragmento_aplicado,
             vigencia=c.vigencia or "v3.2 - Octubre 2026",
-            url=c.url or f"https://soporte.conectatec.edu.ec/manuales/{c.documento_id.lower()}",
+            url=c.url or f"https://soporte.soporte.pyme.local/manuales/{c.documento_id.lower()}",
             requiere_cuadrilla_fisica=diag.requiere_visita_campo,
             solucion_propuesta=diag.solucion_propuesta,
             citas=citas_dicts
@@ -971,7 +971,7 @@ class AgenteTriajeTecnico:
                 return None
 
             prompt_agente = (
-                "Eres el motor cognitivo de un Agente ReAct de Triaje Técnico (TecnoAula / ConectaTec Grupo 3 UNIANDES).\n"
+                "Eres el motor cognitivo de un Agente ReAct de Triaje Técnico (Triaje Automático de Soporte para una PYME Grupo 3 UNIANDES).\n"
                 "Tu objetivo es resolver la incidencia del usuario decidiendo qué herramienta técnica invocar en cada paso.\n\n"
                 "SOLICITUD DEL USUARIO:\n"
                 f"<solicitud>{texto_usuario}</solicitud>\n\n"
@@ -1138,7 +1138,7 @@ class AgenteTriajeTecnico:
 
         if es_fuera_de_alcance:
             diag_fuera = (
-                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec. "
+                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de Soporte Tecnológico para PYME. "
                 "La consulta no describe ninguna avería técnica ni falla en la infraestructura de Internet o telecomunicaciones. "
                 "No se requiere despacho de cuadrilla ni manipulación de equipos. "
                 "Orientación al usuario: Si su solicitud corresponde a trámites administrativos o académicos (como notas, matrículas o certificaciones), "
@@ -1264,7 +1264,7 @@ class AgenteTriajeTecnico:
                 if res_tool.get("es_fuera_de_alcance"):
                     resuelto = True
                     diagnostico_actual = (
-                        "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec. "
+                        "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de Soporte Tecnológico para PYME. "
                         "Orientación al usuario: Si su solicitud corresponde a trámites administrativos o académicos, acuda a Secretaría General."
                     )
                     prioridad_actual = "Baja"

@@ -59,7 +59,7 @@ def procesar_archivo(ruta_origen: str):
 def main():
     inicializar_carpetas()
     print("=" * 70)
-    print(" 📑 CONVERSOR AUTOMÁTICO DE MANUALES TIC A MARKDOWN RAG (ConectaTec)")
+    print(" 📑 CONVERSOR AUTOMÁTICO DE MANUALES TIC A MARKDOWN RAG (Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME)")
     print("=" * 70)
     
     # 1. Si se pasó un archivo por parámetro de línea de comandos

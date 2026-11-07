@@ -1,6 +1,6 @@
 """
 Script de Auditoría Determinista de Seguridad: Cero Secretos en Git
-Caso N.º 03 · ConectaTec ISP (Grupo 3 UNIANDES)
+Caso N.º 03 · Soporte Tecnológico PYME (Grupo 3 UNIANDES)
 Evalúa el cumplimiento estricto de:
 - .env en .gitignore
 - .env NUNCA comiteado en ningún commit de la historia del repositorio
@@ -36,7 +36,7 @@ def print_resultado(titulo: str, ok: bool, detalle: str = ""):
 def main():
     print("=" * 70)
     print(" AUDITORIA DE SEGURIDAD: POLITICA CERO SECRETOS EN GIT")
-    print(" Proyecto: ConectaTec / TecnoAula · Grupo 3 UNIANDES (Caso N. 03)")
+    print(" Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME · Grupo 3 UNIANDES (Caso N. 03)")
     print(" Marco: OWASP LLM06 / LOPDP Art. 23 (Cero Credenciales en Codigo)")
     print("=" * 70)
 

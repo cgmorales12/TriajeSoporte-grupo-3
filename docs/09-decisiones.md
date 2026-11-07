@@ -112,7 +112,7 @@ Separar taxativamente las responsabilidades bajo el principio rector:
 El MVP debe ser evaluado por docentes y jurados que clonarán el repositorio y requerirán ejecutar el sistema inmediatamente sin instalar servidores de bases de datos complejos como PostgreSQL o MySQL.
 
 #### Decisión
-Utilizar **SQLite** (`data/conectatec.db`) embebido en Python con consultas SQL estrictamente parametrizadas mediante el marcador `?`.
+Utilizar **SQLite** (`data/triaje_soporte.db`) embebido en Python con consultas SQL estrictamente parametrizadas mediante el marcador `?`.
 
 #### Justificación
 1. **Cero Fricción de Despliegue:** Funciona en cualquier sistema operativo sin dependencias externas ni puertos de red adicionales.

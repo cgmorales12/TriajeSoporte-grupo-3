@@ -1,5 +1,5 @@
 """
-Enrutador de Endpoints Principales - ConectaTec
+Enrutador de Endpoints Principales - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 Cumple con la rúbrica del Seminario de Titulación:
 - POST /chat: Endpoint conversacional interactivo con streaming en tiempo real (StreamingResponse).
 - POST /clasificar: Triaje e inferencia técnica retornando JSON bajo esquema estricto Pydantic V2.

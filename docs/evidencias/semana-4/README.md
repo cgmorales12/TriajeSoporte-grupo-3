@@ -38,7 +38,7 @@ El backend de FastAPI y la interfaz web interactiva están desplegados en un con
 ```json
 {
   "status": "ok",
-  "servicio": "conectatec-api",
+  "servicio": "triaje-soporte-pyme-api",
   "timestamp": "2026-11-06T19:26:47.245982+00:00",
   "base_datos": {
     "motor": "sqlite",

@@ -1,6 +1,6 @@
 """
 Cinta de Procesamiento y Triaje Automatizado con IA
-Proyecto: ConectaTec / TecnoAula — Caso N.º 03 (Grupo 3 UNIANDES)
+Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME — Caso N.º 03 (Grupo 3 UNIANDES)
 Principio Rector: «La IA decide lo difuso · El código decide lo exacto · Una persona decide lo riesgoso».
 """
 

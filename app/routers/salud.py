@@ -1,5 +1,5 @@
 """
-Enrutador de Salud y Diagnóstico Operativo - ConectaTec
+Enrutador de Salud y Diagnóstico Operativo - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 """
 
 from fastapi import APIRouter
@@ -15,12 +15,12 @@ def health_check():
     """
     Informa el estado de operatividad del backend, base de datos y proveedor de IA.
     """
-    db_path = os.path.join(os.path.dirname(__file__), "..", "..", "data", "conectatec.db")
+    db_path = os.path.join(os.path.dirname(__file__), "..", "..", "data", "triaje_soporte.db")
     db_activa = os.path.exists(db_path)
     
     return {
         "status": "ok",
-        "servicio": "conectatec-api",
+        "servicio": "triaje-soporte-pyme-api",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "base_datos": {
             "motor": "sqlite",

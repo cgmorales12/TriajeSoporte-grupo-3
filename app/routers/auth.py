@@ -1,5 +1,5 @@
 """
-Enrutador de Autenticación para el Personal TIC - ConectaTec
+Enrutador de Autenticación para el Personal TIC - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME
 Endpoints: Inicio de Sesión y Verificación de Perfil Activo (RBAC)
 Autor: Amalia Geoconda Iguasnia (QA / Seguridad y Requerimientos)
 """

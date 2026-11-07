@@ -8,7 +8,7 @@ _test_db_file = tempfile.NamedTemporaryFile(suffix="_test.db", delete=False)
 _test_db_path = _test_db_file.name
 _test_db_file.close()
 
-os.environ["CONECTATEC_DB_PATH"] = _test_db_path
+os.environ["TRIAJE_SOPORTE_DB_PATH"] = _test_db_path
 
 from app.database import inicializar_bd
 

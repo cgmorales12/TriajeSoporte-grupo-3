@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script de Ingesta, Limpieza, Fragmentación y Vectorización Reproducible (RAG)
-Proyecto: ConectaTec — Triaje de Incidentes Técnicos para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)
+Proyecto: Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME — Triaje de Incidentes Técnicos para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)
 Seminario de Titulación: Ingeniería de Software con IA Generativa — 2026
 
 Requerimiento Oficial:
@@ -102,7 +102,7 @@ def limpiar_texto(texto: str) -> str:
 def parsear_metadatos_cabecera(contenido: str, doc_id: str) -> Dict[str, str]:
     """Extrae metadatos declarados en las primeras líneas del Markdown."""
     categoria = "Soporte Técnico General"
-    fabricante = "ConectaTec Soluciones S.A."
+    fabricante = "Soporte Tecnológico PYME"
     vigencia = "2026-V1"
 
     cat_match = re.search(r"\*\*Categoría:\*\*\s*(.+)", contenido)
@@ -126,7 +126,7 @@ def parsear_metadatos_cabecera(contenido: str, doc_id: str) -> Dict[str, str]:
         "fabricante": fabricante,
         "vigencia": vigencia,
         "titulo": titulo,
-        "url": URLS_OFICIALES.get(doc_id, f"https://soporte.conectatec.edu.ec/manuales/{doc_id}")
+        "url": URLS_OFICIALES.get(doc_id, f"https://soporte.soporte.pyme.local/manuales/{doc_id}")
     }
 
 
@@ -247,7 +247,7 @@ def vectorizar_e_indexar(chunks: List[Dict[str, Any]], ruta_chroma: str) -> Any:
 
     collection = client.create_collection(
         name=COLLECTION_NAME,
-        metadata={"hnsw:space": "cosine", "description": "15 Manuales Oficiales ConectaTec"}
+        metadata={"hnsw:space": "cosine", "description": "15 Manuales Oficiales Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME"}
     )
 
     ids = [c["chunk_id"] for c in chunks]
@@ -308,7 +308,7 @@ def probar_recuperacion(collection: Any) -> None:
 
 def main():
     print("=" * 72)
-    print("🚀 INGESTA REPRODUCIBLE RAG · ConectaTec (Caso N.º 03 · Grupo 3 UNIANDES)")
+    print("🚀 INGESTA REPRODUCIBLE RAG · Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03 · Grupo 3 UNIANDES)")
     print(f"   Directorio Origen: {RAW_DIR}")
     print(f"   Destino ChromaDB:  {CHROMA_DIR}")
     print("=" * 72)

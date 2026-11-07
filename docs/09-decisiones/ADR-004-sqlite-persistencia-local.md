@@ -13,7 +13,7 @@ En el despliegue del sistema dentro de microcontenedores Linux (Docker / Render 
    - *Decisión:* Se copian directamente en la imagen de Docker durante el build (`COPY . .`), garantizando que la aplicación arranque inmediatamente sin descargas externas, sin costos de red y lista para resolver consultas RAG desde el segundo cero.
 
 2. **Datos Transaccionales Efímeros del MVP («Se escribe y se acepta el ciclo efímero»):**
-   - El historial de tickets de soporte y bitácora de auditoría transaccional (`data/conectatec.db`).
+   - El historial de tickets de soporte y bitácora de auditoría transaccional (`data/triaje_soporte.db`).
    - *Decisión:* Para el prototipo funcional y la sustentación académica (despliegue en contenedor único de Render, réplicas = 1), se utiliza SQLite embebido. Se acepta que el contenedor nazca limpio en cada reinicio o redepliegue de versión, eliminando dependencias de infraestructura de pago o tarjetas de crédito.
 
 3. **Datos Transaccionales de Producción («Se escribe e importa a largo plazo»):**
@@ -24,7 +24,7 @@ En el despliegue del sistema dentro de microcontenedores Linux (Docker / Render 
 ## 2. Pregunta de Arquitectura: «¿Qué ve el usuario si hay dos copias de la app, cada una con su SQLite?»
 Si un balanceador de carga distribuye tráfico entre dos réplicas concurrentes (Instancia A e Instancia B) utilizando SQLite local en disco efímero:
 - **Efecto Observado:** El usuario experimenta **inconsistencia severa de datos (Split-Brain / Estado Fragmentado)**.
-- **Ejemplo Operativo:** Si la petición HTTP de creación de ticket llega a la Instancia A, el ticket se registra en el archivo `conectatec.db` de A. Si la siguiente petición (por ejemplo, recargar el tablero Kanban en `/tablero`) es despachada por el balanceador hacia la Instancia B, el usuario no verá el ticket creado, porque la base de datos de B es completamente independiente y desconoce los registros de A.
+- **Ejemplo Operativo:** Si la petición HTTP de creación de ticket llega a la Instancia A, el ticket se registra en el archivo `triaje_soporte.db` de A. Si la siguiente petición (por ejemplo, recargar el tablero Kanban en `/tablero`) es despachada por el balanceador hacia la Instancia B, el usuario no verá el ticket creado, porque la base de datos de B es completamente independiente y desconoce los registros de A.
 - **Mitigación Arquitectónica:**
   - Para el MVP: Concurrencia controlada en una única instancia activa (`replicas: 1`).
   - Para Producción: Desacoplamiento de SQLite hacia una base de datos relacional externa centralizada (PostgreSQL), para la cual los repositorios de `app/database.py` ya están preparados.

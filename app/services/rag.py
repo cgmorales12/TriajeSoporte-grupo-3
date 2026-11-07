@@ -12,7 +12,7 @@ import logging
 from typing import List, Dict, Any, Tuple, Optional
 from app.schemas import CitaRAG, DiagnosticoRAG
 
-logger = logging.getLogger("conectatec.rag")
+logger = logging.getLogger("triaje_soporte.rag")
 
 RAW_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "raw")
 CHROMA_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "chroma")
@@ -59,7 +59,7 @@ def _resolver_url_manual(doc_id: str, url_meta: Optional[str] = None) -> str:
     """Retorna la URL oficial real y resoluble en internet para el manual indicado."""
     if doc_id in URLS_REALES_MANUALES:
         return URLS_REALES_MANUALES[doc_id]
-    if url_meta and "conectatec.edu.ec" not in url_meta and "conectatec.local" not in url_meta:
+    if url_meta and "soporte.pyme.local" not in url_meta and "soporte.pyme.local" not in url_meta:
         return url_meta
     return f"https://github.com/cgmorales12/TriajeSoporte-grupo-3/blob/main/data/raw/{doc_id.lower()}.md"
 
@@ -359,7 +359,7 @@ def buscar_solucion(
     if es_fuera_de_alcance or (len(texto_lower) < 4 and not tiene_termino_ti):
         return DiagnosticoRAG(
             solucion_propuesta=(
-                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec / Soporte PYME. "
+                "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de Soporte Tecnológico para PYME. "
                 "La consulta no describe ninguna avería técnica ni incidencia en la infraestructura de TI (Active Directory, VPN, impresoras, carpetas SMB, ERP, correo u ofimática). "
                 "No se requiere intervención técnica en el puesto de trabajo. "
                 "Orientación al usuario: Si su solicitud corresponde a trámites administrativos, académicos (como notas, matrículas o certificaciones) o de Recursos Humanos, "
@@ -453,7 +453,7 @@ def buscar_solucion(
         if not docs_a_citar and not requiere_visita_campo:
             return DiagnosticoRAG(
                 solucion_propuesta=(
-                    "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de ConectaTec / Soporte PYME. "
+                    "No dispongo de un procedimiento técnico registrado para esta situación en los 15 manuales oficiales de Soporte Tecnológico para PYME. "
                     "La consulta no describe ninguna avería técnica ni incidencia en la infraestructura de TI (Active Directory, VPN, impresoras, carpetas SMB, ERP, correo u ofimática). "
                     "No se requiere intervención técnica en el puesto de trabajo. "
                     "Orientación al usuario: Si su solicitud corresponde a trámites administrativos, académicos (como notas, matrículas o certificaciones) o de Recursos Humanos, "
