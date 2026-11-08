@@ -122,36 +122,33 @@ def inicializar_bd():
     if "orden_despacho_id" not in columnas:
         cursor.execute("ALTER TABLE tickets ADD COLUMN orden_despacho_id TEXT")
     
-    # Sembrar usuario administrador TIC inicial si no existe (Cero Secretos en Git)
-    usuario_existente = cursor.execute("SELECT id FROM usuarios_tic WHERE usuario = ?", ("admin.tic@soporte.pyme.local",)).fetchone()
-    if not usuario_existente:
-        import hashlib
-        import secrets
+    # Sembrar o sincronizar usuario administrador TIC (Cero Secretos en Git / Rotación dinámica)
+    import hashlib
+    import secrets
 
-        # Principio de Arquitectura LOPDP / OWASP: Cero contraseñas hardcodeadas en código fuente.
-        # Se obtiene de variable de entorno (.env). Si no existe, se genera una contraseña criptográfica efímera.
-        admin_pass = os.environ.get("ADMIN_PASSWORD")
-        if not admin_pass:
-            admin_pass = secrets.token_urlsafe(16)
-            logger.warning(
-                "ADVERTENCIA DE SEGURIDAD (OWASP LLM02): ADMIN_PASSWORD no está definida en .env. "
-                "Se generó una contraseña criptográfica temporal para admin: %s (Defina ADMIN_PASSWORD en su .env)",
-                admin_pass
-            )
-        
-        salt = secrets.token_hex(16)
-        hash_pass = hashlib.pbkdf2_hmac("sha256", admin_pass.encode("utf-8"), salt.encode("utf-8"), 100000).hex()
-        ahora_iso = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    admin_pass = os.environ.get("ADMIN_PASSWORD")
+    if not admin_pass:
+        admin_pass = secrets.token_urlsafe(16)
+        logger.warning(
+            "ADVERTENCIA DE SEGURIDAD (OWASP LLM02): ADMIN_PASSWORD no está definida en .env. "
+            "Se generó una contraseña criptográfica temporal para admin: %s (Defina ADMIN_PASSWORD en su .env)",
+            admin_pass
+        )
+    
+    salt = secrets.token_hex(16)
+    hash_pass = hashlib.pbkdf2_hmac("sha256", admin_pass.encode("utf-8"), salt.encode("utf-8"), 100000).hex()
+    ahora_iso = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Sincronizar o crear admin principal y alias corto
+    for u_nombre in ("admin.tic@soporte.pyme.local", "admin"):
         cursor.execute("""
             INSERT INTO usuarios_tic (usuario, nombre_completo, rol, hash_password, salt, activo, fecha_creacion)
-            VALUES (?, ?, ?, ?, ?, 1, ?)
-        """, ("admin.tic@soporte.pyme.local", "Administrador TIC - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME", "administrador_tic", hash_pass, salt, ahora_iso))
-        
-        # También alias corto para pruebas ágiles
-        cursor.execute("""
-            INSERT OR IGNORE INTO usuarios_tic (usuario, nombre_completo, rol, hash_password, salt, activo, fecha_creacion)
-            VALUES (?, ?, ?, ?, ?, 1, ?)
-        """, ("admin", "Administrador TIC - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME", "administrador_tic", hash_pass, salt, ahora_iso))
+            VALUES (?, ?, 'administrador_tic', ?, ?, 1, ?)
+            ON CONFLICT(usuario) DO UPDATE SET
+                hash_password = excluded.hash_password,
+                salt = excluded.salt,
+                activo = 1
+        """, (u_nombre, "Administrador TIC - Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME", hash_pass, salt, ahora_iso))
 
     # Sembrar automáticamente los 20 tickets de demostración (5 por cada estado) si la tabla está vacía
     conteo_tickets = cursor.execute("SELECT COUNT(*) FROM tickets WHERE (eliminado IS NULL OR eliminado = 0)").fetchone()[0]

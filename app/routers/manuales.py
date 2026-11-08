@@ -93,9 +93,9 @@ def _parsear_metadatos_manual(ruta_completa: str) -> dict:
     "/manuales",
     response_model=ListaManualesOut,
     status_code=status.HTTP_200_OK,
-    summary="Lista todos los manuales Markdown de la base de conocimiento (Solo TIC)"
+    summary="Lista todos los manuales Markdown de la base de conocimiento (Lectura pública / TIC)"
 )
-def listar_manuales_rag(usuario_tic: dict = Depends(obtener_usuario_autenticado)):
+def listar_manuales_rag():
     """Retorna el inventario de los manuales técnicos oficiales almacenados en data/raw/."""
     os.makedirs(DIRECTORIO_RAW, exist_ok=True)
     patron = os.path.join(DIRECTORIO_RAW, "*.md")
@@ -116,12 +116,9 @@ def listar_manuales_rag(usuario_tic: dict = Depends(obtener_usuario_autenticado)
     "/manuales/{nombre_archivo}",
     response_model=ManualDetalleOut,
     status_code=status.HTTP_200_OK,
-    summary="Obtiene el contenido completo de un manual Markdown (Solo TIC)"
+    summary="Obtiene el contenido completo de un manual Markdown (Lectura pública / TIC)"
 )
-def obtener_detalle_manual(
-    nombre_archivo: str,
-    usuario_tic: dict = Depends(obtener_usuario_autenticado)
-):
+def obtener_detalle_manual(nombre_archivo: str):
     """Retorna el contenido en texto plano Markdown de un manual para visualización o edición."""
     archivo_seguro = _validar_y_sanitizar_archivo(nombre_archivo)
     ruta_completa = os.path.join(DIRECTORIO_RAW, archivo_seguro)

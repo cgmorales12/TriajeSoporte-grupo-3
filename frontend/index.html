@@ -3689,23 +3689,34 @@
         const API_AUTH = '/v1/auth';
         const API_ADMIN = '/v1/admin';
 
-        window._sesionTIC = {
-            token: "demo-token-tic",
-            usuario: "soporte.tic@pyme.local",
-            nombre_completo: "Personal de Soporte TIC",
-            rol: "administrador"
-        };
+        window._sesionTIC = null;
         let _ticketIdAEliminar = null;
         let _ticketCodigoAEliminar = null;
         let _manualesCargados = [];
 
         function cargarSesionGuardada() {
+            try {
+                const s = localStorage.getItem('pyme_tic_sesion') || sessionStorage.getItem('pyme_tic_sesion');
+                if (s) {
+                    const data = JSON.parse(s);
+                    if (data && data.token && !['demo', 'demo-token', 'demo-token-tic', 'token-demo'].includes(data.token)) {
+                        window._sesionTIC = data;
+                    } else {
+                        window._sesionTIC = null;
+                        localStorage.removeItem('pyme_tic_sesion');
+                        sessionStorage.removeItem('pyme_tic_sesion');
+                    }
+                }
+            } catch (e) {
+                window._sesionTIC = null;
+            }
             actualizarEstadoSesionTIC();
         }
 
         function actualizarEstadoSesionTIC() {
             const container = document.getElementById('ticNavContainer');
             if (container) {
+                const estaLogueado = !!(window._sesionTIC && window._sesionTIC.token);
                 container.innerHTML = `
                     <button type="button" class="btn-tic-action" onclick="abrirGestorManualesTIC('catalogo')" title="Consultar y Administrar los 15 manuales técnicos RAG">
                         📚 15 Manuales RAG
@@ -3713,6 +3724,18 @@
                     <button type="button" class="btn-tic-action" onclick="abrirDashboardFase5()" title="Visualizar métricas oficiales de ROI, autoatención y regla de escalamiento (Fase 5)" style="background:#0F766E; border-color:#14B8A6; font-weight:700;">
                         📊 Métricas y ROI (Fase 5)
                     </button>
+                    ${estaLogueado ? `
+                        <span style="font-size:11px; color:#A7F3D0; background:#064E3B; padding:3px 8px; border-radius:4px; border:1px solid #059669;" title="Usuario: ${window._sesionTIC.usuario}">
+                            🛡️ ${window._sesionTIC.usuario || 'Admin TIC'}
+                        </span>
+                        <button type="button" class="btn-tic-action" onclick="cerrarSesionTIC()" style="background:#7F1D1D; border-color:#DC2626;" title="Cerrar sesión TIC">
+                            🔒 Salir
+                        </button>
+                    ` : `
+                        <button type="button" class="btn-tic-action" onclick="abrirModalLoginTIC()" style="background:#1E3A8A; border-color:#3B82F6;" title="Iniciar sesión como Personal TIC">
+                            🔐 Iniciar Sesión TIC
+                        </button>
+                    `}
                 `;
             }
 
@@ -3723,12 +3746,19 @@
         }
 
         function abrirModalLoginTIC() {
-            // Acceso libre para la defensa sin fricción de login
+            const m = document.getElementById('modalLoginTIC');
+            if (m) m.classList.add('activo');
         }
 
         function cerrarModalLoginTIC() {
             const m = document.getElementById('modalLoginTIC');
             if (m) m.classList.remove('activo');
+        }
+
+        function rellenarCredencialesTIC() {
+            document.getElementById('txtUsuarioTIC').value = 'admin';
+            document.getElementById('txtPasswordTIC').value = 'AdminUniandes2026!';
+            mostrarToast('Credenciales oficiales cargadas. Haga clic en Iniciar Sesión.', 'info');
         }
 
         async function ejecutarLoginTIC(e) {
@@ -3786,6 +3816,11 @@
 
         // --- Eliminación y Retiro de Tickets (Soft-Delete) ---
         function solicitarQuitarTicket(ticketId, ticketCodigo) {
+            if (!window._sesionTIC || !window._sesionTIC.token) {
+                mostrarToast('Acción administrativa: Inicie sesión como personal TIC para eliminar tickets', 'alerta');
+                abrirModalLoginTIC();
+                return;
+            }
             confirmarEliminarTicket(ticketId, ticketCodigo);
         }
 
@@ -3803,7 +3838,10 @@
         }
 
         async function ejecutarEliminarTicket() {
-            if (!_ticketIdAEliminar || !window._sesionTIC) return;
+            if (!_ticketIdAEliminar || !window._sesionTIC || !window._sesionTIC.token) {
+                abrirModalLoginTIC();
+                return;
+            }
             const btn = document.getElementById('btnConfirmarBorrado');
             btn.disabled = true;
             btn.textContent = '⏳ Eliminando...';
@@ -4123,23 +4161,33 @@
             tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:#64748B;">⏳ Cargando catálogo de manuales oficiales...</td></tr>';
 
             try {
-                const res = await fetch(`${API_ADMIN}/manuales`, {
-                    headers: { 'Authorization': `Bearer ${window._sesionTIC.token}` }
-                });
+                const headers = {};
+                if (window._sesionTIC && window._sesionTIC.token) {
+                    headers['Authorization'] = `Bearer ${window._sesionTIC.token}`;
+                }
+                const res = await fetch(`${API_ADMIN}/manuales`, { headers });
 
                 if (res.ok) {
                     const data = await res.json();
-                    _manualesCargados = data.manuales;
+                    _manualesCargados = data.manuales || [];
                     renderizarTablaManuales(_manualesCargados);
                 } else if (res.status === 401) {
-                    cerrarGestorManualesTIC();
                     cerrarSesionTIC();
-                    mostrarToast('⚠️ Sesión expirada.', 'alerta');
+                    // Reintento de consulta pública de lectura
+                    const resPub = await fetch(`${API_ADMIN}/manuales`);
+                    if (resPub.ok) {
+                        const data = await resPub.json();
+                        _manualesCargados = data.manuales || [];
+                        renderizarTablaManuales(_manualesCargados);
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#DC2626; padding:20px;">Sesión TIC expirada. Inicie sesión para gestionar manuales.</td></tr>';
+                    }
                 } else {
                     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#DC2626; padding:20px;">Error al cargar manuales.</td></tr>';
                 }
             } catch (err) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#DC2626; padding:20px;">Fallo de conexión.</td></tr>';
+                console.error("Error al cargar manuales:", err);
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#DC2626; padding:20px;">Fallo de conexión al cargar el catálogo de manuales.</td></tr>';
             }
         }
 
@@ -4184,6 +4232,11 @@
         }
 
         async function editarManualTIC(nombreArchivo) {
+            if (!window._sesionTIC || !window._sesionTIC.token) {
+                mostrarToast('Se requiere inicio de sesión TIC para editar manuales', 'alerta');
+                abrirModalLoginTIC();
+                return;
+            }
             try {
                 const res = await fetch(`${API_ADMIN}/manuales/${nombreArchivo}`, {
                     headers: { 'Authorization': `Bearer ${window._sesionTIC.token}` }
@@ -4262,6 +4315,11 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
         async function guardarManualTIC(e) {
             e.preventDefault();
+            if (!window._sesionTIC || !window._sesionTIC.token) {
+                mostrarToast('Se requiere inicio de sesión TIC para guardar cambios', 'alerta');
+                abrirModalLoginTIC();
+                return;
+            }
             const archivo = document.getElementById('txtNombreArchivoMD').value.trim();
             const contenido = document.getElementById('txtEditorMarkdown').value;
             const btn = document.getElementById('btnGuardarManual');
@@ -4309,6 +4367,11 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
         }
 
         async function eliminarManualTIC(nombreArchivo) {
+            if (!window._sesionTIC || !window._sesionTIC.token) {
+                mostrarToast('Se requiere inicio de sesión TIC para eliminar manuales', 'alerta');
+                abrirModalLoginTIC();
+                return;
+            }
             if (!confirm(`¿Está seguro de eliminar permanentemente '${nombreArchivo}' de la base de conocimiento?`)) {
                 return;
             }
@@ -4339,6 +4402,11 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
         }
 
         function procesarArchivoConversor(file) {
+            if (!window._sesionTIC || !window._sesionTIC.token) {
+                mostrarToast('Se requiere inicio de sesión TIC para importar Word o PDF', 'alerta');
+                abrirModalLoginTIC();
+                return;
+            }
             const nombre = file.name;
             const ext = nombre.split('.').pop().toLowerCase();
             if (ext !== 'docx' && ext !== 'pdf') {
@@ -5351,6 +5419,9 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     </div>
                     <div id="msgErrorLogin" style="display:none; color:#DC2626; background:#FEE2E2; border:1px solid #FCA5A5; padding:8px 12px; border-radius:6px; font-size:12px; margin-bottom:12px;"></div>
                     <button type="submit" id="btnSubmitLogin" class="btn-submit" style="width:100%;">🔓 Iniciar Sesión</button>
+                    <button type="button" class="act-btn" onclick="rellenarCredencialesTIC()" style="margin-top:10px; width:100%; font-size:11.5px; background:#0F172A; color:#38BDF8; border:1px solid #334155; padding:8px; border-radius:6px; cursor:pointer;">
+                        🔑 Rellenar credenciales oficiales (admin / AdminUniandes2026!)
+                    </button>
                     <p style="font-size:11.5px; color:#64748B; margin-top:12px; text-align:center;">
                         🛡️ Mesa de Ayuda TIC para PYMEs (Caso N.º 03 · Grupo 3 UNIANDES).
                     </p>
