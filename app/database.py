@@ -157,6 +157,26 @@ def inicializar_bd():
     conteo_tickets = cursor.execute("SELECT COUNT(*) FROM tickets WHERE (eliminado IS NULL OR eliminado = 0)").fetchone()[0]
     if conteo_tickets == 0:
         sembrar_tickets_demo(cursor)
+    else:
+        # Sincronizar asignación oficial de demostración para los 3 expositores (Christian, Fernando, Amalia)
+        cursor.execute("""
+            UPDATE tickets
+            SET nombre_cliente = 'Christian Morales (Coordinación Técnica - Puesto 01)',
+                email_cliente = 'christian.morales@empresa.com'
+            WHERE ticket_codigo = 'TCK-N01-AD'
+        """)
+        cursor.execute("""
+            UPDATE tickets
+            SET nombre_cliente = 'Luis Fernando Ribera (Arquitectura de Software - Puesto 02)',
+                email_cliente = 'fernando.ribera@empresa.com'
+            WHERE ticket_codigo = 'TCK-E01-BSOD'
+        """)
+        cursor.execute("""
+            UPDATE tickets
+            SET nombre_cliente = 'Amalia Geoconda Iguasnia (Aseguramiento de Calidad - Puesto 06)',
+                email_cliente = 'amalia.iguasnia@empresa.com'
+            WHERE ticket_codigo = 'TCK-R01-AD'
+        """)
     
     conn.commit()
     conn.close()

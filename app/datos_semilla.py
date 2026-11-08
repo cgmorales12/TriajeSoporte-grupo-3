@@ -9,8 +9,8 @@ TICKETS_PYME = [
     {
         "codigo": "TCK-N01-AD",
         "estado": "nuevo",
-        "cliente": "Ana Martínez (Contabilidad - Puesto 04)",
-        "email": "ana.martinez@empresa.com",
+        "cliente": "Christian Morales (Coordinación Técnica - Puesto 01)",
+        "email": "christian.morales@empresa.com",
         "problema": "Mi cuenta de usuario en Active Directory se bloqueó después de ingresar 3 veces la clave equivocada y no puedo acceder al correo corporativo ni al equipo.",
         "categoria": "Accesos y Contraseñas",
         "impacto": "Bajo",
@@ -271,8 +271,8 @@ TICKETS_PYME = [
     {
         "codigo": "TCK-E01-BSOD",
         "estado": "escalado_cuadrilla",
-        "cliente": "Roberto Silva (Finanzas - Puesto 08)",
-        "email": "roberto.silva@empresa.com",
+        "cliente": "Luis Fernando Ribera (Arquitectura de Software - Puesto 02)",
+        "email": "fernando.ribera@empresa.com",
         "problema": "La computadora de escritorio emite tres pitidos cortos, huele a recalentamiento en la fuente de poder y se apaga arrojando pantalla azul BSOD KERNEL_DATA_INPAGE_ERROR.",
         "categoria": "Hardware y Equipos",
         "impacto": "Bajo",
@@ -420,8 +420,8 @@ TICKETS_PYME = [
     {
         "codigo": "TCK-R01-AD",
         "estado": "resuelto",
-        "cliente": "Gonzalo Benítez (Logística)",
-        "email": "gonzalo.benitez@empresa.com",
+        "cliente": "Amalia Geoconda Iguasnia (Aseguramiento de Calidad - Puesto 06)",
+        "email": "amalia.iguasnia@empresa.com",
         "problema": "Olvido de contraseña de red tras el período de vacaciones. Se requería restablecimiento formal bajo política de seguridad.",
         "categoria": "Accesos y Contraseñas",
         "impacto": "Bajo",

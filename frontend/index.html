@@ -2216,7 +2216,12 @@
 
     <header>
         <div class="header-title">
-            <h1>🏢 Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME</h1>
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:3px;">
+                <h1 style="margin:0;">🏢 Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME</h1>
+                <span id="badgeIndicadorVista" class="badge-indicador-vista" style="background:#1E3A8A; color:#FFFFFF; padding:4px 14px; border-radius:20px; font-weight:800; font-size:12px; display:inline-flex; align-items:center; gap:6px; border:1.5px solid #60A5FA; box-shadow:0 2px 4px rgba(0,0,0,0.15); letter-spacing:0.3px;">
+                    👤 VISTA DE USUARIO · Portal del Colaborador
+                </span>
+            </div>
             <p id="subHeaderTexto">Caso N.º 03 · Grupo 3 UNIANDES | Mesa de Ayuda y Ticket Inteligente de Soporte Microinformático TIC (60 Colaboradores)</p>
         </div>
         <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
@@ -2235,7 +2240,7 @@
             </div>
             <!-- Botón para alternar entre Vista Usuario y Vista Personal TIC -->
             <button type="button" id="btnToggleVista" class="btn-tic-action" onclick="alternarVista()" title="Alternar entre Vista Usuario y Vista Personal TIC">
-                👨‍💻 Vista TIC
+                👨‍💻 Cambiar a Vista de TIC
             </button>
             <!-- Selector de Modo Oscuro / Modo Claro (Fondo Negro vs Blanco con Alto Contraste) -->
             <button type="button" id="btnToggleTheme" class="btn-theme-toggle" onclick="alternarTemaVisual()" title="Cambiar a Modo Oscuro (Fondo Negro)">
@@ -2272,6 +2277,39 @@
     <div class="container">
         <!-- Panel lateral de nuevo reporte -->
         <aside class="sidebar">
+            <!-- Simulador de Login / Control de Acceso y Aislamiento de Incidencias LOPDP -->
+            <div id="cardSimuladorLogin" class="login-simulator-card" style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-left:4.5px solid #2563EB; border-radius:10px; padding:12px 14px; margin-bottom:16px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-weight:800; font-size:12px; color:#1E3A8A; display:flex; align-items:center; gap:5px;">
+                        <span>🔐 Simulador de Inicio de Sesión (Login)</span>
+                    </span>
+                    <span style="font-size:10px; background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:2px 7px; border-radius:4px; font-weight:700;">
+                        LOPDP Art. 23
+                    </span>
+                </div>
+                <p style="margin:0 0 8px 0; font-size:11px; color:#475569; line-height:1.35;">
+                    Seleccione un colaborador para simular la sesión y verificar el <b>aislamiento estricto de incidencias</b>:
+                </p>
+                <div style="margin-bottom:8px;">
+                    <select id="selectUsuarioLogin" class="form-control" onchange="seleccionarUsuarioLogin(this.value)" style="font-weight:600; font-size:12px; border-color:#93C5FD; background:#FFFFFF; cursor:pointer;">
+                        <option value="christian" selected>👤 Christian Morales (Tech Lead / Coordinador)</option>
+                        <option value="fernando">👤 Luis Fernando Ribera (Builder / Arquitectura)</option>
+                        <option value="amalia">👤 Amalia Iguasnia (QA Lead / Ciberseguridad)</option>
+                        <option value="libre">✏️ Ingresar otro usuario manualmente...</option>
+                    </select>
+                </div>
+                <!-- Tarjeta de estado de sesión y privacidad -->
+                <div id="boxInfoSesionUsuario" style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:7px 10px; font-size:11px; color:#166534; display:flex; flex-direction:column; gap:2px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>🟢 <b>Sesión Activa:</b> <span id="txtSesionNombreUsuario" style="font-weight:700;">Christian Morales</span></span>
+                        <span id="badgeAislamientoUsuario" style="font-size:9.5px; background:#DCFCE7; color:#15803D; font-weight:700; padding:1px 6px; border-radius:3px; border:1px solid #86EFAC;">🔒 Aislamiento Activo</span>
+                    </div>
+                    <small id="txtSesionDetalleUsuario" style="color:#15803D; font-size:10px;">
+                        Solo visualiza sus propios tickets (1 Ticket Nuevo en demostración).
+                    </small>
+                </div>
+            </div>
+
             <h2>Ingresar Solicitud de Soporte</h2>
             <form id="ticketForm">
                 <div class="form-group">
@@ -2339,6 +2377,22 @@
 
         <!-- Contenedor Derecho: Filtros por Metadatos y Tablero Kanban -->
         <section class="kanban-section" style="min-width: 0; width: 100%; overflow: hidden;">
+            <!-- Banner Informativo de Vista Activa y Aislamiento de Tickets LOPDP -->
+            <div id="bannerVistaTitulo" style="background:#EFF6FF; border:1px solid #BFDBFE; border-left:4.5px solid #2563EB; border-radius:8px; padding:10px 14px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span id="iconoBannerVista" style="font-size:18px;">👤</span>
+                    <div>
+                        <strong id="textoTituloVistaTablero" style="font-size:13px; color:#1E3A8A;">Mis Solicitudes de Soporte (Vista de Usuario · Colaborador: Christian Morales)</strong>
+                        <div id="textoSubtituloVistaTablero" style="font-size:11px; color:#475569;">
+                            🔒 Aislamiento LOPDP Art. 23: Este colaborador únicamente visualiza y administra sus propios tickets de soporte.
+                        </div>
+                    </div>
+                </div>
+                <div id="badgeTagAislamientoTablero" style="font-size:11px; font-weight:700; background:#DBEAFE; color:#1E40AF; padding:3px 10px; border-radius:12px; border:1px solid #93C5FD;">
+                    👤 Sesión: Christian Morales
+                </div>
+            </div>
+
             <!-- Barra de Filtros por Metadatos RAG e ITIL 4 -->
             <div class="meta-filters-bar">
                 <div class="meta-filters-header">
@@ -2565,9 +2619,17 @@
         function cargarPreset(tipo) {
             limpiarErrorFormulario();
             const p = PRESETS[tipo];
-            document.getElementById('nombreCliente').value = p.nombre;
-            document.getElementById('emailCliente').value = p.email;
-            document.getElementById('codigoAbonado').value = p.codigo;
+            const uId = window._usuarioSesionActiva || 'christian';
+            if (window._vistaActual === 'usuario' && uId !== 'libre' && typeof USUARIOS_DEMO !== 'undefined' && USUARIOS_DEMO[uId]) {
+                const u = USUARIOS_DEMO[uId];
+                document.getElementById('nombreCliente').value = u.nombre;
+                document.getElementById('emailCliente').value = u.email;
+                document.getElementById('codigoAbonado').value = u.codigo;
+            } else {
+                document.getElementById('nombreCliente').value = p.nombre;
+                document.getElementById('emailCliente').value = p.email;
+                document.getElementById('codigoAbonado').value = p.codigo;
+            }
             document.getElementById('descripcionProblema').value = p.desc;
 
             if (p.autoSimularCaida) {
@@ -2672,13 +2734,39 @@
         const restablecer20EjemplosTablero = actualizarTablero;
 
         function aplicarFiltrosMetadatos(tickets) {
+            // Aislamiento de Incidencias por Usuario en Vista de Usuario (LOPDP Art. 23)
+            let listaBase = tickets;
+            if (window._vistaActual === 'usuario') {
+                const uId = window._usuarioSesionActiva || 'christian';
+                if (uId !== 'libre' && typeof USUARIOS_DEMO !== 'undefined' && USUARIOS_DEMO[uId]) {
+                    const u = USUARIOS_DEMO[uId];
+                    const emailBuscado = u.email.toLowerCase();
+                    const nombreBuscado = u.nombre.toLowerCase();
+                    listaBase = tickets.filter(t => {
+                        const tEmail = (t.email_cliente || '').toLowerCase().trim();
+                        const tNombre = (t.nombre_cliente || '').toLowerCase().trim();
+                        return tEmail === emailBuscado ||
+                               tEmail.includes(emailBuscado) ||
+                               tNombre.includes(nombreBuscado) ||
+                               (uId === 'christian' && (tNombre.includes('christian morales') || tEmail === 'christian.morales@empresa.com')) ||
+                               (uId === 'fernando' && (tNombre.includes('fernando ribera') || tEmail === 'fernando.ribera@empresa.com')) ||
+                               (uId === 'amalia' && (tNombre.includes('amalia') || tEmail === 'amalia.iguasnia@empresa.com'));
+                    });
+                } else if (uId === 'libre') {
+                    const emailForm = (document.getElementById('emailCliente')?.value || '').toLowerCase().trim();
+                    if (emailForm) {
+                        listaBase = tickets.filter(t => (t.email_cliente || '').toLowerCase() === emailForm);
+                    }
+                }
+            }
+
             const q = (document.getElementById('filtroBusqueda')?.value || '').toLowerCase().trim();
             const cat = document.getElementById('filtroCategoria')?.value || 'todas';
             const prio = document.getElementById('filtroPrioridad')?.value || 'todas';
             const fuente = document.getElementById('filtroFuente')?.value || 'todas';
             const tipoCita = document.getElementById('filtroTipoCita')?.value || 'todas';
 
-            return tickets.filter(t => {
+            return listaBase.filter(t => {
                 // 1. Buscador libre
                 if (q) {
                     const matchQ = (t.ticket_codigo || '').toLowerCase().includes(q) ||
@@ -2724,16 +2812,25 @@
 
             const badgeFiltro = document.getElementById('filtroContadorBadge');
             if (badgeFiltro) {
-                if (ticketsFiltrados.length === tickets.length) {
-                    badgeFiltro.textContent = `Mostrando todos (${tickets.length})`;
-                    badgeFiltro.style.background = '#F1F5F9';
-                    badgeFiltro.style.color = '#475569';
-                    badgeFiltro.style.border = '1px solid #CBD5E1';
-                } else {
-                    badgeFiltro.textContent = `Filtrados: ${ticketsFiltrados.length} de ${tickets.length}`;
-                    badgeFiltro.style.background = '#F8FAFC';
-                    badgeFiltro.style.color = '#1E3A8A';
+                if (window._vistaActual === 'usuario') {
+                    const u = (typeof USUARIOS_DEMO !== 'undefined') ? USUARIOS_DEMO[window._usuarioSesionActiva || 'christian'] : null;
+                    const nom = u ? u.nombre : 'Colaborador';
+                    badgeFiltro.textContent = `Sesión: ${nom} (${ticketsFiltrados.length} solicitud${ticketsFiltrados.length === 1 ? '' : 'es'})`;
+                    badgeFiltro.style.background = '#EFF6FF';
+                    badgeFiltro.style.color = '#1E40AF';
                     badgeFiltro.style.border = '1px solid #93C5FD';
+                } else {
+                    if (ticketsFiltrados.length === tickets.length) {
+                        badgeFiltro.textContent = `Mostrando todos (${tickets.length})`;
+                        badgeFiltro.style.background = '#F1F5F9';
+                        badgeFiltro.style.color = '#475569';
+                        badgeFiltro.style.border = '1px solid #CBD5E1';
+                    } else {
+                        badgeFiltro.textContent = `Filtrados: ${ticketsFiltrados.length} de ${tickets.length}`;
+                        badgeFiltro.style.background = '#F8FAFC';
+                        badgeFiltro.style.color = '#1E3A8A';
+                        badgeFiltro.style.border = '1px solid #93C5FD';
+                    }
                 }
             }
 
@@ -2801,7 +2898,11 @@
                 container.innerHTML = '';
 
                 if (total === 0) {
-                    container.innerHTML = '<div class="empty-col-msg">📭 Sin tickets en esta columna</div>';
+                    if (window._vistaActual === 'usuario') {
+                        container.innerHTML = '<div class="empty-col-msg" style="padding:18px 8px; text-align:center; color:#64748B; font-size:11.5px; font-style:italic;">🔒 Sin solicitudes para este colaborador</div>';
+                    } else {
+                        container.innerHTML = '<div class="empty-col-msg">📭 Sin tickets en esta columna</div>';
+                    }
                     return;
                 }
 
@@ -3238,6 +3339,7 @@
                         actualizarHeaderBadge(dataResp.metadatos_ia);
                         mostrarToast(`⚡ Ticket ${dataResp.ticket_codigo} clasificado con ${dataResp.metadatos_ia.proveedor}`, 'exito');
                         document.getElementById('ticketForm').reset();
+                        restaurarDatosUsuarioEnFormulario();
                         paginacionColumnas[dataResp.estado] = 1;
                         cargarTickets();
                     }
@@ -4734,6 +4836,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     const ticketGuardado = await res.json();
                     cerrarModalConfirmarRegistro();
                     document.getElementById('ticketForm').reset();
+                    restaurarDatosUsuarioEnFormulario();
                     mostrarToast(`🛡️ Ticket ${ticketGuardado.ticket_codigo} confirmado y registrado formalmente por ${payload.operador_confirmador}`, 'exito');
                     paginacionColumnas[ticketGuardado.estado] = 1;
                     cargarTickets();
@@ -4910,7 +5013,184 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             }
         }
 
+        // =========================================================================
+        // CONTROL DE ACCESO, SIMULADOR DE LOGIN Y AISLAMIENTO LOPDP (ART. 23)
+        // =========================================================================
+        const USUARIOS_DEMO = {
+            'christian': {
+                id: 'christian',
+                nombre: 'Christian Morales',
+                email: 'christian.morales@empresa.com',
+                codigo: 'Coordinación Técnica - Puesto 01',
+                cargo: 'Tech Lead / Coordinador',
+                resumenTT: '1 Ticket en Estado NUEVO (Demostración)',
+                colorTema: '#2563EB'
+            },
+            'fernando': {
+                id: 'fernando',
+                nombre: 'Luis Fernando Ribera',
+                email: 'fernando.ribera@empresa.com',
+                codigo: 'Arquitectura de Software - Puesto 02',
+                cargo: 'Builder / Arquitectura de Software',
+                resumenTT: '1 Ticket en Estado ESCALADO A SOPORTE PRESENCIAL (Demostración)',
+                colorTema: '#DC2626'
+            },
+            'amalia': {
+                id: 'amalia',
+                nombre: 'Amalia Geoconda Iguasnia',
+                email: 'amalia.iguasnia@empresa.com',
+                codigo: 'Aseguramiento de Calidad - Puesto 06',
+                cargo: 'QA Lead / Seguridad y Requerimientos',
+                resumenTT: '1 Ticket en Estado RESUELTO (Demostración)',
+                colorTema: '#16A34A'
+            },
+            'libre': {
+                id: 'libre',
+                nombre: '',
+                email: '',
+                codigo: '',
+                cargo: 'Ingreso Manual Libre',
+                resumenTT: 'Ingreso manual personalizado',
+                colorTema: '#64748B'
+            }
+        };
+
+        window._usuarioSesionActiva = 'christian';
         window._vistaActual = 'usuario';
+
+        function seleccionarUsuarioLogin(usuarioId) {
+            if (!usuarioId) usuarioId = 'christian';
+            window._usuarioSesionActiva = usuarioId;
+
+            const selectElem = document.getElementById('selectUsuarioLogin');
+            if (selectElem && selectElem.value !== usuarioId) {
+                selectElem.value = usuarioId;
+            }
+
+            restaurarDatosUsuarioEnFormulario();
+            actualizarDetalleSesionUsuario();
+            actualizarBannerVistaYUsuario();
+
+            if (typeof renderizarTablero === 'function' && window._ticketsCargados) {
+                renderizarTablero(window._ticketsCargados);
+            }
+
+            const u = USUARIOS_DEMO[usuarioId];
+            if (u && usuarioId !== 'libre' && window._vistaActual === 'usuario') {
+                mostrarToast(`👤 Sesión cambiada: ${u.nombre} (${u.resumenTT})`, 'info');
+            }
+        }
+
+        function restaurarDatosUsuarioEnFormulario() {
+            const uId = window._usuarioSesionActiva || 'christian';
+            const u = USUARIOS_DEMO[uId];
+            if (!u) return;
+
+            const inpNombre = document.getElementById('nombreCliente');
+            const inpEmail = document.getElementById('emailCliente');
+            const inpCodigo = document.getElementById('codigoAbonado');
+
+            if (uId === 'libre') {
+                if (inpNombre) inpNombre.readOnly = false;
+                if (inpEmail) inpEmail.readOnly = false;
+                if (inpCodigo) inpCodigo.readOnly = false;
+            } else {
+                if (inpNombre) inpNombre.value = u.nombre;
+                if (inpEmail) inpEmail.value = u.email;
+                if (inpCodigo) inpCodigo.value = u.codigo;
+            }
+        }
+
+        function actualizarDetalleSesionUsuario() {
+            const esTIC = (window._vistaActual === 'tic');
+            const boxSesion = document.getElementById('boxInfoSesionUsuario');
+            const txtNombre = document.getElementById('txtSesionNombreUsuario');
+            const txtDetalle = document.getElementById('txtSesionDetalleUsuario');
+            const badgeAislamiento = document.getElementById('badgeAislamientoUsuario');
+            const uId = window._usuarioSesionActiva || 'christian';
+            const u = USUARIOS_DEMO[uId] || USUARIOS_DEMO['christian'];
+
+            if (esTIC) {
+                if (boxSesion) {
+                    boxSesion.style.background = '#F8FAFC';
+                    boxSesion.style.borderColor = '#CBD5E1';
+                    boxSesion.style.color = '#334155';
+                }
+                if (txtNombre) txtNombre.textContent = 'Consola TIC (Soporte Técnico)';
+                if (badgeAislamiento) {
+                    badgeAislamiento.textContent = '🌐 Modo Global TIC';
+                    badgeAislamiento.style.background = '#E0E7FF';
+                    badgeAislamiento.style.color = '#3730A3';
+                    badgeAislamiento.style.borderColor = '#A5B4FC';
+                }
+                if (txtDetalle) txtDetalle.textContent = 'Visualizando todos los tickets de la PYME para despacho y asignación.';
+            } else {
+                if (boxSesion) {
+                    boxSesion.style.background = '#F0FDF4';
+                    boxSesion.style.borderColor = '#BBF7D0';
+                    boxSesion.style.color = '#166534';
+                }
+                if (badgeAislamiento) {
+                    badgeAislamiento.textContent = '🔒 Aislamiento Activo';
+                    badgeAislamiento.style.background = '#DCFCE7';
+                    badgeAislamiento.style.color = '#15803D';
+                    badgeAislamiento.style.borderColor = '#86EFAC';
+                }
+                if (uId === 'libre') {
+                    if (txtNombre) txtNombre.textContent = 'Colaborador Manual';
+                    if (txtDetalle) txtDetalle.textContent = 'Modo libre para ingresar cualquier colaborador y correo.';
+                } else {
+                    if (txtNombre) txtNombre.textContent = `${u.nombre}`;
+                    if (txtDetalle) txtDetalle.textContent = `Aislamiento estricto: Solo visualiza sus propios tickets (${u.resumenTT}).`;
+                }
+            }
+        }
+
+        function actualizarBannerVistaYUsuario() {
+            const esTIC = (window._vistaActual === 'tic');
+            const icono = document.getElementById('iconoBannerVista');
+            const titulo = document.getElementById('textoTituloVistaTablero');
+            const subtitulo = document.getElementById('textoSubtituloVistaTablero');
+            const badgeTag = document.getElementById('badgeTagAislamientoTablero');
+            const uId = window._usuarioSesionActiva || 'christian';
+            const u = USUARIOS_DEMO[uId] || USUARIOS_DEMO['christian'];
+
+            if (esTIC) {
+                if (icono) icono.textContent = '👨‍💻';
+                if (titulo) {
+                    titulo.textContent = 'Consola General de Soporte Técnico (Vista de TIC · Modo Administrador)';
+                    titulo.style.color = '#0F172A';
+                }
+                if (subtitulo) {
+                    subtitulo.textContent = '🌐 Modo Global de Gestión TIC: Visualización completa de incidencias de todos los colaboradores (20+ Tickets en demostración).';
+                }
+                if (badgeTag) {
+                    badgeTag.textContent = '👨‍💻 Consola TIC · Todos los Tickets';
+                    badgeTag.style.background = '#E0E7FF';
+                    badgeTag.style.color = '#3730A3';
+                    badgeTag.style.borderColor = '#A5B4FC';
+                }
+            } else {
+                if (icono) icono.textContent = '👤';
+                if (titulo) {
+                    titulo.textContent = (uId === 'libre') 
+                        ? 'Mis Solicitudes de Soporte (Vista de Usuario · Ingreso Libre)'
+                        : `Mis Solicitudes de Soporte (Vista de Usuario · Colaborador: ${u.nombre})`;
+                    titulo.style.color = '#1E3A8A';
+                }
+                if (subtitulo) {
+                    subtitulo.textContent = '🔒 Aislamiento LOPDP Art. 23: Este colaborador únicamente visualiza y administra sus propios tickets de soporte (los demás colaboradores no ven sus tickets ni él ve los ajenos).';
+                }
+                if (badgeTag) {
+                    badgeTag.textContent = (uId === 'libre')
+                        ? '👤 Sesión: Colaborador Libre'
+                        : `👤 Sesión: ${u.nombre}`;
+                    badgeTag.style.background = '#DBEAFE';
+                    badgeTag.style.color = '#1E40AF';
+                    badgeTag.style.borderColor = '#93C5FD';
+                }
+            }
+        }
 
         function alternarVista(destino) {
             if (destino) {
@@ -4926,16 +5206,32 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
         function aplicarVistaActual() {
             const esTIC = (window._vistaActual === 'tic');
             
+            // 0. Badge indicador de vista en la cabecera
+            const badgeIndicadorVista = document.getElementById('badgeIndicadorVista');
+            if (badgeIndicadorVista) {
+                if (esTIC) {
+                    badgeIndicadorVista.innerHTML = '👨‍💻 VISTA DE TIC · Consola de Gestión y Soporte';
+                    badgeIndicadorVista.style.background = '#0F172A';
+                    badgeIndicadorVista.style.borderColor = '#94A3B8';
+                    badgeIndicadorVista.style.color = '#38BDF8';
+                } else {
+                    badgeIndicadorVista.innerHTML = '👤 VISTA DE USUARIO · Portal del Colaborador';
+                    badgeIndicadorVista.style.background = '#1E3A8A';
+                    badgeIndicadorVista.style.borderColor = '#60A5FA';
+                    badgeIndicadorVista.style.color = '#FFFFFF';
+                }
+            }
+
             // 1. Botón alternar vista en cabecera
             const btnToggleVista = document.getElementById('btnToggleVista');
             if (btnToggleVista) {
                 if (esTIC) {
-                    btnToggleVista.innerHTML = '👤 Vista Usuario';
-                    btnToggleVista.title = 'Cambiar a Portal de Autoatención del Usuario';
+                    btnToggleVista.innerHTML = '👤 Cambiar a Vista de Usuario';
+                    btnToggleVista.title = 'Cambiar a Portal de Autoatención del Colaborador';
                     btnToggleVista.style.background = '#1E3A8A';
                     btnToggleVista.style.borderColor = '#2563EB';
                 } else {
-                    btnToggleVista.innerHTML = '👨‍💻 Vista TIC';
+                    btnToggleVista.innerHTML = '👨‍💻 Cambiar a Vista de TIC';
                     btnToggleVista.title = 'Cambiar a Consola de Gestión Técnica TIC';
                     btnToggleVista.style.background = '#1E293B';
                     btnToggleVista.style.borderColor = '#334155';
@@ -4980,7 +5276,12 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 }
             }
 
-            // 7. Re-renderizar tablero si hay tickets cargados
+            // 7. Actualizar banners y detalles de sesión de usuario
+            actualizarDetalleSesionUsuario();
+            actualizarBannerVistaYUsuario();
+            restaurarDatosUsuarioEnFormulario();
+
+            // 8. Re-renderizar tablero si hay tickets cargados
             if (typeof renderizarTablero === 'function' && window._ticketsCargados) {
                 renderizarTablero(window._ticketsCargados);
             }
@@ -4991,6 +5292,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             const vistaGuardada = localStorage.getItem('pyme_vista_activa');
             if (vistaGuardada) window._vistaActual = vistaGuardada;
         } catch (e) {}
+        seleccionarUsuarioLogin('christian');
         aplicarVistaActual();
         cargarTemaGuardado();
         actualizarEstadoSimulacion();
