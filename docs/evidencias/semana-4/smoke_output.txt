@@ -18,3 +18,4 @@ METRICAS:
 - Casos de inyección neutralizados (OWASP LLM01 / LLM07) -> CUMPLE
 - Inferencia y RAG activos sin fugas -> CUMPLE
 ======================================================================
+
