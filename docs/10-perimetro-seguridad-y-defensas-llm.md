@@ -19,12 +19,12 @@ Este documento técnico sirve como **respaldo de sustentación y auditoría de c
 
 | Capa | Archivo en Repositorio | Líneas | Vulnerabilidad / Marco | Mecanismo de Defensa Implementado |
 | :---: | :--- | :---: | :--- | :--- |
-| **1** | [app/services/llm.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py) | L18–L56 | **LOPDP Ecuador (Art. 23)** / OWASP LLM02 | Anonimización previa por Regex: detección y reemplazo de contraseñas por `[CONFIDENCIAL_REMOVIDO]`. |
-| **2** | [app/services/llm.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py) | L90–L93 | **OWASP LLM01** (Prompt Injection) | Aislamiento semántico mediante delimitadores XML `<solicitud>...</solicitud>`. |
-| **3** | [app/schemas.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/schemas.py) | L15–L75 | **OWASP LLM05** (Improper Output Handling) | Esquemas Pydantic V2 cerrados con `model_config = ConfigDict(extra="forbid")`. |
-| **4** | [app/tools/priorizar.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/tools/priorizar.py) | L44–L68 | **Alucinación de SLAs** / Integridad ITIL | Principio determinista: *«El modelo propone, el código dispone»*. Matriz fija en `config/matriz_prioridad.json`. |
-| **5** | [app/services/rag.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/rag.py) | L40–L110 | **Alucinación de Procedimientos** | Grounding estricto en ChromaDB sobre 15 manuales técnicos oficiales (`DOC-01` a `DOC-15`). |
-| **6** | [app/main.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/main.py) | L65–L95 | **OWASP LLM04** (Denial of Service) / RFC 6585 | Limitador de tasa Token Bucket en memoria (10 fichas, recarga 1 cada 6s) con HTTP `429 Too Many Requests`. |
+| **1** | [app/services/llm.py](../app/services/llm.py) | L18–L56 | **LOPDP Ecuador (Art. 23)** / OWASP LLM02 | Anonimización previa por Regex: detección y reemplazo de contraseñas por `[CONFIDENCIAL_REMOVIDO]`. |
+| **2** | [app/services/llm.py](../app/services/llm.py) | L90–L93 | **OWASP LLM01** (Prompt Injection) | Aislamiento semántico mediante delimitadores XML `<solicitud>...</solicitud>`. |
+| **3** | [app/schemas.py](../app/schemas.py) | L15–L75 | **OWASP LLM05** (Improper Output Handling) | Esquemas Pydantic V2 cerrados con `model_config = ConfigDict(extra="forbid")`. |
+| **4** | [app/tools/priorizar.py](../app/tools/priorizar.py) | L44–L68 | **Alucinación de SLAs** / Integridad ITIL | Principio determinista: *«El modelo propone, el código dispone»*. Matriz fija en `config/matriz_prioridad.json`. |
+| **5** | [app/services/rag.py](../app/services/rag.py) | L40–L110 | **Alucinación de Procedimientos** | Grounding estricto en ChromaDB sobre 15 manuales técnicos oficiales (`DOC-01` a `DOC-15`). |
+| **6** | [app/main.py](../app/main.py) | L65–L95 | **OWASP LLM04** (Denial of Service) / RFC 6585 | Limitador de tasa Token Bucket en memoria (10 fichas, recarga 1 cada 6s) con HTTP `429 Too Many Requests`. |
 
 ---
 
@@ -107,7 +107,7 @@ Este documento técnico sirve como **respaldo de sustentación y auditoría de c
 Para evidenciar la solidez del sistema ante el tribunal, el sistema incluye en su interfaz web el interruptor:
 $$\text{\texttt{[Seguridad] Defensas IA: ACTIVAS \quad $\longleftrightarrow$ \quad [Alerta] Modo Vulnerable: SIN DEFENSAS}}$$
 
-Ubicación en el código: [app/routers/tickets.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/routers/tickets.py#L44-L80)
+Ubicación en el código: [app/routers/tickets.py](../app/routers/tickets.py#L44-L80)
 
 ```python
 if solicitud.modo_vulnerable:

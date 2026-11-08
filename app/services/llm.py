@@ -735,6 +735,49 @@ class ClienteLLM:
                 continue
         raise RuntimeError("No se pudo conectar a Groq streaming")
 
+    def _generar_con_gemini(self, prompt: str, key_gemini: str) -> Optional[str]:
+        """Genera una respuesta síncrona en texto usando la API de Gemini (usado por el orquestador agéntico)."""
+        import httpx
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key={key_gemini}"
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": 0.1}
+        }
+        try:
+            with httpx.Client(timeout=15.0) as client:
+                res = client.post(url, json=payload)
+                if res.status_code == 200:
+                    data = res.json()
+                    cands = data.get("candidates", [])
+                    if cands:
+                        parts = cands[0].get("content", {}).get("parts", [])
+                        if parts:
+                            return parts[0].get("text", "")
+        except Exception as e:
+            logger.debug("Falla en _generar_con_gemini: %s", e)
+        return None
+
+    def _generar_con_groq(self, messages: list, key_groq: str) -> Optional[str]:
+        """Genera una respuesta síncrona en texto usando la API de Groq Cloud (usado por el orquestador agéntico)."""
+        from groq import Groq
+        try:
+            client = Groq(api_key=key_groq)
+            modelos = ["llama-3.3-70b-versatile", "openai/gpt-oss-120b", "qwen/qwen3.8-27b"]
+            for mod in modelos:
+                try:
+                    resp = client.chat.completions.create(
+                        model=mod,
+                        messages=messages,
+                        temperature=0.1
+                    )
+                    if resp.choices and resp.choices[0].message:
+                        return resp.choices[0].message.content
+                except Exception:
+                    continue
+        except Exception as e:
+            logger.debug("Falla en _generar_con_groq: %s", e)
+        return None
+
     def _stream_offline(self, mensaje: str) -> Iterator[str]:
         msg_low = mensaje.lower()
         if any(k in msg_low for k in ["los", "roja", "luz roja", "fibra", "corte"]):

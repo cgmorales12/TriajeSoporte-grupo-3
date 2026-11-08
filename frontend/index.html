@@ -2718,20 +2718,38 @@
 
         async function actualizarTablero() {
             try {
-                const res = await fetch('/v1/tickets/restablecer-ejemplos', { method: 'POST' });
-                if (res.ok) {
-                    mostrarToast('Tablero actualizado');
-                    await cargarTickets();
-                } else {
-                    await cargarTickets();
-                    mostrarToast('Tablero actualizado');
-                }
-            } catch (e) {
                 await cargarTickets();
-                mostrarToast('Tablero actualizado');
+                mostrarToast('Tablero sincronizado y actualizado', 'info');
+            } catch (e) {
+                mostrarToast('Error al sincronizar tablero', 'alerta');
             }
         }
-        const restablecer20EjemplosTablero = actualizarTablero;
+
+        async function restablecer20EjemplosTablero() {
+            const token = window._sesionTIC?.token;
+            if (!token) {
+                mostrarToast('Acción administrativa: Inicie sesión como personal TIC', 'alerta');
+                abrirModalLoginTIC();
+                return;
+            }
+            try {
+                const res = await fetch('/v1/tickets/restablecer-ejemplos', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (res.ok) {
+                    mostrarToast('Tablero restablecido con 20 tickets de demostración oficiales', 'exito');
+                    await cargarTickets();
+                } else {
+                    const err = await res.json();
+                    mostrarToast(`Error: ${err.detail || 'No autorizado'}`, 'alerta');
+                }
+            } catch (e) {
+                mostrarToast('Error de conexión al restablecer ejemplos', 'alerta');
+            }
+        }
 
         function aplicarFiltrosMetadatos(tickets) {
             // Aislamiento de Incidencias por Usuario en Vista de Usuario (LOPDP Art. 23)

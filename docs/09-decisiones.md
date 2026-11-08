@@ -133,7 +133,7 @@ Utilizar **SQLite** (`data/triaje_soporte.db`) embebido en Python con consultas 
 Si los controladores de FastAPI importaran directamente los SDKs de Google (`google.generativeai`) o Groq (`groq`), cualquier cambio de proveedor, versión o ajuste de parámetros obligaría a reescribir y recompilar los endpoints HTTP.
 
 #### Decisión
-Encapsular toda la lógica de inferencia, autenticación, manejo de reintentos y conversión de esquemas dentro de la clase `ClienteLLM` en [app/services/llm.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py), aplicando los patrones **Gateway** y **Strategy**.
+Encapsular toda la lógica de inferencia, autenticación, manejo de reintentos y conversión de esquemas dentro de la clase `ClienteLLM` en [app/services/llm.py](../app/services/llm.py), aplicando los patrones **Gateway** y **Strategy**.
 
 #### Justificación
 1. **Invarianza de Endpoints:** Los routers solo conocen métodos de alto nivel (`clasificar()`, `chat_stream()`, `analizar()`).
@@ -159,7 +159,7 @@ Los modelos generativos tienden a inventar procedimientos técnicos inexistentes
 3. Aislar los datos del usuario mediante delimitadores semánticos XML (`<solicitud>{texto}</solicitud>`).
 
 #### Justificación
-1. **Mitigación de Alucinaciones:** Evaluación comparativa en [docs/05-prompts.md](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/docs/05-prompts.md) demostró 100% de precisión y cero invenciones en la versión 3.
+1. **Mitigación de Alucinaciones:** Evaluación comparativa en [docs/05-prompts.md](../docs/05-prompts.md) demostró 100% de precisión y cero invenciones en la versión 3.
 2. **Protección contra Inyección de Prompts (OWASP LLM01):** La delimitación XML previene que instrucciones del usuario secuestren el comportamiento del sistema.
 
 #### Consecuencias

@@ -50,7 +50,7 @@ CORTE CIEGO POR TAMAÑO FIJO (INADECUADO - PRODUCE FRAGMENTO HUÉRFANO)
 ### 2.2. La Decisión de Diseño: «Una Ficha / Paso Operativo = Un Fragmento»
 Para Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Caso N.º 03), se implementó una estrategia de **fragmentación estructural guiada por jerarquía Markdown**:
 * Cada manual en `data/raw/` (`DOC-01` a `DOC-15`) posee una estructura procedural normalizada con títulos de nivel 1 (`#`), secciones de nivel 2 (`##`) y pasos de diagnóstico de nivel 3 (`### Paso X: ...`).
-* El script [`scripts/ingest.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/scripts/ingest.py) utiliza una expresión regular de corte:
+* El script [`scripts/ingest.py`](../scripts/ingest.py) utiliza una expresión regular de corte:
   ```python
   patron_secciones = re.compile(r"^(#{2,3}\s+.*)$", re.MULTILINE)
   ```
@@ -64,7 +64,7 @@ Para Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME (Ca
 
 ## 3. Justificación del Tamaño de Fragmento (Chunk Size)
 
-El tamaño de cada fragmento fue calibrado empíricamente en [`scripts/ingest.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/scripts/ingest.py) atendiendo a tres factores determinantes:
+El tamaño de cada fragmento fue calibrado empíricamente en [`scripts/ingest.py`](../scripts/ingest.py) atendiendo a tres factores determinantes:
 
 | Factor de Calibración | Especificación en Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME | Justificación de Ingeniería de Software |
 | :--- | :--- | :--- |
@@ -93,7 +93,7 @@ En **Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME**, 
 3. **Eficiencia en Memoria y Consumo de Tokens:** Eliminar duplicaciones reduce en un 25% el índice vectorial en disco y ahorra tokens de entrada en la llamada al LLM.
 
 ### 4.2. La Alternativa Superior: «Solapamiento Contextual en Cabecera»
-En lugar de solapar el texto de cola del fragmento anterior, [`scripts/ingest.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/scripts/ingest.py) aplica una técnica de **solapamiento contextual dirigido**:
+En lugar de solapar el texto de cola del fragmento anterior, [`scripts/ingest.py`](../scripts/ingest.py) aplica una técnica de **solapamiento contextual dirigido**:
 * La metadata estructural (`DOC-ID`, título del manual y sección) se repite como prefijo en cada fragmento.
 * Se inyecta una lista controlada de términos clave de dominio (`PALABRAS_CLAVE_DOMINIO`) que cubre las distintas formas cotidianas con las que los colaboradores de la PYME describen el problema.
 
@@ -115,7 +115,7 @@ En el Seminario de Titulación UNIANDES, cada familia de problemas demanda una e
 
 ## 6. Esquema de Metadatos Obligatorios y Pre-filtrado Determinista
 
-La búsqueda semántica mediante embeddings resuelve la equivalencia de significados pero es **ciega ante restricciones duras del negocio**. Por ello, el pipeline de [`scripts/ingest.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/scripts/ingest.py) y [`app/services/rag.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/rag.py) asocia y valida estrictamente 4 metadatos obligatorios en cada fragmento:
+La búsqueda semántica mediante embeddings resuelve la equivalencia de significados pero es **ciega ante restricciones duras del negocio**. Por ello, el pipeline de [`scripts/ingest.py`](../scripts/ingest.py) y [`app/services/rag.py`](../app/services/rag.py) asocia y valida estrictamente 4 metadatos obligatorios en cada fragmento:
 
 ```json
 {
@@ -130,7 +130,7 @@ La búsqueda semántica mediante embeddings resuelve la equivalencia de signific
 ```
 
 ### Funcionalidad de los Metadatos en el Sistema:
-1. **`documento` y `sección`:** Constituyen la base determinista para construir la cita requerida por el esquema Pydantic [`DiagnosticoRAG`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/schemas.py).
+1. **`documento` y `sección`:** Constituyen la base determinista para construir la cita requerida por el esquema Pydantic [`DiagnosticoRAG`](../app/schemas.py).
 2. **`vigencia`:** Resuelve el **Límite 3 del Mapa Vectorial** (documentos derogados u obsoletos). Antes de calcular el coseno, el sistema ejecuta:
    ```python
    collection.query(..., where={"vigente": {"$ne": "obsoleto"}})
@@ -152,7 +152,7 @@ El motor de recuperación RAG y la base de conocimiento alimentan directamente e
 
 ## 7. Resultados de Calidad y Validación Empírica
 
-La estrategia de fragmentación adoptada fue validada de extremo a extremo mediante el evaluador continuo [`eval/evaluar.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/eval/evaluar.py) y el conjunto de prueba formal de 20 preguntas y casos en [`eval/casos_flujo.jsonl`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/eval/casos_flujo.jsonl):
+La estrategia de fragmentación adoptada fue validada de extremo a extremo mediante el evaluador continuo [`eval/evaluar.py`](../eval/evaluar.py) y el conjunto de prueba formal de 20 preguntas y casos en [`eval/casos_flujo.jsonl`](../eval/casos_flujo.jsonl):
 
 ```
 ========================================================================
@@ -177,4 +177,4 @@ El equipo del Grupo 3 responde con base en las evidencias del proyecto:
 1. **Precisión de Cita:** Una mesa de ayuda de soporte técnico corporativo no puede entregar pasos truncados ni atribuir instrucciones de un procedimiento a otro sistema. La fragmentación por sección respeta la frontera natural del conocimiento técnico.
 2. **Cero Fragmentos Huérfanos:** Cada uno de los 120 fragmentos posee su identificador canónico (`DOC-XX`) y su URL de procedencia inyectados de forma inmutable.
 3. **Optimización de Tokens y Costo Cero:** La ausencia de solapamiento ciego evita duplicar fragmentos en el Top-5 y reduce la latencia de inferencia en Gemini 1.5 Flash y Groq Llama 3.3.
-4. **Cumplimiento de la Rúbrica:** Garantiza el 100% de cumplimiento del archivo `docs/06-rag.md` y la reproducibilidad total de la ingesta en [`scripts/ingest.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/scripts/ingest.py).
+4. **Cumplimiento de la Rúbrica:** Garantiza el 100% de cumplimiento del archivo `docs/06-rag.md` y la reproducibilidad total de la ingesta en [`scripts/ingest.py`](../scripts/ingest.py).

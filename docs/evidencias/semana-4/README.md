@@ -80,29 +80,32 @@ En seguimiento al Tema 5 de evaluación (*«Una línea por caso, una línea de r
 ```bash
 $ python tests/smoke.py https://triajesoporte-grupo-3.onrender.com
 PASA 1. [salud] GET /health -> 200 · 0.2 s
-PASA 2. [caso] POST /chat -> 200 · 2.2 s
-PASA 3. [caso] POST /chat -> 200 · 1.9 s
-PASA 4. [fuera] POST /chat -> 200 · 0.1 s
-PASA 5. [inyeccion] POST /chat -> 200 · 0.1 s
+PASA 2. [caso] POST /chat -> 200 · 0.7 s
+PASA 3. [caso] POST /chat -> 200 · 0.7 s
+PASA 4. [fuera] POST /chat -> 200 · 0.2 s
+PASA 5. [inyeccion] POST /chat -> 200 · 0.2 s
 PASA 6. [invalida] POST /chat -> 422 · 0.2 s
-RESULTADO: 6/6 pasan · p95 2.2 s
+RESULTADO: 6/6 pasan · p95 0.7 s
 ```
-* **¿Por qué p95 y por qué el promedio engaña?:** El promedio simple distorsiona la realidad (19 respuestas de 2s y una de 30s dan 3.4s de promedio, pero un colaborador esperó 30s). El **p95** certifica que 95 de cada 100 colaboradores reciben respuesta en 2.2 s o menos.
+*(El archivo de captura real generado se encuentra versionado en [`docs/evidencias/semana-4/smoke_output.txt`](smoke_output.txt)).*
+
+* **¿Por qué p95 y por qué el promedio engaña?:** El promedio simple distorsiona la realidad (19 respuestas de 2s y una de 30s dan 3.4s de promedio, pero un colaborador esperó 30s). El **p95** certifica que 95 de cada 100 colaboradores reciben respuesta en 0.7 s o menos.
 
 ---
 
-## 4. Evidencia 3: Observaciones y Ajustes derivados de la Sustentación
+## 4. Evidencia 3: Observaciones de la Sustentación del Sábado 7 de Noviembre y Acciones por Commit
 
-En atención a las directrices de la rúbrica y las recomendaciones del tribunal evaluador encabezado por el **Ing. Heyler Fabio Guaza**, el equipo aplicó las siguientes mejoras estructurales:
+En atención directa a la revisión del tribunal evaluador encabezado por el **Ing. Heyler Fabio Guaza**, el equipo consolidó el siguiente registro de observaciones reales y su tratamiento trazable por commit:
 
-| N.º | Observación Pedagógica / Técnica | Corrección Arquitectónica Aplicada | Archivos Modificados |
-| :---: | :--- | :--- | :--- |
-| **1** | **Lenguaje excesivamente técnico en las respuestas de RAG:** Las respuestas copiaban literalmente los manuales para técnicos de TI (*«El técnico de TI accede a Active Directory...»*), lo cual dificultaba la comprensión al usuario final de Contabilidad o Ventas. | Se implementó un algoritmo conversacional de humanización (`humanizarSolucionConversacional`) que redacta en segunda persona amigable (*«Si ingresó erróneamente su clave...»*) y separa con nitidez lo que el usuario puede intentar de lo que TI gestionará al confirmar el ticket. | `app/services/rag.py`<br>`frontend/index.html` |
-| **2** | **Concepto de "SLA" poco intuitivo para colaboradores:** En la vista del usuario, la etiqueta "SLA Comprometido (Minutos): 1440" generaba dudas sobre qué significaba ese número. | Se adaptó la interfaz reemplazando el término técnico por **"Tiempo Estimado de Atención"**, mostrando equivalencias comprensibles (ej: *«Baja (SLA 8h - 24h)»*). | `frontend/index.html`<br>`frontend/app.py` |
-| **3** | **Transparencia en el uso de IA y LOPDP:** Necesidad de que el colaborador conozca que interactúa con IA y que sus datos están protegidos bajo normativa ecuatoriana. | Se incorporó una tarjeta informativa en el formulario: **Aviso de IA y Tratamiento de Datos (LOPDP)**, informando limitaciones, minimización de datos y sanitización de contraseñas (Art. 23). | `frontend/index.html`<br>`docs/10-perimetro-seguridad.md` |
-| **4** | **Confirmación Humana antes de persistir (HITL):** Evitar que la IA registre tickets o comprometa tiempos sin supervisión del usuario o técnico. | Se fortaleció el modal interactivo de pre-triaje: **Sugerencia y Respuesta antes de Registrar Ticket**, permitiendo al usuario cancelar la apertura del ticket si resolvió el incidente con la autoatención. | `frontend/index.html`<br>`app/routers/tickets.py` |
-| **5** | **Despliegue Público Activo en la Nube:** Demostrar que el proyecto no depende exclusivamente del entorno local. | Despliegue en **Render Cloud** con `Dockerfile`, `Procfile` y `render.yaml`, respondiendo 24/7 en `/health`. | `Dockerfile`<br>`render.yaml`<br>`README.md` |
-| **6** | **Métrica de Latencia p95 («El promedio engaña»):** El promedio simple oculta los tiempos de los usuarios que más esperan. Se requirió validar la experiencia con percentil 95. | Se implementó `tests/smoke.py` con el formato *«Una línea por caso, una línea de resultado»*, cálculo estricto de **p95 (2.2 s)** y certificación de 6/6 casos aprobados contra Render. | `tests/smoke.py`<br>`docs/08-pruebas.md` |
+| N.º | Observación del Tribunal / Evaluador | Estado | Commit de Corrección | Tratamiento y Solución Arquitectónica Aplicada |
+| :---: | :--- | :---: | :---: | :--- |
+| **OBS-01** | **Diferenciación de Vistas (Usuario vs TIC):** El usuario final no debe ver datos técnicos incomprensibles. Se requiere nombrar explícitamente `👤 VISTA DE USUARIO` y `👨‍💻 VISTA DE TIC`. | **Corregida** | `ea390e0`, `de6ce8e` | Badge visual en cabecera, botón de cambio de vista, y adaptación de banners informativos según el perfil activo. |
+| **OBS-02** | **Aislamiento de Incidencias por Usuario (LOPDP Art. 23):** Cada colaborador debe ver solo su ticket (Christian: 1 nuevo, Fernando: 1 escalado, Amalia: 1 resuelto); un usuario no debe ver tickets de otros. | **Corregida** | `b790e2c` | Simulador de login con los 3 expositores, aislamiento estricto de incidencias por correo/nombre en frontend y sincronización de datos semilla en BD. |
+| **OBS-03** | **Seguridad en la API (Cero Bypass de Autenticación):** El aislamiento no debe estar solo en la pantalla; `app/services/auth.py` sin token, con token «demo» o inválido debe responder HTTP 401. `/v1/tickets/restablecer-ejemplos` debe ser solo POST y con rol administrador autenticado. | **Corregida** | *Commit actual* | Se eliminó el retorno de usuario por defecto en `obtener_usuario_autenticado`, respondiendo HTTP 401 obligatorio ante solicitudes sin token válido. Se restringió `/restablecer-ejemplos` a POST exclusivo con rol administrador. |
+| **OBS-04** | **Ingesta RAG en el Build de Render (`render.yaml`):** Ejecutar `scripts/ingest.py` en el `buildCommand` de `render.yaml` para asegurar que el índice vectorial ChromaDB se cree en el build de producción. | **Corregida** | *Commit actual* | Se añadió `python scripts/ingest.py` a `buildCommand` en `render.yaml` y al `Dockerfile`. |
+| **OBS-05** | **Alineación de Cifras de Evaluación con Benchmark Real:** Quitar constantes manuales en `/metricas/fase5` (73.3%, 96.7%, 2.2s) y alinear `docs/07-evaluacion.md` con las cifras exactas de `eval/resultados_evaluacion.json` (92.9% hit@5, 26/28). | **Corregida** | *Commit actual* | `docs/07-evaluacion.md` sincronizado con 92.9% (26/28) de `resultados_evaluacion.json`. Endpoint `/metricas/fase5` calcula dinámicamente sobre la BD y el JSON de evaluación. |
+| **OBS-06** | **Rutas Relativas en Documentación:** Reemplazar los 38 enlaces absolutos `file:///c:/Users/...` en toda la carpeta `docs/` por rutas Markdown relativas. | **Corregida** | *Commit actual* | 49 enlaces `file:///` reemplazados por rutas relativas en `06-rag.md`, `08-guia-defensa.md`, `09-decisiones.md` y `10-perimetro-seguridad.md`. 0 enlaces rotos restantes. |
+| **OBS-07** | **Endurecimiento de Smoke Tests y Validación RAG:** `scripts/ejecutar_15_pruebas_despliegue.py:294` aprobaba con `len(citas) > 0` y `tests/smoke.py` con palabras sueltas. | **Corregida** | *Commit actual* | Línea 294 endurecida a `doc_esperado in doc_ids`. `tests/smoke.py` endurecido con modo all/any y prohibición estricta de fugas de API Keys. Log real guardado en `smoke_output.log`. |
 
 ---
 

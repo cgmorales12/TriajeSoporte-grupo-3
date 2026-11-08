@@ -113,29 +113,40 @@ def verificar_token_sesion(token: str) -> Optional[Dict[str, Any]]:
 def obtener_usuario_autenticado(authorization: Optional[str] = Header(None)) -> Dict[str, Any]:
     """
     Dependencia FastAPI que intercepta el encabezado Authorization: Bearer <token>.
-    En modo abierto para demostración y evaluación de la defensa (sin fricción de login),
-    permite acceso directo con perfil de Soporte TIC si no se envía encabezado o se usa token demo.
+    Exige autenticación estricta en la API (Cero bypass de seguridad):
+    - Sin token -> HTTP 401 Unauthorized
+    - Token «demo», «demo-token», «token-demo» -> HTTP 401 Unauthorized
+    - Token con firma inválida o expirado -> HTTP 401 Unauthorized
     """
-    usuario_defecto = {
-        "sub": "1",
-        "usuario": "soporte.tic@pyme.local",
-        "nombre_completo": "Personal de Soporte TIC",
-        "rol": "administrador"
-    }
-    
     if not authorization:
-        return usuario_defecto
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="No autorizado: se requiere encabezado Authorization con Bearer token de personal TIC",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
     
-    partes = authorization.split(" ")
+    partes = authorization.strip().split(" ")
     if len(partes) != 2 or partes[0].lower() != "bearer":
-        return usuario_defecto
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Formato de autorización no válido. Formato esperado: Bearer <token>",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
     
-    token = partes[1]
-    if token in ("demo-token", "demo-token-tic", "token-demo"):
-        return usuario_defecto
+    token = partes[1].strip()
+    if token in ("demo", "demo-token", "demo-token-tic", "token-demo"):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token demo no permitido. Debe autenticarse formalmente en /v1/auth/login",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
         
     payload = verificar_token_sesion(token)
     if not payload:
-        return usuario_defecto
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token JWT inválido o expirado. Inicie sesión nuevamente en /v1/auth/login",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
     
     return payload

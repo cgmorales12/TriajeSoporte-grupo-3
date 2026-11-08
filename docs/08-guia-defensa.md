@@ -116,13 +116,13 @@ Para maximizar el impacto ante el jurado calificador, la sustentación sigue un 
 
 ### Pregunta 1: *«¿Por qué no le pidieron al LLM que calcule directamente la prioridad y el tiempo SLA de resolución?»*
 * **Respuesta:** *«Porque los Modelos de Lenguaje son sistemas estocásticos y probabilísticos, no motores de cálculo determinista. En la gestión de servicios ITIL v4 y en acuerdos de nivel de servicio (SLA), los tiempos de respuesta tienen consecuencias contractuales y financieras que no pueden depender de la temperatura o del muestreo probabilístico de un modelo. En nuestro sistema aplicamos la regla fundacional: 'El modelo propone, el código dispone'. El LLM únicamente extrae el Impacto y la Urgencia cualitativa desde el lenguaje natural del reporte; luego, nuestra función determinista en Python lee la matriz oficial en `config/matriz_prioridad.json` y calcula la prioridad matemática y los minutos de SLA. De este modo garantizamos cero alucinaciones, 100% de reproducibilidad y cero costo de tokens.»*
-* **Archivos de respaldo:** [`app/tools/priorizar.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/tools/priorizar.py) y [`config/matriz_prioridad.json`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/config/matriz_prioridad.json).
+* **Archivos de respaldo:** [`app/tools/priorizar.py`](../app/tools/priorizar.py) y [`config/matriz_prioridad.json`](../config/matriz_prioridad.json).
 
 ---
 
 ### Pregunta 2: *«¿Qué ocurre si durante la operación en vivo la API de Google Gemini se cae (HTTP 503) o se satura la cuota (HTTP 429)?»*
 * **Respuesta:** *«Diseñamos un Gateway de Resiliencia multinivel en `ClienteLLM`. Ante un error HTTP 429, el cliente ejecuta un ciclo de hasta 3 reintentos gobernados por Exponential Backoff ($0.5s \times 2^{\text{intento}}$). Si la saturación persiste o la llamada excede el timeout estricto de 12 segundos, el sistema conmuta automáticamente en menos de 500 ms al modelo secundario Llama 3.3 70B en Groq Cloud. Si el entorno carece de conexión a internet, se activa un tercer nivel de contingencia: nuestro motor heurístico local offline. Además, cumplimos con el principio de transparencia: el payload y la interfaz web encienden un distintivo naranja informando al operador que la solicitud fue atendida por el modelo de respaldo y registrando el motivo exacto del fallo.»*
-* **Archivos de respaldo:** [`app/services/llm.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py) y [`docs/09-decisiones/ADR-003-failover-gemini-groq.md`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/docs/09-decisiones/ADR-003-failover-gemini-groq.md).
+* **Archivos de respaldo:** [`app/services/llm.py`](../app/services/llm.py) y [`docs/09-decisiones/ADR-003-failover-gemini-groq.md`](../docs/09-decisiones/ADR-003-failover-gemini-groq.md).
 
 ---
 
@@ -131,7 +131,7 @@ Para maximizar el impacto ante el jurado calificador, la sustentación sigue un 
   1. **Anonimización previa de credenciales (Art. 23 LOPDP):** Mediante expresiones regulares en la capa de entrada del backend, cualquier contraseña ingresada accidentalmente por el usuario es interceptada y sustituida por `[CONFIDENCIAL_REMOVIDO]` antes de enviar los datos al LLM o guardarlos en SQLite.  
   2. **Minimización de datos (Art. 10 LOPDP):** Solo se capturan los identificadores estrictamente necesarios para el triaje técnico (nombre, correo corporativo y departamento).  
   3. **Filtro de Contrato con `response_model` en FastAPI:** Evita la fuga de PII, system prompts, rutas internas o tracebacks hacia el cliente (OWASP LLM02).»*
-* **Archivos de respaldo:** [`app/routers/principal.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/routers/principal.py) y [`app/services/llm.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py).
+* **Archivos de respaldo:** [`app/routers/principal.py`](../app/routers/principal.py) y [`app/services/llm.py`](../app/services/llm.py).
 
 ---
 
@@ -141,37 +141,37 @@ Para maximizar el impacto ante el jurado calificador, la sustentación sigue un 
   2. **Esquemas Pydantic V2 cerrados:** La configuración `model_config = ConfigDict(extra="forbid")` rechaza de inmediato cualquier payload que intente inyectar atributos espurios.  
   3. **Directiva de abstención en Prompt v3:** Instruye al modelo a rechazar instrucciones que contradigan su rol de mesa de ayuda y activar `requiere_revision_humana: true`.  
   4. **Lógica determinista:** La decisión de prioridad y escalamiento presencial la decide el código Python evaluando reglas de negocio, nunca la prosa generada por el LLM.»*
-* **Archivos de respaldo:** [`app/prompts/sistema_v3.txt`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/prompts/sistema_v3.txt) y [`docs/05-prompts.md`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/docs/05-prompts.md).
+* **Archivos de respaldo:** [`app/prompts/sistema_v3.txt`](../app/prompts/sistema_v3.txt) y [`docs/05-prompts.md`](../docs/05-prompts.md).
 
 ---
 
 ### Pregunta 5: *«¿Por qué dicen que el cliente del modelo está encapsulado y cómo demuestran que cambiar de proveedor no toca los endpoints?»*
 * **Respuesta:** *«Aplicamos el patrón Gateway / Strategy en `ClienteLLM`. Los controladores HTTP en FastAPI (`app/routers/principal.py`) no importan los SDKs de Google ni de Groq; únicamente consumen métodos de alto nivel: `cliente_llm.clasificar()`, `cliente_llm.chat_stream()` y `cliente_llm.analizar()`. Podemos cambiar de proveedor en tiempo de ejecución (`cliente_llm.cambiar_proveedor('groq')`) o modificando la variable `PROVEEDOR_LLM_ACTIVO` en `.env`, y los endpoints continúan recibiendo y emitiendo los mismos contratos tipados Pydantic V2 (`TicketOut`, `ResultadoAnalizarOut`). Ninguna línea de los controladores se modifica.»*
-* **Archivos de respaldo:** [`app/services/llm.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py).
+* **Archivos de respaldo:** [`app/services/llm.py`](../app/services/llm.py).
 
 ---
 
 ### Pregunta 6: *«¿Cómo probaron los endpoints con `pytest` sin gastar saldo de API ni depender de conexión a internet?»*
 * **Respuesta:** *«Construimos una suite de **82 pruebas unitarias automatizadas** en `tests/` utilizando dobles de prueba (`monkeypatch`). Interceptamos las funciones del cliente LLM para retornar respuestas predecibles e instantáneas que validan todo el perímetro de backend (esquemas Pydantic, cálculo ITIL, citas RAG y persistencia SQLite) en tan solo 60 segundos con $0.00 USD de gasto. Incluso implementamos la prueba `test_mock_garantia_cero_consumo_api_y_cero_red` que borra las API keys del entorno y demuestra que el sistema aprueba 100% desconectado de internet.»*
-* **Archivos de respaldo:** [`tests/test_endpoints.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/tests/test_endpoints.py) y [`tests/test_herramientas_agente.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/tests/test_herramientas_agente.py).
+* **Archivos de respaldo:** [`tests/test_endpoints.py`](../tests/test_endpoints.py) y [`tests/test_herramientas_agente.py`](../tests/test_herramientas_agente.py).
 
 ---
 
 ### Pregunta 7: *«¿Cómo miden y controlan los costos de inferencia y la latencia del sistema (FinOps)?»*
 * **Respuesta:** *«Implementamos un middleware de observabilidad en `app/main.py`. Por cada solicitud de inferencia se miden con `time.perf_counter()` la duración exacta en milisegundos y se contabilizan los tokens de entrada (prompt), tokens de salida (completado) y tokens totales. Estos datos se inyectan en los encabezados HTTP (`X-Response-Time-Ms`, `X-Request-ID`), se escriben en logs estructurados con formato JSON y se exponen en el endpoint de telemetría `GET /v1/metricas/solicitudes`, permitiendo a los supervisores auditar promedios, máximos y costos proyectados en tiempo real.»*
-* **Archivos de respaldo:** [`app/main.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/main.py).
+* **Archivos de respaldo:** [`app/main.py`](../app/main.py).
 
 ---
 
 ### Pregunta 8: *«¿Por qué la interfaz principal es un Tablero Kanban y no un chat abierto?»*
 * **Respuesta:** *«Porque en la ingeniería de soporte técnico y gestión ITIL, los incidentes no son conversaciones de ocio; son **órdenes de trabajo con estados, responsables y tiempos máximos de atención (SLA)**. Un chat abierto oculta las averías pendientes y no permite balancear la carga de trabajo del técnico de TI. El tablero Kanban permite visualizar en tiempo real qué tickets están nuevos, cuáles están en autoatención y cuáles requieren soporte presencial en el puesto de trabajo. Para asistencia interactiva complementaria, disponemos del endpoint `POST /chat` con Streaming token a token.»*
-* **Archivos de respaldo:** [`frontend/index.html`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/frontend/index.html) y [`docs/01-propuesta.md`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/docs/01-propuesta.md).
+* **Archivos de respaldo:** [`frontend/index.html`](../frontend/index.html) y [`docs/01-propuesta.md`](../docs/01-propuesta.md).
 
 ---
 
 ### Pregunta 9: *«¿Por qué el endpoint `/health` nunca debe invocar al modelo LLM?»*
 * **Respuesta:** *«Porque `/health` es una sonda de vitalidad operacional (liveness probe). Su único propósito es verificar si el servidor web, el runtime de Python y el microcontenedor están activos («estoy viva»). Si `/health` realizara una llamada a Google Gemini o Groq y la API externa sufriera latencia, timeout, cuota 429 o una caída temporal 503, la plataforma de orquestación en la nube (Render, Cloud Run, Kubernetes) asumiría erróneamente que la aplicación entera colapsó y reiniciaría en bucle el contenedor, destruyendo la disponibilidad del servicio. Además, invocar al modelo en `/health` provocaría un consumo continuo e innecesario de tokens. En nuestra arquitectura, `/health` nunca invoca al LLM y responde inmediatamente en milisegundos con `{"status": "ok"}`.»*
-* **Archivos de respaldo:** [`app/routers/salud.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/routers/salud.py) y [`app/main.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/main.py).
+* **Archivos de respaldo:** [`app/routers/salud.py`](../app/routers/salud.py) y [`app/main.py`](../app/main.py).
 
 ---
 
@@ -180,7 +180,7 @@ Para maximizar el impacto ante el jurado calificador, la sustentación sigue un 
   1. **Datos de solo lectura:** El índice vectorial de ChromaDB (`data/chroma/`), los 15 manuales técnicos (`data/raw/`) y la configuración ITIL (`config/`) se empaquetan dentro de la imagen Docker en el build (`COPY . .`), garantizando que la aplicación esté lista para resolver consultas desde el primer segundo.  
   2. **Datos transaccionales efímeros del MVP:** La base SQLite (`data/triaje_soporte.db`) corre en disco local con réplica única (`replicas: 1`), aceptando su reinicio limpio para garantizar costo cero y latencia menor a 1ms. Además, al arrancar, el ciclo lifespan siembra automáticamente los 20 tickets oficiales de demostración (5 por columna del Kanban) a partir de `app/datos_semilla.py`.  
   **Si desplegáramos dos copias (réplicas concurrentes) cada una con su propio SQLite:** El usuario experimentaría **inconsistencia de datos (Split-Brain / Estado Fragmentado)**. Si un colaborador crea un ticket en la Réplica A y al recargar la página el balanceador lo envía a la Réplica B, el ticket no aparecerá porque la base de B es un archivo local independiente. Por ello, la evolución a producción multi-instancia horizontal exige desacoplar SQLite hacia una base de datos externa gestionada (PostgreSQL / Supabase) o volumen persistente compartido, decisión formalmente documentada en el ADR-004.»*
-* **Archivos de respaldo:** [`docs/09-decisiones/ADR-004-sqlite-persistencia-local.md`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/docs/09-decisiones/ADR-004-sqlite-persistencia-local.md), [`Dockerfile`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/Dockerfile) y [`app/database.py`](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/database.py).
+* **Archivos de respaldo:** [`docs/09-decisiones/ADR-004-sqlite-persistencia-local.md`](../docs/09-decisiones/ADR-004-sqlite-persistencia-local.md), [`Dockerfile`](../Dockerfile) y [`app/database.py`](../app/database.py).
 
 ---
 
@@ -188,18 +188,18 @@ Para maximizar el impacto ante el jurado calificador, la sustentación sigue un 
 
 | Concepto Evaluado por el Tribunal | Archivo Principal de Implementación | Justificación Técnica Breve |
 |---|---|---|
-| **Modelo C4 (Niveles 1 al 4)** | [docs/03-arquitectura.md](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/docs/03-arquitectura.md) | Diagramas Mermaid de Contexto, Contenedores, Componentes y Código/Secuencia. |
-| **Cliente LLM Encapsulado** | [app/services/llm.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py) | Patrón Gateway / Strategy; conmutación en caliente sin tocar controladores. |
-| **Failover Gemini $\to$ Groq** | [app/services/llm.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py) | Captura de errores 429/503/timeout y conmutación automática en <500 ms. |
-| **Priorización Determinista ITIL** | [app/tools/priorizar.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/tools/priorizar.py) | Cálculo matemático de prioridad y SLA leyendo `config/matriz_prioridad.json`. |
-| **Validación Estricta Pydantic V2** | [app/schemas.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/schemas.py) | Modelos DTO con `ConfigDict(extra="forbid")` para neutralizar OWASP LLM05. |
-| **Ciberseguridad y LOPDP (Art. 23)** | [app/services/llm.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/services/llm.py) | Anonimización previa de contraseñas por Regex (`[CONFIDENCIAL_REMOVIDO]`). |
-| **Limitador de Tasa Token Bucket** | [app/main.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/main.py) | 15 fichas por IP, recarga cada 3s y respuesta RFC 6585 con `Retry-After`. |
-| **Observabilidad y Tokens** | [app/main.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/main.py) | Registro de tokens in/out/total, latencia y endpoint `/v1/metricas/solicitudes`. |
-| **Dashboard de Métricas Fase 5** | [app/routers/principal.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/app/routers/principal.py) | Endpoint `/v1/metricas/fase5` y modal interactivo en el frontend. |
-| **Pruebas con Mocks (Cero API)** | [tests/test_endpoints.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/tests/test_endpoints.py) | 82 pruebas pasando en 60s con `monkeypatch` y $0.00 USD consumidos. |
-| **Auditoría Cero Secretos** | [scripts/auditar_cero_secretos.py](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/scripts/auditar_cero_secretos.py) | Verificación de exclusión de `.env` en Git e historial limpio de commits. |
-| **10 Decisiones de Arquitectura** | [docs/09-decisiones/](file:///c:/Users/Cris/Downloads/Programas%20APP/Seminario/APP%20IA/docs/09-decisiones/) | Registros ADR-001 al ADR-010 con contexto, decisión y consecuencias. |
+| **Modelo C4 (Niveles 1 al 4)** | [docs/03-arquitectura.md](../docs/03-arquitectura.md) | Diagramas Mermaid de Contexto, Contenedores, Componentes y Código/Secuencia. |
+| **Cliente LLM Encapsulado** | [app/services/llm.py](../app/services/llm.py) | Patrón Gateway / Strategy; conmutación en caliente sin tocar controladores. |
+| **Failover Gemini $\to$ Groq** | [app/services/llm.py](../app/services/llm.py) | Captura de errores 429/503/timeout y conmutación automática en <500 ms. |
+| **Priorización Determinista ITIL** | [app/tools/priorizar.py](../app/tools/priorizar.py) | Cálculo matemático de prioridad y SLA leyendo `config/matriz_prioridad.json`. |
+| **Validación Estricta Pydantic V2** | [app/schemas.py](../app/schemas.py) | Modelos DTO con `ConfigDict(extra="forbid")` para neutralizar OWASP LLM05. |
+| **Ciberseguridad y LOPDP (Art. 23)** | [app/services/llm.py](../app/services/llm.py) | Anonimización previa de contraseñas por Regex (`[CONFIDENCIAL_REMOVIDO]`). |
+| **Limitador de Tasa Token Bucket** | [app/main.py](../app/main.py) | 15 fichas por IP, recarga cada 3s y respuesta RFC 6585 con `Retry-After`. |
+| **Observabilidad y Tokens** | [app/main.py](../app/main.py) | Registro de tokens in/out/total, latencia y endpoint `/v1/metricas/solicitudes`. |
+| **Dashboard de Métricas Fase 5** | [app/routers/principal.py](../app/routers/principal.py) | Endpoint `/v1/metricas/fase5` y modal interactivo en el frontend. |
+| **Pruebas con Mocks (Cero API)** | [tests/test_endpoints.py](../tests/test_endpoints.py) | 82 pruebas pasando en 60s con `monkeypatch` y $0.00 USD consumidos. |
+| **Auditoría Cero Secretos** | [scripts/auditar_cero_secretos.py](../scripts/auditar_cero_secretos.py) | Verificación de exclusión de `.env` en Git e historial limpio de commits. |
+| **10 Decisiones de Arquitectura** | [docs/09-decisiones/](../docs/09-decisiones/) | Registros ADR-001 al ADR-010 con contexto, decisión y consecuencias. |
 
 ---
 

@@ -36,7 +36,14 @@ ENVIRONMENT=development
 ```
 *(Nota: Si no configura claves de API, el sistema activa automáticamente el conmutador heurístico offline para pruebas 100% funcionales sin internet).*
 
-### 2.4. Iniciar el Servidor de Backend y Frontend
+### 2.4. Ingesta Reproducible de los 15 Manuales Técnicos (RAG en ChromaDB)
+Para vectorizar el corpus oficial de 15 procedimientos técnicos de la PYME y almacenarlos en la base de datos persistente ChromaDB:
+```bash
+python scripts/ingest.py
+```
+Este proceso procesa los 15 archivos Markdown en `data/raw/`, genera los chunks con solapamiento contextual y metadatos de vigencia normativa (ISO 27002 / ITIL 4), y persiste el índice en `data/chroma/`.
+
+### 2.5. Iniciar el Servidor de Backend y Frontend
 Ejecute el servidor de desarrollo de FastAPI con Uvicorn:
 ```bash
 uvicorn app.main:app --reload --port 8000
@@ -46,7 +53,26 @@ Acceso a servicios:
 - **Tablero Kanban Web:** `http://localhost:8000/tablero`
 - **Documentación Interactiva Swagger:** `http://localhost:8000/docs`
 - **Documentación Redoc:** `http://localhost:8000/redoc`
-- **Chequeo de Salud:** `http://localhost:8000/v1/salud`
+- **Chequeo de Salud:** `http://localhost:8000/health` (y `/v1/salud`)
+
+### 2.6. Despliegue en Producción (Render Cloud y Docker)
+
+#### Opción A: Despliegue con Render Cloud (`render.yaml`)
+El repositorio incluye el manifiesto `render.yaml` con configuración de infraestructura como código (IaC):
+- **Build Command:** `pip install -r requirements.txt && python scripts/ingest.py` (ejecuta la ingesta RAG durante la compilación).
+- **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- **Health Check Path:** `/health`
+- **Auto-Deploy:** Habilitado en la rama `main`.
+
+#### Opción B: Despliegue con Docker Container (`Dockerfile`)
+Construir y ejecutar la imagen contenerizada con usuario no privilegiado (`appuser`):
+```bash
+# Construir la imagen Docker
+docker build -t triaje-soporte-pyme .
+
+# Ejecutar el contenedor exponiendo el puerto 8000
+docker run -d -p 8000:8000 --name triaje-soporte triaje-soporte-pyme
+```
 
 ---
 

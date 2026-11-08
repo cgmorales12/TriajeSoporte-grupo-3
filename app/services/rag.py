@@ -59,7 +59,7 @@ def _resolver_url_manual(doc_id: str, url_meta: Optional[str] = None) -> str:
     """Retorna la URL oficial real y resoluble en internet para el manual indicado."""
     if doc_id in URLS_REALES_MANUALES:
         return URLS_REALES_MANUALES[doc_id]
-    if url_meta and "soporte.pyme.local" not in url_meta and "soporte.pyme.local" not in url_meta:
+    if url_meta and "soporte.pyme.local" not in url_meta:
         return url_meta
     return f"https://github.com/cgmorales12/TriajeSoporte-grupo-3/blob/main/data/raw/{doc_id.lower()}.md"
 

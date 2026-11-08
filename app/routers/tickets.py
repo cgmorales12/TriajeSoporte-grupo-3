@@ -533,10 +533,21 @@ def confirmar_derivacion_cuadrilla_endpoint(ticket_id: int, payload: ConfirmarDe
     )
 
 
-@router.post("/restablecer-ejemplos", summary="Restablece los 20 tickets de demostración oficiales (5 por estado)")
-@router.get("/restablecer-ejemplos", summary="Permite restablecer también vía GET desde el navegador")
-def restablecer_ejemplos():
-    """Restablece exactamente 20 tickets didácticos (5 por columna del Kanban)."""
+@router.post(
+    "/restablecer-ejemplos",
+    summary="Restablece los 20 tickets de demostración oficiales (Solo Administrador Autenticado)",
+    status_code=status.HTTP_200_OK
+)
+def restablecer_ejemplos(usuario_tic: dict = Depends(obtener_usuario_autenticado)):
+    """
+    Restablece exactamente 20 tickets didácticos (5 por columna del Kanban).
+    Requiere autenticación formal como personal TIC con rol de administrador (Cero acceso GET anónimo).
+    """
+    if usuario_tic.get("rol") not in ("administrador", "administrador_tic"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Permiso denegado: solo personal TIC con rol de administrador puede restablecer los tickets."
+        )
     from app.database import sembrar_tickets_demo, _obtener_conexion
     conn = _obtener_conexion()
     cursor = conn.cursor()

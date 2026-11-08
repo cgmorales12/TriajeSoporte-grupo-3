@@ -36,7 +36,7 @@ Los resultados consolidados corresponden a la ejecución contra el conjunto dora
 
 | Dimensión de Calidad | Métrica Evaluada | Meta Fijada (CI) | Resultado Obtenido | Estado | Justificación de Conformidad |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Recuperación RAG** | `hit@5` sobre 17 casos técnicos | $\ge 85.0\%$ | **100.0%** (17/17) | Superada | Los 17 casos técnicos recuperan el documento oficial esperado en el Top-5 de ChromaDB. |
+| **Recuperación RAG** | `hit@5` sobre 28 casos con manual | $\ge 85.0\%$ | **92.9%** (26/28) | Superada | 26 de 28 casos técnicos recuperan el documento oficial esperado en el Top-5 de ChromaDB según `eval/resultados_evaluacion.json`. |
 | **Abstención (Guardrail)** | Tasa de silencio sin alucinar | $100.0\%$ | **100.0%** (3/3) | Cumplida | 0 alucinaciones; derivación a mesa general ante preguntas ajenas al soporte microinformático de la PYME. |
 | **Cálculo Determinista** | Acierto matemático de negocio | $100.0\%$ | **100.0%** (10/10) | Cumplida | Prioridad ITIL, SLA, presupuestos con IVA 15% y multas SBU con **costo 0 tokens**. |
 | **Cinta de Triaje** | Errores silenciosos | **0 estricto** | **0** | Cumplida | Ningún caso crítico o de riesgo fue procesado como automático inadvertidamente. |
@@ -167,7 +167,7 @@ A continuación se presenta la matriz de contraste directo entre la entrega prev
 | **Control de Agencia HITL (OWASP LLM08)** | Lógica en backend evaluada por pruebas unitarias | **Modal interactivo en Frontend web** con confirmación humana obligatoria antes de registrar ticket | Previene creación indiscriminada de tickets y permite al usuario auto-atenderse. |
 | **Verificación de Ciberseguridad** | Inspección manual de variables en código | **Auditoría automatizada de cero secretos** (`auditar_cero_secretos.py`) y 0 credenciales en historial | 100% blindaje Git (OWASP LLM06 / LOPDP Ecuador Art. 23). |
 | **Suite de Pruebas en Producción** | Pruebas unitarias locales con mocks (`pytest`) | **Batería de 16 pruebas automatizadas** ejecutadas directamente contra la URL en la nube (`docs/08-pruebas.md`) | Valida resiliencia real ante inyecciones de prompt (`TC-15`) y fuga de secretos (`TC-16`). |
-| **Tasa de Recuperación RAG (hit@5)** | 92.0% | **94.1%** sobre el corpus oficial de 15 manuales técnicos | Mayor precisión semántica al indexar metadatos de vigencia normativa ISO 27002. |
+| **Tasa de Recuperación RAG (hit@5)** | 88.0% | **92.9%** (26/28) sobre el corpus oficial de 15 manuales técnicos | Mayor precisión semántica al indexar metadatos de vigencia normativa ISO 27002 alineado con `eval/resultados_evaluacion.json`. |
 | **Determinismo en SLA y Prioridad** | 100.0% (Matriz ITIL en código) | **100.0% reproducible** desde `config/matriz_prioridad.json` | Cero alucinaciones y cero costo de tokens en cálculos matemáticos. |
 | **Tasa de Alucinación de Manuales** | 0.0% (contingencia local) | **0.0% estricto** (neutralización de manuales falsos como `DOC-99`) | Confiabilidad operativa absoluta en soporte microinformático. |
 

@@ -449,7 +449,7 @@ def tool_buscar_solucion(params: ParamsBuscarSolucion) -> ResultadoBuscarProcedi
             paso_exacto=c.paso_exacto,
             fragmento_aplicado=c.fragmento_aplicado,
             vigencia=c.vigencia or "v3.2 - Octubre 2026",
-            url=c.url or f"https://soporte.soporte.pyme.local/manuales/{c.documento_id.lower()}",
+            url=c.url or f"https://soporte.pyme.local/manuales/{c.documento_id.lower()}",
             requiere_cuadrilla_fisica=diag.requiere_visita_campo,
             solucion_propuesta=diag.solucion_propuesta,
             citas=citas_dicts
@@ -931,16 +931,28 @@ class AgenteTriajeTecnico:
                 getattr(params_validados, "confirmado", False)
             )
             if not confirmado:
-                # Si es la herramienta escalar, escalar_cuadrilla_presencial o derivar_a_tecnico sin confirmación
                 if nombre_tool in ["escalar", "escalar_cuadrilla_presencial", "derivar_a_tecnico"]:
                     msg_hitl = (
                         f"BLOQUEO HUMAN-IN-THE-LOOP (HITL): La herramienta '{nombre_tool}' requiere "
                         f"confirmación humana explícita antes de despachar o derivar (config/parametros.yaml)."
                     )
                     logger.info(msg_hitl)
-                    # La herramienta escalar retorna su resultado de pausa controlada
                     resultado_obj = funcion_fn(params_validados)  # type: ignore[call-arg]
                     return True, resultado_obj.model_dump(), msg_hitl
+                elif nombre_tool in ["crear_ticket", "registrar_ticket_kanban"]:
+                    msg_hitl = (
+                        f"BLOQUEO HUMAN-IN-THE-LOOP (HITL): La herramienta '{nombre_tool}' requiere "
+                        f"confirmación humana explícita antes de persistir el ticket en SQLite (OWASP LLM08 / config/parametros.yaml)."
+                    )
+                    logger.info(msg_hitl)
+                    return True, {
+                        "ticket_id": 0,
+                        "ticket_codigo": "PENDIENTE_HITL",
+                        "estado": "pendiente_aprobacion_humana",
+                        "registrado": False,
+                        "requiere_confirmacion_humana": True,
+                        "mensaje": msg_hitl
+                    }, msg_hitl
 
         # 4. Ejecución Determinista
         try:
@@ -963,6 +975,10 @@ class AgenteTriajeTecnico:
             from app.services.llm import cliente_llm
             key_gemini = os.environ.get("GEMINI_API_KEY") or getattr(cliente_llm, "gemini_api_key", None)
             key_groq = os.environ.get("GROQ_API_KEY") or getattr(cliente_llm, "groq_api_key", None)
+
+            # En suite de pruebas automatizadas (pytest), derivar a evaluación determinista (Regla AGENTS.md: Mocks / Cero API)
+            if os.environ.get("PYTEST_CURRENT_TEST"):
+                return None
 
             # Si no hay claves reales configuradas en entorno, derivar al evaluador cognitivo de estado
             if not key_gemini and not key_groq:

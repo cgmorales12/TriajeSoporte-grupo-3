@@ -76,13 +76,15 @@ En estricto seguimiento a las directrices de evaluación del **Tema 5 (Pruebas F
 ```bash
 $ python tests/smoke.py https://triajesoporte-grupo-3.onrender.com
 PASA 1. [salud] GET /health -> 200 · 0.2 s
-PASA 2. [caso] POST /chat -> 200 · 2.2 s
-PASA 3. [caso] POST /chat -> 200 · 1.9 s
-PASA 4. [fuera] POST /chat -> 200 · 0.1 s
-PASA 5. [inyeccion] POST /chat -> 200 · 0.1 s
+PASA 2. [caso] POST /chat -> 200 · 0.7 s
+PASA 3. [caso] POST /chat -> 200 · 0.7 s
+PASA 4. [fuera] POST /chat -> 200 · 0.2 s
+PASA 5. [inyeccion] POST /chat -> 200 · 0.2 s
 PASA 6. [invalida] POST /chat -> 422 · 0.2 s
-RESULTADO: 6/6 pasan · p95 2.2 s
+RESULTADO: 6/6 pasan · p95 0.7 s
 ```
+
+*(El registro verbatim de salida se encuentra almacenado como evidencia formal en [`docs/evidencias/semana-4/smoke_output.txt`](evidencias/semana-4/smoke_output.txt)).*
 
 ### 4.1. Fundamentación Técnica: ¿Por qué p95 y por qué «el promedio engaña»?
 * **Definición de p95:** El **Percentil 95 (p95)** indica que **95 de cada 100 respuestas tardan ese valor o menos**. Es la métrica estándar en ingeniería de confiabilidad (SRE / ITIL) porque analiza la experiencia real de los usuarios en los percentiles extremos.

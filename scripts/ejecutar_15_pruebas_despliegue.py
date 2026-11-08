@@ -291,7 +291,7 @@ def ejecutar_suite():
                 citas = data.get("citas", [])
                 doc_esperado = c.get("doc_esperado")
                 doc_ids = [ct.get("documento_id") for ct in citas]
-                pasa = status_code == 201 and (doc_esperado in doc_ids or len(citas) > 0)
+                pasa = (status_code == 201) and (doc_esperado in doc_ids)
                 doc_hallado = doc_ids[0] if doc_ids else "Ninguno"
                 detalle = f"HTTP {status_code} · Doc: {doc_hallado} (Esperado: {doc_esperado}) · Prioridad: {data.get('prioridad')} · SLA: {data.get('sla_minutos')}m"
             

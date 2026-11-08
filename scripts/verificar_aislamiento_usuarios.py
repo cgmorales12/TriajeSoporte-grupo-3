@@ -33,3 +33,4 @@ for uId, u in USUARIOS.items():
     for f in filtrados:
         print(f'   [{f["estado"]}] {f["ticket_codigo"]} - {f["nombre_cliente"]} ({f["email_cliente"]})')
 print('=== VERIFICACION EXITOSA ===')
+
