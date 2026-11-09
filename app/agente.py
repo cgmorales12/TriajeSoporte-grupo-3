@@ -976,7 +976,7 @@ class AgenteTriajeTecnico:
             key_gemini = os.environ.get("GEMINI_API_KEY") or getattr(cliente_llm, "gemini_api_key", None)
             key_groq = os.environ.get("GROQ_API_KEY") or getattr(cliente_llm, "groq_api_key", None)
 
-            # En suite de pruebas automatizadas (pytest), derivar a evaluación determinista (Regla AGENTS.md: Mocks / Cero API)
+            # En suite de pruebas automatizadas (pytest), derivar a evaluación determinista (Políticas de Pruebas: Mocks / Cero API)
             if os.environ.get("PYTEST_CURRENT_TEST"):
                 return None
 

@@ -244,6 +244,9 @@ logs/
 
 # Material de estudio privado, clases y guia de defensa (No subir a GitHub)
 material_estudio/
+AGENTS.md
+*.doc
+*.docx
 
 
 # Archivos comprimidos de entrega
