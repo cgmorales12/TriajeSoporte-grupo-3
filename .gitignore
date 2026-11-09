@@ -245,3 +245,6 @@ logs/
 # Material de estudio privado, clases y guia de defensa (No subir a GitHub)
 material_estudio/
 
+
+# Archivos comprimidos de entrega
+*.zip
