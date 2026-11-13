@@ -4520,8 +4520,23 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 : '';
             const docNorm = docId.toUpperCase();
 
+            // Si es una solicitud fuera de alcance, consulta no técnica o abstención por falta de procedimiento:
+            const categoria = (propuesta && propuesta.categoria_propuesta) ? propuesta.categoria_propuesta.toLowerCase() : '';
+            const esFueraDeAlcance = categoria.includes('fuera de alcance') ||
+                                     categoria.includes('no técnica') ||
+                                     categoria.includes('no tecnica') ||
+                                     txt.toLowerCase().includes('no dispongo de un procedimiento') ||
+                                     txt.toLowerCase().includes('no describe ninguna avería') ||
+                                     txt.toLowerCase().includes('no describe una avería');
+
+            if (esFueraDeAlcance && (!docNorm || docNorm === '')) {
+                return "Esta consulta no describe una avería técnica en computadoras, redes o programas corporativos.\n" +
+                       "1. Si su requerimiento corresponde a trámites administrativos, cafetería/comedor o talento humano, por favor canalícelo con Administración o Recursos Humanos.\n" +
+                       "2. Si experimenta inconvenientes técnicos con su equipo de trabajo, red corporativa o programas de la empresa, por favor descríbalos detalladamente.";
+            }
+
             // Si es DOC-01 o trata de bloqueo de cuenta / contraseña:
-            if (docNorm.includes('DOC-01') || txt.toLowerCase().includes('active directory') || txt.toLowerCase().includes('desbloquear la cuenta') || txt.toLowerCase().includes('ingresó erróneamente su clave')) {
+            if (docNorm.includes('DOC-01') || (docNorm === '' && (txt.toLowerCase().includes('desbloquear la cuenta') || txt.toLowerCase().includes('ingresó erróneamente su clave')))) {
                 return "Si ingresó erróneamente su clave más de 5 veces consecutivas, su cuenta se bloqueó automáticamente durante 30 minutos por directiva de seguridad.\n" +
                        "1. Si recuerda su contraseña actual, puede esperar el tiempo de seguridad o confirmar este ticket para que soporte la desbloquee de inmediato.\n" +
                        "2. Al enviar esta solicitud, nuestro equipo técnico accederá al sistema para reactivar su usuario.\n" +
@@ -4677,18 +4692,36 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 }
             }
 
-            // Limpieza y adaptación preventiva de la solución al perfil de usuario vs TIC
-            let solTexto = (propuesta.solucion_propuesta || '').trim();
-            solTexto = solTexto.split('\n')
-                .filter(l => !l.toLowerCase().startsWith('términos clave:') && !l.toLowerCase().startsWith('terminos clave:'))
-                .join('\n').trim();
+            // ── GUARDA DETERMINISTA: Fuera de Alcance / No Técnica ──────────────────
+            // Se ejecuta ANTES de cualquier humanización para evitar que el backend
+            // devuelva plantillas de TI (ej. bloqueo de contraseña) en consultas
+            // ajenas al soporte tecnológico (OWASP LLM01 · abstención institucional).
+            const _catProp = (propuesta.categoria_propuesta || '').toLowerCase();
+            const _esFueraDefinitivo = _catProp.includes('fuera de alcance') ||
+                                       _catProp.includes('no técnica') ||
+                                       _catProp.includes('no tecnica');
 
-            if (!esTIC) {
-                solTexto = humanizarSolucionConversacional(solTexto, propuesta);
-            } else if (propuesta.citas && propuesta.citas.length > 0 && propuesta.citas[0].fragmento_aplicado) {
-                solTexto = propuesta.citas[0].fragmento_aplicado;
+            if (_esFueraDefinitivo) {
+                document.getElementById('hitlRegSolucion').value =
+                    "Esta consulta no describe una avería técnica en computadoras, redes o programas corporativos.\n" +
+                    "1. Si su requerimiento corresponde a trámites administrativos, cafetería/comedor o talento humano, " +
+                    "por favor canalícelo con Administración o Recursos Humanos.\n" +
+                    "2. Si experimenta inconvenientes técnicos con su equipo de trabajo, red corporativa o programas " +
+                    "de la empresa, por favor descríbalos detalladamente para que el sistema los clasifique correctamente.";
+            } else {
+                // Limpieza y adaptación preventiva de la solución al perfil de usuario vs TIC
+                let solTexto = (propuesta.solucion_propuesta || '').trim();
+                solTexto = solTexto.split('\n')
+                    .filter(l => !l.toLowerCase().startsWith('términos clave:') && !l.toLowerCase().startsWith('terminos clave:'))
+                    .join('\n').trim();
+
+                if (!esTIC) {
+                    solTexto = humanizarSolucionConversacional(solTexto, propuesta);
+                } else if (propuesta.citas && propuesta.citas.length > 0 && propuesta.citas[0].fragmento_aplicado) {
+                    solTexto = propuesta.citas[0].fragmento_aplicado;
+                }
+                document.getElementById('hitlRegSolucion').value = solTexto;
             }
-            document.getElementById('hitlRegSolucion').value = solTexto;
 
             // Detección de Falla Física / Hardware (Compuerta Human-in-the-Loop obligatoria)
             const esHardware = (propuesta.categoria_propuesta === 'Hardware y Equipos') || 
