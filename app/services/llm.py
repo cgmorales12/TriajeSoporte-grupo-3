@@ -754,7 +754,7 @@ class ClienteLLM:
                         if parts:
                             return parts[0].get("text", "")
         except Exception as e:
-            logger.debug("Falla en _generar_con_gemini: %s", e)
+            logger_llm.debug("Falla en _generar_con_gemini: %s", e)
         return None
 
     def _generar_con_groq(self, messages: list, key_groq: str) -> Optional[str]:
@@ -775,7 +775,7 @@ class ClienteLLM:
                 except Exception:
                     continue
         except Exception as e:
-            logger.debug("Falla en _generar_con_groq: %s", e)
+            logger_llm.debug("Falla en _generar_con_groq: %s", e)
         return None
 
     def _stream_offline(self, mensaje: str) -> Iterator[str]:
