@@ -2385,8 +2385,8 @@
                 </div>
 
                 <button type="submit" id="btnSubmit" class="btn-submit">
-                    <span id="btnSubmitIcon">⚡</span>
-                    <span id="btnSubmitText">Clasificar con IA y Crear Ticket</span>
+                    <span id="btnSubmitIcon">📨</span>
+                    <span id="btnSubmitText">Enviar Solicitud a Soporte Técnico</span>
                 </button>
             </form>
 
@@ -3357,9 +3357,10 @@
             const presetBtns = document.querySelectorAll('.preset-btn');
 
             // 1. Deshabilitar botón principal y botones secundarios mientras se procesa la solicitud
+            const esTIC = (window._vistaActual === 'tic');
             btn.disabled = true;
             if (btnIcon) btnIcon.innerHTML = '<span class="spinner-mini"></span>';
-            if (btnText) btnText.textContent = 'Analizando con IA y RAG...';
+            if (btnText) btnText.textContent = esTIC ? 'Analizando con IA y RAG...' : 'Buscando solución en manuales...';
             presetBtns.forEach(b => b.disabled = true);
 
             const payload = {
@@ -3488,9 +3489,10 @@
                 mostrarToast('🔌 Sin conexión con el servidor backend FastAPI.', 'alerta');
             } finally {
                 // 2. Restaurar invariablemente el estado del botón y presets al terminar
+                const esTIC = (window._vistaActual === 'tic');
                 btn.disabled = false;
-                if (btnIcon) btnIcon.textContent = '⚡';
-                if (btnText) btnText.textContent = 'Clasificar con IA y Crear Ticket';
+                if (btnIcon) btnIcon.textContent = esTIC ? '⚡' : '📨';
+                if (btnText) btnText.textContent = esTIC ? 'Clasificar con IA y Crear Ticket' : 'Enviar Solicitud a Soporte Técnico';
                 presetBtns.forEach(b => b.disabled = false);
             }
         });
@@ -5482,12 +5484,22 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 }
             }
 
-            // 7. Actualizar banners y detalles de sesión de usuario
+            // 7. Texto del botón de envío adaptado al perfil
+            const btnSubmitText = document.getElementById('btnSubmitText');
+            const btnSubmitIcon = document.getElementById('btnSubmitIcon');
+            if (btnSubmitText) {
+                btnSubmitText.textContent = esTIC ? 'Clasificar con IA y Crear Ticket' : 'Enviar Solicitud a Soporte Técnico';
+            }
+            if (btnSubmitIcon) {
+                btnSubmitIcon.textContent = esTIC ? '⚡' : '📨';
+            }
+
+            // 8. Actualizar banners y detalles de sesión de usuario
             actualizarDetalleSesionUsuario();
             actualizarBannerVistaYUsuario();
             restaurarDatosUsuarioEnFormulario();
 
-            // 8. Re-renderizar tablero si hay tickets cargados
+            // 9. Re-renderizar tablero si hay tickets cargados
             if (typeof renderizarTablero === 'function' && window._ticketsCargados) {
                 renderizarTablero(window._ticketsCargados);
             }
