@@ -4791,37 +4791,45 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                             </span>
                         `;
                     } else {
+                        alertaNormal.style.background = '#FFFBEB';
+                        alertaNormal.style.border = '1.5px solid #F59E0B';
+                        alertaNormal.style.borderLeft = '5px solid #D97706';
+                        alertaNormal.style.padding = '13px 16px';
                         alertaNormal.innerHTML = `
-                            <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:8px; font-size:13px; color:#B45309;">
+                            <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:8px; font-size:13.5px; color:#92400E;">
                                 <span>🛡️ Atención Presencial Requerida (Revisión Física de Equipo):</span>
                             </div>
-                            <div style="color:#92400E; font-size:12.5px; line-height:1.55;">
-                                <p style="margin:0 0 8px 0;">El sistema analizó los síntomas y detectó que se trata de un <b>daño físico en hardware</b> que no puede resolverse por autoatención de software.</p>
-                                <p style="margin:0;"><b>Por su seguridad:</b> Se ha pausado la autoatención. Al confirmar este ticket, un técnico de soporte acudirá presencialmente a su puesto de trabajo para revisar el equipo.</p>
+                            <div style="color:#78350F !important; -webkit-text-fill-color:#78350F !important; font-size:13px; line-height:1.6; font-weight:600;">
+                                <p style="margin:0 0 8px 0; color:#78350F !important; -webkit-text-fill-color:#78350F !important; font-weight:600;">El sistema analizó los síntomas y detectó que se trata de un <b style="color:#92400E !important; font-weight:800;">daño físico en hardware</b> que no puede resolverse por autoatención de software.</p>
+                                <p style="margin:0; color:#78350F !important; -webkit-text-fill-color:#78350F !important; font-weight:600;"><b style="color:#92400E !important; font-weight:800;">Por su seguridad:</b> Se ha pausado la autoatención. Al confirmar este ticket, un técnico de soporte acudirá presencialmente a su puesto de trabajo para revisar el equipo.</p>
                             </div>
                         `;
                     }
                 } else if (esTIC) {
-                    alertaNormal.style.background = '#EFF6FF';
-                    alertaNormal.style.border = '1px solid #BFDBFE';
-                    alertaNormal.style.borderLeft = '4px solid #2563EB';
-                    alertaNormal.style.padding = '12px 14px';
+                    alertaNormal.style.background = '#F8FAFC';
+                    alertaNormal.style.border = '1.5px solid #94A3B8';
+                    alertaNormal.style.borderLeft = '5px solid #2563EB';
+                    alertaNormal.style.padding = '13px 16px';
                     alertaNormal.innerHTML = `
-                        <b style="color:#0F172A;">Principio de Exceso de Agencia Controlado (OWASP LLM08):</b><br>
-                        <span style="color:#1E293B;">El modelo de IA propone la clasificación y solución, pero <b>no se registra en la base de datos ni se compromete el SLA</b> sin la autorización explícita de un técnico u operador humano.</span>
+                        <div style="font-weight:800; color:#1E3A8A; font-size:13px; margin-bottom:6px;">
+                            Principio de Exceso de Agencia Controlado (OWASP LLM08):
+                        </div>
+                        <div style="color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-size:12.5px; line-height:1.55; font-weight:600;">
+                            El modelo de IA propone la clasificación y solución, pero <b style="color:#1E3A8A !important; font-weight:800;">no se registra en la base de datos ni se compromete el SLA</b> sin la autorización explícita de un técnico u operador humano.
+                        </div>
                     `;
                 } else {
-                    alertaNormal.style.background = '#EFF6FF';
-                    alertaNormal.style.border = '1px solid #BFDBFE';
-                    alertaNormal.style.borderLeft = '4.5px solid #2563EB';
-                    alertaNormal.style.padding = '12px 14px';
+                    alertaNormal.style.background = '#F8FAFC';
+                    alertaNormal.style.border = '1.5px solid #94A3B8';
+                    alertaNormal.style.borderLeft = '5px solid #2563EB';
+                    alertaNormal.style.padding = '13px 16px';
                     alertaNormal.innerHTML = `
-                        <div style="font-weight:800; color:#1E3A8A; font-size:13px; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                        <div style="font-weight:800; color:#1E3A8A; font-size:13.5px; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
                             <span>💡 Solución Inmediata Sugerida por la IA:</span>
                         </div>
-                        <div style="color:#1E293B; font-size:12.5px; line-height:1.55;">
-                            <p style="margin:0 0 8px 0;">La Inteligencia Artificial analizó su consulta y localizó la solución en los manuales de la empresa.</p>
-                            <p style="margin:0;"><b>Revise los pasos propuestos:</b> Si resuelven su inconveniente, puede aplicarlos de inmediato. Si el inconveniente continúa o requiere soporte presencial, confirme el envío para que un técnico le asista.</p>
+                        <div style="color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-size:13px; line-height:1.6; font-weight:600;">
+                            <p style="margin:0 0 8px 0; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600;">La Inteligencia Artificial analizó su consulta y localizó la solución en los manuales de la empresa.</p>
+                            <p style="margin:0; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600;"><b style="color:#1E3A8A !important; font-weight:800;">Revise los pasos propuestos:</b> Si resuelven su inconveniente, puede aplicarlos de inmediato. Si el inconveniente continúa o requiere soporte presencial, confirme el envío para que un técnico le asista.</p>
                         </div>
                     `;
                 }
@@ -5899,9 +5907,9 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 <button type="button" class="modal-close" onclick="cerrarModalConfirmarRegistro()" title="Cerrar ventana">✕</button>
             </div>
             <div class="modal-body" style="padding:18px 22px;">
-                <div id="hitlAlertBoxNormal" class="hitl-alert-box">
-                    <b style="color:#0F172A;">Principio de Exceso de Agencia Controlado (OWASP LLM08):</b><br>
-                    <span style="color:#1E293B;">El modelo de IA propone la clasificación y solución, pero <b>no se registra en la base de datos ni se compromete el SLA</b> sin la autorización explícita de un técnico u operador humano.</span>
+                <div id="hitlAlertBoxNormal" class="hitl-alert-box" style="background:#F8FAFC; border:1.5px solid #94A3B8; border-left:5px solid #2563EB;">
+                    <div style="font-weight:800; color:#1E3A8A; font-size:13px; margin-bottom:6px;">Principio de Exceso de Agencia Controlado (OWASP LLM08):</div>
+                    <div style="color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-size:12.5px; line-height:1.55; font-weight:600;">El modelo de IA propone la clasificación y solución, pero <b style="color:#1E3A8A !important; font-weight:800;">no se registra en la base de datos ni se compromete el SLA</b> sin la autorización explícita de un técnico u operador humano.</div>
                 </div>
 
                 <!-- Alerta destacada para Solicitudes No Técnicas / Fuera de Alcance -->
