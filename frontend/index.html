@@ -1254,6 +1254,32 @@
 
         .modal-close:hover { color: #FFF; }
 
+        .btn-modal-cancel {
+            background: #E2E8F0 !important;
+            border: 1.5px solid #94A3B8 !important;
+            color: #0F172A !important;
+            -webkit-text-fill-color: #0F172A !important;
+            font-size: 12.5px;
+            font-weight: 700;
+            padding: 9px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+        }
+
+        .btn-modal-cancel:hover {
+            background: #CBD5E1 !important;
+            border-color: #64748B !important;
+            color: #020617 !important;
+            -webkit-text-fill-color: #020617 !important;
+            box-shadow: 0 2px 4px rgba(15, 23, 42, 0.12);
+        }
+
         .modal-body {
             padding: 20px;
             overflow-y: auto;
@@ -4844,7 +4870,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             // 5. Botones adaptados
             const btnDescartar = document.getElementById('btnDescartarModalRegistro');
             if (btnDescartar) {
-                btnDescartar.textContent = esTIC ? 'Descartar Consulta' : 'Cancelar (Ya no requiero ticket)';
+                btnDescartar.textContent = esTIC ? '✕ Descartar Consulta' : '✕ Cancelar (Ya no requiero ticket)';
             }
             const btnRegistrar = document.getElementById('btnEjecutarConfirmarRegistro');
             if (btnRegistrar) {
@@ -5949,7 +5975,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:10px;">
-                    <button type="button" id="btnDescartarModalRegistro" class="btn-reset-filters" style="padding:9px 16px; font-size:12.5px; font-weight:600; color:#1E293B !important; background:#FFFFFF; border:1px solid #CBD5E1;" onclick="cerrarModalConfirmarRegistro()">Cancelar (Ya no requiero ticket)</button>
+                    <button type="button" id="btnDescartarModalRegistro" class="btn-modal-cancel" onclick="cerrarModalConfirmarRegistro()">✕ Cancelar (Ya no requiero ticket)</button>
                     <button type="button" id="btnEjecutarConfirmarRegistro" class="btn-submit" style="background:#1E3A8A; color:#FFFFFF !important; border:1px solid #1E3A8A; padding:9px 18px; width:auto; font-size:12.5px;" onclick="ejecutarConfirmarRegistro()">Enviar Solicitud a Soporte Técnico</button>
                 </div>
             </div>
@@ -5986,7 +6012,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     <input type="text" id="hitlEnvioOperador" class="form-control" value="Christian Morales (Operador Técnico)" style="font-size:12px;">
                 </div>
                 <div style="display:flex; justify-content:flex-end; gap:10px;">
-                    <button type="button" class="btn-reset-filters" style="padding:8px 14px; font-size:12px; color:#1E293B !important; background:#FFFFFF; border:1px solid #CBD5E1;" onclick="cerrarModalConfirmarEnvio()">Cancelar</button>
+                    <button type="button" class="btn-modal-cancel" style="padding:8px 14px; font-size:12px;" onclick="cerrarModalConfirmarEnvio()">✕ Cancelar</button>
                     <button type="button" id="btnEjecutarConfirmarEnvio" class="btn-submit" style="background:#1E3A8A; color:#FFFFFF !important; border:1px solid #1E3A8A; padding:8px 18px; width:auto;" onclick="ejecutarConfirmarEnvio()">📤 Confirmar y Enviar al Usuario</button>
                 </div>
             </div>
@@ -6032,7 +6058,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     <input type="text" id="hitlDerivacionOperador" class="form-control" value="Christian Morales (Tech Lead)" style="font-size:12px;">
                 </div>
                 <div style="display:flex; justify-content:flex-end; gap:10px;">
-                    <button type="button" class="btn-reset-filters" style="padding:8px 14px; font-size:12px; color:#1E293B !important; background:#FFFFFF; border:1px solid #CBD5E1;" onclick="cerrarModalConfirmarDerivacion()">Cancelar</button>
+                    <button type="button" class="btn-modal-cancel" style="padding:8px 14px; font-size:12px;" onclick="cerrarModalConfirmarDerivacion()">✕ Cancelar</button>
                     <button type="button" id="btnEjecutarConfirmarDerivacion" class="btn-submit" style="background:#D97706; color:#FFFFFF !important; border:none; padding:8px 18px; width:auto;" onclick="ejecutarConfirmarDerivacion()">🚨 Confirmar y Despachar a Sitio</button>
                 </div>
             </div>
