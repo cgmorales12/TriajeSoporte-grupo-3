@@ -4834,7 +4834,12 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 : (esTIC ? '<span>📋 Solución Técnica Propuesta (Pasos Operativos a Seguir)</span>' : '<span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención y Soporte):</span>');
 
             const lblOp = document.getElementById('hitlLblOperador');
-            if (lblOp) lblOp.textContent = esTIC ? 'Técnico / Operador que Autoriza el Alta' : 'Responsable Asignado para Atención';
+            if (lblOp) lblOp.textContent = esTIC ? 'Técnico / Operador que Autoriza el Alta' : 'Técnico de Soporte Asignado';
+
+            const inpOp = document.getElementById('hitlRegOperador');
+            if (inpOp) {
+                inpOp.value = esTIC ? 'Christian Morales (Operador TIC / Nivel 2)' : 'Christian Morales (Técnico de Soporte TI)';
+            }
 
             // 5. Botones adaptados
             const btnDescartar = document.getElementById('btnDescartarModalRegistro');
