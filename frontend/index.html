@@ -4746,20 +4746,34 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     alertaNormal.style.background = '#FFFBEB';
                     alertaNormal.style.border = '1.5px solid #FCD34D';
                     alertaNormal.style.borderLeft = '4.5px solid #D97706';
-                    alertaNormal.innerHTML = `
-                        <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:4px; font-size:13px; color:#B45309;">
-                            <span>🛡️ Acción con Confirmación Humana (Human-in-the-Loop · OWASP LLM08):</span>
-                        </div>
-                        <span style="color:#92400E; font-size:12px; line-height:1.45;">
-                            El sistema analizó los síntomas y detectó que se trata de un <b>daño físico en hardware</b> que no puede resolverse por autoatención de software. 
-                            Inmediatamente <b>bloquea la autoatención y activa la compuerta HITL</b>: no registra el ticket ni despacha presencialmente de forma automática. 
-                            Muestra esta sugerencia técnica y <b>exige que un técnico humano confirme y autorice la intervención en sitio</b>.
-                        </span>
-                    `;
+                    alertaNormal.style.padding = '12px 14px';
+                    if (esTIC) {
+                        alertaNormal.innerHTML = `
+                            <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:6px; font-size:13px; color:#B45309;">
+                                <span>🛡️ Acción con Confirmación Humana (Human-in-the-Loop · OWASP LLM08):</span>
+                            </div>
+                            <span style="color:#92400E; font-size:12px; line-height:1.45;">
+                                El sistema analizó los síntomas y detectó que se trata de un <b>daño físico en hardware</b> que no puede resolverse por autoatención de software. 
+                                Inmediatamente <b>bloquea la autoatención y activa la compuerta HITL</b>: no registra el ticket ni despacha presencialmente de forma automática. 
+                                Muestra esta sugerencia técnica y <b>exige que un técnico humano confirme y autorice la intervención en sitio</b>.
+                            </span>
+                        `;
+                    } else {
+                        alertaNormal.innerHTML = `
+                            <div style="font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:8px; font-size:13px; color:#B45309;">
+                                <span>🛡️ Atención Presencial Requerida (Revisión Física de Equipo):</span>
+                            </div>
+                            <div style="color:#92400E; font-size:12.5px; line-height:1.55;">
+                                <p style="margin:0 0 8px 0;">El sistema analizó los síntomas y detectó que se trata de un <b>daño físico en hardware</b> que no puede resolverse por autoatención de software.</p>
+                                <p style="margin:0;"><b>Por su seguridad:</b> Se ha pausado la autoatención. Al confirmar este ticket, un técnico de soporte acudirá presencialmente a su puesto de trabajo para revisar el equipo.</p>
+                            </div>
+                        `;
+                    }
                 } else if (esTIC) {
                     alertaNormal.style.background = '#EFF6FF';
                     alertaNormal.style.border = '1px solid #BFDBFE';
                     alertaNormal.style.borderLeft = '4px solid #2563EB';
+                    alertaNormal.style.padding = '12px 14px';
                     alertaNormal.innerHTML = `
                         <b style="color:#0F172A;">Principio de Exceso de Agencia Controlado (OWASP LLM08):</b><br>
                         <span style="color:#1E293B;">El modelo de IA propone la clasificación y solución, pero <b>no se registra en la base de datos ni se compromete el SLA</b> sin la autorización explícita de un técnico u operador humano.</span>
@@ -4767,13 +4781,16 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 } else {
                     alertaNormal.style.background = '#EFF6FF';
                     alertaNormal.style.border = '1px solid #BFDBFE';
-                    alertaNormal.style.borderLeft = '4px solid #2563EB';
+                    alertaNormal.style.borderLeft = '4.5px solid #2563EB';
+                    alertaNormal.style.padding = '12px 14px';
                     alertaNormal.innerHTML = `
-                        <b style="color:#1E3A8A; font-size:13px;">💡 Solución Inmediata Sugerida por la IA:</b><br>
-                        <span style="color:#1E293B; font-size:12px; line-height:1.45;">
-                            La Inteligencia Artificial analizó su consulta y localizó la solución en los manuales de la empresa. 
-                            <b>Revise los pasos propuestos:</b> si resuelven su inconveniente, puede aplicarlos de inmediato. Si el inconveniente continúa o requiere soporte presencial, confirme el envío para que un técnico le asista.
-                        </span>
+                        <div style="font-weight:800; color:#1E3A8A; font-size:13px; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                            <span>💡 Solución Inmediata Sugerida por la IA:</span>
+                        </div>
+                        <div style="color:#1E293B; font-size:12.5px; line-height:1.55;">
+                            <p style="margin:0 0 8px 0;">La Inteligencia Artificial analizó su consulta y localizó la solución en los manuales de la empresa.</p>
+                            <p style="margin:0;"><b>Revise los pasos propuestos:</b> Si resuelven su inconveniente, puede aplicarlos de inmediato. Si el inconveniente continúa o requiere soporte presencial, confirme el envío para que un técnico le asista.</p>
+                        </div>
                     `;
                 }
             }
