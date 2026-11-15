@@ -4682,12 +4682,18 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     `;
                 } else {
                     bannerItil.style.display = 'block';
-                    bannerItil.style.background = '#F0FDF4';
-                    bannerItil.style.border = '1px solid #BBF7D0';
-                    bannerItil.style.borderLeft = '4px solid #16A34A';
-                    bannerItil.style.color = '#166534';
+                    bannerItil.style.background = '#F8FAFC';
+                    bannerItil.style.border = '1px solid #CBD5E1';
+                    bannerItil.style.borderLeft = '4.5px solid #2563EB';
+                    bannerItil.style.color = '#0F172A';
+                    bannerItil.style.padding = '10px 14px';
                     bannerItil.innerHTML = `
-                        <span>⏱️ <b>Tiempo Estimado de Atención:</b> <strong style="background:#DCFCE7; padding:1px 7px; border-radius:4px;">${slaTxt}</strong> · Prioridad: <b>${pItil}</b>. <i>Su requerimiento fue analizado para brindarle asistencia técnica según los tiempos de servicio de la empresa.</i></span>
+                        <span style="font-size:12.5px; line-height:1.5; color:#0F172A;">
+                            ⏱️ <b style="color:#0F172A;">Tiempo Estimado de Atención:</b> 
+                            <strong style="background:#E2E8F0; color:#0F172A; border:1px solid #94A3B8; padding:2px 8px; border-radius:4px; font-weight:800;">${slaTxt}</strong> 
+                            · Prioridad: <strong style="color:#1E3A8A; background:#DBEAFE; border:1px solid #93C5FD; padding:2px 8px; border-radius:4px; font-weight:800;">${pItil}</strong>. 
+                            <span style="color:#334155; font-style:normal;">Su requerimiento fue analizado para brindarle asistencia técnica según los tiempos de servicio de la empresa.</span>
+                        </span>
                     `;
                 }
             }
