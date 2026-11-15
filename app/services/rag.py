@@ -381,16 +381,10 @@ def buscar_solucion(
     if coleccion is not None:
         try:
             # Query semántico directo a ChromaDB
-            filtro_where = {"categoria": categoria} if categoria else None
-            res_chroma = None
-            try:
-                if filtro_where:
-                    res_chroma = coleccion.query(query_texts=[texto], n_results=max(top_k * 3, 10), where=filtro_where)
-            except Exception:
-                res_chroma = None
-
-            if not res_chroma or not res_chroma.get("ids") or len(res_chroma["ids"][0]) == 0:
-                res_chroma = coleccion.query(query_texts=[texto], n_results=max(top_k * 3, 10))
+            # NOTA: Realizamos la búsqueda semántica global en el espacio vectorial para que el embedding
+            # identifique el manual técnico exacto (ej. VPN -> DOC-02) sin que una discrepancia en la
+            # taxonomía de categorías ("Red y Conectividad" vs "Red y VPN") filtre indebidamente el mejor resultado.
+            res_chroma = coleccion.query(query_texts=[texto], n_results=max(top_k * 3, 10))
 
             if res_chroma and res_chroma.get("metadatas") and len(res_chroma["metadatas"][0]) > 0:
                 metas = res_chroma["metadatas"][0]
