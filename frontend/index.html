@@ -1120,6 +1120,20 @@
             color: #0F172A !important;
         }
 
+        #hitlRegCategoria,
+        #hitlRegPrioridad {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-image: none !important;
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+        #hitlRegCategoria::-ms-expand,
+        #hitlRegPrioridad::-ms-expand {
+            display: none !important;
+        }
+
         .hitl-cita-card {
             background: #F8FAFC;
             border: 1px solid #CBD5E1;
@@ -4866,10 +4880,10 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
             // 4. Etiquetas adaptadas al perfil (Usuario vs TIC)
             const lblCat = document.getElementById('hitlLblCategoria');
-            if (lblCat) lblCat.textContent = esTIC ? 'Categoría Asignada por IA' : 'Categoría Identificada';
+            if (lblCat) lblCat.textContent = esTIC ? 'Categoría Asignada por IA' : 'Categoría Identificada por IA';
 
             const lblPrio = document.getElementById('hitlLblPrioridad');
-            if (lblPrio) lblPrio.textContent = esTIC ? 'Prioridad ITIL Determinista' : 'Prioridad y Tiempo Estimado de Atención';
+            if (lblPrio) lblPrio.textContent = esTIC ? 'Prioridad ITIL Determinista (0 Tokens)' : 'Prioridad y Tiempo Estimado';
 
             const lblSol = document.getElementById('hitlLblSolucion');
             if (lblSol) lblSol.innerHTML = esHardware 
@@ -5949,7 +5963,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
                         <div class="form-group" style="margin-bottom:0;">
                             <label id="hitlLblCategoria" style="font-size:12px; font-weight:700; color:#0F172A; margin-bottom:4px; display:block;">Categoría Identificada</label>
-                            <select id="hitlRegCategoria" class="form-control" style="font-size:12.5px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:700; cursor:not-allowed;" disabled>
+                            <select id="hitlRegCategoria" class="form-control" style="font-size:12.5px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:700; cursor:default; appearance:none; -webkit-appearance:none; -moz-appearance:none; pointer-events:none; padding:8px 12px;" disabled>
                                 <option value="Accesos y Contraseñas">Accesos y Contraseñas</option>
                                 <option value="Red y Conectividad">Red y Conectividad</option>
                                 <option value="Impresoras y Periféricos">Impresoras y Periféricos</option>
@@ -5962,7 +5976,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                         </div>
                         <div class="form-group" style="margin-bottom:0;">
                             <label id="hitlLblPrioridad" style="font-size:12px; font-weight:700; color:#0F172A; margin-bottom:4px; display:block;">Prioridad y Tiempo Estimado de Atención</label>
-                            <select id="hitlRegPrioridad" class="form-control" style="font-size:12.5px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:700; cursor:not-allowed;" disabled>
+                            <select id="hitlRegPrioridad" class="form-control" style="font-size:12.5px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:700; cursor:default; appearance:none; -webkit-appearance:none; -moz-appearance:none; pointer-events:none; padding:8px 12px;" disabled>
                                 <option value="Alta">Alta (Atención inmediata · Respuesta en 15m a 1h)</option>
                                 <option value="Media">Media (Atención regular · Respuesta en 2h a 4h)</option>
                                 <option value="Baja">Baja (Consulta / Autoatención · Respuesta en el día)</option>
