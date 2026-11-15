@@ -4708,18 +4708,25 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     `;
                 } else {
                     bannerItil.style.display = 'block';
-                    bannerItil.style.background = '#F8FAFC';
-                    bannerItil.style.border = '1px solid #CBD5E1';
-                    bannerItil.style.borderLeft = '4.5px solid #2563EB';
+                    bannerItil.style.background = '#F1F5F9';
+                    bannerItil.style.border = '1.5px solid #94A3B8';
+                    bannerItil.style.borderLeft = '5px solid #2563EB';
+                    bannerItil.style.borderRadius = '8px';
                     bannerItil.style.color = '#0F172A';
-                    bannerItil.style.padding = '10px 14px';
+                    bannerItil.style.padding = '12px 14px';
+                    bannerItil.style.marginBottom = '12px';
                     bannerItil.innerHTML = `
-                        <span style="font-size:12.5px; line-height:1.5; color:#0F172A;">
-                            ⏱️ <b style="color:#0F172A;">Tiempo Estimado de Atención:</b> 
-                            <strong style="background:#E2E8F0; color:#0F172A; border:1px solid #94A3B8; padding:2px 8px; border-radius:4px; font-weight:800;">${slaTxt}</strong> 
-                            · Prioridad: <strong style="color:#1E3A8A; background:#DBEAFE; border:1px solid #93C5FD; padding:2px 8px; border-radius:4px; font-weight:800;">${pItil}</strong>. 
-                            <span style="color:#334155; font-style:normal;">Su requerimiento fue analizado para brindarle asistencia técnica según los tiempos de servicio de la empresa.</span>
-                        </span>
+                        <div style="font-size:13px; line-height:1.55; color:#0F172A; font-weight:600;">
+                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;">
+                                <span>⏱️ <b style="color:#0F172A; font-weight:800;">Tiempo Estimado de Atención:</b></span>
+                                <strong style="background:#FFFFFF; color:#0F172A; border:1.5px solid #64748B; padding:2px 10px; border-radius:5px; font-weight:800;">${slaTxt}</strong>
+                                <span>· Prioridad:</span>
+                                <strong style="color:#1E3A8A; background:#DBEAFE; border:1.5px solid #60A5FA; padding:2px 10px; border-radius:5px; font-weight:800;">${pItil}</strong>
+                            </div>
+                            <div style="color:#334155; font-size:12px; font-weight:500; margin-top:4px;">
+                                Su requerimiento fue analizado para brindarle asistencia técnica según los tiempos de servicio de la empresa.
+                            </div>
+                        </div>
                     `;
                 }
             }
@@ -4819,10 +4826,12 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                         </div>
                     `;
                 } else {
-                    alertaNormal.style.background = '#F8FAFC';
-                    alertaNormal.style.border = '1.5px solid #94A3B8';
+                    alertaNormal.style.background = '#F0F7FF';
+                    alertaNormal.style.border = '1.5px solid #93C5FD';
                     alertaNormal.style.borderLeft = '5px solid #2563EB';
-                    alertaNormal.style.padding = '13px 16px';
+                    alertaNormal.style.borderRadius = '8px';
+                    alertaNormal.style.padding = '14px 16px';
+                    alertaNormal.style.marginBottom = '12px';
                     alertaNormal.innerHTML = `
                         <div style="font-weight:800; color:#1E3A8A; font-size:13.5px; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
                             <span>💡 Solución Inmediata Sugerida por la IA:</span>
@@ -5920,65 +5929,73 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     <span>Esta consulta no describe una avería ni requerimiento tecnológico corporativo. Por directiva estricta de abstención institucional, <b>NO se autoriza la apertura de un Ticket Técnico (TT)</b> ni se asigna personal de soporte microinformático.</span>
                 </div>
                 
-                <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:12px 14px; margin-bottom:14px;">
+                <!-- Tarjeta 1: Datos de la Solicitud y Problema -->
+                <div style="background:#F1F5F9; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px 14px; margin-bottom:12px;">
                     <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
                         <span style="font-size:12px; font-weight:700; color:#334155;">Código Propuesto:</span>
-                        <strong id="hitlRegCodigo" style="font-family:var(--font-mono); color:#1E3A8A; font-size:14px;"></strong>
+                        <strong id="hitlRegCodigo" style="font-family:var(--font-mono); color:#1E3A8A; font-size:14px; font-weight:800;"></strong>
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
                         <span style="font-size:12px; font-weight:700; color:#334155;">Colaborador / Usuario:</span>
-                        <span id="hitlRegCliente" style="font-size:13px; font-weight:700; color:#0F172A;"></span>
+                        <span id="hitlRegCliente" style="font-size:13px; font-weight:800; color:#0F172A;"></span>
                     </div>
                     <div style="font-size:12.5px; color:#0F172A; margin-top:6px; line-height:1.45;">
-                        <b style="color:#0F172A;">Problema:</b> <span id="hitlRegProblema" style="color:#0F172A; font-weight:500;"></span>
+                        <b style="color:#0F172A;">Problema:</b> <span id="hitlRegProblema" style="color:#0F172A; font-weight:600;"></span>
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:14px;">
-                    <div class="form-group">
-                        <label id="hitlLblCategoria" style="font-size:12px; font-weight:700; color:#0F172A;">Categoría Identificada</label>
-                        <select id="hitlRegCategoria" class="form-control" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600; cursor:not-allowed;" disabled>
-                            <option value="Accesos y Contraseñas">Accesos y Contraseñas</option>
-                            <option value="Red y Conectividad">Red y Conectividad</option>
-                            <option value="Impresoras y Periféricos">Impresoras y Periféricos</option>
-                            <option value="Carpetas Compartidas">Carpetas Compartidas</option>
-                            <option value="Software y Sistema Contable">Software y Sistema Contable</option>
-                            <option value="Hardware y Equipos">Hardware y Equipos</option>
-                            <option value="Políticas y Seguridad">Políticas y Seguridad</option>
-                            <option value="Solicitud No Técnica / Fuera de Alcance">Solicitud No Técnica / Fuera de Alcance</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label id="hitlLblPrioridad" style="font-size:12px; font-weight:700; color:#0F172A;">Prioridad y Tiempo Estimado de Atención</label>
-                        <select id="hitlRegPrioridad" class="form-control" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600; cursor:not-allowed;" disabled>
-                            <option value="Alta">Alta (Atención inmediata · Respuesta en 15m a 1h)</option>
-                            <option value="Media">Media (Atención regular · Respuesta en 2h a 4h)</option>
-                            <option value="Baja">Baja (Consulta / Autoatención · Respuesta en el día)</option>
-                        </select>
+                <!-- Tarjeta 2: Categoría y Prioridad Identificadas -->
+                <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px 14px; margin-bottom:12px;">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label id="hitlLblCategoria" style="font-size:12px; font-weight:700; color:#0F172A; margin-bottom:4px; display:block;">Categoría Identificada</label>
+                            <select id="hitlRegCategoria" class="form-control" style="font-size:12.5px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:700; cursor:not-allowed;" disabled>
+                                <option value="Accesos y Contraseñas">Accesos y Contraseñas</option>
+                                <option value="Red y Conectividad">Red y Conectividad</option>
+                                <option value="Impresoras y Periféricos">Impresoras y Periféricos</option>
+                                <option value="Carpetas Compartidas">Carpetas Compartidas</option>
+                                <option value="Software y Sistema Contable">Software y Sistema Contable</option>
+                                <option value="Hardware y Equipos">Hardware y Equipos</option>
+                                <option value="Políticas y Seguridad">Políticas y Seguridad</option>
+                                <option value="Solicitud No Técnica / Fuera de Alcance">Solicitud No Técnica / Fuera de Alcance</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label id="hitlLblPrioridad" style="font-size:12px; font-weight:700; color:#0F172A; margin-bottom:4px; display:block;">Prioridad y Tiempo Estimado de Atención</label>
+                            <select id="hitlRegPrioridad" class="form-control" style="font-size:12.5px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:700; cursor:not-allowed;" disabled>
+                                <option value="Alta">Alta (Atención inmediata · Respuesta en 15m a 1h)</option>
+                                <option value="Media">Media (Atención regular · Respuesta en 2h a 4h)</option>
+                                <option value="Baja">Baja (Consulta / Autoatención · Respuesta en el día)</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Banner Explicativo de Prioridad ITIL Determinista (0 Tokens) -->
-                <div id="hitlNotaItilBanner" style="background:#EFF6FF; border:1px solid #BFDBFE; border-left:4px solid #2563EB; border-radius:6px; padding:8px 12px; margin-bottom:12px; font-size:12px; color:#1E40AF; line-height:1.45;"></div>
+                <!-- Tarjeta 3: Banner Explicativo de Prioridad ITIL Determinista (0 Tokens) -->
+                <div id="hitlNotaItilBanner" style="background:#F1F5F9; border:1.5px solid #94A3B8; border-left:5px solid #2563EB; border-radius:8px; padding:12px 14px; margin-bottom:12px; font-size:12.5px; color:#0F172A; line-height:1.45;"></div>
 
-                <div class="form-group" style="margin-bottom:12px;">
-                    <label id="hitlLblSolucion" style="font-size:12px; font-weight:700; color:#0F172A; display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                <!-- Tarjeta 4: Pasos Sugeridos de Autoatención -->
+                <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px 14px; margin-bottom:12px;">
+                    <label id="hitlLblSolucion" style="font-size:12px; font-weight:700; color:#0F172A; display:flex; align-items:center; gap:6px; margin-bottom:6px;">
                         <span>📋 Pasos Sugeridos para Resolver su Inconveniente (Autoatención y Soporte)</span>
                     </label>
-                    <textarea id="hitlRegSolucion" class="form-control" rows="4" style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:500; line-height:1.45; font-family:var(--font-sans);" readonly></textarea>
+                    <textarea id="hitlRegSolucion" class="form-control" rows="4" style="font-size:13px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600; line-height:1.55; font-family:var(--font-sans); padding:10px 12px;" readonly></textarea>
                 </div>
 
                 <div id="hitlRegCitasContainer" style="margin-bottom:14px;"></div>
 
-                <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:12px; margin-bottom:16px;">
-                    <div class="form-group">
-                        <label id="hitlLblOperador" style="font-size:12px; font-weight:700; color:#0F172A;">Responsable Asignado para Atención</label>
-                        <input type="text" id="hitlRegOperador" class="form-control" value="Christian Morales (Tech Lead)" readonly style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600;">
-                    </div>
-                    <div class="form-group">
-                        <label id="hitlLblSla" style="font-size:12px; font-weight:700; color:#0F172A;">⏱️ Tiempo Estimado de Respuesta</label>
-                        <input type="text" id="hitlRegSla" class="form-control" readonly style="font-size:12.5px; background:#F8FAFC; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:600;">
-                        <input type="hidden" id="hitlRegSlaMinutos" value="1440">
+                <!-- Tarjeta 5: Responsable Asignado y Tiempo Estimado -->
+                <div style="background:#F1F5F9; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px 14px; margin-bottom:16px;">
+                    <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:12px;">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label id="hitlLblOperador" style="font-size:12px; font-weight:700; color:#0F172A; margin-bottom:4px; display:block;">Técnico de Soporte Asignado</label>
+                            <input type="text" id="hitlRegOperador" class="form-control" value="Christian Morales (Técnico de Soporte TI)" readonly style="font-size:12.5px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:700;">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label id="hitlLblSla" style="font-size:12px; font-weight:700; color:#0F172A; margin-bottom:4px; display:block;">⏱️ Tiempo Estimado de Respuesta</label>
+                            <input type="text" id="hitlRegSla" class="form-control" readonly style="font-size:12.5px; background:#FFFFFF; border:1.5px solid #94A3B8; border-radius:6px; color:#0F172A !important; -webkit-text-fill-color:#0F172A !important; font-weight:700;">
+                            <input type="hidden" id="hitlRegSlaMinutos" value="1440">
+                        </div>
                     </div>
                 </div>
 
