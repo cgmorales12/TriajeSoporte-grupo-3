@@ -88,22 +88,30 @@ def clasificar_y_crear_ticket(solicitud: SolicitudTicketIn, request: Request = N
         estado_inicial = "nuevo"
         requiere_revision = True
     else:
-        # Enfoque Seguro Triaje Automático de Solicitudes de Soporte Tecnológico para una PYME: El código dispone leyendo la matriz ITIL
-        prioridad_sla = calcular_prioridad_itil(clasificacion_ia.impacto, clasificacion_ia.urgencia)
-        prioridad_nombre = prioridad_sla.prioridad
-        sla_minutos = prioridad_sla.sla_minutos
-        descripcion_sla = prioridad_sla.descripcion_sla
-        
         # 3. Consulta RAG sobre el corpus de 15 manuales (con soporte de desconexión simulada)
         diagnostico_rag = consultar_base_conocimiento(
             solicitud.descripcion_problema,
             categoria=clasificacion_ia.categoria,
             simular_caida_rag=solicitud.simular_caida_rag
         )
+
+        # Regla de Escalamiento Determinista ITIL: Si hay falla física crítica de hardware (requiere visita presencial),
+        # el código escala deterministamente a Impacto=Alto y Urgencia=Alta para activar atención presencial inmediata (SLA 15 min).
+        impacto_final = clasificacion_ia.impacto
+        urgencia_final = clasificacion_ia.urgencia
+        if diagnostico_rag.requiere_visita_campo or (clasificacion_ia.categoria == "Hardware y Equipos" and any(k in solicitud.descripcion_problema.lower() for k in ["pantalla azul", "bsod", "fuente de poder", "apaga sola", "ruido metálico", "quemad"])):
+            impacto_final = "Alto"
+            urgencia_final = "Alta"
+
+        prioridad_sla = calcular_prioridad_itil(impacto_final, urgencia_final)
+        prioridad_nombre = prioridad_sla.prioridad
+        sla_minutos = prioridad_sla.sla_minutos
+        descripcion_sla = prioridad_sla.descripcion_sla
+        
         estado_inicial = "escalado_cuadrilla" if diagnostico_rag.requiere_visita_campo else ("en_atencion" if solicitud.simular_caida_rag else "nuevo")
         requiere_revision = (
             metadatos_ia.conmutado or 
-            clasificacion_ia.impacto == "Alto" or
+            impacto_final == "Alto" or
             clasificacion_ia.categoria == "Solicitud No Técnica / Fuera de Alcance" or
             solicitud.simular_caida_rag
         )
@@ -261,12 +269,22 @@ def proponer_registro_ticket(solicitud: SolicitudTicketIn, request: Request = No
     if request:
         request.state.metadatos_ia = metadatos_ia
 
-    prioridad_sla = calcular_prioridad_itil(clasificacion_ia.impacto, clasificacion_ia.urgencia)
     diagnostico_rag = consultar_base_conocimiento(
         solicitud.descripcion_problema,
         categoria=clasificacion_ia.categoria,
         simular_caida_rag=solicitud.simular_caida_rag
     )
+
+    # Regla de Escalamiento Determinista ITIL: Si hay falla física crítica de hardware (requiere visita de campo),
+    # o la descripción describe fallo de componentes con apagado/riesgo eléctrico,
+    # el código escala deterministamente a Impacto=Alto y Urgencia=Alta para activar atención presencial inmediata (SLA 15 min).
+    impacto_final = clasificacion_ia.impacto
+    urgencia_final = clasificacion_ia.urgencia
+    if diagnostico_rag.requiere_visita_campo or (clasificacion_ia.categoria == "Hardware y Equipos" and any(k in solicitud.descripcion_problema.lower() for k in ["pantalla azul", "bsod", "fuente de poder", "apaga sola", "ruido metálico", "quemad"])):
+        impacto_final = "Alto"
+        urgencia_final = "Alta"
+
+    prioridad_sla = calcular_prioridad_itil(impacto_final, urgencia_final)
 
     codigo_propuesto = f"TCK-{str(uuid.uuid4())[:8].upper()}"
 
@@ -276,8 +294,8 @@ def proponer_registro_ticket(solicitud: SolicitudTicketIn, request: Request = No
         email_cliente=solicitud.email_cliente,
         descripcion_problema=solicitud.descripcion_problema,
         categoria_propuesta=clasificacion_ia.categoria,
-        impacto_propuesto=clasificacion_ia.impacto,
-        urgencia_propuesta=clasificacion_ia.urgencia,
+        impacto_propuesto=impacto_final,
+        urgencia_propuesta=urgencia_final,
         prioridad_itil=prioridad_sla.prioridad,
         sla_minutos=prioridad_sla.sla_minutos,
         descripcion_sla=prioridad_sla.descripcion_sla,

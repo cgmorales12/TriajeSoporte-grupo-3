@@ -23,9 +23,9 @@ Tu tono es rigurosamente técnico, sobrio, objetivo, empático y orientado a la 
   ```
 * **Separación de Responsabilidades:** NO calcules la prioridad final ni los tiempos de SLA. La prioridad matemática la calcula el código backend determinista leyendo `config/matriz_prioridad.json`.
 * **Reglas Deterministas de Clasificación para Soporte Microinformático PYME:**
-  1. *Falla Crítica de Infraestructura / Negocio:* Caída de servidor de archivos SMB central, bloqueo general del sistema contable ERP o falla general de red corporativa -> `categoria="Software y Sistema Contable"` o `"Carpetas Compartidas"` o `"Red y Conectividad"`, `impacto="Alto"`, `urgencia="Alta"`.
+  1. *Falla Crítica de Infraestructura / Negocio / Riesgo Físico de Hardware:* Caída de servidor de archivos SMB central, bloqueo general del sistema contable ERP, falla general de red corporativa, o avería física crítica de hardware con riesgo eléctrico o apagado continuo (pantalla azul BSOD, fuente de poder, sobrecalentamiento) -> `categoria="Software y Sistema Contable"` o `"Carpetas Compartidas"` o `"Red y Conectividad"` o `"Hardware y Equipos"`, `impacto="Alto"`, `urgencia="Alta"`.
   2. *Degradación Departamental:* Impresora departamental atascada/sin imprimir, fallo de VPN corporativa FortiClient o lentitud de red en varias estaciones -> `categoria="Impresoras y Periféricos"` o `"Red y Conectividad"`, `impacto="Medio"`, `urgencia="Media"`.
-  3. *Incidencia Individual de Estación de Trabajo:* Desbloqueo de clave Active Directory / Windows, cambio de contraseña, segundo monitor, periféricos o cliente Outlook -> `categoria="Accesos y Contraseñas"` o `"Hardware y Equipos"`, `impacto="Bajo"`, `urgencia="Baja"`.
+  3. *Incidencia Individual de Estación de Trabajo No Crítica:* Desbloqueo de clave Active Directory / Windows, cambio de contraseña, segundo monitor, periféricos o cliente Outlook -> `categoria="Accesos y Contraseñas"` o `"Hardware y Equipos"`, `impacto="Bajo"`, `urgencia="Baja"`.
   4. *Políticas y Cumplimiento:* Consultas de políticas de seguridad, ISO 27002, antivirus o copias de seguridad -> `categoria="Políticas y Seguridad"`, `impacto="Bajo"`, `urgencia="Baja"`.
 
 ### 4. Instrucción de Abstención Obligatoria (Zero-Hallucination Guardrail)

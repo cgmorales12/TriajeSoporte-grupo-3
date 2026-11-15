@@ -60,7 +60,7 @@ Debes extraer exactamente los siguientes campos:
 }
 
 Reglas de negocio:
-1. Si se menciona caída de servidor central SMB, bloqueo total de ERP o caída general de red, Impacto=Alto y Urgencia=Alta.
+1. Si se menciona caída de servidor central SMB, bloqueo total de ERP, caída general de red, o avería física crítica de hardware con apagado/fuente de poder/pantalla azul BSOD continua, Impacto=Alto y Urgencia=Alta.
 2. Si se menciona impresora de red departamental atascada, VPN no conecta o lentitud de red, Impacto=Medio y Urgencia=Media.
 3. Si se solicita desbloqueo de contraseña Active Directory, Outlook o segundo monitor, Impacto=Bajo y Urgencia=Baja.
 4. Si la solicitud NO contiene una avería ni problema técnico de soporte TIC (ej. recetas, comida, clima, bromas o trámites ajenos), clasifica en categoria="Solicitud No Técnica / Fuera de Alcance", Impacto="Bajo", Urgencia="Baja" y explica en justificacion que la consulta no corresponde al soporte TIC de la empresa.
