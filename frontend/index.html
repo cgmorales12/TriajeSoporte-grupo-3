@@ -4867,49 +4867,51 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 if (btnRegistrar) btnRegistrar.style.display = 'inline-flex';
             }
 
-            // 6. Citas RAG Oficiales con enlace verificable y paso exacto (Adaptado al perfil)
+            // 6. Citas RAG Oficiales con enlace verificable y paso exacto (Exclusivo para Auditoría Vista TIC)
             const citasCont = document.getElementById('hitlRegCitasContainer');
-            if (propuesta.citas && propuesta.citas.length > 0) {
-                const tituloCitas = esTIC 
-                    ? '📖 Cita RAG Oficial Verificada en Manuales Técnicos (Auditoría TIC):' 
-                    : '📗 Guía y Manual Oficial de Ayuda (Soporte PYME):';
-                citasCont.innerHTML = `
-                    <div style="font-size:12px; font-weight:700; color:#1E3A8A; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                        <span>${tituloCitas}</span>
-                    </div>
-                    ${propuesta.citas.map(c => {
-                        const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
-                        let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial')
-                            .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
-                            .replace(/^DOC-\d+:?\s*/i, '')
-                            .trim();
-                        const nombreEnlace = c.url && c.url.includes('forticlient') 
-                            ? 'Descargar / Configurar en Portal Oficial FortiClient VPN' 
-                            : (c.url && c.url.includes('microsoft') ? 'Ver Documentación Oficial Microsoft' : 'Abrir Documento Técnico Oficial');
-                        const urlBtn = c.url 
-                            ? `<div style="margin-top:6px; padding-top:6px; border-top:1px dashed #CBD5E1;">
-                                 <a href="${c.url}" target="_blank" rel="noopener noreferrer" style="color:#2563EB; font-weight:700; text-decoration:underline; font-size:11.5px; display:inline-flex; align-items:center; gap:4px;">
-                                     🌐 <b>Enlace Oficial:</b> ${nombreEnlace} ↗
-                                 </a>
-                               </div>` 
-                            : '';
-                        return `
-                        <div class="hitl-cita-card" style="background:#F0FDF4; border:1.5px solid #86EFAC; border-left:4px solid #16A34A; border-radius:8px; padding:10px 14px; margin-bottom:8px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
-                                <span class="hitl-cita-title" style="font-weight:800; color:#14532D; font-size:12.5px;">📄 ${esTIC ? docId + ': ' : ''}${titLimpio}</span>
-                                <span style="font-size:10px; background:#DCFCE7; color:#166534; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #86EFAC;">🛡️ ${c.vigencia || 'Vigencia 2026'}</span>
-                            </div>
-                            <div class="hitl-cita-sec" style="font-size:11.5px; color:#1F2937; margin-top:2px;">
-                                📍 <strong>${esTIC ? 'Sección Oficial:' : 'Paso recomendado:'}</strong> <b>${c.paso_exacto || 'Procedimiento estándar'}</b>
-                            </div>
-                            ${urlBtn}
-                        </div>
-                    `;}).join('')}
-                `;
+            if (!esTIC) {
+                // En Vista Usuario se oculta esta sección técnica para no saturar al usuario no técnico
+                citasCont.style.display = 'none';
+                citasCont.innerHTML = '';
             } else {
-                citasCont.innerHTML = esTIC
-                    ? '<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; color:#475569; font-size:11.5px; font-style:italic;">ℹ️ Sin citas documentales requeridas (solicitud fuera de alcance o administrativa).</div>'
-                    : '';
+                citasCont.style.display = 'block';
+                if (propuesta.citas && propuesta.citas.length > 0) {
+                    citasCont.innerHTML = `
+                        <div style="font-size:12px; font-weight:700; color:#1E3A8A; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                            <span>📖 Cita RAG Oficial Verificada en Manuales Técnicos (Auditoría TIC):</span>
+                        </div>
+                        ${propuesta.citas.map(c => {
+                            const docId = (c.documento_id || 'DOC-OFICIAL').replace(/\.md$/i, '');
+                            let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial')
+                                .replace(new RegExp(`^${docId}:?\\s*`, 'i'), '')
+                                .replace(/^DOC-\d+:?\s*/i, '')
+                                .trim();
+                            const nombreEnlace = c.url && c.url.includes('forticlient') 
+                                ? 'Descargar / Configurar en Portal Oficial FortiClient VPN' 
+                                : (c.url && c.url.includes('microsoft') ? 'Ver Documentación Oficial Microsoft' : 'Abrir Documento Técnico Oficial');
+                            const urlBtn = c.url 
+                                ? `<div style="margin-top:6px; padding-top:6px; border-top:1px dashed #CBD5E1;">
+                                     <a href="${c.url}" target="_blank" rel="noopener noreferrer" style="color:#2563EB; font-weight:700; text-decoration:underline; font-size:11.5px; display:inline-flex; align-items:center; gap:4px;">
+                                         🌐 <b>Enlace Oficial:</b> ${nombreEnlace} ↗
+                                     </a>
+                                   </div>` 
+                                : '';
+                            return `
+                            <div class="hitl-cita-card" style="background:#F0FDF4; border:1.5px solid #86EFAC; border-left:4px solid #16A34A; border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
+                                    <span class="hitl-cita-title" style="font-weight:800; color:#14532D; font-size:12.5px;">📄 ${docId}: ${titLimpio}</span>
+                                    <span style="font-size:10px; background:#DCFCE7; color:#166534; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #86EFAC;">🛡️ ${c.vigencia || 'Vigencia 2026'}</span>
+                                </div>
+                                <div class="hitl-cita-sec" style="font-size:11.5px; color:#1F2937; margin-top:2px;">
+                                    📍 <strong>Sección Oficial:</strong> <b>${c.paso_exacto || 'Procedimiento estándar'}</b>
+                                </div>
+                                ${urlBtn}
+                            </div>
+                        `;}).join('')}
+                    `;
+                } else {
+                    citasCont.innerHTML = '<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; color:#475569; font-size:11.5px; font-style:italic;">ℹ️ Sin citas documentales requeridas (solicitud fuera de alcance o administrativa).</div>';
+                }
             }
 
             document.getElementById('modalConfirmarRegistro').classList.add('activo');
