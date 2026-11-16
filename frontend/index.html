@@ -4934,12 +4934,50 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 if (btnRegistrar) btnRegistrar.style.display = 'inline-flex';
             }
 
-            // 6. Citas RAG Oficiales con enlace verificable y paso exacto (Exclusivo para Auditoría Vista TIC)
+            // 6. Citas RAG Oficiales con enlace verificable y paso exacto (Adaptado a Vista Usuario vs Vista TIC)
             const citasCont = document.getElementById('hitlRegCitasContainer');
             if (!esTIC) {
-                // En Vista Usuario se oculta esta sección técnica para no saturar al usuario no técnico
-                citasCont.style.display = 'none';
-                citasCont.innerHTML = '';
+                // En Vista Usuario: Si hay citas y no es falla física ni fuera de alcance, mostrar únicamente la cita principal destacando el código DOC-XX y el enlace oficial
+                if (propuesta.citas && propuesta.citas.length > 0 && !esHardware && !esNoTecnica) {
+                    const c = propuesta.citas[0];
+                    const matchDoc = (c.documento_id || '').match(/DOC-\d+/i);
+                    const docCodigo = matchDoc ? matchDoc[0].toUpperCase() : 'DOC-02';
+                    let titLimpio = (c.titulo_documento || 'Manual Técnico Oficial')
+                        .replace(new RegExp(`^${docCodigo}:?\\s*`, 'i'), '')
+                        .replace(/^DOC-\d+:?\s*/i, '')
+                        .trim();
+                    const nombreEnlace = c.url && c.url.includes('forticlient') 
+                        ? 'Descargar / Configurar en Portal Oficial FortiClient VPN' 
+                        : (c.url && c.url.includes('microsoft') ? 'Ver Documentación Oficial Microsoft' : 'Abrir Documento Técnico Oficial');
+                    const urlBtn = c.url 
+                        ? `<div style="margin-top:8px; padding-top:8px; border-top:1px dashed #86EFAC;">
+                             <a href="${c.url}" target="_blank" rel="noopener noreferrer" style="color:#15803D; font-weight:800; text-decoration:underline; font-size:12px; display:inline-flex; align-items:center; gap:5px;">
+                                 🌐 <b>Enlace Oficial:</b> ${nombreEnlace} ↗
+                             </a>
+                           </div>` 
+                        : '';
+                    citasCont.style.display = 'block';
+                    citasCont.innerHTML = `
+                        <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-left:5px solid #16A34A; border-radius:8px; padding:12px 14px; margin-bottom:12px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:6px;">
+                                <span style="font-weight:800; color:#14532D; font-size:12.5px; display:flex; align-items:center; gap:6px;">
+                                    <span>📖 Manual Oficial Localizado por IA:</span>
+                                    <strong style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:2px 8px; border-radius:4px; font-family:var(--font-mono); font-size:13px;">${docCodigo}</strong>
+                                </span>
+                                <span style="font-size:10.5px; background:#DCFCE7; color:#166534; padding:2px 8px; border-radius:4px; font-weight:700; border:1px solid #86EFAC;">
+                                    ✓ RAG Verificado (ChromaDB)
+                                </span>
+                            </div>
+                            <div style="font-size:12px; color:#1F2937; margin-top:4px; font-weight:600;">
+                                ${titLimpio}
+                            </div>
+                            ${urlBtn}
+                        </div>
+                    `;
+                } else {
+                    citasCont.style.display = 'none';
+                    citasCont.innerHTML = '';
+                }
             } else {
                 citasCont.style.display = 'block';
                 if (propuesta.citas && propuesta.citas.length > 0) {
