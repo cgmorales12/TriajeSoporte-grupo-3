@@ -1441,6 +1441,41 @@ def test_metricas_fase5_dashboard_y_graficos_excel():
     assert "renderizarGraficosFase5" in html
 
 
+def test_catalogo_manuales_rag_y_proteccion_corpus_base():
+    """
+    Valida la gestión de base de conocimiento TIC:
+    1. Listado público/TIC de los 15 manuales oficiales.
+    2. Detalle y contenido de un manual (DOC-01).
+    3. Bloqueo 403 ante intento de eliminación de manuales base (DOC-01 a DOC-15).
+    """
+    from app.services.auth import generar_token_sesion
+    # 1. Listar manuales
+    res_list = client.get("/v1/admin/manuales")
+    assert res_list.status_code == 200
+    data = res_list.json()
+    assert data["total"] >= 15
+    codigos = [m["documento_id"] for m in data["manuales"]]
+    assert "DOC-01" in codigos
+    assert "DOC-02" in codigos
+    assert "DOC-15" in codigos
+
+    # 2. Detalle de DOC-02
+    res_doc = client.get("/v1/admin/manuales/DOC-02_configuracion_vpn_corporativa.md")
+    assert res_doc.status_code == 200
+    detalle = res_doc.json()
+    assert detalle["documento_id"] == "DOC-02"
+    assert "VPN" in detalle["titulo"]
+    assert len(detalle["contenido_markdown"]) > 50
+
+    # 3. Intento de borrado de DOC-01 con token autenticado -> debe dar 403 Forbidden
+    token = generar_token_sesion({"sub": "operador_tic", "nombre": "Operador", "rol": "operador_tic"})
+    headers = {"Authorization": f"Bearer {token}"}
+    res_del = client.delete("/v1/admin/manuales/DOC-01_restablecimiento_contrasenas.md", headers=headers)
+    assert res_del.status_code == 403
+    assert "protegido" in res_del.json()["detail"].lower()
+
+
+
 
 
 

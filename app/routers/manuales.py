@@ -225,6 +225,14 @@ def eliminar_manual(
             detail=f"El manual '{archivo_seguro}' no existe en data/raw/."
         )
         
+    # Proteger los 15 manuales canónicos de auditoría UNIANDES contra eliminación accidental
+    m_base = re.match(r"^(DOC-(?:0[1-9]|1[0-5]))[_\-]", archivo_seguro, re.IGNORECASE)
+    if m_base:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"El manual oficial {m_base.group(1)} pertenece al corpus base protegido de la PYME (ISO 27002 / Caso UNIANDES) y no puede ser eliminado para garantizar la reproducibilidad del RAG."
+        )
+        
     os.remove(ruta_completa)
     return {
         "status": "ok",
