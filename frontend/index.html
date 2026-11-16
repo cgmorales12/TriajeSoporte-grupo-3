@@ -4712,11 +4712,40 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                 }
             }
 
+            // ── GUARDA DETERMINISTA: Fuera de Alcance / No Técnica ──────────────────
+            const _catProp = (propuesta.categoria_propuesta || '').toLowerCase();
+            const _esFueraDefinitivo = _catProp.includes('fuera de alcance') ||
+                                       _catProp.includes('no técnica') ||
+                                       _catProp.includes('no tecnica') ||
+                                       (propuesta.prioridad_itil === 'Baja' && propuesta.sla_minutos >= 1440 && (!propuesta.citas || propuesta.citas.length === 0));
+
             // Banner explicativo: lenguaje adaptado (Usuario vs TIC)
             const bannerItil = document.getElementById('hitlNotaItilBanner');
             if (bannerItil) {
                 const pItil = propuesta.prioridad_itil || 'Media';
-                if (esTIC) {
+                if (_esFueraDefinitivo) {
+                    bannerItil.style.display = 'block';
+                    bannerItil.style.background = '#FFF1F2';
+                    bannerItil.style.border = '1.5px solid #FDA4AF';
+                    bannerItil.style.borderLeft = '5px solid #E11D48';
+                    bannerItil.style.borderRadius = '8px';
+                    bannerItil.style.color = '#9F1239';
+                    bannerItil.style.padding = '12px 14px';
+                    bannerItil.style.marginBottom = '12px';
+                    bannerItil.innerHTML = `
+                        <div style="font-size:13px; line-height:1.55; font-weight:600; color:#9F1239;">
+                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;">
+                                <span>🛡️ <b style="font-weight:800; color:#9F1239;">Regla de Silencio (OWASP LLM01):</b></span>
+                                <strong style="background:#FFFFFF; color:#9F1239; border:1.5px solid #F43F5E; padding:2px 10px; border-radius:5px; font-weight:800;">0 Tickets Creados</strong>
+                                <span>·</span>
+                                <strong style="background:#FFFFFF; color:#9F1239; border:1.5px solid #F43F5E; padding:2px 10px; border-radius:5px; font-weight:800;">0 Citas Documentales</strong>
+                            </div>
+                            <div style="color:#881337; font-size:12px; font-weight:500; margin-top:4px;">
+                                Consulta ajena a soporte microinformático. No se compromete tiempo de respuesta ni se satura la mesa de ayuda de TI.
+                            </div>
+                        </div>
+                    `;
+                } else if (esTIC) {
                     bannerItil.style.display = 'block';
                     bannerItil.style.background = '#EFF6FF';
                     bannerItil.style.border = '1px solid #BFDBFE';
@@ -4749,15 +4778,6 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
                     `;
                 }
             }
-
-            // ── GUARDA DETERMINISTA: Fuera de Alcance / No Técnica ──────────────────
-            // Se ejecuta ANTES de cualquier humanización para evitar que el backend
-            // devuelva plantillas de TI (ej. bloqueo de contraseña) en consultas
-            // ajenas al soporte tecnológico (OWASP LLM01 · abstención institucional).
-            const _catProp = (propuesta.categoria_propuesta || '').toLowerCase();
-            const _esFueraDefinitivo = _catProp.includes('fuera de alcance') ||
-                                       _catProp.includes('no técnica') ||
-                                       _catProp.includes('no tecnica');
 
             if (_esFueraDefinitivo) {
                 document.getElementById('hitlRegSolucion').value =
@@ -4900,13 +4920,24 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
 
             const inpOp = document.getElementById('hitlRegOperador');
             if (inpOp) {
-                inpOp.value = esTIC ? 'Christian Morales (Operador TIC / Nivel 2)' : 'Christian Morales (Técnico de Soporte TI)';
+                if (_esFueraDefinitivo) {
+                    inpOp.value = 'Ninguno (Solicitud No Técnica)';
+                } else {
+                    inpOp.value = esTIC ? 'Christian Morales (Operador TIC / Nivel 2)' : 'Christian Morales (Técnico de Soporte TI)';
+                }
+            }
+            if (_esFueraDefinitivo && slaInput) {
+                slaInput.value = 'No Aplica (0 min)';
             }
 
             // 5. Botones adaptados
             const btnDescartar = document.getElementById('btnDescartarModalRegistro');
             if (btnDescartar) {
-                btnDescartar.textContent = esTIC ? '✕ Descartar Consulta' : '✕ Cancelar (Ya no requiero ticket)';
+                if (_esFueraDefinitivo) {
+                    btnDescartar.textContent = '✕ Cerrar (Consulta Fuera de Alcance)';
+                } else {
+                    btnDescartar.textContent = esTIC ? '✕ Descartar Consulta' : '✕ Cancelar (Ya no requiero ticket)';
+                }
             }
             const btnRegistrar = document.getElementById('btnEjecutarConfirmarRegistro');
             if (btnRegistrar) {
