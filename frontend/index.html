@@ -4943,7 +4943,7 @@ Compruebe que el servicio o estación funcione correctamente junto al usuario an
             const btnRegistrar = document.getElementById('btnEjecutarConfirmarRegistro');
             if (btnRegistrar) {
                 if (esHardware) {
-                    btnRegistrar.textContent = 'Autorizar Orden Presencial (Compuerta HITL)';
+                    btnRegistrar.textContent = esTIC ? 'Autorizar Orden Presencial (Compuerta HITL)' : 'Solicitar Visita Técnica Presencial (Compuerta HITL)';
                     btnRegistrar.style.background = '#D97706';
                     btnRegistrar.style.borderColor = '#B45309';
                 } else {
